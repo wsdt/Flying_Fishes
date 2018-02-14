@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.GameView;
+/*package yourowngame.com.yourowngame.gameview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,9 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.widget.ImageView;
 
-/**
- * Created by Solution on 14.02.2018.
- */
+//TODO: In my point of view not the best method (see WhatsApp)
 
 @SuppressLint("AppCompatCustomView")
 public class GameView extends ImageView {
@@ -35,3 +33,4 @@ public class GameView extends ImageView {
 
     }
 }
+*/
