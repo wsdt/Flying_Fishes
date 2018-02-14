@@ -31,7 +31,7 @@ public class GameView extends ImageView {
 
         canvas.drawLine(0, 0, getWidth(), getHeight(), p);
         p.setTextSize(75);
-        canvas.drawText("Create GameObjcets here", 0, getHeight()-5, p);
+        canvas.drawText("Create GameObjects here", 0, getHeight()-5, p);
 
     }
 }
