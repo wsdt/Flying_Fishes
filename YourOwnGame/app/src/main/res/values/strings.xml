@@ -5,4 +5,8 @@
     <string name="gameViewActivity">GameView</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+
+    <!-- LoadingActivity -->
+    <string name="loadingActivity_imageView_contentDescription">App-Icon</string>
 </resources>
