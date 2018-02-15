@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.handler.AdManager;
 
 public class LoadingActivity extends AppCompatActivity {
     private static final String TAG = "LoadingActivity";
@@ -54,12 +55,6 @@ public class LoadingActivity extends AppCompatActivity {
         }*/
 
         //FullPageAd etc. (use when you want to display ads and after loaded ad activity gets loaded)
-        /*AdManager adManager = new AdManager(this);
-        adManager.initializeAdmob();
-        adManager.loadFullPageAd(null, followingActivityIntent); //after ad is closed or failure happens the maiActivity starts.
-        */
-
-        //TODO - IMPORTANT: COMMENT following line if you want to display interestial ads!
-        startActivity(followingActivityIntent);
+        (new AdManager(this)).loadFullPageAd(null, followingActivityIntent); //after ad is closed or failure happens the maiActivity starts.
     }
 }

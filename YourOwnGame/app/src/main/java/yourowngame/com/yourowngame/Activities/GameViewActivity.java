@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.Player;
-//import yourowngame.com.yourowngame.gameview.gameview;
 
 /**
  * The GameViewActivity contains the GameLogic.
@@ -42,7 +41,7 @@ public class GameViewActivity extends AppCompatActivity {
         gameLayout = (RelativeLayout) findViewById(R.id.gameViewLayout);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 750);
         gameLayout.setLayoutParams(params);
-        gameLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        gameLayout.setBackgroundColor(this.getResources().getColor(R.color.colorPrimary));
 
         gameLayout.addView(drawingPanel);
     }

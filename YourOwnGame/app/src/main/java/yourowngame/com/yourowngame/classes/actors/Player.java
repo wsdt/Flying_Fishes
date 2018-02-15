@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import yourowngame.com.yourowngame.classes.configuration.Constants;
+
 
 public class Player extends GameObject {
 
@@ -12,12 +14,13 @@ public class Player extends GameObject {
         super(activity, posX, posY, speedX, speedY, name);
 
         //Standard-Speed
-        this.speedX = this.speedY = 5;
+        this.speedX = this.speedY = Constants.Actors.Player.defaultSpeed;
     }
 
     @Override
     public void update(boolean UP, boolean DOWN){
-        if(UP) posY =- speedY;
-        if(DOWN) posY += speedY;
+        if(UP) {posY =- speedY;}
+        if(DOWN) {posY += speedY;}
     }
+
 }
