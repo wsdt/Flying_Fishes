@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.handler.AdManager;
+import yourowngame.com.yourowngame.classes.commercial.AdManager;
 
 /**
  *

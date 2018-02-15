@@ -31,8 +31,17 @@ public interface Constants {
         interface Barrier {}
         interface Enemy {}
         interface Player {
-            int defaultSpeed = 5;
+            int defaultSpeedX = 5;
+            int defaultSpeedY = 0;
         }
         interface Reward {}
+    }
+
+    interface GameLogic {
+        int refreshUIintervalInMs = 500; //0.5 seconds (just for testing, later presumably a lower no.)
+        interface KeyHandler {
+            int goUpOnClick = 25;
+            int goDownPerTimeUnit = 15;
+        }
     }
 }

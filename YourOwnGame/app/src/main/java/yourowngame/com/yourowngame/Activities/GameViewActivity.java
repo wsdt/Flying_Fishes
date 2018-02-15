@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,9 +28,10 @@ import yourowngame.com.yourowngame.classes.actors.Player;
 
 
 public class GameViewActivity extends AppCompatActivity {
-    private RelativeLayout gameLayout;
+    private static final String TAG = "GameViewActivity";
+    private FrameLayout gameLayout;
     private DrawingPanel drawingPanel;
-    Player playerOne; //
+    private Player playerOne;
 
     //(1.) Initialize objects
     @Override
@@ -37,15 +39,20 @@ public class GameViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
 
-        drawingPanel = new DrawingPanel(this);
+        /*If we want to hide actionbar: (but I think we could add pause button etc. in actionbar)
+        if (getSupportActionBar() == null) {Log.i(TAG, "Actionbar already gone/hidden.");} else {getSupportActionBar().hide();}*/
+
+        setDrawingPanel(new DrawingPanel(this));
 
         //layout referenzieren
-        gameLayout = (RelativeLayout) findViewById(R.id.gameViewLayout);
+        setGameLayout((FrameLayout) findViewById(R.id.gameViewLayout));
+        /* Did following in XML (faster):
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 750);
-        gameLayout.setLayoutParams(params);
-        gameLayout.setBackgroundColor(this.getResources().getColor(R.color.colorPrimary));
+        getGameLayout().setLayoutParams(params);
+        getGameLayout().setBackgroundColor(this.getResources().getColor(R.color.colorPrimary));*/
 
-        gameLayout.addView(drawingPanel);
+        initGameObjects();
+        getGameLayout().addView(getDrawingPanel());
     }
 
     public void startGame() {
@@ -59,19 +66,19 @@ public class GameViewActivity extends AppCompatActivity {
             //playerOne.update();
 
             //3.
-            drawingPanel.repaint();
+            getDrawingPanel().repaint();
 
         }
     }
 
-    public void initGameObject(){
-        playerOne = new Player(this, 0, 0, 0, 0, null,  "Gerhard Anus");
+    private void initGameObjects(){
+        setPlayerOne(new Player(this, 0, 0, 5, 5, R.drawable.player_testingpurpose,  "Gerhard Anus"));
     }
 
 
     //Drawing panel - draw Objects
     @SuppressLint("AppCompatCustomView")
-    class DrawingPanel extends ImageView{
+    class DrawingPanel extends ImageView {
 
         public DrawingPanel(Context context) {
             super(context);
@@ -89,11 +96,40 @@ public class GameViewActivity extends AppCompatActivity {
             p.setTextSize(75);
             canvas.drawText("Create GameObjects here", 0, getHeight()-5, p);
 
+            //Maybe draw members like this:
+            //getResources().getDrawable(getPlayerOne().getImg()).draw(canvas);
+
         }
 
         public void repaint(){
             this.repaint();
         }
+    }
+
+
+    //GETTER/SETTER (Base class)
+    public FrameLayout getGameLayout() {
+        return gameLayout;
+    }
+
+    public void setGameLayout(FrameLayout gameLayout) {
+        this.gameLayout = gameLayout;
+    }
+
+    public DrawingPanel getDrawingPanel() {
+        return drawingPanel;
+    }
+
+    public void setDrawingPanel(DrawingPanel drawingPanel) {
+        this.drawingPanel = drawingPanel;
+    }
+
+    public Player getPlayerOne() {
+        return playerOne;
+    }
+
+    public void setPlayerOne(Player playerOne) {
+        this.playerOne = playerOne;
     }
 }
 

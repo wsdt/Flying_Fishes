@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.handler.AdManager;
+import yourowngame.com.yourowngame.classes.commercial.AdManager;
 
 public class LoadingActivity extends AppCompatActivity {
     private static final String TAG = "LoadingActivity";
