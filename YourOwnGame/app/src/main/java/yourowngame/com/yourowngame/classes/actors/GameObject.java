@@ -30,10 +30,12 @@ public abstract class GameObject extends View {
         this.setSpeedY(speedY);
         this.setName(name);
 
-        //speedX = speedY = 0; //whats this?
+        speedX = speedY = 0; //all sprites should be at 0 when getting created
     }
 
-    protected abstract void update();
+    //Moves the positions, when true
+
+    public abstract void update(boolean UP, boolean DOWN);
 
     public double getPosX() { return posX; }
 

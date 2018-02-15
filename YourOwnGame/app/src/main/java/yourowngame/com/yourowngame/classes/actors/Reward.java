@@ -12,7 +12,8 @@ public class Reward extends GameObject {
     }
 
     @Override
-    protected void update() {
-
+    public void update(boolean UP, boolean DOWN){
+        if(UP) posY =- speedY;
+        if(DOWN) posY += speedY;
     }
 }

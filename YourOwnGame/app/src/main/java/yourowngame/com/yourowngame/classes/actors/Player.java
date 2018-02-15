@@ -10,10 +10,14 @@ public class Player extends GameObject {
 
     public Player(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @Nullable String name) {
         super(activity, posX, posY, speedX, speedY, name);
+
+        //Standard-Speed
+        this.speedX = this.speedY = 5;
     }
 
     @Override
-    protected void update() {
-
+    public void update(boolean UP, boolean DOWN){
+        if(UP) posY =- speedY;
+        if(DOWN) posY += speedY;
     }
 }
