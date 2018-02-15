@@ -21,6 +21,8 @@ import yourowngame.com.yourowngame.classes.actors.Player;
  * It defines a inner class providing a drawing Panel,
  * in which the obj are gettin drawn.
  *
+ * TODO: create image asset for player, draw player, implement touchHandler
+ *
  *
  */
 
@@ -28,7 +30,7 @@ import yourowngame.com.yourowngame.classes.actors.Player;
 public class GameViewActivity extends AppCompatActivity {
     private RelativeLayout gameLayout;
     private DrawingPanel drawingPanel;
-    Player playerOne = new Player(this, 0, 0, 0, 0, "Revin Kiedl");
+    Player playerOne; //
 
     //(1.) Initialize objects
     @Override
@@ -62,6 +64,11 @@ public class GameViewActivity extends AppCompatActivity {
 
         }
     }
+
+    public void initGameObject(){
+        playerOne = new Player(this, 0, 0, 0, 0, null,  "Gerhard Anus");
+    }
+
 
     //Drawing panel - draw Objects
     @SuppressLint("AppCompatCustomView")
