@@ -7,18 +7,22 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/appName"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity"/>
-        <activity android:name=".activities.GameViewActivity"/>
+        <activity android:name=".activities.MainActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="sensorLandscape"/>
+        <activity android:name=".activities.GameViewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="sensorLandscape"/>
 
         <!-- screenOrientation and configChanges so only portrait mode -->
         <activity android:name=".activities.LoadingActivity"
             android:noHistory="true"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

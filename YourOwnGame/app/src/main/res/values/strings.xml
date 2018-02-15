@@ -1,11 +1,14 @@
 <resources>
-    <string name="app_name">Your Own Game!</string>
-    <string name="starte_Spiel"> Starten! </string>
+    <!-- GLOBAL -->
+    <string name="appName">Your Own Game!</string>
 
     <string name="gameViewActivity">GameView</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
+    <!-- MainActivity -->
+    <string name="mainActivity_button_startGame">Starten!</string>
+    <string name="mainActivity_imageView_contentDescription">App Welcome Picture</string>
 
     <!-- LoadingActivity -->
     <string name="loadingActivity_imageView_contentDescription">App-Icon</string>
