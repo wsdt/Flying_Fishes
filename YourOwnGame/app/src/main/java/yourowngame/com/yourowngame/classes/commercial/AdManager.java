@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.handler;
+package yourowngame.com.yourowngame.classes.commercial;
 
 import android.app.Activity;
 import android.content.Intent;

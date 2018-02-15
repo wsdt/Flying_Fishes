@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes;
+package yourowngame.com.yourowngame.classes.handler;
 
 /**
  * Created by Solution on 15.02.2018.
@@ -20,4 +20,6 @@ package yourowngame.com.yourowngame.classes;
  */
 
 public class KeyHandler {
+    //Constants for y+={value} and y-={value} when clicking on or releasing screen (falling per second or similar) are in Constants interface!
+
 }
