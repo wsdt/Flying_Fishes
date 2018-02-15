@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="yourowngame.com.yourowngame.activities.LoadingActivity">
 
     <TextView
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorWhite"
         android:textSize="35sp"
         android:layout_centerHorizontal="true"
         android:id="@+id/appName"
         android:text="@string/app_name"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -23,7 +25,7 @@
         android:textSize="20sp"
         android:layout_below="@+id/appName"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorWhite"
         android:layout_marginBottom="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

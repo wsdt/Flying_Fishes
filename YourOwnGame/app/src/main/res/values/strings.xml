@@ -9,4 +9,10 @@
 
     <!-- LoadingActivity -->
     <string name="loadingActivity_imageView_contentDescription">App-Icon</string>
+
+    <!-- AdManager -->
+    <string name="adManager_error_couldNotLoadAd">Could not load ad. Do you have internet?</string>
+    <string name="adManager_msg_rewardAd_whatIsMyReward">After watching this video you spawn a few seconds before the game was over.</string>
+    <string name="adManager_success_rewardAd_rewardReceived">You can now continue your game :)</string>
+
 </resources>
