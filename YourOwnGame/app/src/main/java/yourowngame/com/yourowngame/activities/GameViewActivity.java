@@ -63,21 +63,20 @@ public class GameViewActivity extends AppCompatActivity  {
 
         getGameLayout().addView(getDrawingPanel());
     }
+
+    /** TODO
+     *  GAME LOOP
+     *  FPS Counter
+     */
     public void startGame() {
+
         while (true) {
-            //1. initialization has already been done (onCreate())
-            System.out.println("Start");
             //2.Check for changes
             playerOne.update(isTouched, true);
 
-            //3. Repaint (Old getDrawingPanel.repaint() was a huge recursive exception, my fault)
+            System.out.println("Reached");
             getDrawingPanel().invalidate();
 
-            try {
-                Thread.sleep(15);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
     private void initGameObjects(){
