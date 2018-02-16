@@ -1,11 +1,15 @@
 package yourowngame.com.yourowngame.classes.actors;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import yourowngame.com.yourowngame.R;
 
 /**
  *  Superclass for other GameObjects
@@ -34,6 +38,16 @@ public abstract class GameObject /*extends Mapper*/ {
         //no default declaration for speed necessary, because no constructor for GameObject without speedX/Y available
     }
 
+    /* @update:
+     *
+     * had some troubles with this method, but in the end i got an arrow to the knee.
+     *
+     * nah thought that cohesion might be a problem, because update() method is kind a player.class-like.
+     * But all Objects should move in their own way, only the player.class relies on user interaction
+     *
+     * but all fine!
+     *
+     */
 
     //not abstract anymore because now we have the possibility of all possible updateCombinations and do not have to distinguish between player, enemy etc. (if we want to change it, we can override it manually)
     public void update(@Nullable Boolean goUp, @Nullable Boolean goForward) {
@@ -67,7 +81,6 @@ public abstract class GameObject /*extends Mapper*/ {
             }
         }
     }
-
 
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public double getPosX() { return posX; }
@@ -115,4 +128,5 @@ public abstract class GameObject /*extends Mapper*/ {
     public void setImg(int img) {
         this.img = img;
     }
+
 }

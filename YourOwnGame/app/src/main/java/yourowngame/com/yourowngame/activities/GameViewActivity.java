@@ -2,15 +2,18 @@ package yourowngame.com.yourowngame.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.Player;
@@ -27,17 +30,24 @@ import yourowngame.com.yourowngame.classes.actors.Player;
  */
 
 
-public class GameViewActivity extends AppCompatActivity {
+public class GameViewActivity extends AppCompatActivity  {
     private static final String TAG = "GameViewActivity";
     private FrameLayout gameLayout;
     private DrawingPanel drawingPanel;
     private Player playerOne;
+    private Bitmap map; //just for testing purpose
+
+    private boolean isTouched = false; //Screen is touched, player will move (DrawablePanel manages this)
 
     //(1.) Initialize objects
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
+
+        initComponents();
+        initGameObjects();
+        startGame();  // throwed a horrible excecption including a freeze, might have a big bug here
 
         /*If we want to hide actionbar: (but I think we could add pause button etc. in actionbar)
         if (getSupportActionBar() == null) {Log.i(TAG, "Actionbar already gone/hidden.");} else {getSupportActionBar().hide();}*/
@@ -46,39 +56,49 @@ public class GameViewActivity extends AppCompatActivity {
 
         //layout referenzieren
         setGameLayout((FrameLayout) findViewById(R.id.gameViewLayout));
-        /* Did following in XML (faster):
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 750);
-        getGameLayout().setLayoutParams(params);
-        getGameLayout().setBackgroundColor(this.getResources().getColor(R.color.colorPrimary));*/
+        //Adding the drawPanel the TouchListener
+        drawingPanel.setOnTouchListener(drawingPanel);
 
-        initGameObjects();
+        /*@TODO: deleted code*/
+
         getGameLayout().addView(getDrawingPanel());
     }
-
     public void startGame() {
         while (true) {
-
             //1. initialization has already been done (onCreate())
-            //2. check whether positions have changed
-            //3. repaint screen
+            System.out.println("Start");
+            //2.Check for changes
+            playerOne.update(isTouched, true);
 
-            //2.
-            //playerOne.update();
+            //3. Repaint (Old getDrawingPanel.repaint() was a huge recursive exception, my fault)
+            getDrawingPanel().invalidate();
 
-            //3.
-            getDrawingPanel().repaint();
-
+            try {
+                Thread.sleep(15);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
-
     private void initGameObjects(){
-        setPlayerOne(new Player(this, 0, 0, 5, 5, R.drawable.player_testingpurpose,  "Gerhard Anus"));
+        setPlayerOne(new Player(this, 40, 100, 5, 5, R.drawable.player_testingpurpose,  "Gerhard Anus"));
+    }
+
+    // used to initialize other components, drawPanel has been null
+    private void initComponents(){
+        getBitMapFromPlayer();
+        drawingPanel = new DrawingPanel(this);
     }
 
 
+
+
+    /*
+     * update, replacing ImageView with View, for more power (which we surely need)
+     */
     //Drawing panel - draw Objects
     @SuppressLint("AppCompatCustomView")
-    class DrawingPanel extends ImageView {
+    class DrawingPanel extends View implements View.OnTouchListener{
 
         public DrawingPanel(Context context) {
             super(context);
@@ -89,23 +109,31 @@ public class GameViewActivity extends AppCompatActivity {
             super.onDraw(canvas);
 
             Paint p = new Paint();
-            p.setColor(Color.WHITE);
-            p.setStrokeWidth(5);
-
-            canvas.drawLine(0, 0, getWidth(), getHeight(), p);
-            p.setTextSize(75);
-            canvas.drawText("Create GameObjects here", 0, getHeight()-5, p);
 
             //Maybe draw members like this:
             //getResources().getDrawable(getPlayerOne().getImg()).draw(canvas);
 
+            canvas.drawBitmap(map, (int) playerOne.getPosX(), (int) playerOne.getPosY(), p);
+
         }
 
-        public void repaint(){
-            this.repaint();
+        // Replacing KeyHandler with inner class, for more possibilities
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            int action = event.getAction();
+
+            if (action == MotionEvent.ACTION_DOWN) {
+                Log.d(TAG, "Screen Touched");
+                return isTouched = true; //player will move
+            } else
+                return isTouched = false;
         }
     }
 
+    //Only testing purpose, must be declared in respective class
+    public void getBitMapFromPlayer(){
+        map = BitmapFactory.decodeResource(getResources(), R.drawable.player_testingpurpose);
+    }
 
     //GETTER/SETTER (Base class)
     public FrameLayout getGameLayout() {
