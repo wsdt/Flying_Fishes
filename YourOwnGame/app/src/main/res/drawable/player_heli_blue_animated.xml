@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Animation, but currently useless (animating manually in canvas) -->
+
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false"
+    android:id="@+id/player_heli_blue_animated">
+    <item android:drawable="@drawable/player_heli_blue_1" android:duration="50"/>
+    <item android:drawable="@drawable/player_heli_blue_2" android:duration="50"/>
+    <item android:drawable="@drawable/player_heli_blue_3" android:duration="50"/>
+    <item android:drawable="@drawable/player_heli_blue_4" android:duration="50"/>
+    <item android:drawable="@drawable/player_heli_blue_3" android:duration="50"/>
+    <item android:drawable="@drawable/player_heli_blue_2" android:duration="50"/>
+</animation-list>

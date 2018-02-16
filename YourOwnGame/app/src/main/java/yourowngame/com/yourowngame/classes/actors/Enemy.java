@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 
 public class Enemy extends GameObject {
 
-    public Enemy(double posX, double posY, double speedX, double speedY, int img, @Nullable String name) {
+    public Enemy(double posX, double posY, double speedX, double speedY, int[] img, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, name);
     }
 

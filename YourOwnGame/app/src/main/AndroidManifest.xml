@@ -2,26 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="yourowngame.com.yourowngame">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_icon_gameboy"
         android:label="@string/appName"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/app_icon_gameboy"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity"
+        <activity
+            android:name=".activities.MainActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="sensorLandscape"/>
-        <activity android:name=".activities.GameViewActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".activities.GameViewActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape" />
 
         <!-- screenOrientation and configChanges so only portrait mode -->
-        <activity android:name=".activities.LoadingActivity"
-            android:noHistory="true"
+        <activity
+            android:name=".activities.LoadingActivity"
             android:configChanges="keyboardHidden|orientation"
+            android:noHistory="true"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -31,6 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.CreditActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.classes.actors;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -9,24 +10,27 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import yourowngame.com.yourowngame.R;
 
 /**
- *  Superclass for other GameObjects
- *
- *  Some obj's do not move, so speedX/Y is at standard 0.
- *
+ * Superclass for other GameObjects
+ * <p>
+ * Some obj's do not move, so speedX/Y is at standard 0.
  */
 
 public abstract class GameObject /*extends Mapper*/ {
     private static final String TAG = "GameObject";
     private double posX, posY, speedX, speedY;
     private String name;
-    private int img;
+    private int[] img;
+    //private Bitmap animatedImg; //[no setter/getter!] used for performance enhancement
 
     //add, add, add
 
-    public GameObject(double posX, double posY, double speedX, double speedY, int img, @Nullable String name){
+    public GameObject(double posX, double posY, double speedX, double speedY, int[] img, @Nullable String name) {
         //super(activity);
         this.setPosX(posX);
         this.setPosY(posY);
@@ -56,7 +60,6 @@ public abstract class GameObject /*extends Mapper*/ {
          * (goUp == null --> IGNORING | goForward == null --> IGNORING)*/
 
 
-
         if (goForward == null && goUp == null) {
             Log.i(TAG, "update: Called update-method without a valid Boolean param!");
         } else {
@@ -84,8 +87,22 @@ public abstract class GameObject /*extends Mapper*/ {
         }
     }
 
+    /* only merges bitmaps
+    public Bitmap getAnimatedImg(Context context) {
+        if (this.animatedImg == null) {
+            ArrayList<Bitmap> bitmaps = new ArrayList<>();
+            for (int drawableFrame : this.getImg()) {
+                bitmaps.add(BitmapFactory.decodeResource(context.getResources(), drawableFrame));
+            }
+            this.animatedImg = bitmaps.get(Math.abs((new AtomicInteger()).get() % bitmaps.size()));
+        }
+        return this.animatedImg; //return previously factored bitmap [no calculating necessary]
+    }*/
+
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public double getPosX() { return posX; }
+    public double getPosX() {
+        return posX;
+    }
 
     public void setPosX(double posX) {
         this.posX = posX;
@@ -123,11 +140,11 @@ public abstract class GameObject /*extends Mapper*/ {
         this.name = name;
     }
 
-    public int getImg() {
+    public int[] getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(int[] img) {
         this.img = img;
     }
 
