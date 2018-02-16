@@ -26,7 +26,7 @@ public abstract class GameObject /*extends Mapper*/ {
 
     //add, add, add
 
-    public GameObject(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int img, @Nullable String name){
+    public GameObject(double posX, double posY, double speedX, double speedY, int img, @Nullable String name){
         //super(activity);
         this.setPosX(posX);
         this.setPosY(posY);
@@ -54,6 +54,8 @@ public abstract class GameObject /*extends Mapper*/ {
         /* ######################################## HOW TO USE ###############################################
          * Uses speedY and speedX of object (goUp==true --> goUp | goUp==false --> goDown | goForward==true --> goForward | goForward==false --> goBack)
          * (goUp == null --> IGNORING | goForward == null --> IGNORING)*/
+
+
 
         if (goForward == null && goUp == null) {
             Log.i(TAG, "update: Called update-method without a valid Boolean param!");
