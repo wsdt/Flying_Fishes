@@ -16,8 +16,8 @@ public class Player extends GameObject {
     private static final String TAG = "Player";
 
 
-    public Player(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int img, @Nullable String name) {
-        super(activity, posX, posY, speedX, speedY, img, name);
+    public Player(double posX, double posY, double speedX, double speedY, int img, @Nullable String name) {
+        super(posX, posY, speedX, speedY, img, name);
 
         //yep! denkfehler, clear!
         /*Standard-Speed --> Why eig.? Immerhin übergeben wir SpeedX/SpeedY, dort können wir über unten angegebene Konstanten auch Standard Speed festlegen
