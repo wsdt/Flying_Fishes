@@ -48,6 +48,7 @@ public class GameViewActivity extends AppCompatActivity {
         /*If we want to hide actionbar: (but I think we could add pause button etc. in actionbar)
         if (getSupportActionBar() == null) {Log.i(TAG, "Actionbar already gone/hidden.");} else {getSupportActionBar().hide();}*/
 
+        Log.d(TAG, "onCreate: Trying to load game.");
         setGameLayout((FrameLayout) findViewById(R.id.gameViewLayout));
 
         //Master-Call, GameView gets instantiated!

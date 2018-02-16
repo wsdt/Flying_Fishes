@@ -16,7 +16,7 @@ public class Player extends GameObject {
     private static final String TAG = "Player";
 
 
-    public Player(double posX, double posY, double speedX, double speedY, int img, @Nullable String name) {
+    public Player(double posX, double posY, double speedX, double speedY, int img[], @Nullable String name) {
         super(posX, posY, speedX, speedY, img, name);
 
         //yep! denkfehler, clear!
