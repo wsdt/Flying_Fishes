@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import yourowngame.com.yourowngame.activities.MainActivity;
+import yourowngame.com.yourowngame.classes.configuration.Constants;
 
 /**
  * Created by Solution on 16.02.2018.
@@ -66,11 +67,11 @@ public class GameLoopThread extends Thread {
                         }
                     }
 
-                    while (sleepTime < 0 && framesSkipped < 5) { //5 = Max frames skipped (into constants todo)
+                    while (sleepTime < 0 && framesSkipped < Constants.GameLogic.GameLoopThread.maxFramesSkipable) { //= Max frames skipped
                         //catch up, update without rendering
                         view.updateGameObjects();
                         //add frame period to check if in next frame
-                        sleepTime += (1000 / 50); //FRAMEPERIOD = 1000 / 50 [50 = MAX_FPS]
+                        sleepTime += (1000 / Constants.GameLogic.GameLoopThread.maxFPS); //FRAMEPERIOD = 1000 / 50 [50 = MAX_FPS]
                         framesSkipped++;
                     }
                     Log.d(TAG, "run: Started cycle at "+beginTime+"\nTime-Difference (to ending): "+timeDiff);

@@ -16,6 +16,8 @@ import android.widget.ImageView;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.Player;
+import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 
 /**
  * Created by Solution on 16.02.2018.
@@ -113,8 +115,18 @@ public class GameView extends SurfaceView {
 
             //X coord bleibt gleich, sollte aber mitwachsen. Denkfehler von mir? haha
             // --> playerOne.update() --> Werte werden nicht statisch verändert, sondern hängen von SpeedX/Y ab (wo bei dir speedY == 0 war, vl hat sich deshalb ein Wert nicht geändert)
-            //TODO: maybe decodeResource in gameObject class [so we could also tilt (=drehen/neigen) the image acc. to update() when +y/-y] (% {no. here: 5} is max int of animation)
-            canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), this.playerOne.getImg()[(int) loopCount % 5]), (int) playerOne.getPosX(), (int) playerOne.getPosY(), null);
+
+
+            try {
+                canvas.drawBitmap(this.playerOne.getCraftedBitmap(this.getContext(), ((int) loopCount % this.playerOne.getImg().length), 5f, 0.35f, 0.35f), (int) playerOne.getPosX(), (int) playerOne.getPosY(), null);
+                //tried to make a nice flying animation (slight rotating to -5/+5 degree every few seconds) but hmm haha, too stupid now (just a normal animation above to show method functionality)
+                //todo --> BUT: Flying animations could be also fully done in images itself (so no separate calcutation necessary (battery) and the SAME battery/cpu usage! :)
+                //canvas.drawBitmap(this.playerOne.getCraftedBitmap(this.getContext(), ((int) loopCount % this.playerOne.getImg().length), (float) ((((loopCount%100)+1)*Constants.GameLogic.GameView.playerEffectTiltDegreeChangeRate))*((loopCount%100 >= 50) ? 1 : (-1)), 0.35f, 0.35f), (int) playerOne.getPosX(), (int) playerOne.getPosY(), null);
+                //canvas.drawBitmap(this.playerOne.getCraftedBitmap(this.getContext(), ((int) loopCount % this.playerOne.getImg().length), (Constants.GameLogic.GameView.playerEffectTiltDegreePositive * ((loopCount%90 >= 45) ? 1 : (-1)))*(((loopCount%5)+1)*(0.25f)), 0.35f, 0.35f), (int) playerOne.getPosX(), (int) playerOne.getPosY(), null);
+            } catch (NoDrawableInArrayFound_Exception e) {
+                Log.e(TAG, "redraw: Could not draw image (error code: 404)");
+                e.printStackTrace();
+            }
             Log.d(TAG, "Tried to draw animationdrawable.");
         } else {
             exitGame();
@@ -128,7 +140,7 @@ public class GameView extends SurfaceView {
      * 2. Update GameObjects here *
      *****************************/
     public void updateGameObjects(){
-        playerOne.update(isTouched, true);
+        playerOne.update(this.touchHandler.isTouched(), true);
         System.out.println("Position x: " +playerOne.getPosX() + " / Position Y " + playerOne.getPosY());
     }
 

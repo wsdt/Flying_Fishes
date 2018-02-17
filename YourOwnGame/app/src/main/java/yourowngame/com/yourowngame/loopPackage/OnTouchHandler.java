@@ -1,6 +1,5 @@
 package yourowngame.com.yourowngame.loopPackage;
 
-import android.drm.DrmStore;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -27,6 +26,10 @@ public class OnTouchHandler implements View.OnTouchListener {
             Toast.makeText(v.getContext(), "Touched", Toast.LENGTH_SHORT).show();
             isTouched = true;
         }
-        return isTouched;
+        return isTouched();
+    }
+
+    public boolean isTouched() {
+        return this.isTouched;
     }
 }

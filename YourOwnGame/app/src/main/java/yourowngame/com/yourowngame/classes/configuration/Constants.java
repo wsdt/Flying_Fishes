@@ -38,10 +38,13 @@ public interface Constants {
     }
 
     interface GameLogic {
-        int refreshUIintervalInMs = 500; //0.5 seconds (just for testing, later presumably a lower no.)
-        interface KeyHandler {
-            int goUpOnClick = 25;
-            int goDownPerTimeUnit = 15;
+        interface GameLoopThread {
+            int maxFramesSkipable = 5;
+            int maxFPS = 50;
+        }
+        interface GameView {
+            int playerEffectTiltDegreePositive = 5; //this value gets multiplikated with (-1) all x milliseconds
+            float playerEffectTiltDegreeChangeRate = 0.05f;
         }
     }
 }
