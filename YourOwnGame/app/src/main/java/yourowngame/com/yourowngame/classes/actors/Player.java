@@ -19,9 +19,8 @@ public class Player extends GameObject {
     public Player(double posX, double posY, double speedX, double speedY, int img[], @Nullable String name) {
         super(posX, posY, speedX, speedY, img, name);
 
-        //yep! denkfehler, clear!
         /*Standard-Speed --> Why eig.? Immerhin übergeben wir SpeedX/SpeedY, dort können wir über unten angegebene Konstanten auch Standard Speed festlegen
-        this.setSpeedX(Constants.Actors.Player.defaultSpeedX);
+        this.setBackgroundSpeed(Constants.Actors.Player.defaultSpeedX);
         this.setSpeedY(Constants.Actors.Player.defaultSpeedY);*/
 
     }

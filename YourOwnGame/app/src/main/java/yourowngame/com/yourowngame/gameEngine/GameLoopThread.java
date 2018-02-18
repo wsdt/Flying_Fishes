@@ -1,11 +1,9 @@
-package yourowngame.com.yourowngame.loopPackage;
+package yourowngame.com.yourowngame.gameEngine;
 
 import android.graphics.Canvas;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 
-import yourowngame.com.yourowngame.activities.MainActivity;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 
 /**

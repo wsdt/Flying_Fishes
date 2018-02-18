@@ -1,25 +1,14 @@
 package yourowngame.com.yourowngame.activities;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.Player;
-import yourowngame.com.yourowngame.loopPackage.GameView;
+import yourowngame.com.yourowngame.gameEngine.GameView;
 
 /**
  * The GameViewActivity does only add the GameView!
@@ -55,12 +44,6 @@ public class GameViewActivity extends AppCompatActivity {
         getGameLayout().addView(new GameView(this));
 
     }
-
- //Deleted: old gameStart() - Method
- //Deleted: setPlayerOne()
- //Deleted: setBitMap
-
-
 
     //GETTER/SETTER (Base class)
     public FrameLayout getGameLayout() {

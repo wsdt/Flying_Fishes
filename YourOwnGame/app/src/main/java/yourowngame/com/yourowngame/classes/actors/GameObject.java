@@ -44,18 +44,25 @@ public abstract class GameObject /*extends Mapper*/ {
         //no default declaration for speed necessary, because no constructor for GameObject without speedX/Y available
     }
 
-    /* @update:
+
+    /**
+     * TODO update()
      *
-     * had some troubles with this method, but in the end i got an arrow to the knee.
+     * guess we got a design-problem here. Method works just fine, but only for Player.class
+     * All other GameObjects() got nothing to do with this method.
      *
-     * nah thought that cohesion might be a problem, because update() method is kind a player.class-like.
-     * But all Objects should move in their own way, only the player.class relies on user interaction
+     * Enemys will move towards the player due to the posX/Y values of the player
+     * Rewards will stay static, waiting to be collected (or maybe fly around the surface)
+     * Barriers will always be static, waiting for collision
+     * ...
      *
-     * but all fine!
+     * might implement a interface Updateable with method update()?
+     *
+     * I would place the logic of the current update method within the body method of the players class.
+     * because the player is the only one to receive this (logically!)
      *
      */
 
-    //not abstract anymore because now we have the possibility of all possible updateCombinations and do not have to distinguish between player, enemy etc. (if we want to change it, we can override it manually)
     public void update(@Nullable Boolean goUp, @Nullable Boolean goForward) {
         /* ######################################## HOW TO USE ###############################################
          * Uses speedY and speedX of object (goUp==true --> goUp | goUp==false --> goDown | goForward==true --> goForward | goForward==false --> goBack)
