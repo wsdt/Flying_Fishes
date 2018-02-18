@@ -47,4 +47,8 @@ public interface Constants {
             float playerEffectTiltDegreeChangeRate = 0.05f;
         }
     }
+
+    interface Background {
+        int maxSizeBackground = 2150; //-10 for eq
+    }
 }
