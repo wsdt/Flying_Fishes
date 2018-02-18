@@ -1,5 +1,14 @@
 package yourowngame.com.yourowngame.classes.background;
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.annotation.Nullable;
+import android.util.Log;
+
+import yourowngame.com.yourowngame.classes.configuration.Constants;
+
 /**
  * Created on 18.02.2018.
  *
@@ -9,20 +18,68 @@ package yourowngame.com.yourowngame.classes.background;
  */
 
 public class Background {
-
+    private static final String TAG = "Background";
     private int[] img;
     private String name;
     private int speedX = 0;
-    private double x, y;
+    private double x;
+    private double y;
     private int activeDrawable = 0; /** image from the int array which is visible*/
 
-    public Background(int[] img, String name){
-        this.img = img;
+    public Background(int[] img, String name, int backgroundSpeed) {
+        Log.d(TAG, "getBackgroundInstance: Created new instance.");
+        this.setImg(img);
+        this.setName(name);
+        this.setBackgroundSpeed(backgroundSpeed);
     }
 
-    //returns how many backgrounds are defined
+    public Bitmap getCraftedBitmap(Context activityContext) {
+        //maybe later more things (like animations and so on)
+        return BitmapFactory.decodeResource(activityContext.getResources(),
+                this.getImg()[this.getActiveDrawable()]);
+    }
+
+
+    /** TODO
+     * This method updates the X-Values of the background & will make it move
+     * After the first image is completely out of sight, the next one will appear (but of course, the fuck it doenst appear smoothly)
+     *
+     */
+    public void updateBackground(@Nullable Integer backgroundSpeed){
+        //if I understood it right we can replace imageCounter here with activeDrawable
+
+        //configure speed [now in constructor]
+        //this.setBackgroundSpeed((backgroundSpeed==null) ? Constants.Background.defaultBgSpeed : backgroundSpeed); //if given use it, otherwise default value
+
+        //sets the activeDrawable to position 0 (int array) --> already 0 at instantiation
+        //this.setActiveDrawable(this.getDisplay(this.getActiveDrawable()));
+
+        //starts at 0, X - speed = decrease, if under 4000 (but why 4000? sure, should be at the getWidth() fuck, BUT I HAVE NO FUCKING GETWIDTH !!!
+        this.setX(this.getX() - this.getSpeedX());
+
+        System.out.println("Position of BackgroundX is " + this.getX());
+
+        /**TODO
+         * if currentBackground image is over getWidth(), load the next Image
+         * @getDisplay() returns the active drawable (in the first case, clouds_1)
+         *
+         * */
+        //and again, needs to be fucking getWidth
+        if(this.getX() < -4000){
+            this.setActiveDrawable(this.getActiveDrawable()+1);
+            this.setX(100); /** <- thats the shithole, here we should draw the next image, x should be again at 0, but just draw the next image */
+        }
+
+        /** If imageCounter equals the size of the Background its int-array (number of images the obj holds), the counter will start at 0 again
+         * eq -> the image clouds_1 will appear again. */
+        if(this.getLengthOfBackground() == this.getActiveDrawable()){
+            this.setActiveDrawable(0);
+        }
+    }
+
+    //returns how many drawables for this background are defined
     public int getLengthOfBackground(){
-        return img.length;
+        return getImg().length;
     }
 
     public void setBackgroundSpeed(int speedX){
@@ -45,6 +102,10 @@ public class Background {
         return activeDrawable;
     }
 
+    public void setY(double y) {
+        this.y = y;
+    }
+
     public double getY() {
         return y;
     }
@@ -54,8 +115,23 @@ public class Background {
     }
 
     public int getDisplay(int pos){
-        return img[pos];
+        return getImg()[pos];
     }
 
 
+    public int[] getImg() {
+        return img;
+    }
+
+    public void setImg(int[] img) {
+        this.img = img;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
