@@ -9,6 +9,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.ViewTreeObserver;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.Player;
@@ -34,6 +35,8 @@ public class GameView extends SurfaceView {
     private OnTouchHandler touchHandler;
     private boolean isTouched = false;
     private static final String TAG = "GameView";
+    private int viewWidth;
+    private int viewHeight;
 
 
 
@@ -72,12 +75,6 @@ public class GameView extends SurfaceView {
                 exitGame();
             }
         });
-
-        //Just for testing purpose, create a bitmap for showing (will later be the GameObjects...)
-        //bmp = BitmapFactory.decodeResource(getResources(), this.playerOne.getImg());
-        //bmp = this.playerOne.getAnimatedImg(context);
-        //animationDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.player_heli_blue_animated);
-        //bmp = BitmapFactory.decodeResource(getResources(), R.drawable.player_heli_blue_animated);
     }
 
     private void exitGame() {
@@ -120,16 +117,10 @@ public class GameView extends SurfaceView {
             canvas.drawColor(0, PorterDuff.Mode.CLEAR); //remove previous bitmaps etc.
 
             try {
-                Background layer1_clouds = BackgroundManager.getInstance().getBackgroundLayers().get(0);
-                if (layer1_clouds != null) {
-                    canvas.drawBitmap(layer1_clouds.getCraftedBitmap(this.getContext()),
-                            (int) layer1_clouds.getX(), (int) layer1_clouds.getY(), null);
-                } else {
-                    Log.w(TAG, "redraw: Background layer 1 (clouds) not found!");
-                }
+                //draw background
+                loadBackground(canvas);
 
-
-
+                //draw player
                 canvas.drawBitmap(this.playerOne.getCraftedBitmap(this.getContext(), ((int) loopCount % this.playerOne.getImg().length), 5f, 0.35f, 0.35f), (int) playerOne.getPosX(), (int) playerOne.getPosY(), null);
                 //tried to make a nice flying animation (slight rotating to -5/+5 degree every few seconds) but hmm haha, too stupid now (just a normal animation above to show method functionality)
                 //todo --> BUT: Flying animations could be also fully done in images itself (so no separate calcutation necessary (battery) and the SAME battery/cpu usage! :)
@@ -145,8 +136,7 @@ public class GameView extends SurfaceView {
         }
     }
 
-    /* When refreshing/invalidating view surfaceView returns a black screen when we use onDraw() [use redraw() method above]
-
+    /* When refreshing/invalidating view surfaceView returns a black screen when we use onDraw() [use redraw() method above]*/
 
     /*****************************
      * 2. Update GameObjects here *
@@ -159,4 +149,47 @@ public class GameView extends SurfaceView {
         BackgroundManager.getInstance().updateAllBackgroundLayers();
     }
 
+
+    public void loadBackground(final Canvas canvas) {
+        final GameView view = this;
+        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                view.getViewTreeObserver().removeOnPreDrawListener(this);
+                //get width/height of GameView
+                setViewHeight(view.getHeight());
+                setViewWidth(view.getWidth());
+
+                //Set background
+                Background layer1_clouds = BackgroundManager.getInstance().getBackgroundLayers().get(0);
+                if (layer1_clouds != null) {
+                    canvas.drawBitmap(layer1_clouds.getCraftedBitmap(getContext()),
+                            (int) layer1_clouds.getX(), (int) layer1_clouds.getY(), null);
+                } else {
+                    Log.w(TAG, "redraw: Background layer 1 (clouds) not found!");
+                }
+                return true;
+            }
+        };
+        view.getViewTreeObserver().addOnPreDrawListener(preDrawListener);
+
+
+
+    }
+
+    public int getViewWidth() {
+        return viewWidth;
+    }
+
+    public void setViewWidth(int viewWidth) {
+        this.viewWidth = viewWidth;
+    }
+
+    public int getViewHeight() {
+        return viewHeight;
+    }
+
+    public void setViewHeight(int viewHeight) {
+        this.viewHeight = viewHeight;
+    }
 }
