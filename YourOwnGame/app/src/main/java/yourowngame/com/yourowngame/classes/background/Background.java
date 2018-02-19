@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.gameEngine.GameView;
 
 /**
  * Created on 18.02.2018.
@@ -19,6 +20,7 @@ import yourowngame.com.yourowngame.classes.configuration.Constants;
 
 public class Background {
     private static final String TAG = "Background";
+    private GameView gameView;
     private int[] img;
     private String name;
     private int speedX = 0;
@@ -26,7 +28,7 @@ public class Background {
     private double y;
     private int activeDrawable = 0; /** image from the int array which is visible*/
 
-    public Background(int[] img, String name, int backgroundSpeed) {
+    public Background(GameView gameView, int[] img, String name, int backgroundSpeed) {
         Log.d(TAG, "getBackgroundInstance: Created new instance.");
         this.setImg(img);
         this.setName(name);
@@ -55,13 +57,14 @@ public class Background {
         //this.setActiveDrawable(this.getDisplay(this.getActiveDrawable()));
 
         //starts at 0, X - speed = decrease, if under 4000 (but why 4000? sure, should be at the getWidth() fuck, BUT I HAVE NO FUCKING GETWIDTH !!!
+        //TODO: Now we have getWidth etc. by Gamview.getViewHeight(), etc.
         this.setX(this.getX() - this.getSpeedX());
 
         System.out.println("Position of BackgroundX is " + this.getX());
 
         /**TODO
          * if currentBackground image is over getWidth(), load the next Image
-         * @getDisplay() returns the active drawable (in the first case, clouds_1)
+         * @getDisplay() returns the active drawable (in the first case, bglayer1_clouds_1)
          *
          * */
         //and again, needs to be fucking getWidth
@@ -71,7 +74,7 @@ public class Background {
         }
 
         /** If imageCounter equals the size of the Background its int-array (number of images the obj holds), the counter will start at 0 again
-         * eq -> the image clouds_1 will appear again. */
+         * eq -> the image bglayer1_clouds_1 will appear again. */
         if(this.getLengthOfBackground() == this.getActiveDrawable()){
             this.setActiveDrawable(0);
         }
@@ -133,5 +136,13 @@ public class Background {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public GameView getGameView() {
+        return gameView;
+    }
+
+    public void setGameView(GameView gameView) {
+        this.gameView = gameView;
     }
 }
