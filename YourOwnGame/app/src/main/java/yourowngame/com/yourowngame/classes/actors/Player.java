@@ -10,6 +10,7 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.gameEngine.GameView;
 
 
 public class Player extends GameObject {
@@ -29,8 +30,8 @@ public class Player extends GameObject {
     public void update(@Nullable Boolean goUp, @Nullable Boolean goForward) {
         super.update(goUp, goForward);
 
-
     }
+
 
 }
 

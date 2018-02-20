@@ -56,7 +56,6 @@ public class Background {
         //sets the activeDrawable to position 0 (int array) --> already 0 at instantiation
         //this.setActiveDrawable(this.getDisplay(this.getActiveDrawable()));
 
-        //starts at 0, X - speed = decrease, if under 4000 (but why 4000? sure, should be at the getWidth() fuck, BUT I HAVE NO FUCKING GETWIDTH !!!
         //TODO: Now we have getWidth etc. by Gamview.getViewHeight(), etc.
         this.setX(this.getX() - this.getSpeedX());
 
@@ -67,7 +66,7 @@ public class Background {
          * @getDisplay() returns the active drawable (in the first case, bglayer1_clouds_1)
          *
          * */
-        //and again, needs to be fucking getWidth
+        /**TODO */
         if(this.getX() < -4000){
             this.setActiveDrawable(this.getActiveDrawable()+1);
             this.setX(100); /** <- thats the shithole, here we should draw the next image, x should be again at 0, but just draw the next image */

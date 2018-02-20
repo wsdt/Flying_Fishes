@@ -28,13 +28,9 @@ public class BackgroundManager {
     //Singleton
     private static BackgroundManager INSTANCE;
     public static BackgroundManager getInstance(@NonNull GameView gameView){
-        if (INSTANCE == null) {
-            INSTANCE = new BackgroundManager(gameView);
-        }
-        return INSTANCE;
+        return INSTANCE == null ? INSTANCE = new BackgroundManager(gameView) : INSTANCE;
     }
 
-    //private access, due to singleton
     //create backgrounds here
     private BackgroundManager(@NonNull GameView gameView){
         //Firstly initialize arraylist (nullpointer)
@@ -52,17 +48,6 @@ public class BackgroundManager {
             backgroundLayer.updateBackground(null); //todo: maybe give custom speed (maybe also by method itself or save it into background instance [= best I would say]
         }
     }
-
-
-
-    // by creation, 1 = level 1, 2 = level 2 etc. --> not necessary anymore (just use: this.getBackgroundLayers().get(index)
-    /*public Background setBackgroundLevel(int i){
-        switch(i){
-            case 1: currentBackground = backgroundLevelOne; break;
-            case 2: //not implemented yet, more backgrounds comming later!
-        }
-    }*/
-
 
     public ArrayList<Background> getBackgroundLayers() {
         return backgroundLayers;
