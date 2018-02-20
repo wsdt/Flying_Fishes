@@ -50,7 +50,7 @@ public abstract class GameObject /*extends Mapper*/ {
 
     //add, add, add
 
-    public GameObject(double posX, double posY, double speedX, int[] img, @Nullable String name) {
+    public GameObject(double posX, double posY, double speedX, double speedY, int[] img, @Nullable String name) {
         //super(activity);
         this.setPosX(posX);
         this.setPosY(posY);
