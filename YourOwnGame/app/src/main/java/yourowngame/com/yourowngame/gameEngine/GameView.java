@@ -135,13 +135,13 @@ public class GameView extends SurfaceView {
             @Override
             public boolean onPreDraw() {
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
-                //get width/height of GameView
                 setViewHeight(view.getHeight());
                 setViewWidth(view.getWidth());
 
                 //Set background
                 Background layer1_clouds = BackgroundManager.getInstance(view).getBackgroundLayers().get(0);
                 if (layer1_clouds != null) {
+                    Log.d(TAG, "Background is gettin created");
                     canvas.drawBitmap(layer1_clouds.getCraftedBitmap(getContext()),
                             (int) layer1_clouds.getX(), (int) layer1_clouds.getY(), null);
                 } else {
