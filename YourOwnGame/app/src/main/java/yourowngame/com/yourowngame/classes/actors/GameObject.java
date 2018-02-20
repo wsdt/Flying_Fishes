@@ -61,6 +61,8 @@ public abstract class GameObject /*extends Mapper*/ {
 
         //no default declaration for speed necessary, because no constructor for GameObject without speedX/Y available
     }
+    //Default constructor
+    public GameObject(){}
 
 
     /**
@@ -92,7 +94,7 @@ public abstract class GameObject /*extends Mapper*/ {
         } else {
             // Update Y
             // replaced x/y game starts at 0|0 which is the top left corner of the view
-            // if player "jumps" the y value increases (cause y grows towards the bottom of the view)
+            // if player "jumps" the y value decreases (cause y grows towards the bottom of the view)
             if (goUp != null) {
                 if (goUp) {
                     this.setPosY(this.getPosY() - this.getSpeedY() * Constants.Actors.GameObject.MOVE_UP_MULTIPLIER);
@@ -110,7 +112,7 @@ public abstract class GameObject /*extends Mapper*/ {
                 } else {
                   // should not go back, only if bonus of getting forward is no longer active
                   //  this.setPosX(this.getPosX() - this.getSpeedX());
-                } //if false go back
+                } //if fa#lse go back
             } else {
                 Log.i(TAG, "updateX: Ignoring goForward. Because parameter null.");
             }
