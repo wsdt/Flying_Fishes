@@ -6,10 +6,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewTreeObserver;
+import android.widget.Toast;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.Enemy;
@@ -173,10 +175,31 @@ public class GameView extends SurfaceView {
     public void updateGameObjects(){
         //Update the player handling                    should only be true if player collects box or equivalent!
         playerOne.update(this.touchHandler.isTouched(), false);
+        //Check if player is still in sight
+        this.checkPlayerBounds();
+
 
         //Update background
         BackgroundManager.getInstance(this).updateAllBackgroundLayers();
     }
+
+    /** Check if player hits the ground or top */
+    public void checkPlayerBounds(){
+        //first, get the size of the player's image (unfortunately not dynamic, neet to be the current player!)
+        BitmapDrawable bd = (BitmapDrawable) this.getResources().getDrawable(R.drawable.player_heli_blue_1);
+        int height = bd.getBitmap().getHeight();
+        //int width  = bd.getBitmap().getWidth(); no need for, player will never reach left or right end!
+
+
+        //(1) player reaches bottom
+        //would work just fine, but i guess the drawable gets drawn bigger than it really is.. should have made bounds :-(
+        if(playerOne.getPosY() + height > this.getRootView().getHeight()) {
+            Log.d(TAG, "PosY at: " + playerOne.getPosY() + height);
+            exitGame();
+        }
+    }
+
+
 
     //returns a random x - Position on the screen
     private double randomX(){
