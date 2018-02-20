@@ -31,9 +31,7 @@ public class GameView extends SurfaceView {
     private SurfaceHolder holder;
     private GameLoopThread thread;
     private Player playerOne;
-    //private BackgroundManager backgroundManager; --> no need because of singleton (just use getInstance)
     private OnTouchHandler touchHandler;
-    private boolean isTouched = false;
     private static final String TAG = "GameView";
     private int viewWidth;
     private int viewHeight;
@@ -89,19 +87,14 @@ public class GameView extends SurfaceView {
         }
     }
 
+    //initialize components that match GameObject()
     private void initGameObjects(){
-        playerOne = new Player(0, 400, 3, 1, new int[] {
+        playerOne = new Player(100, getRootView().getHeight()/4, 5, 1, new int[] {
                 R.drawable.player_heli_blue_1, R.drawable.player_heli_blue_2, R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_4,
                 R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2}, "Rezy");
     }
 
-    //Not necessary anymore: Because of singleton we just can call backgroundManager.getInstance() [even better for memory, because we call it only when we need it]
-    //for later usage, level-system (but guess we can manage this better)
-    /*private void initBackground(int level){
-        //backgroundManager = BackgroundManager.getInstance();
-        //backgroundManager.setBackgroundLevel(1);
-    }*/
-
+    //initialize components that do not match other categories
     private void initComponents(){
         touchHandler = new OnTouchHandler();
     }
@@ -136,20 +129,6 @@ public class GameView extends SurfaceView {
         }
     }
 
-    /* When refreshing/invalidating view surfaceView returns a black screen when we use onDraw() [use redraw() method above]*/
-
-    /*****************************
-     * 2. Update GameObjects here *
-     *****************************/
-    public void updateGameObjects(){
-        //Update the player handling
-        playerOne.update(this.touchHandler.isTouched(), true);
-
-        //Update background
-        BackgroundManager.getInstance().updateAllBackgroundLayers();
-    }
-
-
     public void loadBackground(final Canvas canvas) {
         final GameView view = this;
         final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
@@ -161,7 +140,7 @@ public class GameView extends SurfaceView {
                 setViewWidth(view.getWidth());
 
                 //Set background
-                Background layer1_clouds = BackgroundManager.getInstance().getBackgroundLayers().get(0);
+                Background layer1_clouds = BackgroundManager.getInstance(view).getBackgroundLayers().get(0);
                 if (layer1_clouds != null) {
                     canvas.drawBitmap(layer1_clouds.getCraftedBitmap(getContext()),
                             (int) layer1_clouds.getX(), (int) layer1_clouds.getY(), null);
@@ -176,6 +155,19 @@ public class GameView extends SurfaceView {
 
 
     }
+
+    /*****************************
+     * 2. Update GameObjects here *
+     *****************************/
+    public void updateGameObjects(){
+        //Update the player handling                    should only be true if player collects box or equivalent!
+        playerOne.update(this.touchHandler.isTouched(), false);
+
+        //Update background
+        BackgroundManager.getInstance(this).updateAllBackgroundLayers();
+    }
+
+
 
     public int getViewWidth() {
         return viewWidth;

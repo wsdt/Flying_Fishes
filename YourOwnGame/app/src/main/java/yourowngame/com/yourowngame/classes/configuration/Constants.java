@@ -27,7 +27,9 @@ public interface Constants {
     }
 
     interface Actors {
-        interface GameObject {}
+        interface GameObject {
+            int MOVE_UP_MULTIPLIER = 3;
+        }
         interface Barrier {}
         interface Enemy {}
         interface Player {

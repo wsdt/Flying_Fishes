@@ -40,7 +40,7 @@ public class GameViewActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: Trying to load game.");
         setGameLayout((FrameLayout) findViewById(R.id.gameViewLayout));
 
-        //Master-Call, GameView gets instantiated!
+        /** Master-call, create GameView*/
         getGameLayout().addView(new GameView(this));
 
     }

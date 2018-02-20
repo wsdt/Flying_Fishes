@@ -15,12 +15,30 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 
 /**
  * Superclass for other GameObjects
  * <p>
  * Some obj's do not move, so speedX/Y is at standard 0.
+ *
+ * * * * PLEASE RED * * *
+ *
+ * Imagination of player.class
+ *
+ * The player will spawn at a defined position
+ * he first of all will only move up (if screen touched)
+ * or fall dawn, if not.
+ * if he hits the ground, game over
+ * if he collets a bonus, he will get more freedom to move around
+ * if he hits a barrier/enemy, he could lose life points or die immediately
+ *
+ * guess we're save if we keep the implementation at this level,
+ * if development increaes, we can easy add other movements!
+ *
+ * würdest was anderst machen?
+ *
  */
 
 public abstract class GameObject /*extends Mapper*/ {
@@ -32,7 +50,7 @@ public abstract class GameObject /*extends Mapper*/ {
 
     //add, add, add
 
-    public GameObject(double posX, double posY, double speedX, double speedY, int[] img, @Nullable String name) {
+    public GameObject(double posX, double posY, double speedX, int[] img, @Nullable String name) {
         //super(activity);
         this.setPosX(posX);
         this.setPosY(posY);
@@ -72,12 +90,14 @@ public abstract class GameObject /*extends Mapper*/ {
         if (goForward == null && goUp == null) {
             Log.i(TAG, "update: Called update-method without a valid Boolean param!");
         } else {
-            //Update Y
+            // Update Y
+            // replaced x/y game starts at 0|0 which is the top left corner of the view
+            // if player "jumps" the y value increases (cause y grows towards the bottom of the view)
             if (goUp != null) {
                 if (goUp) {
-                    this.setPosY(this.getPosY() + this.getSpeedY()); //if true go up
+                    this.setPosY(this.getPosY() - this.getSpeedY() * Constants.Actors.GameObject.MOVE_UP_MULTIPLIER);
                 } else {
-                    this.setPosY(this.getPosY() - this.getSpeedY());
+                    this.setPosY(this.getPosY() + this.getSpeedY());
                 } //if false go down
             } else {
                 Log.i(TAG, "updateY: Ignoring goUp. Because parameter null.");
@@ -88,7 +108,8 @@ public abstract class GameObject /*extends Mapper*/ {
                 if (goForward) {
                     this.setPosX(this.getPosX() + this.getSpeedX()); //if true go forward
                 } else {
-                    this.setPosX(this.getPosX() - this.getSpeedX());
+                  // should not go back, only if bonus of getting forward is no longer active
+                  //  this.setPosX(this.getPosX() - this.getSpeedX());
                 } //if false go back
             } else {
                 Log.i(TAG, "updateX: Ignoring goForward. Because parameter null.");
