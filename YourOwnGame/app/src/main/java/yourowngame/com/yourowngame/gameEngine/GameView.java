@@ -144,29 +144,14 @@ public class GameView extends SurfaceView {
     }
 
     public void loadBackground(final Canvas canvas) {
-        final GameView view = this;
-        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                view.getViewTreeObserver().removeOnPreDrawListener(this);
-                setViewHeight(view.getHeight());
-                setViewWidth(view.getWidth());
-
-                //Set background
-                Background layer1_clouds = BackgroundManager.getInstance(view).getBackgroundLayers().get(0);
-                if (layer1_clouds != null) {
-                    canvas.drawBitmap(layer1_clouds.getCraftedBitmap(getContext()),
-                            (int) layer1_clouds.getX(), (int) layer1_clouds.getY(), null);
-                } else {
-                    Log.w(TAG, "redraw: Background layer 1 (clouds) not found!");
-                }
-                return true;
-            }
-        };
-        view.getViewTreeObserver().addOnPreDrawListener(preDrawListener);
-
-
-
+        //Set background (this = GAMEVIEW!!)
+        Background layer1_clouds = BackgroundManager.getInstance(this).getBackgroundLayers().get(0);
+        if (layer1_clouds != null) {
+            canvas.drawBitmap(layer1_clouds.getCraftedBitmap(getContext()),
+                    (int) layer1_clouds.getX(), (int) layer1_clouds.getY(), null);
+        } else {
+            Log.w(TAG, "redraw: Background layer 1 (clouds) not found!");
+        }
     }
 
     /*****************************
@@ -199,7 +184,19 @@ public class GameView extends SurfaceView {
         }
     }
 
-
+    private void loadViewWidthHeight(){
+        final GameView view = this;
+        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                view.getViewTreeObserver().removeOnPreDrawListener(this);
+                setViewHeight(view.getHeight());
+                setViewWidth(view.getWidth());
+                return true;
+            }
+        };
+        view.getViewTreeObserver().addOnPreDrawListener(preDrawListener);
+    }
 
     //returns a random x - Position on the screen
     private double randomX(){

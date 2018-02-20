@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.background.layers.BgLayer_1_Clouds;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
@@ -37,7 +38,7 @@ public class BackgroundManager {
         this.setBackgroundLayers(new ArrayList<Background>());
         this.setGameView(gameView);
 
-        this.getBackgroundLayers().add(new Background(gameView, new int[] {R.drawable.bglayer1_clouds_1, R.drawable.bglayer1_clouds_2, R.drawable.bglayer1_clouds_3}, "Heaven", Constants.Background.defaultBgSpeed));
+        this.getBackgroundLayers().add(new BgLayer_1_Clouds(gameView, new int[] {R.drawable.bglayer1_clouds_1, R.drawable.bglayer1_clouds_2, R.drawable.bglayer1_clouds_3}, "Heaven", Constants.Background.defaultBgSpeed));
         //TODO: PS: Geile Idee in Schichten zu unterteilen! (also Wolkenschicht, Landschaft usw. zu separieren)
         //TODO: Wenn du ein Levelsystem gemeint hast (für Hintergrundwechsel ab Punkteanzahl z.B., dann können wir später ja mit extends Background eigene Layerschichten oder so denk ich realisieren
             //TODO --> so auch dann levelbezogene Methoden möglich
