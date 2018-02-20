@@ -28,6 +28,8 @@ public class Player extends GameObject {
     @Override
     public void update(@Nullable Boolean goUp, @Nullable Boolean goForward) {
         super.update(goUp, goForward);
+
+
     }
 
 }

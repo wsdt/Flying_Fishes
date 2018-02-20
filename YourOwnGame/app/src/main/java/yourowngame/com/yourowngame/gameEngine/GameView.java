@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 import android.view.ViewTreeObserver;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.actors.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
@@ -89,9 +90,17 @@ public class GameView extends SurfaceView {
 
     //initialize components that match GameObject()
     private void initGameObjects(){
+        /** Player creation*/
         playerOne = new Player(100, getRootView().getHeight()/4, 5, 1, new int[] {
                 R.drawable.player_heli_blue_1, R.drawable.player_heli_blue_2, R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_4,
                 R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2}, "Rezy");
+
+        /** Enemy creation */
+        Enemy enemyFactory = Enemy.getInstance();
+        enemyFactory.createEnemys(150, randomX(), randomY(),
+                                  10, 10, null, "Enemy");
+
+        /** other creations creating here */
     }
 
     //initialize components that do not match other categories
@@ -112,6 +121,9 @@ public class GameView extends SurfaceView {
             try {
                 //draw background
                 loadBackground(canvas);
+
+                /** TODO draw enemys (on level 1 every second will spawn 10 enemys etc..) */
+                // much fun kevin, i wont draw anything anymore! haha
 
                 //draw player
                 canvas.drawBitmap(this.playerOne.getCraftedBitmap(this.getContext(), ((int) loopCount % this.playerOne.getImg().length), 5f, 0.35f, 0.35f), (int) playerOne.getPosX(), (int) playerOne.getPosY(), null);
@@ -141,7 +153,6 @@ public class GameView extends SurfaceView {
                 //Set background
                 Background layer1_clouds = BackgroundManager.getInstance(view).getBackgroundLayers().get(0);
                 if (layer1_clouds != null) {
-                    Log.d(TAG, "Background is gettin created");
                     canvas.drawBitmap(layer1_clouds.getCraftedBitmap(getContext()),
                             (int) layer1_clouds.getX(), (int) layer1_clouds.getY(), null);
                 } else {
@@ -167,7 +178,14 @@ public class GameView extends SurfaceView {
         BackgroundManager.getInstance(this).updateAllBackgroundLayers();
     }
 
-
+    //returns a random x - Position on the screen
+    private double randomX(){
+        return Math.random() * getRootView().getWidth();
+    }
+    //returns a random y - Position on the screen
+    private double randomY(){
+        return Math.random() * getRootView().getHeight();
+    }
 
     public int getViewWidth() {
         return viewWidth;

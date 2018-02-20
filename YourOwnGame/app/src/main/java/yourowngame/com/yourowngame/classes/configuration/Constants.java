@@ -31,7 +31,9 @@ public interface Constants {
             int MOVE_UP_MULTIPLIER = 5;     //Jump Speed multiplied by MOVE_UP_MULTIPLIER
         }
         interface Barrier {}
-        interface Enemy {}
+        interface Enemy {
+            int MOVING_SPEED = 10;
+        }
         interface Player {
             int defaultSpeedX = 5;
             int defaultSpeedY = 0;
