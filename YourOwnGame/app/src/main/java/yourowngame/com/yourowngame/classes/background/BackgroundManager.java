@@ -61,7 +61,7 @@ public class BackgroundManager {
         this.setBackgroundLayers(new ArrayList<Background>());
         this.setGameView(gameView);
 
-        this.getBackgroundLayers().add(new BgLayerClouds1(gameView, new int[] {R.drawable.bglayer1_clouds_1, R.drawable.bglayer1_clouds_2, R.drawable.bglayer1_clouds_3}, "Heaven", Constants.Background.defaultBgSpeed));
+        this.getBackgroundLayers().add(new BgLayerClouds1(gameView, new int[] {R.drawable.background/*, R.drawable.bglayer1_clouds_2, R.drawable.bglayer1_clouds_3*/}, "Heaven", Constants.Background.defaultBgSpeed));
         //TODO: PS: Geile Idee in Schichten zu unterteilen! (also Wolkenschicht, Landschaft usw. zu separieren)
         //TODO: Wenn du ein Levelsystem gemeint hast (für Hintergrundwechsel ab Punkteanzahl z.B., dann können wir später ja mit extends Background eigene Layerschichten oder so denk ich realisieren
             //TODO --> so auch dann levelbezogene Methoden möglich
