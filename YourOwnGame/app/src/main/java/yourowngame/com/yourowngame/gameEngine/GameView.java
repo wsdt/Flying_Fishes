@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.gameEngine;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -29,8 +31,8 @@ import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exc
  */
 
 public class GameView extends SurfaceView {
-    private Bitmap bmp; //example for Player
-    private AnimationDrawable animationDrawable; //TODO: player animation (temporary, should be saved as int into Player class!)
+    private int counterOneTimeRendering = 0; //todo:no better solution that time
+    private Canvas currentCanvas;
     private SurfaceHolder holder;
     private GameLoopThread thread;
     private Player playerOne;
@@ -39,9 +41,9 @@ public class GameView extends SurfaceView {
     private int viewWidth;
     private int viewHeight;
 
+    private GameView(Context context) {super(context);} //dummy constructor for android tools
 
-
-    public GameView(Context context) {
+    public GameView(Activity context) {
         super(context);
 
         /** Initialize GameObjects & eq here! */
@@ -108,6 +110,18 @@ public class GameView extends SurfaceView {
     //initialize components that do not match other categories
     private void initComponents(){
         touchHandler = new OnTouchHandler();
+
+        //this.setBackground(R.drawable.bglayer0_blue); //todo: in future static backgroud image instead of color
+    }
+
+    private void setGameBackground(@NonNull Canvas canvas, int bgColor) {
+        //for now only color, later here image set
+        if ((this.counterOneTimeRendering) == 0) { //todo do only onetime! (NOTE: incrementation removed, because we use drawColor 0 in redraw(), so we need to set bg color steadily! [BAD DESIGN, sry])
+            //canvas.drawARGB(90,0,136,255);
+            canvas.drawColor(getResources().getColor(bgColor));
+            Log.d(TAG, "setGameBackground: Tried to set bg!");
+            //this.setBackgroundColor(this.getResources().getColor(bgColor));
+        }
     }
 
 
@@ -118,11 +132,14 @@ public class GameView extends SurfaceView {
     public void redraw(Canvas canvas, long loopCount) { //Create separate method, so we could add some things here
         Log.d(TAG, "redraw: Trying to invalidate/redraw GameView.");
         if (canvas != null) {
-            canvas.drawColor(0, PorterDuff.Mode.CLEAR); //remove previous bitmaps etc.
+            //in loop, BUT we don't do anything if already set
+            canvas.drawColor(0, PorterDuff.Mode.CLEAR); //remove previous bitmaps etc. (it does not work to set here only bg color!, because of mode)
+            this.setCurrentCanvas(canvas); //so we can access it in other classes
+            this.setGameBackground(canvas, R.color.colorSkyBlue);
 
             try {
                 //draw background
-                loadBackground(canvas);
+                loadDynamicBackgroundLayer(canvas);
 
                 /** TODO draw enemys (on level 1 every second will spawn 10 enemys etc..) */
                 // much fun kevin, i wont draw anything anymore! haha
@@ -143,11 +160,12 @@ public class GameView extends SurfaceView {
         }
     }
 
-    public void loadBackground(final Canvas canvas) {
+    public void loadDynamicBackgroundLayer(final Canvas canvas) {
+        //Set background (this = GAMEVIEW!!)
         Background layer1_clouds = BackgroundManager.getInstance(this).getBackgroundLayers().get(0);
         if (layer1_clouds != null) {
-            canvas.drawBitmap(layer1_clouds.getCraftedBitmap(getContext()),
-                    (int) layer1_clouds.getX(), (int) layer1_clouds.getY(), null);
+            //canvas.drawBitmap(layer1_clouds.getCraftedBitmap(getContext()),
+                    //(int) layer1_clouds.getX(), (int) layer1_clouds.getY(), null);
         } else {
             Log.w(TAG, "redraw: Background layer 1 (clouds) not found!");
         }
@@ -162,8 +180,9 @@ public class GameView extends SurfaceView {
         //Check if player is still in sight
         this.checkPlayerBounds();
 
+
         //Update background
-       // BackgroundManager.getInstance(this).updateAllBackgroundLayers();
+        BackgroundManager.getInstance(this).updateAllBackgroundLayers();
     }
 
     /** Check if player hits the ground or top */
@@ -182,19 +201,6 @@ public class GameView extends SurfaceView {
         }
     }
 
-    private void loadViewWidthHeight(){
-        final GameView view = this;
-        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                view.getViewTreeObserver().removeOnPreDrawListener(this);
-                setViewHeight(view.getHeight());
-                setViewWidth(view.getWidth());
-                return true;
-            }
-        };
-        view.getViewTreeObserver().addOnPreDrawListener(preDrawListener);
-    }
 
     //returns a random x - Position on the screen
     private double randomX(){
@@ -219,5 +225,13 @@ public class GameView extends SurfaceView {
 
     public void setViewHeight(int viewHeight) {
         this.viewHeight = viewHeight;
+    }
+
+    public Canvas getCurrentCanvas() {
+        return currentCanvas;
+    }
+
+    public void setCurrentCanvas(Canvas currentCanvas) {
+        this.currentCanvas = currentCanvas;
     }
 }
