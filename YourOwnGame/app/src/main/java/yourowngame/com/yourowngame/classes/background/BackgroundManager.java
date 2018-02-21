@@ -1,6 +1,11 @@
 package yourowngame.com.yourowngame.classes.background;
 
+import android.app.Activity;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.Display;
+import android.view.ViewTreeObserver;
 
 import java.util.ArrayList;
 
@@ -47,6 +52,8 @@ public class BackgroundManager {
     private static final String TAG = "BackgroundManager";
     private ArrayList<Background> backgroundLayers;
     private GameView gameView;
+    private double gameViewWidth = 0; //default value (for getter necessary) [do not make them static, add. it is e a Singleton]
+    private double gameViewHeight = 0; //same as width
 
 
     //Singleton
@@ -61,7 +68,11 @@ public class BackgroundManager {
         this.setBackgroundLayers(new ArrayList<Background>());
         this.setGameView(gameView);
 
-        this.getBackgroundLayers().add(new BgLayerClouds1(gameView, new int[] {R.drawable.bglayer1_clouds_1, R.drawable.bglayer1_clouds_2, R.drawable.bglayer1_clouds_3}, "Heaven", Constants.Background.defaultBgSpeed));
+        //calculating display size
+        //loadPhoneDisplaySize();
+        loadGameViewWidthHeight(); //previously setGameView() has to be called!
+
+        this.getBackgroundLayers().add(new BgLayerClouds1(this, new int[] {R.drawable.bglayer_1_cloud_1}, "Heaven", Constants.Background.defaultBgSpeed));
         //TODO: PS: Geile Idee in Schichten zu unterteilen! (also Wolkenschicht, Landschaft usw. zu separieren)
         //TODO: Wenn du ein Levelsystem gemeint hast (für Hintergrundwechsel ab Punkteanzahl z.B., dann können wir später ja mit extends Background eigene Layerschichten oder so denk ich realisieren
             //TODO --> so auch dann levelbezogene Methoden möglich
@@ -69,9 +80,10 @@ public class BackgroundManager {
 
     public void updateAllBackgroundLayers() {
         for (Background backgroundLayer : this.getBackgroundLayers()) {
-            backgroundLayer.updateBackground(10); //todo: maybe give custom speed (maybe also by method itself or save it into background instance [= best I would say]
+            backgroundLayer.updateBackground();
         }
     }
+
 
     public ArrayList<Background> getBackgroundLayers() {
         return backgroundLayers;
@@ -86,7 +98,48 @@ public class BackgroundManager {
         return gameView;
     }
 
-    public void setGameView(GameView gameView) {
+    public void setGameView(@NonNull GameView gameView) {
         this.gameView = gameView;
     }
+
+    //No public/protected setter!! (only system should calculate it)
+    public double getGameViewWidth() {
+        return gameViewWidth;
+    }
+
+    public double getGameViewHeight() {
+        return gameViewHeight;
+    }
+
+    private void loadGameViewWidthHeight(){
+        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                getGameView().getViewTreeObserver().removeOnPreDrawListener(this);
+                gameViewHeight = (getGameView().getHeight());
+                gameViewWidth = (getGameView().getWidth());
+                return true;
+            }
+        };
+        getGameView().getViewTreeObserver().addOnPreDrawListener(preDrawListener);
+    }
+
+
+    /*private void loadPhoneDisplaySize() {
+        Log.d(TAG, "loadPhoneDisplaySize: Loading max x/y!");
+        Display phoneDisplay = ((Activity) gameView.getContext()).getWindowManager().getDefaultDisplay(); //because of this casting we have in GameView constructor Activity and not Context!
+        Point size = new Point();
+        phoneDisplay.getSize(size); //calculate size of display
+        screenWidth = size.x; //no setter for screenwidth (at least no public/protected one)
+        screenHeight = size.y; //same as width
+    }
+
+    //No setter for screenwidth and height!!
+    public double getScreenWidth() {
+        return this.screenWidth;
+    }
+
+    public double getScreenHeight() {
+        return this.screenHeight;
+    }*/
 }

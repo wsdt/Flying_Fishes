@@ -41,7 +41,7 @@ import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exc
  *
  */
 
-public abstract class GameObject /*extends Mapper*/ {
+public abstract class GameObject {
     private static final String TAG = "GameObject";
     private double posX, posY, speedX, speedY;
     private String name;
@@ -118,18 +118,6 @@ public abstract class GameObject /*extends Mapper*/ {
             }
         }
     }
-
-    /* only merges bitmaps
-    public Bitmap getAnimatedImg(Context context) {
-        if (this.animatedImg == null) {
-            ArrayList<Bitmap> bitmaps = new ArrayList<>();
-            for (int drawableFrame : this.getImg()) {
-                bitmaps.add(BitmapFactory.decodeResource(context.getResources(), drawableFrame));
-            }
-            this.animatedImg = bitmaps.get(Math.abs((new AtomicInteger()).get() % bitmaps.size()));
-        }
-        return this.animatedImg; //return previously factored bitmap [no calculating necessary]
-    }*/
 
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public double getPosX() {
