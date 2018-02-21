@@ -4,7 +4,7 @@ package yourowngame.com.yourowngame.classes.background.layers;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
-public class BgLayer_1_Clouds extends Background {
+public class BgLayerClouds1 extends Background {
     /**
      * image from the int array which is visible
      *
@@ -13,7 +13,7 @@ public class BgLayer_1_Clouds extends Background {
      * @param name
      * @param backgroundSpeed
      */
-    public BgLayer_1_Clouds(GameView gameView, int[] img, String name, int backgroundSpeed) {
+    public BgLayerClouds1(GameView gameView, int[] img, String name, int backgroundSpeed) {
         super(gameView, img, name, backgroundSpeed);
     }
 
@@ -38,10 +38,9 @@ public class BgLayer_1_Clouds extends Background {
          * @getDisplay() returns the active drawable (in the first case, bglayer1_clouds_1)
          *
          * */
-        /**TODO */
         if(this.getX() < -4000){
             this.setActiveDrawable(this.getActiveDrawable()+1);
-            this.setX(100); /** <- thats the shithole, here we should draw the next image, x should be again at 0, but just draw the next image */
+            this.setX(100);
         }
 
         /** If imageCounter equals the size of the Background its int-array (number of images the obj holds), the counter will start at 0 again
