@@ -144,7 +144,6 @@ public class GameView extends SurfaceView {
     }
 
     public void loadBackground(final Canvas canvas) {
-        //Set background (this = GAMEVIEW!!)
         Background layer1_clouds = BackgroundManager.getInstance(this).getBackgroundLayers().get(0);
         if (layer1_clouds != null) {
             canvas.drawBitmap(layer1_clouds.getCraftedBitmap(getContext()),
@@ -163,9 +162,8 @@ public class GameView extends SurfaceView {
         //Check if player is still in sight
         this.checkPlayerBounds();
 
-
         //Update background
-        BackgroundManager.getInstance(this).updateAllBackgroundLayers();
+       // BackgroundManager.getInstance(this).updateAllBackgroundLayers();
     }
 
     /** Check if player hits the ground or top */
