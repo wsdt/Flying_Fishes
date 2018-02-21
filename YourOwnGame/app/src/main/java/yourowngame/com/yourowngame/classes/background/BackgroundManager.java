@@ -48,6 +48,7 @@ public class BackgroundManager {
     private ArrayList<Background> backgroundLayers;
     private GameView gameView;
 
+
     //Singleton
     private static BackgroundManager INSTANCE;
     public static BackgroundManager getInstance(@NonNull GameView gameView){
