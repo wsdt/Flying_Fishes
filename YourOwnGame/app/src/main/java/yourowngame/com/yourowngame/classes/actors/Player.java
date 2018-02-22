@@ -1,14 +1,12 @@
 package yourowngame.com.yourowngame.classes.actors;
 
-import android.app.Activity;
-import android.graphics.Bitmap;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 
-import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
@@ -26,11 +24,14 @@ public class Player extends GameObject {
 
     }
 
+    /**
+     * @param obj currently not used!
+     * @param goUp check if go up
+     * @param goForward check if go forward
+     */
     @Override
-    public void update(@Nullable Boolean goUp, @Nullable Boolean goForward) {
-        super.update(goUp, goForward);
+    public void update(GameObject obj, @Nullable Boolean goUp, @Nullable  Boolean goForward) {
 
-        //do not add code here, which is specialised for any subclass, every subclass needs to handle that itself
         if (goForward == null && goUp == null) {
             Log.i(TAG, "update: Called update-method without a valid Boolean param!");
         } else {
@@ -59,10 +60,30 @@ public class Player extends GameObject {
                 Log.i(TAG, "updateX: Ignoring goForward. Because parameter null.");
             }
         }
-
-
     }
 
+    @Override
+    public boolean collision(View view, GameObject obj) {
+        /** The only problem we've got here is, that we need to cut the helicopter images to the best!
+         the current PNG has a margin from about 10-20 pixel, which leads to a collision earlier!
+         So we'll need to cut all helicopte images to the maximum! then this method will work just fine*/
+        //get the current player and View
+        Player playerOne = (Player) obj;
+        GameView currentView = (GameView) view;
 
+        //Gets the original height of the players image
+        Drawable bd = (Drawable) currentView.getResources().getDrawable(playerOne.getImg()[0]);
+        int height = bd.getIntrinsicHeight();   //gets orginal height
+
+        //Gets the scaled-size of the current player image
+        float playerPosYWithImage = (float) playerOne.getPosY() + (height * Constants.GameLogic.GameView.widthInPercentage);
+        float playerPosYWithoutImage = (float) playerOne.getPosY();
+
+        //compares, if player hits ground or top
+        if(playerPosYWithImage > currentView.getLayout().getHeight() || playerPosYWithoutImage < 0)
+            return true;
+        else
+            return false;
+    }
 }
 

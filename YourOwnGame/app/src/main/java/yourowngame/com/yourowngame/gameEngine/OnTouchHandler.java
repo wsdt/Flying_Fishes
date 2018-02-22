@@ -7,6 +7,8 @@ import android.widget.Toast;
 /**
  * Created by Solution on 16.02.2018.
  *
+ * Checks, whether the screen has ben touched or not
+ *
  */
 
 public class OnTouchHandler implements View.OnTouchListener {
@@ -16,7 +18,6 @@ public class OnTouchHandler implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-
         int action = event.getAction();
 
         //Should always start at false

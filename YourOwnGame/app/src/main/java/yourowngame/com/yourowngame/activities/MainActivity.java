@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Load Banner Ad (declared as a member of class, so we could easily display more)
-        this.setAdManager(new AdManager(this));
-        this.getAdManager().loadBannerAd((RelativeLayout) findViewById(R.id.mainActivity_RL));
+        //this.setAdManager(new AdManager(this));
+        //this.getAdManager().loadBannerAd((RelativeLayout) findViewById(R.id.mainActivity_RL));
 
         startGame = (Button) findViewById(R.id.startGame);
         startGame.setOnClickListener(new View.OnClickListener() {

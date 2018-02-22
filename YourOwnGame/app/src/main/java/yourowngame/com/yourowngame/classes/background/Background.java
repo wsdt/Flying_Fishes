@@ -51,7 +51,7 @@ public abstract class Background {
         return randomY;
     }
 
-    /*public Bitmap getCraftedBitmap(Context activityContext) {
+    /*public Bitmap getCraftedDynamicBitmap(Context activityContext) {
         //maybe later more things (like animations and so on)
         //return BitmapFactory.decodeResource(activityContext.getResources(),
           //      this.getImg()[this.getActiveDrawable()]);

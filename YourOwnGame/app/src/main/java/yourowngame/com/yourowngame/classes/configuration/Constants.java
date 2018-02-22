@@ -49,6 +49,8 @@ public interface Constants {
         interface GameView {
             int playerEffectTiltDegreePositive = 5; //this value gets multiplikated with (-1) all x milliseconds
             float playerEffectTiltDegreeChangeRate = 0.05f;
+            float widthInPercentage = 0.35f;
+            float heightInPercentage = 0.35f;
         }
     }
 
