@@ -19,28 +19,6 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 
-/**
- * Superclass for other GameObjects
- * <p>
- * Some obj's do not move, so speedX/Y is at standard 0.
- *
- * * * * PLEASE READ * * *
- *
- * Imagination of player.class
- *
- * The player will spawn at a defined position
- * he first of all will only move up (if screen touched)
- * or fall dawn, if not.
- * if he hits the ground, game over
- * if he collets a bonus, he will get more freedom to move around
- * if he hits a barrier/enemy, he could lose life points or die immediately
- *
- * guess we're save if we keep the implementation at this level,
- * if development increaes, we can easy add other movements!
- *
- * würdest was anderst machen?
- *
- */
 
 public abstract class GameObject {
     private static final String TAG = "GameObject";
@@ -49,7 +27,6 @@ public abstract class GameObject {
     private int[] img;
     //private ArrayList<Bitmap> imgCrafted; //[no setter/getter!] used for performance enhancement
 
-    //add, add, add
 
     public GameObject(double posX, double posY, double speedX, double speedY, int[] img, @Nullable String name) {
         //super(activity);

@@ -27,9 +27,7 @@ public class Enemy extends GameObject {
         super(posX, posY, speedX, speedY, img, name);
     }
 
-    public Enemy(){
-
-    }
+    public Enemy(){}
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
