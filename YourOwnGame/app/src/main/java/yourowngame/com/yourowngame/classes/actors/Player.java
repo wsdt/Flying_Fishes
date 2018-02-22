@@ -30,6 +30,37 @@ public class Player extends GameObject {
     public void update(@Nullable Boolean goUp, @Nullable Boolean goForward) {
         super.update(goUp, goForward);
 
+        //do not add code here, which is specialised for any subclass, every subclass needs to handle that itself
+        if (goForward == null && goUp == null) {
+            Log.i(TAG, "update: Called update-method without a valid Boolean param!");
+        } else {
+            // Update Y
+            // replaced x/y game starts at 0|0 which is the top left corner of the view
+            // if player "jumps" the y value decreases (cause y grows towards the bottom of the view)
+            if (goUp != null) {
+                if (goUp) {
+                    this.setPosY(this.getPosY() - this.getSpeedY() * Constants.Actors.GameObject.MOVE_UP_MULTIPLIER);
+                } else {
+                    this.setPosY(this.getPosY() + this.getSpeedY());
+                } //if false go down
+            } else {
+                Log.i(TAG, "updateY: Ignoring goUp. Because parameter null.");
+            }
+
+            //Update X
+            if (goForward != null) {
+                if (goForward) {
+                    this.setPosX(this.getPosX() + this.getSpeedX()); //if true go forward
+                } else {
+                    // should not go back, only if bonus of getting forward is no longer active
+                    //  this.setPosX(this.getPosX() - this.getSpeedX());
+                } //if false go back
+            } else {
+                Log.i(TAG, "updateX: Ignoring goForward. Because parameter null.");
+            }
+        }
+
+
     }
 
 

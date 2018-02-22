@@ -61,6 +61,18 @@ public class GameViewActivity extends AppCompatActivity {
     public void setPlayerOne(Player playerOne) {
         this.playerOne = playerOne;
     }
+
+    public FrameLayout getView(){
+        return gameLayout;
+    }
+
+    public int getWidth(){
+        return gameLayout.getWidth();
+    }
+
+    public int getHeight(){
+        return gameLayout.getHeight();
+    }
 }
 
 

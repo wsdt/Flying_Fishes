@@ -5,17 +5,21 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
@@ -31,20 +35,25 @@ import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exc
  */
 
 public class GameView extends SurfaceView {
+    private static final String TAG = "GameView";
+    private static final float WIDTH_IN_PERCENTAGE = 0.35f;     //Should add it later to the Constants Interface
+    private static final float HEIGHT_IN_PERCENTAGE = 0.35f;    //Should add it later to the Constants Interface
+
     private int counterOneTimeRendering = 0; //todo:no better solution that time
     private Canvas currentCanvas;
     private SurfaceHolder holder;
     private GameLoopThread thread;
     private Player playerOne;
     private OnTouchHandler touchHandler;
-    private static final String TAG = "GameView";
-    private int viewWidth;
-    private int viewHeight;
+    private FrameLayout layout;
 
     private GameView(Context context) {super(context);} //dummy constructor for android tools
 
-    public GameView(Activity context) {
+    public GameView(GameViewActivity context) {
         super(context);
+
+        /** Get the layout-res */
+        layout = context.getView();
 
         /** Initialize GameObjects & eq here! */
         initGameObjects();
@@ -101,10 +110,9 @@ public class GameView extends SurfaceView {
 
         /** Enemy creation */
         Enemy enemyFactory = Enemy.getInstance();
-        enemyFactory.createEnemys(150, randomX(), randomY(),
-                                  10, 10, null, "Enemy");
+        enemyFactory.createEnemys(150, randomX(), randomY(),10, 10, null, "Enemy");
 
-        /** other creations creating here */
+        /** other creations here */
     }
 
     //initialize components that do not match other categories
@@ -141,11 +149,12 @@ public class GameView extends SurfaceView {
                 //draw background
                 loadDynamicBackgroundLayer(canvas);
 
-                /** TODO draw enemys (on level 1 every second will spawn 10 enemys etc..) */
+                /** TODO draw enemies (on level 1 every second will spawn 10 enemys etc..) */
                 // much fun kevin, i wont draw anything anymore! haha
 
                 //draw player
-                canvas.drawBitmap(this.playerOne.getCraftedBitmap(this.getContext(), ((int) loopCount % this.playerOne.getImg().length), 5f, 0.35f, 0.35f), (int) playerOne.getPosX(), (int) playerOne.getPosY(), null);
+                canvas.drawBitmap(this.playerOne.getCraftedBitmap(this.getContext(), ((int) loopCount % this.playerOne.getImg().length),
+                        5f, WIDTH_IN_PERCENTAGE, HEIGHT_IN_PERCENTAGE), (int) playerOne.getPosX(), (int) playerOne.getPosY(), null);
                 //tried to make a nice flying animation (slight rotating to -5/+5 degree every few seconds) but hmm haha, too stupid now (just a normal animation above to show method functionality)
                 //todo --> BUT: Flying animations could be also fully done in images itself (so no separate calcutation necessary (battery) and the SAME battery/cpu usage! :)
                 //canvas.drawBitmap(this.playerOne.getCraftedBitmap(this.getContext(), ((int) loopCount % this.playerOne.getImg().length), (float) ((((loopCount%100)+1)*Constants.GameLogic.GameView.playerEffectTiltDegreeChangeRate))*((loopCount%100 >= 50) ? 1 : (-1)), 0.35f, 0.35f), (int) playerOne.getPosX(), (int) playerOne.getPosY(), null);
@@ -177,27 +186,28 @@ public class GameView extends SurfaceView {
     public void updateGameObjects(){
         //Update the player handling                    should only be true if player collects box or equivalent!
         playerOne.update(this.touchHandler.isTouched(), false);
-        //Check if player is still in sight
+        //Check if player hits the view's border
         this.checkPlayerBounds();
-
-
         //Update background
         BackgroundManager.getInstance(this).updateAllBackgroundLayers();
     }
 
     /** Check if player hits the ground or top */
     public void checkPlayerBounds(){
-        //first, get the size of the player's image (unfortunately not dynamic, neet to be the current player!)
-        BitmapDrawable bd = (BitmapDrawable) this.getResources().getDrawable(R.drawable.player_heli_blue_1);
-        int height = bd.getBitmap().getHeight();
-        //int width  = bd.getBitmap().getWidth(); no need for, player will never reach left or right end!
+        /** The only problem we've got here is, that we need to cut the helicopter images to the best!
+            the current PNG has a margin from about 10-20 pixel, which leads to a collision earlier!
+             So we'll need to cut all helicopte images to the maximum! then this method will work just fine*/
+        //Gets the original height of the players image
+        Drawable bd = (Drawable) this.getResources().getDrawable(playerOne.getImg()[0]);
+        int height = bd.getIntrinsicHeight();   //gets orginal height
 
+        //Gets the scaled-size of the current player image
+        float playerPosYWithImage = (float) playerOne.getPosY() + (height*HEIGHT_IN_PERCENTAGE);
+        float playerPosYWithoutImage = (float) playerOne.getPosY();
 
-        //(1) player reaches bottom
-        //would work just fine, but i guess the drawable gets drawn bigger than it really is.. should have made bounds :-(
-        if(playerOne.getPosY() + height > this.getRootView().getHeight()) {
-            Log.d(TAG, "PosY at: " + playerOne.getPosY() + height);
-            exitGame();
+        //compares, if player hits ground or top
+        if(playerPosYWithImage > this.layout.getHeight() || playerPosYWithoutImage < 0) {
+            exitGame(); //todo here must be an animation later, player crashed, game over
         }
     }
 
@@ -209,22 +219,6 @@ public class GameView extends SurfaceView {
     //returns a random y - Position on the screen
     private double randomY(){
         return Math.random() * getRootView().getHeight();
-    }
-
-    public int getViewWidth() {
-        return viewWidth;
-    }
-
-    public void setViewWidth(int viewWidth) {
-        this.viewWidth = viewWidth;
-    }
-
-    public int getViewHeight() {
-        return viewHeight;
-    }
-
-    public void setViewHeight(int viewHeight) {
-        this.viewHeight = viewHeight;
     }
 
     public Canvas getCurrentCanvas() {
