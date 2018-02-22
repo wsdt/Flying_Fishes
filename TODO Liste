@@ -7,7 +7,7 @@ TODO LISTE
 --> wenn ein Punkt erledigt wurde, einfach kennzeichen
 
 
-(1) GameObject, update() Methode muss für jede Subklasse passend sein, Aktuelle Logik in der Superklassen-methoden update() muss in die Player.class
+(1 = ERLEDIGT) GameObject, update() Methode muss für jede Subklasse passend sein, Aktuelle Logik in der Superklassen-methoden             update() muss in die Player.class
 
 (2) GameView, aufräumen, rendering verbessern, hintergrundbild statisch erzeugen
 
