@@ -73,9 +73,7 @@ public class BackgroundManager {
         loadGameViewWidthHeight(); //previously setGameView() has to be called!
 
         this.getBackgroundLayers().add(new BgLayerClouds1(this, new int[] {R.drawable.bglayer_1_cloud_1}, "Heaven", Constants.Background.defaultBgSpeed));
-        //TODO: PS: Geile Idee in Schichten zu unterteilen! (also Wolkenschicht, Landschaft usw. zu separieren)
-        //TODO: Wenn du ein Levelsystem gemeint hast (für Hintergrundwechsel ab Punkteanzahl z.B., dann können wir später ja mit extends Background eigene Layerschichten oder so denk ich realisieren
-            //TODO --> so auch dann levelbezogene Methoden möglich
+
     }
 
     public void updateAllBackgroundLayers() {
