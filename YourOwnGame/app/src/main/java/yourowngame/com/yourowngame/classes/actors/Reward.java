@@ -8,7 +8,6 @@ public class Reward extends GameObject {
 
     public Reward(double posX, double posY, double speedX, double speedY, int[] img, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, name);
-
     }
 
     @Override
