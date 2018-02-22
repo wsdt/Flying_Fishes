@@ -10,6 +10,7 @@ import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -23,7 +24,7 @@ import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exc
  * <p>
  * Some obj's do not move, so speedX/Y is at standard 0.
  *
- * * * * PLEASE RED * * *
+ * * * * PLEASE READ * * *
  *
  * Imagination of player.class
  *
@@ -64,28 +65,19 @@ public abstract class GameObject {
     //Default constructor
     public GameObject(){}
 
+    /**
+     * method which its only use is to update the objects x and y axis!
+     *
+     * @param goUp check if object goes up
+     * @param goForward check if object goes down
+     */
+    public abstract void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward);
 
     /**
-     * TODO update()
-     *
-     * guess we got a design-problem here. Method works just fine, but only for Player.class
-     * All other GameObjects() got nothing to do with this method.
-     *
-     * Enemys will move towards the player due to the posX/Y values of the player
-     * Rewards will stay static, waiting to be collected (or maybe fly around the surface)
-     * Barriers will always be static, waiting for collision
-     * ...
-     *
-     * might implement a interface Updateable with method update()?
-     *
-     * I would place the logic of the current update method within the body method of the players class.
-     * because the player is the only one to receive this (logically!)
-     *
+     * @param obj check
+     * @return returns whether a collision happened or not!
      */
-
-    public void update(@Nullable Boolean goUp, @Nullable Boolean goForward) {
-
-    }
+    public abstract boolean collision(View view, GameObject obj);
 
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public double getPosX() {
@@ -136,17 +128,20 @@ public abstract class GameObject {
         this.img = img;
     }
 
-    /** getCraftedBitmap:
+    /** getCraftedDynamicBitmap:
+     *
+     * Creates a dynamic bitmap from a drawable res
+     *
      * @param imgFrame: index of int-array (set/getImg())
      * @param rotationDegrees: how much should be image tilted or rotated? (in degrees) / if null then image won't be rotated
      * @param widthInPercent: reduce/enlarge width / if this param OR scaleHeight is null, both values get ignored! Use . as comma ;) --> Values MUST be higher than 0 and should not be higher than 1! (quality)
      * @param heightInPercent: same as scaleWidth. */
-    public Bitmap getCraftedBitmap(@NonNull Context context, int imgFrame, @Nullable Float rotationDegrees, @Nullable Float widthInPercent, @Nullable Float heightInPercent) throws NoDrawableInArrayFound_Exception {
+    public Bitmap getCraftedDynamicBitmap(@NonNull Context context, int imgFrame, @Nullable Float rotationDegrees, @Nullable Float widthInPercent, @Nullable Float heightInPercent) throws NoDrawableInArrayFound_Exception {
         Log.d(TAG, "getCraftedBitmaps: Trying to craft bitmaps.");
         if (this.getImg().length <= imgFrame && this.getImg().length >= 1) {
-               Log.e(TAG, "getCraftedBitmap: IndexOutOfBounds, could not determine correct drawable for animation. Returning drawable at index 0!");
+               Log.e(TAG, "getCraftedDynamicBitmap: IndexOutOfBounds, could not determine correct drawable for animation. Returning drawable at index 0!");
                imgFrame = 0;
-        } else if (this.getImg().length <= 0) { throw new NoDrawableInArrayFound_Exception("getCraftedBitmap: FATAL EXCEPTION->Integer array (getImg()) has no content! Could not return bitmap."); }
+        } else if (this.getImg().length <= 0) { throw new NoDrawableInArrayFound_Exception("getCraftedDynamicBitmap: FATAL EXCEPTION->Integer array (getImg()) has no content! Could not return bitmap."); }
         //not else (because despite normal if method should continue)
         Bitmap targetImg = BitmapFactory.decodeResource(context.getResources(), this.getImg()[imgFrame]);
         if (widthInPercent != null && heightInPercent != null) { //must be before rotationDegrees-If
@@ -158,6 +153,19 @@ public abstract class GameObject {
             targetImg = Bitmap.createBitmap(targetImg, 0, 0, targetImg.getWidth(), targetImg.getHeight(), matrix, true);
         } //not else if (we want to make several combinations)
         return targetImg;
+    }
+
+    /**
+     * Creates a simple Bitmap from a Drawable res
+     *
+     * @param context context
+     * @param img image to be drawn
+     * @return
+     */
+    public Bitmap getCraftedBitmap(@NonNull Context context, int img){
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), img);
+
+        return bitmap;
     }
 
 }

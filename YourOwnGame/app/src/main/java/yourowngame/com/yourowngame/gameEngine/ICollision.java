@@ -6,6 +6,6 @@ package yourowngame.com.yourowngame.gameEngine;
 
 public interface ICollision {
 
-   void collision();
+   abstract void collision();
 
 }

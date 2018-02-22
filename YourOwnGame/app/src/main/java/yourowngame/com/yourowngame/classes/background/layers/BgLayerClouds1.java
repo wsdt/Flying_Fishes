@@ -14,6 +14,10 @@ import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
+/**
+ * Move the inner class into their respective package (=MovableObjects)
+ */
+
 public class BgLayerClouds1 extends Background {
     private ArrayList<Cloud> craftedClouds;
     private static final String TAG = "BgLayerClouds1";

@@ -15,8 +15,6 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
  * Painting and action happens in GameView or GameLoopThread
  *
  * TODO: create image asset for player, draw player, implement touchHandler
- *
- *
  */
 
 

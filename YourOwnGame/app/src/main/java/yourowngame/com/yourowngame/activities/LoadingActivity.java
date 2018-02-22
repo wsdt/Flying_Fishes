@@ -18,8 +18,6 @@ public class LoadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
-        //this activity has no actionbar (see android manifest)
-
         //Create blinking effect
         final ImageView appIcon = ((ImageView) findViewById(R.id.appIcon));
         ObjectAnimator animator = ObjectAnimator.ofFloat(appIcon, "alpha", 0.25f);
