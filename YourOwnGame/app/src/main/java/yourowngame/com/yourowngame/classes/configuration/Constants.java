@@ -28,15 +28,19 @@ public interface Constants {
 
     interface Actors {
         interface GameObject {
-            int MOVE_UP_MULTIPLIER = 5;     //Jump Speed multiplied by MOVE_UP_MULTIPLIER
+            int MOVE_UP_MULTIPLIER = 2;     //Jump Speed multiplied by MOVE_UP_MULTIPLIER
         }
         interface Barrier {}
         interface Enemy {
             int MOVING_SPEED = 10;
+            float defaultRotation = 0;
+            float rotationFlyingUp = 10;
+            float rotationFlyingDown = -10;
         }
         interface Player {
-            int defaultSpeedX = 5;
-            int defaultSpeedY = 0;
+            float defaultRotation = 0;
+            float rotationFlyingUp = 5;
+            float rotationFlyingDown = -5;
         }
         interface Reward {}
     }
@@ -55,7 +59,12 @@ public interface Constants {
     }
 
     interface Background {
-        int maxSizeBackground = 2150; //-10 for eq
-        float defaultBgSpeed = 0.1f;
+        float defaultBgSpeed = 0.0001f; //the lower the no. the slower the skyElements (e.g. layer1: Clouds)
+        interface layer1_clouds {
+            int anzahlClouds = 15;
+            float randomYplacementInPercentageCloud = 0.40f; //top 40% where clouds can appear
+            float randomCloudSpeedMax = 1f;
+            float randomCloudSpeedMin = 0.01f; //do not place 0!
+        }
     }
 }

@@ -23,17 +23,19 @@ import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exc
 public abstract class GameObject {
     private static final String TAG = "GameObject";
     private double posX, posY, speedX, speedY;
+    private float rotationDegree; //rotation for simulating flying down/up
     private String name;
     private int[] img;
     //private ArrayList<Bitmap> imgCrafted; //[no setter/getter!] used for performance enhancement
 
 
-    public GameObject(double posX, double posY, double speedX, double speedY, int[] img, @Nullable String name) {
+    public GameObject(double posX, double posY, double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name) {
         //super(activity);
         this.setPosX(posX);
         this.setPosY(posY);
         this.setSpeedX(speedX);
         this.setSpeedY(speedY);
+        this.setRotationDegree(rotationDegree);
         this.setName(name);
         this.setImg(img);
 
@@ -145,4 +147,11 @@ public abstract class GameObject {
         return bitmap;
     }
 
+    public float getRotationDegree() {
+        return rotationDegree;
+    }
+
+    public void setRotationDegree(float rotationDegree) {
+        this.rotationDegree = rotationDegree;
+    }
 }
