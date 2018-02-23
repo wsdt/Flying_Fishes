@@ -23,8 +23,8 @@ public class Enemy extends GameObject {
         return INSTANCE == null ? INSTANCE = new Enemy() : INSTANCE;
     }
 
-    public Enemy(double posX, double posY, double speedX, double speedY, int[] img, @Nullable String name) {
-        super(posX, posY, speedX, speedY, img, name);
+    public Enemy(double posX, double posY, double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name) {
+        super(posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
     public Enemy(){}
@@ -42,10 +42,10 @@ public class Enemy extends GameObject {
 
     //So we have all parameters we need quite compact in the GameView.class (by creation)
     public void createEnemys(int numberOfEnemys, double posX, double posY,
-                             double speedX, double speedY, int[] img, @Nullable String name){
+                             double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name){
         //add enemy to list
         for(int i=0; i <= numberOfEnemys; i++) {
-            enemyList.add(new Enemy(posX, posY, speedX, speedY, img, name));
+            enemyList.add(new Enemy(posX, posY, speedX, speedY, img, rotationDegree, name));
         }
     }
 

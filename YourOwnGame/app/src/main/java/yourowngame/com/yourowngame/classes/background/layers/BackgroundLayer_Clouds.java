@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
+import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
 /**
@@ -36,24 +38,24 @@ public class BackgroundLayer_Clouds extends Background {
      */
     public BackgroundLayer_Clouds(@NonNull BackgroundManager backgroundManager, int[] img, String name, float backgroundSpeed) {
         super(backgroundManager, img, name, backgroundSpeed);
-        this.craftClouds(img, 30); //also sets simultaneously
+        this.craftClouds(img, Constants.Background.layer1_clouds.anzahlClouds); //also sets simultaneously
     }
 
     public class Cloud {
         public Bitmap cloudImg;
-        public int posX;
-        public int posY;
+        public float posX;
+        public float posY;
 
-        public Cloud(Bitmap cloudImg, int posX, int posY) {
+        public Cloud(Bitmap cloudImg, float posX, float posY) {
             this.posX = posX;
             this.posY = posY;
             this.cloudImg = cloudImg;
         }
 
         //this methods updates the cloud
-        public void updateCloud(int speed) {
+        public void updateCloud(float speed) {
             for (Cloud c : getCraftedClouds())
-                c.posX += speed;
+                c.posX += (speed); // divided by 10, because int values mostly relatively fast
         }
 
     }
@@ -62,20 +64,17 @@ public class BackgroundLayer_Clouds extends Background {
 
     @Override
     public void updateBackground() { //clouds crafted before, so this is not also in this loop!
-        //TODO: Calculate here position for every cloud seperately
-        //currently only one cloud! (todo: make foreach etc.)
-        //currently we assume that at least and maximum one cloud is given!
-        //Canvas currentCanvas = this.getBackgroundManager().getGameView().getCurrentCanvas();
-        //if (currentCanvas != null) {
-            /*this.getCraftedClouds().get(0).posX -= this.getBackgroundSpeedX();
-            currentCanvas.drawBitmap(this.getCraftedClouds().get(0).cloudImg,
-                    (float) this.getCraftedClouds().get(0).posX,
-                    (float) this.getCraftedClouds().get(0).posY, null);*/
-            /*currentCanvas.drawBitmap(this.getCraftedClouds().get(0).cloudImg,
-                    (float) 100,
-                    (float) 100, null);*/
-        this.getCraftedClouds().get(0).posX -= this.getBackgroundSpeedX();
-        Log.d(TAG, "updateBackground: Tried to move cloud: Y: " + this.getCraftedClouds().get(0).posY + " / X: " + (this.getCraftedClouds().get(0).posX));
+        //Calculate here position for every cloud seperately
+        for (Cloud cloud : this.getCraftedClouds()) {
+            if (GameViewActivity.GAME_WIDTH < cloud.posX) {
+                //if outside screen spawn on the start (reset x)
+                cloud.posY = this.getRandomYforSkyElements(); //also reset y (looks more natural)
+                cloud.posX = this.getRandomXforSkyElements();
+                Log.d(TAG, "updateBackground: Resetted cloud.");
+            }
+            cloud.posX -= this.getBackgroundSpeedX();
+            Log.d(TAG, "updateBackground: Tried to move cloud: Y: " + cloud.posY + " / X: " + (cloud.posX));
+        }
         Log.d(TAG, "updateBackground: Tried to update BackgroundLayer_Clouds.");
         //}
     }

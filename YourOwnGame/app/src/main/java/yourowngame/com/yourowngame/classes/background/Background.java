@@ -108,15 +108,14 @@ public abstract class Background {
     //Returns a random Y Value for the clouds ( located between 0 and 15% of the GameHeight)
     public int getRandomYforSkyElements() {
         double randomY;
-            randomY = Math.random() * GameViewActivity.GAME_HEIGHT * 0.15; //so clouds will be existing from 0 to 15% of top
+            randomY = Math.random() * GameViewActivity.GAME_HEIGHT * Constants.Background.layer1_clouds.randomYplacementInPercentageCloud; //so clouds will be existing from 0 to 15% of top
 
         return (int) randomY;
     }
 
     //Returns a random X Value for the clouds ( located between -50 and 0)
     public int getRandomXforSkyElements() {
-        Random r = new Random();
-        int i = r.nextInt(1001) - 1000;
+        int i = ((new Random()).nextInt(1001)-1000);
         Log.d(TAG, "Lets just check if X is between -50 and 0 or not:" + i);
         return i;
     }

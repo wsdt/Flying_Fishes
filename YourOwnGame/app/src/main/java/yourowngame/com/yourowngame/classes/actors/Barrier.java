@@ -8,8 +8,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 public class Barrier extends GameObject {
-    public Barrier(double posX, double posY, double speedX, double speedY, int[] img, @Nullable String name) {
-        super(posX, posY, speedX, speedY, img, name);
+    public Barrier(double posX, double posY, double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name) {
+        super(posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
     @Override

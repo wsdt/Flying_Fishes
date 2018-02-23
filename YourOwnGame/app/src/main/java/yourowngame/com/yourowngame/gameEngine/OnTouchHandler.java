@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.gameEngine;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -12,7 +13,7 @@ import android.widget.Toast;
  */
 
 public class OnTouchHandler implements View.OnTouchListener {
-
+    private static final String TAG = "OnTouchHandler";
     private boolean isTouched = false;
 
 
@@ -20,12 +21,14 @@ public class OnTouchHandler implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
 
-        //Should always start at false
-        isTouched = false;
+        //Should (not!) always start at false --> so we can hold our finger on screen and jump up continously
+        //isTouched = false;
 
-        if(action == MotionEvent.ACTION_DOWN){
-            Toast.makeText(v.getContext(), "Touched", Toast.LENGTH_SHORT).show();
+        if(action == MotionEvent.ACTION_DOWN) {
+            Log.d(TAG, "onTouch: Screen got touched!");
             isTouched = true;
+        } else if (action == MotionEvent.ACTION_UP) {
+            isTouched = false; //set to false if finger removed
         }
         return isTouched();
     }

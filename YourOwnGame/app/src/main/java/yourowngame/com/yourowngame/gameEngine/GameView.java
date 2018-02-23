@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
+import android.widget.Toast;
+
+import java.util.Random;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
@@ -16,6 +19,7 @@ import yourowngame.com.yourowngame.classes.actors.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Player;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
+import yourowngame.com.yourowngame.classes.configuration.Constants;
 
 /**
  * Created by Solution on 16.02.2018.
@@ -28,14 +32,13 @@ public class GameView extends SurfaceView {
     private static final float WIDTH_IN_PERCENTAGE = 0.35f;     //Should add it later to the Constants Interface
     private static final float HEIGHT_IN_PERCENTAGE = 0.35f;    //Should add it later to the Constants Interface
 
-    private int counterOneTimeRendering = 0; //todo:no better solution that time
-    private Canvas currentCanvas;
     private SurfaceHolder holder;
     private GameLoopThread thread;
     private Player playerOne;
     private OnTouchHandler touchHandler;
     private FrameLayout layout;
     private Bitmap viewStaticBackground;
+    private Random random = new Random();
 
     private GameView(Context context) {
         super(context);
@@ -94,6 +97,7 @@ public class GameView extends SurfaceView {
                 e.printStackTrace();
             }
         }
+        Toast.makeText(this.getContext(), "Game over", Toast.LENGTH_SHORT).show();
     }
 
     //initialize components that match GameObject()
@@ -101,11 +105,11 @@ public class GameView extends SurfaceView {
         /** Player creation*/
         playerOne = new Player(100, getRootView().getHeight() / 4, 5, 1, new int[]{
                 R.drawable.player_heli_blue_1, R.drawable.player_heli_blue_2, R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_4,
-                R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2}, "Rezy");
+                R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy");
 
         /** Enemy creation */
         Enemy enemyFactory = Enemy.getInstance();
-        enemyFactory.createEnemys(150, randomX(), randomY(), 10, 10, null, "Enemy");
+        enemyFactory.createEnemys(150, randomX(), randomY(), 10, 10, null,Constants.Actors.Enemy.defaultRotation, "Enemy");
 
         /** other creations here */
     }
@@ -141,19 +145,18 @@ public class GameView extends SurfaceView {
         if (canvas != null) {
             //in loop, BUT we don't do anything if already set
             canvas.drawColor(0, PorterDuff.Mode.CLEAR); //remove previous bitmaps etc. (it does not work to set here only bg color!, because of mode)
-            this.setCurrentCanvas(canvas); //so we can access it in other classes
             //this.setGameBackground(canvas, R.color.colorSkyBlue);
 
             try {
                 //draw background
-                loadDynamicBackgroundLayer2(canvas);
+                loadDynamicBackgroundLayer(canvas);
 
                 /** TODO draw enemies (on level 1 every second will spawn 10 enemys etc..) */
                 // much fun kevin, i wont draw anything anymore! haha
 
                 //draw player
                 canvas.drawBitmap(this.playerOne.getCraftedDynamicBitmap(this.getContext(), ((int) loopCount % this.playerOne.getImg().length),
-                        5f, WIDTH_IN_PERCENTAGE, HEIGHT_IN_PERCENTAGE), (int) playerOne.getPosX(), (int) playerOne.getPosY(), null);
+                        this.playerOne.getRotationDegree(), WIDTH_IN_PERCENTAGE, HEIGHT_IN_PERCENTAGE), (int) playerOne.getPosX(), (int) playerOne.getPosY(), null);
                 //tried to make a nice flying animation (slight rotating to -5/+5 degree every few seconds) but hmm haha, too stupid now (just a normal animation above to show method functionality)
                 //todo --> BUT: Flying animations could be also fully done in images itself (so no separate calcutation necessary (battery) and the SAME battery/cpu usage! :)
                 //canvas.drawBitmap(this.playerOne.getCraftedDynamicBitmap(this.getContext(), ((int) loopCount % this.playerOne.getImg().length), (float) ((((loopCount%100)+1)*Constants.GameLogic.GameView.playerEffectTiltDegreeChangeRate))*((loopCount%100 >= 50) ? 1 : (-1)), 0.35f, 0.35f), (int) playerOne.getPosX(), (int) playerOne.getPosY(), null);
@@ -169,7 +172,7 @@ public class GameView extends SurfaceView {
     }
 
 
-    public void loadDynamicBackgroundLayer(Canvas canvas) {
+    /*public void loadDynamicBackgroundLayer(Canvas canvas) {
         //canvas.drawBitmap(this.viewStaticBackground, 0f, 0f, null);
 
         BackgroundLayer_Clouds layer1_clouds = (BackgroundLayer_Clouds) BackgroundManager.getInstance(this).getBackgroundLayers().get(0);
@@ -177,26 +180,28 @@ public class GameView extends SurfaceView {
         if (layer1_clouds != null) {
             BackgroundLayer_Clouds.Cloud cloud1 = layer1_clouds.getCraftedClouds().get(0);
             cloud1.updateCloud(2);
-            if (cloud1 != null) {
-                canvas.drawBitmap(cloud1.cloudImg, cloud1.posX, cloud1.posY, null);
-            }
+            canvas.drawBitmap(cloud1.cloudImg, cloud1.posX, cloud1.posY, null);
         } else {
             Log.w(TAG, "redraw: Background layer 1 (clouds) not found!");
         }
-    }
+    }*/
 
     //Only tried, copied your backgroundLayer method
-    public void loadDynamicBackgroundLayer2(Canvas canvas) {
+    public void loadDynamicBackgroundLayer(Canvas canvas) {
         //canvas.drawBitmap(this.viewStaticBackground, 0f, 0f, null);
 
         BackgroundLayer_Clouds layer1_clouds = (BackgroundLayer_Clouds) BackgroundManager.getInstance(this).getBackgroundLayers().get(0);
-        BackgroundLayer_Clouds.Cloud cloud1 = layer1_clouds.getCraftedClouds().get(0);
-        cloud1.updateCloud(2);
+        /*BackgroundLayer_Clouds.Cloud cloud1 = layer1_clouds.getCraftedClouds().get(0);
+        cloud1.updateCloud(2);*/
 
             for (int i = 0; i < layer1_clouds.getCraftedClouds().size(); i++) {
-                canvas.drawBitmap(layer1_clouds.getCraftedClouds().get(i).cloudImg,
-                                  layer1_clouds.getCraftedClouds().get(i).posX,
-                                  layer1_clouds.getCraftedClouds().get(i).posY, null);
+                BackgroundLayer_Clouds.Cloud tmpCloud = layer1_clouds.getCraftedClouds().get(i);
+                float randomCloudSpeed = this.random.nextFloat()*(((Constants.Background.layer1_clouds.randomCloudSpeedMax-Constants.Background.layer1_clouds.randomCloudSpeedMin)+Constants.Background.layer1_clouds.randomCloudSpeedMin));
+                Log.d(TAG, "loadDynamicBackgroundLayer:Clouds: Random speed -> "+randomCloudSpeed);
+                tmpCloud.updateCloud(randomCloudSpeed); //maxSpeed: 5 / MinSpeed: 1 (see Constants)
+                canvas.drawBitmap(tmpCloud.cloudImg,
+                                  tmpCloud.posX,
+                                  tmpCloud.posY, null);
             }
         }
 
@@ -209,8 +214,9 @@ public class GameView extends SurfaceView {
         playerOne.update(null, this.touchHandler.isTouched(), false);
 
         //Check if player hits the view's border
-        if (playerOne.collision(this, playerOne))
+        if (playerOne.collision(this, playerOne)) {
             exitGame();
+        }
 
         //Update background
         BackgroundManager.getInstance(this).updateAllBackgroundLayers();
@@ -226,14 +232,6 @@ public class GameView extends SurfaceView {
     //returns a random y - Position on the screen
     private double randomY() {
         return Math.random() * getRootView().getHeight();
-    }
-
-    public Canvas getCurrentCanvas() {
-        return currentCanvas;
-    }
-
-    public void setCurrentCanvas(Canvas currentCanvas) {
-        this.currentCanvas = currentCanvas;
     }
 
     public FrameLayout getLayout() {

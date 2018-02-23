@@ -6,8 +6,8 @@ import android.view.View;
 
 public class Reward extends GameObject {
 
-    public Reward(double posX, double posY, double speedX, double speedY, int[] img, @Nullable String name) {
-        super(posX, posY, speedX, speedY, img, name);
+    public Reward(double posX, double posY, double speedX, double speedY, int[] img,float rotationDegree, @Nullable String name) {
+        super(posX, posY, speedX, speedY, img, rotationDegree,name);
     }
 
     @Override

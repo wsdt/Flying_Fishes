@@ -15,8 +15,8 @@ public class Player extends GameObject {
     private static final String TAG = "Player";
 
 
-    public Player(double posX, double posY, double speedX, double speedY, int img[], @Nullable String name) {
-        super(posX, posY, speedX, speedY, img, name);
+    public Player(double posX, double posY, double speedX, double speedY, int img[],float rotationDegree, @Nullable String name) {
+        super(posX, posY, speedX, speedY, img,rotationDegree, name);
 
         /*Standard-Speed --> Why eig.? Immerhin übergeben wir SpeedX/SpeedY, dort können wir über unten angegebene Konstanten auch Standard Speed festlegen
         this.setBackgroundSpeed(Constants.Actors.Player.defaultSpeedX);
@@ -41,8 +41,10 @@ public class Player extends GameObject {
             if (goUp != null) {
                 if (goUp) {
                     this.setPosY(this.getPosY() - this.getSpeedY() * Constants.Actors.GameObject.MOVE_UP_MULTIPLIER);
+                    this.setRotationDegree(Constants.Actors.Player.rotationFlyingUp);
                 } else {
                     this.setPosY(this.getPosY() + this.getSpeedY());
+                    this.setRotationDegree(Constants.Actors.Player.rotationFlyingDown);
                 } //if false go down
             } else {
                 Log.i(TAG, "updateY: Ignoring goUp. Because parameter null.");
