@@ -1,16 +1,14 @@
 package yourowngame.com.yourowngame.classes.background;
 
-import android.app.Activity;
-import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.Display;
 import android.view.ViewTreeObserver;
 
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.background.layers.BgLayerClouds1;
+import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
@@ -70,9 +68,9 @@ public class BackgroundManager {
 
         //calculating display size
         //loadPhoneDisplaySize();
-        loadGameViewWidthHeight(); //previously setGameView() has to be called!
 
-        this.getBackgroundLayers().add(new BgLayerClouds1(this, new int[] {R.drawable.bglayer_1_cloud_1}, "Heaven", Constants.Background.defaultBgSpeed));
+
+        this.getBackgroundLayers().add(new BackgroundLayer_Clouds(this, new int[] {R.drawable.bglayer_1_cloud_1}, "Heaven", Constants.Background.defaultBgSpeed));
 
     }
 
@@ -114,8 +112,8 @@ public class BackgroundManager {
             @Override
             public boolean onPreDraw() { //TODO: After view loaded, craft e.g. clouds! (reason because they are not animated yet)
                 getGameView().getViewTreeObserver().removeOnPreDrawListener(this);
-                gameViewHeight = (getGameView().getHeight());
-                gameViewWidth = (getGameView().getWidth());
+                gameViewHeight = GameViewActivity.GAME_HEIGHT;
+                gameViewWidth = GameViewActivity.GAME_WIDTH;
                 Log.d(TAG, "onPreDraw: Tried to calculate view width and height: "+gameViewWidth+"//"+gameViewHeight);
                 return true;
             }

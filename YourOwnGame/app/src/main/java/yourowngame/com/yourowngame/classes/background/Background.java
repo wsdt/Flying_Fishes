@@ -12,6 +12,7 @@ import android.view.Display;
 
 import java.util.Random;
 
+import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
@@ -38,18 +39,10 @@ public abstract class Background {
         this.setBackgroundSpeed(backgroundSpeed);
         this.setBackgroundManager(backgroundManager);
         this.setRandom(new Random()); //for random height/y of clouds etc.
+
     }
 
-    public int getRandomYforSkyElements() {
-        //uses as maximum the gameView height-50 and minimum +50!
-        int randomY = 50; //default, if view was not measured yet
-        if (this.getBackgroundManager().getGameViewHeight() != 0) {
-            randomY = random.nextInt((int) (this.getBackgroundManager().getGameViewHeight() - 50) - 50) + 50; //r.nextInt(High-Low) + Low;
-        } else {
-            Log.w(TAG, "getRandomYforSkyElements: Could not determine gameView height! Returned default random height: "+randomY);
-        }
-        return randomY;
-    }
+
 
     /*public Bitmap getCraftedDynamicBitmap(Context activityContext) {
         //maybe later more things (like animations and so on)
@@ -112,12 +105,28 @@ public abstract class Background {
         this.backgroundManager = backgroundManager;
     }
 
+    //Returns a random Y Value for the clouds ( located between 0 and 15% of the GameHeight)
+    public int getRandomYforSkyElements() {
+        double randomY;
+            randomY = Math.random() * GameViewActivity.GAME_HEIGHT * 0.15; //so clouds will be existing from 0 to 15% of top
+
+        return (int) randomY;
+    }
+
+    //Returns a random X Value for the clouds ( located between -50 and 0)
+    public int getRandomXforSkyElements() {
+        Random r = new Random();
+        int i = r.nextInt(1001) - 1000;
+        Log.d(TAG, "Lets just check if X is between -50 and 0 or not:" + i);
+        return i;
+    }
+
+
     public Random getRandom() {
         return random;
     }
 
-    public void setRandom(Random random) {
+    public void setRandom(Random random){
         this.random = random;
     }
-
 }

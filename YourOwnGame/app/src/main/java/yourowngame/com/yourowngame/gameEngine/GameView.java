@@ -14,9 +14,8 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Player;
-import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
-import yourowngame.com.yourowngame.classes.background.layers.BgLayerClouds1;
+import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
 
 /**
  * Created by Solution on 16.02.2018.
@@ -114,6 +113,8 @@ public class GameView extends SurfaceView {
     //initialize components that do not match other categories
     private void initComponents() {
         touchHandler = new OnTouchHandler();
+
+        //lets just keep it simple black before we get the real backgrounds!
         this.viewStaticBackground = BitmapFactory.decodeResource(getResources(), R.drawable.background);
         //this.setBackground(R.drawable.bglayer0_blue); //todo: in future static backgroud image instead of color
     }
@@ -145,7 +146,7 @@ public class GameView extends SurfaceView {
 
             try {
                 //draw background
-                loadDynamicBackgroundLayer(canvas);
+                loadDynamicBackgroundLayer2(canvas);
 
                 /** TODO draw enemies (on level 1 every second will spawn 10 enemys etc..) */
                 // much fun kevin, i wont draw anything anymore! haha
@@ -167,22 +168,38 @@ public class GameView extends SurfaceView {
         }
     }
 
-    public void loadDynamicBackgroundLayer(Canvas canvas) {
-        //drawing layer 0 (static background)
-        canvas.drawBitmap(this.viewStaticBackground, 0f, 0f, null);
 
-        //Set background (this = GAMEVIEW!!)
-        BgLayerClouds1 layer1_clouds = (BgLayerClouds1) BackgroundManager.getInstance(this).getBackgroundLayers().get(0);
+    public void loadDynamicBackgroundLayer(Canvas canvas) {
+        //canvas.drawBitmap(this.viewStaticBackground, 0f, 0f, null);
+
+        BackgroundLayer_Clouds layer1_clouds = (BackgroundLayer_Clouds) BackgroundManager.getInstance(this).getBackgroundLayers().get(0);
+
         if (layer1_clouds != null) {
-            BgLayerClouds1.Cloud cloud1 = layer1_clouds.getCraftedClouds().get(0);
+            BackgroundLayer_Clouds.Cloud cloud1 = layer1_clouds.getCraftedClouds().get(0);
+            cloud1.updateCloud(2);
             if (cloud1 != null) {
-                canvas.drawBitmap(cloud1.cloudImg,
-                        cloud1.posX, cloud1.posY, null);
+                canvas.drawBitmap(cloud1.cloudImg, cloud1.posX, cloud1.posY, null);
             }
         } else {
             Log.w(TAG, "redraw: Background layer 1 (clouds) not found!");
         }
     }
+
+    //Only tried, copied your backgroundLayer method
+    public void loadDynamicBackgroundLayer2(Canvas canvas) {
+        //canvas.drawBitmap(this.viewStaticBackground, 0f, 0f, null);
+
+        BackgroundLayer_Clouds layer1_clouds = (BackgroundLayer_Clouds) BackgroundManager.getInstance(this).getBackgroundLayers().get(0);
+        BackgroundLayer_Clouds.Cloud cloud1 = layer1_clouds.getCraftedClouds().get(0);
+        cloud1.updateCloud(2);
+
+            for (int i = 0; i < layer1_clouds.getCraftedClouds().size(); i++) {
+                canvas.drawBitmap(layer1_clouds.getCraftedClouds().get(i).cloudImg,
+                                  layer1_clouds.getCraftedClouds().get(i).posX,
+                                  layer1_clouds.getCraftedClouds().get(i).posY, null);
+            }
+        }
+
 
     /*****************************
      * 2. Update GameObjects here *
@@ -197,6 +214,7 @@ public class GameView extends SurfaceView {
 
         //Update background
         BackgroundManager.getInstance(this).updateAllBackgroundLayers();
+
     }
 
 
