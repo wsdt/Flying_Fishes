@@ -2,6 +2,7 @@ package yourowngame.com.yourowngame.gameEngine;
 
 import android.graphics.Canvas;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.configuration.Constants;
@@ -38,6 +39,7 @@ public class GameLoopThread extends Thread {
         int sleepTime = 0; //ms to sleep (<0 when we are behind)
         int framesSkipped; //number of frames being skipped
         long countRenderedCycles = 0;
+        Looper.prepare(); //necessary for handlers etc.
 
         while(isRunning){
             Log.d(TAG, "run: Game loop got started.");

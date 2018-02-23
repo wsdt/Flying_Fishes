@@ -32,7 +32,13 @@ public interface Constants {
         }
         interface Barrier {}
         interface Enemy {
-            int MOVING_SPEED = 10;
+            //max/min values so enemies can be created dynamically
+            float speedXmin = 1;
+            float speedXmax = 10; //could be also level dependent :)
+            float speedYmin = 1;
+            float speedYmax = 5;
+
+
             float defaultRotation = 0;
             float rotationFlyingUp = 10;
             float rotationFlyingDown = -10;
@@ -51,15 +57,13 @@ public interface Constants {
             int maxFPS = 50;
         }
         interface GameView {
-            int playerEffectTiltDegreePositive = 5; //this value gets multiplikated with (-1) all x milliseconds
-            float playerEffectTiltDegreeChangeRate = 0.05f;
             float widthInPercentage = 0.35f;
             float heightInPercentage = 0.35f;
         }
     }
 
     interface Background {
-        float defaultBgSpeed = 0.0001f; //the lower the no. the slower the skyElements (e.g. layer1: Clouds)
+        float defaultBgSpeed = 0.01f; //the lower the no. the slower the skyElements (e.g. layer1: Clouds)
         interface layer1_clouds {
             int anzahlClouds = 15;
             float randomYplacementInPercentageCloud = 0.40f; //top 40% where clouds can appear

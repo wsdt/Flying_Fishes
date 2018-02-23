@@ -14,6 +14,7 @@ import java.util.Random;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.classes.handler.HelperClass;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
 /**
@@ -41,14 +42,6 @@ public abstract class Background {
         this.setRandom(new Random()); //for random height/y of clouds etc.
 
     }
-
-
-
-    /*public Bitmap getCraftedDynamicBitmap(Context activityContext) {
-        //maybe later more things (like animations and so on)
-        //return BitmapFactory.decodeResource(activityContext.getResources(),
-          //      this.getImg()[this.getActiveDrawable()]);
-    }*/
 
 
     /** TODO
@@ -115,8 +108,8 @@ public abstract class Background {
 
     //Returns a random X Value for the clouds ( located between -50 and 0)
     public int getRandomXforSkyElements() {
-        int i = ((new Random()).nextInt(1001)-1000);
-        Log.d(TAG, "Lets just check if X is between -50 and 0 or not:" + i);
+        int i = HelperClass.getRandomInt(-2000,-50);
+        Log.d(TAG, "Lets just check if X is between -2000 and 0 or not:" + i);
         return i;
     }
 

@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.gameEngine;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,8 +12,6 @@ import android.view.SurfaceView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import java.util.Random;
-
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.Enemy;
@@ -20,6 +19,7 @@ import yourowngame.com.yourowngame.classes.actors.Player;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.classes.handler.HelperClass;
 
 /**
  * Created by Solution on 16.02.2018.
@@ -32,13 +32,13 @@ public class GameView extends SurfaceView {
     private static final float WIDTH_IN_PERCENTAGE = 0.35f;     //Should add it later to the Constants Interface
     private static final float HEIGHT_IN_PERCENTAGE = 0.35f;    //Should add it later to the Constants Interface
 
+    private Activity activityContext;
     private SurfaceHolder holder;
     private GameLoopThread thread;
     private Player playerOne;
     private OnTouchHandler touchHandler;
     private FrameLayout layout;
     private Bitmap viewStaticBackground;
-    private Random random = new Random();
 
     private GameView(Context context) {
         super(context);
@@ -46,6 +46,7 @@ public class GameView extends SurfaceView {
 
     public GameView(GameViewActivity context) {
         super(context);
+        this.setActivityContext(context);
 
         /** Get the layout-res */
         layout = context.getView();
@@ -86,30 +87,32 @@ public class GameView extends SurfaceView {
     }
 
     public void exitGame() {
-        Log.d(TAG, "exitGame: Trying to exit game.");
+        Toast.makeText(this.getActivityContext(), "Game over", Toast.LENGTH_SHORT).show(); //TODO: why does this shit not show up
         boolean retry = true;
         thread.setRunning(false);
+        Log.d(TAG, "exitGame: Trying to exit game."); //but this is logged?
         while (retry) {
             try {
+                Log.d(TAG, "exitGame: Trying to join threads.");
                 thread.join();
                 retry = false;
-            } catch (InterruptedException e) {
+                this.getActivityContext().finish(); //todo: does not work
+            } catch (InterruptedException | ClassCastException e) {
                 e.printStackTrace();
             }
         }
-        Toast.makeText(this.getContext(), "Game over", Toast.LENGTH_SHORT).show();
     }
 
     //initialize components that match GameObject()
     private void initGameObjects() {
         /** Player creation*/
-        playerOne = new Player(100, getRootView().getHeight() / 4, 5, 1, new int[]{
+        playerOne = new Player(100, getRootView().getHeight() / 4, 5, 2, new int[]{
                 R.drawable.player_heli_blue_1, R.drawable.player_heli_blue_2, R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_4,
                 R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy");
 
         /** Enemy creation */
         Enemy enemyFactory = Enemy.getInstance();
-        enemyFactory.createEnemys(150, randomX(), randomY(), 10, 10, null,Constants.Actors.Enemy.defaultRotation, "Enemy");
+        enemyFactory.createRandomEnemys(this, 150, null, "Enemy");
 
         /** other creations here */
     }
@@ -152,7 +155,8 @@ public class GameView extends SurfaceView {
                 loadDynamicBackgroundLayer(canvas);
 
                 /** TODO draw enemies (on level 1 every second will spawn 10 enemys etc..) */
-                // much fun kevin, i wont draw anything anymore! haha
+                // TODO: I cannot draw without drawable/bitmap of enemy (need to find icons for them)
+
 
                 //draw player
                 canvas.drawBitmap(this.playerOne.getCraftedDynamicBitmap(this.getContext(), ((int) loopCount % this.playerOne.getImg().length),
@@ -196,7 +200,7 @@ public class GameView extends SurfaceView {
 
             for (int i = 0; i < layer1_clouds.getCraftedClouds().size(); i++) {
                 BackgroundLayer_Clouds.Cloud tmpCloud = layer1_clouds.getCraftedClouds().get(i);
-                float randomCloudSpeed = this.random.nextFloat()*(((Constants.Background.layer1_clouds.randomCloudSpeedMax-Constants.Background.layer1_clouds.randomCloudSpeedMin)+Constants.Background.layer1_clouds.randomCloudSpeedMin));
+                float randomCloudSpeed = HelperClass.getRandomFloat(Constants.Background.layer1_clouds.randomCloudSpeedMin, Constants.Background.layer1_clouds.randomCloudSpeedMax);
                 Log.d(TAG, "loadDynamicBackgroundLayer:Clouds: Random speed -> "+randomCloudSpeed);
                 tmpCloud.updateCloud(randomCloudSpeed); //maxSpeed: 5 / MinSpeed: 1 (see Constants)
                 canvas.drawBitmap(tmpCloud.cloudImg,
@@ -225,16 +229,24 @@ public class GameView extends SurfaceView {
 
 
     //returns a random x - Position on the screen
-    private double randomX() {
+    public double randomX() {
         return Math.random() * getRootView().getWidth();
     }
 
     //returns a random y - Position on the screen
-    private double randomY() {
+    public double randomY() {
         return Math.random() * getRootView().getHeight();
     }
 
     public FrameLayout getLayout() {
         return layout;
+    }
+
+    public Activity getActivityContext() {
+        return activityContext;
+    }
+
+    public void setActivityContext(Activity activityContext) {
+        this.activityContext = activityContext;
     }
 }
