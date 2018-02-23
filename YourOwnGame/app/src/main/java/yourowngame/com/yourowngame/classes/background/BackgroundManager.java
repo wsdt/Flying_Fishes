@@ -112,10 +112,11 @@ public class BackgroundManager {
     private void loadGameViewWidthHeight(){
         final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
             @Override
-            public boolean onPreDraw() {
+            public boolean onPreDraw() { //TODO: After view loaded, craft e.g. clouds! (reason because they are not animated yet)
                 getGameView().getViewTreeObserver().removeOnPreDrawListener(this);
                 gameViewHeight = (getGameView().getHeight());
                 gameViewWidth = (getGameView().getWidth());
+                Log.d(TAG, "onPreDraw: Tried to calculate view width and height: "+gameViewWidth+"//"+gameViewHeight);
                 return true;
             }
         };

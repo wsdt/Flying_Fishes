@@ -31,16 +31,16 @@ public class BgLayerClouds1 extends Background {
      * @param name
      * @param backgroundSpeed
      */
-    public BgLayerClouds1(@NonNull BackgroundManager backgroundManager, int[] img, String name, int backgroundSpeed) {
+    public BgLayerClouds1(@NonNull BackgroundManager backgroundManager, int[] img, String name, float backgroundSpeed) {
         super(backgroundManager, img, name, backgroundSpeed);
         this.craftClouds(img); //also sets simultaneously
     }
 
-    private class Cloud {
-        private Bitmap cloudImg;
-        private int posX;
-        private int posY;
-        private Cloud (Bitmap cloudImg, int posX, int posY) {
+    public class Cloud {
+        public Bitmap cloudImg;
+        public int posX;
+        public int posY;
+        public Cloud (Bitmap cloudImg, int posX, int posY) {
             this.posX = posX;
             this.posY = posY;
             this.cloudImg = cloudImg;
@@ -54,15 +54,19 @@ public class BgLayerClouds1 extends Background {
         //TODO: Calculate here position for every cloud seperately
         //currently only one cloud! (todo: make foreach etc.)
         //currently we assume that at least and maximum one cloud is given!
-        Canvas currentCanvas = this.getBackgroundManager().getGameView().getCurrentCanvas();
-        if (currentCanvas != null) {
-            this.getCraftedClouds().get(0).posX -= this.getBackgroundSpeedX();
+        //Canvas currentCanvas = this.getBackgroundManager().getGameView().getCurrentCanvas();
+        //if (currentCanvas != null) {
+            /*this.getCraftedClouds().get(0).posX -= this.getBackgroundSpeedX();
             currentCanvas.drawBitmap(this.getCraftedClouds().get(0).cloudImg,
                     (float) this.getCraftedClouds().get(0).posX,
-                    (float) this.getCraftedClouds().get(0).posY, null);
+                    (float) this.getCraftedClouds().get(0).posY, null);*/
+            /*currentCanvas.drawBitmap(this.getCraftedClouds().get(0).cloudImg,
+                    (float) 100,
+                    (float) 100, null);*/
+        this.getCraftedClouds().get(0).posX -= this.getBackgroundSpeedX();
             Log.d(TAG, "updateBackground: Tried to move cloud: Y: "+this.getCraftedClouds().get(0).posY+" / X: "+(this.getCraftedClouds().get(0).posX));
             Log.d(TAG, "updateBackground: Tried to update BgLayerClouds1.");
-        }
+        //}
 
 
 /*
