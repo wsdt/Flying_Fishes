@@ -55,7 +55,7 @@ public class BackgroundLayer_Clouds extends Background {
         //this methods updates the cloud
         public void updateCloud(float speed) {
             for (Cloud c : getCraftedClouds())
-                c.posX += (speed); // divided by 10, because int values mostly relatively fast
+                c.posX += (speed);
         }
 
     }

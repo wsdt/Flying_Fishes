@@ -9,8 +9,11 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.classes.handler.HelperClass;
+import yourowngame.com.yourowngame.gameEngine.GameView;
 
 
 public class Enemy extends GameObject {
@@ -41,11 +44,14 @@ public class Enemy extends GameObject {
 
 
     //So we have all parameters we need quite compact in the GameView.class (by creation)
-    public void createEnemys(int numberOfEnemys, double posX, double posY,
-                             double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name){
+    public void createRandomEnemys(GameView gameView, int numberOfEnemys, int[] img, @Nullable String name){
         //add enemy to list
         for(int i=0; i <= numberOfEnemys; i++) {
-            enemyList.add(new Enemy(posX, posY, speedX, speedY, img, rotationDegree, name));
+            enemyList.add(new Enemy(
+                    gameView.randomX(), gameView.randomY(),
+                    HelperClass.getRandomFloat(Constants.Actors.Enemy.speedXmin, Constants.Actors.Enemy.speedXmax),
+                    HelperClass.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
+                    img, Constants.Actors.Enemy.defaultRotation, name));
         }
     }
 
@@ -73,14 +79,14 @@ public class Enemy extends GameObject {
         for (int i = 0; i < enemyList.size(); i++){
 
             if(player.getPosX() < enemyList.get(i).getPosX())
-                enemyList.get(i).setPosX(enemyList.get(i).getPosX() - Constants.Actors.Enemy.MOVING_SPEED);
+                enemyList.get(i).setPosX(enemyList.get(i).getPosX() - enemyList.get(i).getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
             else if(player.getPosX() > enemyList.get(i).getPosX())
-                enemyList.get(i).setPosX(enemyList.get(i).getPosX() + Constants.Actors.Enemy.MOVING_SPEED);
+                enemyList.get(i).setPosX(enemyList.get(i).getPosX() + enemyList.get(i).getSpeedX());
 
             if(player.getPosY() < enemyList.get(i).getPosY())
-                enemyList.get(i).setPosX(enemyList.get(i).getPosX() - Constants.Actors.Enemy.MOVING_SPEED);
+                enemyList.get(i).setPosX(enemyList.get(i).getPosX() - enemyList.get(i).getSpeedX());
             else if(player.getPosY() > enemyList.get(i).getPosY())
-                enemyList.get(i).setPosX(enemyList.get(i).getPosX() + Constants.Actors.Enemy.MOVING_SPEED);
+                enemyList.get(i).setPosX(enemyList.get(i).getPosX() + enemyList.get(i).getSpeedX());
         }
     }
 }
