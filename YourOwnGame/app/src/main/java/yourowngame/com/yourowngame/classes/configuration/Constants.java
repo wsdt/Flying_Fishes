@@ -56,6 +56,6 @@ public interface Constants {
 
     interface Background {
         int maxSizeBackground = 2150; //-10 for eq
-        int defaultBgSpeed = 10;
+        float defaultBgSpeed = 0.1f;
     }
 }

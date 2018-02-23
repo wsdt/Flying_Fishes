@@ -27,11 +27,11 @@ public abstract class Background {
     private static final String TAG = "Background";
     private int[] img;
     private String name;
-    private int backgroundSpeedX = 0;
+    private float backgroundSpeedX = 0;
     private BackgroundManager backgroundManager; //contains also GameView!!
     private Random random;
 
-    public Background(@NonNull BackgroundManager backgroundManager, int[] img, String name, int backgroundSpeed) {
+    public Background(@NonNull BackgroundManager backgroundManager, int[] img, String name, float backgroundSpeed) {
         Log.d(TAG, "getBackgroundInstance: Created new instance.");
         this.setImg(img);
         this.setName(name);
@@ -70,11 +70,11 @@ public abstract class Background {
         return getImg().length;
     }
 
-    public void setBackgroundSpeed(int backgroundSpeedX){
+    public void setBackgroundSpeed(float backgroundSpeedX){
         this.backgroundSpeedX = backgroundSpeedX;
     }
 
-    public int getBackgroundSpeedX() {
+    public float getBackgroundSpeedX() {
         return backgroundSpeedX;
     }
 
