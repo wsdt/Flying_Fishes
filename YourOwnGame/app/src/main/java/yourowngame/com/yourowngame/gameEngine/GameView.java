@@ -19,7 +19,7 @@ import yourowngame.com.yourowngame.classes.actors.Player;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
-import yourowngame.com.yourowngame.classes.handler.HelperClass;
+import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 
 /**
  * Created by Solution on 16.02.2018.
@@ -200,7 +200,7 @@ public class GameView extends SurfaceView {
 
             for (int i = 0; i < layer1_clouds.getCraftedClouds().size(); i++) {
                 BackgroundLayer_Clouds.Cloud tmpCloud = layer1_clouds.getCraftedClouds().get(i);
-                float randomCloudSpeed = HelperClass.getRandomFloat(Constants.Background.layer1_clouds.randomCloudSpeedMin, Constants.Background.layer1_clouds.randomCloudSpeedMax);
+                float randomCloudSpeed = RandomHandler.getRandomFloat(Constants.Background.layer1_clouds.randomCloudSpeedMin, Constants.Background.layer1_clouds.randomCloudSpeedMax);
                 Log.d(TAG, "loadDynamicBackgroundLayer:Clouds: Random speed -> "+randomCloudSpeed);
                 tmpCloud.updateCloud(randomCloudSpeed); //maxSpeed: 5 / MinSpeed: 1 (see Constants)
                 canvas.drawBitmap(tmpCloud.cloudImg,

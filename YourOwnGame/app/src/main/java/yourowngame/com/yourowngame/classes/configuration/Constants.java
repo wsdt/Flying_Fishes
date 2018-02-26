@@ -5,6 +5,8 @@ package yourowngame.com.yourowngame.classes.configuration;
  * If a string can be translated (sensefully) then place it into Strings.xml Resource file!
  *
  * Please group constants within superior Interface 'Constants' by additional interfaces [e.g. Constants > GameObject > {values}]
+ *
+ * Constants always in UPPER_CASE separated by dash
  */
 
 public interface Constants {
@@ -65,10 +67,10 @@ public interface Constants {
     interface Background {
         float defaultBgSpeed = 0.01f; //the lower the no. the slower the skyElements (e.g. layer1: Clouds)
         interface layer1_clouds {
-            int anzahlClouds = 15;
+            int anzahlClouds = 30;
             float randomYplacementInPercentageCloud = 0.40f; //top 40% where clouds can appear
             float randomCloudSpeedMax = 1f;
-            float randomCloudSpeedMin = 0.01f; //do not place 0!
+            float randomCloudSpeedMin = 0.001f; //do not place 0!
         }
     }
 }

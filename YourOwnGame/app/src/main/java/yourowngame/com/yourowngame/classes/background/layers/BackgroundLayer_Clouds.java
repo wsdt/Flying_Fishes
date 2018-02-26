@@ -15,6 +15,7 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
 /**
@@ -67,9 +68,9 @@ public class BackgroundLayer_Clouds extends Background {
         //Calculate here position for every cloud seperately
         for (Cloud cloud : this.getCraftedClouds()) {
             if (GameViewActivity.GAME_WIDTH < cloud.posX) {
-                //if outside screen spawn on the start (reset x)
-                cloud.posY = this.getRandomYforSkyElements(); //also reset y (looks more natural)
-                cloud.posX = this.getRandomXforSkyElements();
+                //if outside screen spawn on the start (reset x)                                                    //also reset y (looks more natural) short name
+                cloud.posY = RandomHandler.getRandomInt(0, (int) (GameViewActivity.GAME_HEIGHT * Constants.Background.layer1_clouds.randomYplacementInPercentageCloud));
+                cloud.posX = RandomHandler.getRandomInt(-2000, -50);;
                 Log.d(TAG, "updateBackground: Resetted cloud.");
             }
             cloud.posX -= this.getBackgroundSpeedX();
@@ -95,7 +96,7 @@ public class BackgroundLayer_Clouds extends Background {
         Log.d(TAG, "craftClouds: Trying to craft clouds.");
         for(int i = 0; i < numberOfClouds; i++) {
             for (int img : imgs) {                                                                                      //guess its cooler if they spawn outside the map?
-                this.getCraftedClouds().add(new Cloud(BitmapFactory.decodeResource(this.getGameView().getResources(), img), this.getRandomXforSkyElements(), this.getRandomYforSkyElements()));
+                this.getCraftedClouds().add(new Cloud(BitmapFactory.decodeResource(this.getGameView().getResources(), img), 0, 0));
             } //clouds now also already set! (no need to call setter itself)
         }
     }

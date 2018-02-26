@@ -56,12 +56,13 @@ public class BackgroundManager {
 
     //Singleton
     private static BackgroundManager INSTANCE;
-    public static BackgroundManager getInstance(@NonNull GameView gameView){
+
+    public static BackgroundManager getInstance(@NonNull GameView gameView) {
         return INSTANCE == null ? INSTANCE = new BackgroundManager(gameView) : INSTANCE;
     }
 
     //create backgrounds here
-    private BackgroundManager(@NonNull GameView gameView){
+    private BackgroundManager(@NonNull GameView gameView) {
         //Firstly initialize arraylist (nullpointer)
         this.setBackgroundLayers(new ArrayList<Background>());
         this.setGameView(gameView);
@@ -70,7 +71,7 @@ public class BackgroundManager {
         //loadPhoneDisplaySize();
 
 
-        this.getBackgroundLayers().add(new BackgroundLayer_Clouds(this, new int[] {R.drawable.bglayer_1_cloud_1}, "Heaven", Constants.Background.defaultBgSpeed));
+        this.getBackgroundLayers().add(new BackgroundLayer_Clouds(this, new int[]{R.drawable.bglayer_1_cloud_1}, "Heaven", Constants.Background.defaultBgSpeed));
 
     }
 
@@ -89,7 +90,9 @@ public class BackgroundManager {
         this.backgroundLayers = backgroundLayers;
     }
 
-    /** backgrounds (all levels) */
+    /**
+     * backgrounds (all levels)
+     */
     public GameView getGameView() {
         return gameView;
     }
@@ -98,28 +101,20 @@ public class BackgroundManager {
         this.gameView = gameView;
     }
 
-    //No public/protected setter!! (only system should calculate it)
-    public double getGameViewWidth() {
-        return gameViewWidth;
-    }
-
-    public double getGameViewHeight() {
-        return gameViewHeight;
-    }
-
-    private void loadGameViewWidthHeight(){
+    private void loadGameViewWidthHeight() {
         final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() { //TODO: After view loaded, craft e.g. clouds! (reason because they are not animated yet)
                 getGameView().getViewTreeObserver().removeOnPreDrawListener(this);
                 gameViewHeight = GameViewActivity.GAME_HEIGHT;
                 gameViewWidth = GameViewActivity.GAME_WIDTH;
-                Log.d(TAG, "onPreDraw: Tried to calculate view width and height: "+gameViewWidth+"//"+gameViewHeight);
+                Log.d(TAG, "onPreDraw: Tried to calculate view width and height: " + gameViewWidth + "//" + gameViewHeight);
                 return true;
             }
         };
         getGameView().getViewTreeObserver().addOnPreDrawListener(preDrawListener);
     }
+}
 
 
     /*private void loadPhoneDisplaySize() {
@@ -130,13 +125,6 @@ public class BackgroundManager {
         screenWidth = size.x; //no setter for screenwidth (at least no public/protected one)
         screenHeight = size.y; //same as width
     }
-
-    //No setter for screenwidth and height!!
-    public double getScreenWidth() {
-        return this.screenWidth;
-    }
-
-    public double getScreenHeight() {
-        return this.screenHeight;
-    }*/
 }
+
+    */
