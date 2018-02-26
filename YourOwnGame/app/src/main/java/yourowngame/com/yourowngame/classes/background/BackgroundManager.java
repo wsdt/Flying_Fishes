@@ -50,8 +50,6 @@ public class BackgroundManager {
     private static final String TAG = "BackgroundManager";
     private ArrayList<Background> backgroundLayers;
     private GameView gameView;
-    private double gameViewWidth = 0; //default value (for getter necessary) [do not make them static, add. it is e a Singleton]
-    private double gameViewHeight = 0; //same as width
 
 
     //Singleton
@@ -63,13 +61,11 @@ public class BackgroundManager {
 
     //create backgrounds here
     private BackgroundManager(@NonNull GameView gameView) {
-        //Firstly initialize arraylist (nullpointer)
         this.setBackgroundLayers(new ArrayList<Background>());
         this.setGameView(gameView);
 
         //calculating display size
         //loadPhoneDisplaySize();
-
 
         this.getBackgroundLayers().add(new BackgroundLayer_Clouds(this, new int[]{R.drawable.bglayer_1_cloud_1}, "Heaven", Constants.Background.defaultBgSpeed));
 
@@ -80,7 +76,6 @@ public class BackgroundManager {
             backgroundLayer.updateBackground();
         }
     }
-
 
     public ArrayList<Background> getBackgroundLayers() {
         return backgroundLayers;
@@ -106,9 +101,7 @@ public class BackgroundManager {
             @Override
             public boolean onPreDraw() { //TODO: After view loaded, craft e.g. clouds! (reason because they are not animated yet)
                 getGameView().getViewTreeObserver().removeOnPreDrawListener(this);
-                gameViewHeight = GameViewActivity.GAME_HEIGHT;
-                gameViewWidth = GameViewActivity.GAME_WIDTH;
-                Log.d(TAG, "onPreDraw: Tried to calculate view width and height: " + gameViewWidth + "//" + gameViewHeight);
+                Log.d(TAG, "onPreDraw: Tried to calculate view width and height: " + GameViewActivity.GAME_HEIGHT + "//" + GameViewActivity.GAME_WIDTH);
                 return true;
             }
         };

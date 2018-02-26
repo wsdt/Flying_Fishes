@@ -20,8 +20,10 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
 
 /**
  *  First Layer class, which provides clouds in the sky (how wonderful!)
- *
- *
+ *  Every Layer-class provides an inner class (or an own class, if too big!)
+ *  which holds the inner-data of the movableObject. The Layer will override
+ *  the update()-method as well as the drawBackground()-method
+ *  from the Background.class
  */
 
 public class BackgroundLayer_Clouds extends Background {
@@ -42,45 +44,56 @@ public class BackgroundLayer_Clouds extends Background {
         this.craftClouds(img, Constants.Background.layer1_clouds.anzahlClouds); //also sets simultaneously
     }
 
+    /**
+     * inner class (the movable-Object on the screen)
+     */
     public class Cloud {
-        public Bitmap cloudImg;
-        public float posX;
-        public float posY;
+        protected Bitmap cloudImg;
+        protected float posX;
+        protected float posY;
+        public float randomSpeed;
 
-        public Cloud(Bitmap cloudImg, float posX, float posY) {
-            this.posX = posX;
-            this.posY = posY;
+        public Cloud(Bitmap cloudImg) {
+            this.posX = RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 1500);
+            this.posY = RandomHandler.getRandomFloat(0, (int) (GameViewActivity.GAME_HEIGHT * Constants.Background.layer1_clouds.randomYplacementInPercentageCloud));;
             this.cloudImg = cloudImg;
+            this.randomSpeed = RandomHandler.getRandomFloat(Constants.Background.layer1_clouds.randomCloudSpeedMin, Constants.Background.layer1_clouds.randomCloudSpeedMax);
         }
 
         //this methods updates the cloud
         public void updateCloud(float speed) {
-            for (Cloud c : getCraftedClouds())
-                c.posX += (speed);
+                this.posX -= (speed);
+                if(this.posX < 0)
+                    posX = GameViewActivity.GAME_WIDTH + 100;
+            }
         }
 
-    }
-
-    //TODO: doDraw() [surfaceLayer] instead of onDraw() | redraw()
-
+    /**
+     * calls the update() method from the Cloud.class
+     *
+     * i removed some thing because it seems we're not using the methods for the right way
+     *  XXX -> update()         should only move the cloud
+     *  XXX -> drawBackground() should only draw it
+     */
     @Override
-    public void updateBackground() { //clouds crafted before, so this is not also in this loop!
-        //Calculate here position for every cloud seperately
+    public void updateBackground() {
         for (Cloud cloud : this.getCraftedClouds()) {
-            if (GameViewActivity.GAME_WIDTH < cloud.posX) {
-                //if outside screen spawn on the start (reset x)                                                    //also reset y (looks more natural) short name
-                cloud.posY = RandomHandler.getRandomInt(0, (int) (GameViewActivity.GAME_HEIGHT * Constants.Background.layer1_clouds.randomYplacementInPercentageCloud));
-                cloud.posX = RandomHandler.getRandomInt(-2000, -50);;
-                Log.d(TAG, "updateBackground: Resetted cloud.");
-            }
-            cloud.posX -= this.getBackgroundSpeedX();
-            Log.d(TAG, "updateBackground: Tried to move cloud: Y: " + cloud.posY + " / X: " + (cloud.posX));
+                //update cloud
+                cloud.updateCloud(cloud.randomSpeed); //Where is the speed defined? couldnt find it!
+                //just for logging
+                Log.d(TAG, "updateBackground: Tried to move cloud: Y: " + cloud.posY + " / X: " + (cloud.posX));
         }
         Log.d(TAG, "updateBackground: Tried to update BackgroundLayer_Clouds.");
-        //}
     }
 
+    /** draws the clouds */
+    @Override
+    public void drawBackground(Canvas canvas) {
+        for (Cloud cloud : this.getCraftedClouds())
+            canvas.drawBitmap(cloud.cloudImg, cloud.posX, cloud.posY, null);
+    }
 
+    /** Returns the craftedClouds*/
     public ArrayList<Cloud> getCraftedClouds() {
         if (this.craftedClouds == null) {
             this.craftedClouds = new ArrayList<>();
@@ -88,16 +101,16 @@ public class BackgroundLayer_Clouds extends Background {
         return craftedClouds;
     }
 
-    public void setCraftedClouds(ArrayList<Cloud> craftedClouds) {
-        this.craftedClouds = craftedClouds;
-    }
-
+    /** Crafts clouds
+     * @param imgs image(s) of the clouds
+     * @param numberOfClouds figure of clouds
+     */
     public void craftClouds(int[] imgs, int numberOfClouds) {
         Log.d(TAG, "craftClouds: Trying to craft clouds.");
         for(int i = 0; i < numberOfClouds; i++) {
-            for (int img : imgs) {                                                                                      //guess its cooler if they spawn outside the map?
-                this.getCraftedClouds().add(new Cloud(BitmapFactory.decodeResource(this.getGameView().getResources(), img), 0, 0));
-            } //clouds now also already set! (no need to call setter itself)
+            for (int img : imgs) {                                                                  //position of X & Y now set in the Constructor (for easier reading)
+                this.getCraftedClouds().add(new Cloud(BitmapFactory.decodeResource(this.getGameView().getResources(), img)));
+            }
         }
     }
 
