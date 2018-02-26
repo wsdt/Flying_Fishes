@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.background;
 
+import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -14,6 +15,7 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
  * Created on 18.02.2018.
  *
  * Class for creating Backgrounds, only data!
+ *
  *
  * TODO exception handling
  */
@@ -37,12 +39,16 @@ public abstract class Background {
     }
 
 
-    /** TODO
-     * This method updates the X-Values of the background & will make it move
-     * After the first image is completely out of sight, the next one will appear (but of course, the fuck it doenst appear smoothly)
-     *
-     */
-    public abstract void updateBackground(); //if we want to change the speed just use the setter!
+    /** abstract method for updating the Background (Layers should provide a method to update themselves! */
+    public abstract void updateBackground();
+
+    /** abstract method for drawing the Background (Layers should provide a method to draw themselves!*/
+    public abstract void drawBackground(Canvas canvas);
+
+
+
+
+
 
     public void setBackgroundSpeed(float backgroundSpeedX){
         this.backgroundSpeedX = backgroundSpeedX;

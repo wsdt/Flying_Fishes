@@ -7,6 +7,13 @@ package yourowngame.com.yourowngame.classes.configuration;
  * Please group constants within superior Interface 'Constants' by additional interfaces [e.g. Constants > GameObject > {values}]
  *
  * Constants always in UPPER_CASE separated by dash
+ *
+ * Im a slightly unhappy about the Constants Interface, because Interfaces should be used for
+ * inheritance and if this game gets further, the most classes depend on that special "interface"
+ * which is basically just a placeholder for constants...
+ *
+ * Cohesion of other classes will suffer!
+ *
  */
 
 public interface Constants {
@@ -67,10 +74,10 @@ public interface Constants {
     interface Background {
         float defaultBgSpeed = 0.01f; //the lower the no. the slower the skyElements (e.g. layer1: Clouds)
         interface layer1_clouds {
-            int anzahlClouds = 30;
+            int anzahlClouds = 15;
             float randomYplacementInPercentageCloud = 0.40f; //top 40% where clouds can appear
-            float randomCloudSpeedMax = 1f;
-            float randomCloudSpeedMin = 0.001f; //do not place 0!
+            float randomCloudSpeedMax = 5f;
+            float randomCloudSpeedMin = 1f; //do not place 0!
         }
     }
 }

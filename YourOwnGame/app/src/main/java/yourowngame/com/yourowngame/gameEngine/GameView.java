@@ -19,7 +19,6 @@ import yourowngame.com.yourowngame.classes.actors.Player;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
-import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 
 /**
  * Created by Solution on 16.02.2018.
@@ -39,6 +38,7 @@ public class GameView extends SurfaceView {
     private OnTouchHandler touchHandler;
     private FrameLayout layout;
     private Bitmap viewStaticBackground;
+    private int level = 0; /** for Background-drawing, amount of enemys etc. */
 
     private GameView(Context context) {
         super(context);
@@ -152,7 +152,7 @@ public class GameView extends SurfaceView {
 
             try {
                 //draw background
-                loadDynamicBackgroundLayer(canvas);
+                drawDynamicBackground(canvas);
 
                 /** TODO draw enemies (on level 1 every second will spawn 10 enemys etc..) */
                 // TODO: I cannot draw without drawable/bitmap of enemy (need to find icons for them)
@@ -175,39 +175,31 @@ public class GameView extends SurfaceView {
         }
     }
 
+/**
+ * This is somehow all kinda shit
+ * This method should draw ALL kind of backgrounds, so if we are (f.e) in level 2
+ * and there is another layer, this method should only create (by switch)
+ * the appropriate layer and then draw it!
+ *
+ * like:
+ *
+ * a = BackgroundManager...get(2)
+ * a.drawBackground(...)
+ *
+ * The GameView should only choose which Layer should be drawn and then draw it!
+ * All other actions belong into either the Background.class or the Layer.class or the Manager.class
+ *
+ * IMPLEMENTED, just for reading & deleting
+ */
 
-    /*public void loadDynamicBackgroundLayer(Canvas canvas) {
-        //canvas.drawBitmap(this.viewStaticBackground, 0f, 0f, null);
 
-        BackgroundLayer_Clouds layer1_clouds = (BackgroundLayer_Clouds) BackgroundManager.getInstance(this).getBackgroundLayers().get(0);
-
-        if (layer1_clouds != null) {
-            BackgroundLayer_Clouds.Cloud cloud1 = layer1_clouds.getCraftedClouds().get(0);
-            cloud1.updateCloud(2);
-            canvas.drawBitmap(cloud1.cloudImg, cloud1.posX, cloud1.posY, null);
-        } else {
-            Log.w(TAG, "redraw: Background layer 1 (clouds) not found!");
-        }
-    }*/
-
-    //Only tried, copied your backgroundLayer method
-    public void loadDynamicBackgroundLayer(Canvas canvas) {
-        //canvas.drawBitmap(this.viewStaticBackground, 0f, 0f, null);
-
-        BackgroundLayer_Clouds layer1_clouds = (BackgroundLayer_Clouds) BackgroundManager.getInstance(this).getBackgroundLayers().get(0);
-        /*BackgroundLayer_Clouds.Cloud cloud1 = layer1_clouds.getCraftedClouds().get(0);
-        cloud1.updateCloud(2);*/
-
-            for (int i = 0; i < layer1_clouds.getCraftedClouds().size(); i++) {
-                BackgroundLayer_Clouds.Cloud tmpCloud = layer1_clouds.getCraftedClouds().get(i);
-                float randomCloudSpeed = RandomHandler.getRandomFloat(Constants.Background.layer1_clouds.randomCloudSpeedMin, Constants.Background.layer1_clouds.randomCloudSpeedMax);
-                Log.d(TAG, "loadDynamicBackgroundLayer:Clouds: Random speed -> "+randomCloudSpeed);
-                tmpCloud.updateCloud(randomCloudSpeed); //maxSpeed: 5 / MinSpeed: 1 (see Constants)
-                canvas.drawBitmap(tmpCloud.cloudImg,
-                                  tmpCloud.posX,
-                                  tmpCloud.posY, null);
-            }
-        }
+    /** Gets the current Layer & draws it! */
+    public void drawDynamicBackground(Canvas canvas) {
+        //Get current Layer
+        BackgroundLayer_Clouds currentLayer = (BackgroundLayer_Clouds) BackgroundManager.getInstance(this).getBackgroundLayers().get(0);
+        //draw current Layer
+        currentLayer.drawBackground(canvas);
+    }
 
 
     /*****************************
@@ -218,15 +210,19 @@ public class GameView extends SurfaceView {
         playerOne.update(null, this.touchHandler.isTouched(), false);
 
         //Check if player hits the view's border
-        if (playerOne.collision(this, playerOne)) {
+        if (playerOne.collision(this, playerOne))
             exitGame();
-        }
 
         //Update background
         BackgroundManager.getInstance(this).updateAllBackgroundLayers();
 
     }
 
+
+
+   /*********************************************************
+     * 2. Getters & Setters and all of that annoying methods *
+     *********************************************************/
 
     //returns a random x - Position on the screen
     public double randomX() {
