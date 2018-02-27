@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -57,6 +58,10 @@ public abstract class GameObject {
      * @return returns whether a collision happened or not!
      */
     public abstract boolean collision(View view, GameObject obj);
+
+    /** When backgrounds have to draw themselves, then GameObjects should do the same (I think we should be konsistent)
+     * @param loopCount: Loop count from GameLoopThread (given in redraw() method), with this we can create loop-dependent animations :)*/
+    public abstract void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception;
 
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public double getPosX() {
@@ -115,7 +120,7 @@ public abstract class GameObject {
      * @param rotationDegrees: how much should be image tilted or rotated? (in degrees) / if null then image won't be rotated
      * @param widthInPercent: reduce/enlarge width / if this param OR scaleHeight is null, both values get ignored! Use . as comma ;) --> Values MUST be higher than 0 and should not be higher than 1! (quality)
      * @param heightInPercent: same as scaleWidth. */
-    public Bitmap getCraftedDynamicBitmap(@NonNull Context context, int imgFrame, @Nullable Float rotationDegrees, @Nullable Float widthInPercent, @Nullable Float heightInPercent) throws NoDrawableInArrayFound_Exception {
+    public Bitmap getCraftedDynamicBitmap(@NonNull Activity context, int imgFrame, @Nullable Float rotationDegrees, @Nullable Float widthInPercent, @Nullable Float heightInPercent) throws NoDrawableInArrayFound_Exception {
         Log.d(TAG, "getCraftedBitmaps: Trying to craft bitmaps.");
         if (this.getImg().length <= imgFrame && this.getImg().length >= 1) {
                Log.e(TAG, "getCraftedDynamicBitmap: IndexOutOfBounds, could not determine correct drawable for animation. Returning drawable at index 0!");
@@ -137,14 +142,12 @@ public abstract class GameObject {
     /**
      * Creates a simple Bitmap from a Drawable res
      *
-     * @param context context
+     * @param context context (Always use Activity (subClass of context, when you need an Activity --> getResources won't work if you call this method from an object)
      * @param img image to be drawn
      * @return
      */
-    public Bitmap getCraftedBitmap(@NonNull Context context, int img){
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), img);
-
-        return bitmap;
+    public Bitmap getCraftedBitmap(@NonNull Activity context, int img){
+        return BitmapFactory.decodeResource(context.getResources(), img);
     }
 
     public float getRotationDegree() {

@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.classes.actors;
 
 import android.app.Activity;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.annotation.NonNull;
@@ -21,6 +22,9 @@ public class Barrier extends GameObject {
     public  boolean collision(View view, GameObject obj) {
         return false;
     }
+
+    @Override
+    public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {}
 
 
 }

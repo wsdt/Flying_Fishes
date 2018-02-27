@@ -37,6 +37,13 @@ public class LevelManager {
         return currLevel;
     }
 
+    /** This method is called when user achieved a level and is allowed to play the next one.
+     * The new level will be returned.*/
+    public int levelAchieved() {
+        Log.d(TAG, "levelAchieved: User achieved current level. Entered next level. Ensure that level exists (sparseArray) and change components (enemies, bg etc.)");
+        return ++CURRENT_LEVEL; //pre-inkrement to return new current level
+    }
+
     /** This method sets the fallback/normal level order*/
     private void createDefaultLevelList() {
         getLevelList().put(0, new Level_HarmlessSky()); //so this is Level 0, etc.

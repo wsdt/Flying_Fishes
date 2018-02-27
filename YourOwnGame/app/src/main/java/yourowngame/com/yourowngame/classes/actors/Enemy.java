@@ -1,23 +1,28 @@
 package yourowngame.com.yourowngame.classes.actors;
 
+import android.app.Activity;
+import android.graphics.Canvas;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
 
 public class Enemy extends GameObject {
-
+    private static final String TAG = "Enemy";
     private static Enemy INSTANCE;
-    private List<Enemy> enemyList = new ArrayList<>();
+    private static List<Enemy> enemyList = new ArrayList<>();
     private Player player;
 
-    public static Enemy getInstance(){
+    public static Enemy getInstance() {
         return INSTANCE == null ? INSTANCE = new Enemy() : INSTANCE;
     }
 
@@ -37,12 +42,25 @@ public class Enemy extends GameObject {
         return false;
     }
 
+    @Override
+    public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
+
+    }
+
+    public static void drawAllEnemies(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
+        for (Enemy enemy : getEnemys()) {
+            enemy.draw(activity, canvas, loopCount);
+        }
+        if (getEnemys().size() <= 0) { //i am sure this will happen to us ^^
+            Log.w(TAG, "drawAllEnemies: No enemies found. Maybe you did not call createRandomEnemies()!");
+        }
+    }
 
     //So we have all parameters we need quite compact in the GameView.class (by creation)
-    public void createRandomEnemys(GameView gameView, int numberOfEnemys, int[] img, @Nullable String name){
+    public void createRandomEnemies(GameView gameView, int numberOfEnemys, int[] img, @Nullable String name){
         //add enemy to list
         for(int i=0; i <= numberOfEnemys; i++) {
-            enemyList.add(new Enemy(
+            Enemy.enemyList.add(new Enemy(
                     gameView.randomX(), gameView.randomY(),
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedXmin, Constants.Actors.Enemy.speedXmax),
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
@@ -51,7 +69,7 @@ public class Enemy extends GameObject {
     }
 
     //Returns the enemyList, ready for drawing, rendering etc.
-    public List<Enemy> getEnemys(){
+    public static List<Enemy> getEnemys(){
         return enemyList;
     }
 
