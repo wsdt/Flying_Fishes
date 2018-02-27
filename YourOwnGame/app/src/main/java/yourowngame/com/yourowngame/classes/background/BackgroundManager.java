@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.background;
 
+import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.ViewTreeObserver;
@@ -9,7 +10,9 @@ import java.util.ArrayList;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
+import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_staticBgImg;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
 /**
@@ -48,8 +51,9 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
 public class BackgroundManager {
 
     private static final String TAG = "BackgroundManager";
-    private ArrayList<Background> backgroundLayers;
+    private ArrayList<Background> backgroundLayers = new ArrayList<Background>();
     private GameView gameView;
+    private LevelManager levelManager;
 
 
     //Singleton
@@ -61,19 +65,22 @@ public class BackgroundManager {
 
     //create backgrounds here
     private BackgroundManager(@NonNull GameView gameView) {
-        this.setBackgroundLayers(new ArrayList<Background>());
         this.setGameView(gameView);
+        this.setLevelManager(LevelManager.getInstance(this));
 
-        //calculating display size
-        //loadPhoneDisplaySize();
-
-        this.getBackgroundLayers().add(new BackgroundLayer_Clouds(this, new int[]{R.drawable.bglayer_1_cloud_1}, "Heaven", Constants.Background.defaultBgSpeed));
-
+        //Not really necessary now, because we have the levelManager as member which contains all levels (inkl. backgroundLayers)
+        this.setBackgroundLayers(this.getLevelManager().getCurrentLevelObj().getBackgroundLayers());
     }
 
     public void updateAllBackgroundLayers() {
         for (Background backgroundLayer : this.getBackgroundLayers()) {
             backgroundLayer.updateBackground();
+        }
+    }
+
+    public void drawAllBackgroundLayers(@NonNull Canvas canvas) {
+        for (Background backgroundLayer : this.getBackgroundLayers()) {
+            backgroundLayer.drawBackground(canvas);
         }
     }
 
@@ -96,16 +103,12 @@ public class BackgroundManager {
         this.gameView = gameView;
     }
 
-    private void loadGameViewWidthHeight() {
-        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() { //TODO: After view loaded, craft e.g. clouds! (reason because they are not animated yet)
-                getGameView().getViewTreeObserver().removeOnPreDrawListener(this);
-                Log.d(TAG, "onPreDraw: Tried to calculate view width and height: " + GameViewActivity.GAME_HEIGHT + "//" + GameViewActivity.GAME_WIDTH);
-                return true;
-            }
-        };
-        getGameView().getViewTreeObserver().addOnPreDrawListener(preDrawListener);
+    public LevelManager getLevelManager() {
+        return levelManager;
+    }
+
+    public void setLevelManager(LevelManager levelManager) {
+        this.levelManager = levelManager;
     }
 }
 
