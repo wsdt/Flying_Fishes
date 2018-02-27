@@ -56,6 +56,8 @@ public interface Constants {
             float defaultRotation = 0;
             float rotationFlyingUp = 5;
             float rotationFlyingDown = -5;
+            float widthPercentage = 0.35f;
+            float heightPercentage = 0.35f;
         }
         interface Reward {}
     }
