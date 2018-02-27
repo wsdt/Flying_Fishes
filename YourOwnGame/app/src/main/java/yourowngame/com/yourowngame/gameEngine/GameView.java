@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -192,13 +193,20 @@ public class GameView extends SurfaceView {
  * IMPLEMENTED, just for reading & deleting
  */
 
+/** Please read: ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ *  I strongly recommend that we always draw and update ALL backgroundlayers (arraylist in BackgroundManager).
+ *  Which this we can have more amazing backgrounds and can also reuse single layers by just adding them to the BackgroundManager arraylist.
+ *  So, for level-change (at least for the background) we just have to change/rearrange the Arraylist in BackgroundManager.
+ *
+ *  With this procedure we can e.g. use the cloud layer in level 0, 5, 8
+ *  [also maybe in different orders --> as example: we could let other layers behind or before the cloud layer and so on! :)]
+ * */
 
-    /** Gets the current Layer & draws it! */
-    public void drawDynamicBackground(Canvas canvas) {
+
+    /** Gets all Layers & draws them! */
+    public void drawDynamicBackground(@NonNull Canvas canvas) {
         //Get current Layer
-        BackgroundLayer_Clouds currentLayer = (BackgroundLayer_Clouds) BackgroundManager.getInstance(this).getBackgroundLayers().get(0);
-        //draw current Layer
-        currentLayer.drawBackground(canvas);
+        BackgroundManager.getInstance(this).drawAllBackgroundLayers(canvas);
     }
 
 
@@ -215,7 +223,6 @@ public class GameView extends SurfaceView {
 
         //Update background
         BackgroundManager.getInstance(this).updateAllBackgroundLayers();
-
     }
 
 

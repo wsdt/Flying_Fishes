@@ -74,7 +74,7 @@ public interface Constants {
     interface Background {
         float defaultBgSpeed = 0.01f; //the lower the no. the slower the skyElements (e.g. layer1: Clouds)
         interface layer1_clouds {
-            int anzahlClouds = 15;
+            int anzahlClouds = 10;
             float randomYplacementInPercentageCloud = 0.40f; //top 40% where clouds can appear
             float randomCloudSpeedMax = 5f;
             float randomCloudSpeedMin = 1f; //do not place 0!
