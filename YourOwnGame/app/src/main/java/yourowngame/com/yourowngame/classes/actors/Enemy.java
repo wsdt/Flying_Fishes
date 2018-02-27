@@ -21,11 +21,11 @@ public class Enemy extends GameObject {
         return INSTANCE == null ? INSTANCE = new Enemy() : INSTANCE;
     }
 
-    public Enemy(double posX, double posY, double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name) {
+    private Enemy(double posX, double posY, double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
-    public Enemy(){}
+    private Enemy(){}
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {

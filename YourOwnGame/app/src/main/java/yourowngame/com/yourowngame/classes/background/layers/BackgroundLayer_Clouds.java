@@ -63,7 +63,7 @@ public class BackgroundLayer_Clouds extends Background {
         //this methods updates the cloud
         public void updateCloud(float speed) {
                 this.posX -= (speed);
-                if(this.posX < 0)
+                if(this.posX < -100) //-100 is on every screen outside of visible area
                     posX = GameViewActivity.GAME_WIDTH + 100;
             }
         }
