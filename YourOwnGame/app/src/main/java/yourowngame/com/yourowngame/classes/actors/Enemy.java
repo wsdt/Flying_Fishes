@@ -9,11 +9,25 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 import yourowngame.com.yourowngame.gameEngine.GameView;
+
+/**
+ * during development rich value methods should be on Top
+ * draw()
+ * update()
+ * collision()
+ * aimToPlayer()
+ *
+ *
+ *
+ *
+ */
 
 
 public class Enemy extends GameObject {
@@ -33,9 +47,7 @@ public class Enemy extends GameObject {
     private Enemy(){}
 
     @Override
-    public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-
-    }
+    public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {}
 
     @Override
     public boolean collision(View view, GameObject obj) {
@@ -44,10 +56,33 @@ public class Enemy extends GameObject {
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-
+        canvas.drawBitmap(this.getCraftedDynamicBitmap(activity, ((int) loopCount % this.getImg().length),
+                this.getRotationDegree(), Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
-    public static void drawAllEnemies(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
+    public void aimToPlayer(Player player) {
+        this.player = player; //not really necess
+
+        for (int i = 0; i < enemyList.size(); i++){
+
+            if(player.getPosX() < enemyList.get(i).getPosX())
+                enemyList.get(i).setPosX(enemyList.get(i).getPosX() - enemyList.get(i).getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
+            else if(player.getPosX() > enemyList.get(i).getPosX())
+                enemyList.get(i).setPosX(enemyList.get(i).getPosX() + enemyList.get(i).getSpeedX());
+
+            if(player.getPosY() < enemyList.get(i).getPosY())
+                enemyList.get(i).setPosY(enemyList.get(i).getPosY() - enemyList.get(i).getSpeedY());
+            else if(player.getPosY() > enemyList.get(i).getPosY())
+                enemyList.get(i).setPosY(enemyList.get(i).getPosY() + enemyList.get(i).getSpeedY());
+        }
+    }
+
+    //Returns the enemyList, ready for drawing, rendering etc.
+    public List<Enemy> getEnemys(){
+        return enemyList;
+    }
+
+    public void drawAllEnemies(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
         for (Enemy enemy : getEnemys()) {
             enemy.draw(activity, canvas, loopCount);
         }
@@ -58,48 +93,15 @@ public class Enemy extends GameObject {
 
     //So we have all parameters we need quite compact in the GameView.class (by creation)
     public void createRandomEnemies(GameView gameView, int numberOfEnemys, int[] img, @Nullable String name){
-        //add enemy to list
-        for(int i=0; i <= numberOfEnemys; i++) {
+        //add enemy to list, numberOfEnemys-1 or the the enemy draws itself too!
+        for(int i=0; i <= numberOfEnemys-1; i++) {
             Enemy.enemyList.add(new Enemy(
-                    gameView.randomX(), gameView.randomY(),
+                                                                                                      // so 200 divided by the speed equals the amount of time, in which the enemys will spawn!
+                    RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 200),
+                    RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT/2, GameViewActivity.GAME_HEIGHT),
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedXmin, Constants.Actors.Enemy.speedXmax),
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
                     img, Constants.Actors.Enemy.defaultRotation, name));
-        }
-    }
-
-    //Returns the enemyList, ready for drawing, rendering etc.
-    public static List<Enemy> getEnemys(){
-        return enemyList;
-    }
-
-    /**
-     * And thats what i meant, GameObjects-update() method should be available for all members
-     * currently the method is only suitable for the player class.
-     *
-     * So we need to put the update() Logic from GameObject into the Player.class
-     * and offer a method that suits ALL subclasses.
-     *
-     * (So this method will later be the update() Method from the Enemy.class)
-     */
-
-    public void aimToPlayer(Player player) {
-        this.player = player; //not really necess
-
-        // move closer to Player
-        // 1 circle, run through all the enemys, see how they can optimate their position
-        // current speed per circle (Constants.Actors.Enemy.MOVING_SPEED = 10)
-        for (int i = 0; i < enemyList.size(); i++){
-
-            if(player.getPosX() < enemyList.get(i).getPosX())
-                enemyList.get(i).setPosX(enemyList.get(i).getPosX() - enemyList.get(i).getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
-            else if(player.getPosX() > enemyList.get(i).getPosX())
-                enemyList.get(i).setPosX(enemyList.get(i).getPosX() + enemyList.get(i).getSpeedX());
-
-            if(player.getPosY() < enemyList.get(i).getPosY())
-                enemyList.get(i).setPosX(enemyList.get(i).getPosX() - enemyList.get(i).getSpeedX());
-            else if(player.getPosY() > enemyList.get(i).getPosY())
-                enemyList.get(i).setPosX(enemyList.get(i).getPosX() + enemyList.get(i).getSpeedX());
         }
     }
 }

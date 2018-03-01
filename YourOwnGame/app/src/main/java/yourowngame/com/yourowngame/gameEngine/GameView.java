@@ -105,10 +105,8 @@ public class GameView extends SurfaceView {
                 R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy");
 
         /** Enemy creation */
-        //todo heli img just for testing
-        Enemy.getInstance().createRandomEnemies(this, 150, new int[] {R.drawable.player_heli_blue_1}, "Enemy");
+        Enemy.getInstance().createRandomEnemies(this, 5, new int[] {R.drawable.enemy}, "Enemy");
 
-        /** other creations here */
     }
 
     //initialize components that do not match other categories
@@ -130,9 +128,8 @@ public class GameView extends SurfaceView {
                 //draw background
                 drawDynamicBackground(canvas);
 
-                /** TODO draw enemies (on level 1 every second will spawn 10 enemys etc..) */
-                // TODO: I cannot draw without drawable/bitmap of enemy (need to find icons for them)
-                Enemy.drawAllEnemies(this.getActivityContext(), canvas, loopCount);
+                //draw enemies
+                Enemy.getInstance().drawAllEnemies(this.getActivityContext(), canvas, loopCount);
 
                 //draw player
                 this.playerOne.draw(this.getActivityContext(), canvas, loopCount);
@@ -147,22 +144,6 @@ public class GameView extends SurfaceView {
         }
     }
 
-/**
- * This is somehow all kinda shit
- * This method should draw ALL kind of backgrounds, so if we are (f.e) in level 2
- * and there is another layer, this method should only create (by switch)
- * the appropriate layer and then draw it!
- *
- * like:
- *
- * a = BackgroundManager...get(2)
- * a.drawBackground(...)
- *
- * The GameView should only choose which Layer should be drawn and then draw it!
- * All other actions belong into either the Background.class or the Layer.class or the Manager.class
- *
- * IMPLEMENTED, just for reading & deleting
- */
 
 /** Please read: ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *  I strongly recommend that we always draw and update ALL backgroundlayers (arraylist in BackgroundManager).
@@ -171,6 +152,8 @@ public class GameView extends SurfaceView {
  *
  *  With this procedure we can e.g. use the cloud layer in level 0, 5, 8
  *  [also maybe in different orders --> as example: we could let other layers behind or before the cloud layer and so on! :)]
+ *
+ *  Sounds nice, lets keep on track
  * */
 
 
@@ -189,10 +172,14 @@ public class GameView extends SurfaceView {
         playerOne.update(null, this.touchHandler.isTouched(), false);
 
         //Update enemies
-
+        for (Enemy e : Enemy.getInstance().getEnemys())
+            e.aimToPlayer(playerOne);
 
         //Check if player hits the view's border
         if (playerOne.collision(this, playerOne))
+            exitGame();
+
+        if(Enemy.getInstance().collision(this, playerOne))
             exitGame();
 
         //Update background
@@ -205,10 +192,13 @@ public class GameView extends SurfaceView {
      * 2. Getters & Setters and all of that annoying methods *
      *********************************************************/
 
-    //returns a random x - Position on the screen
-    public double randomX() {
-        return Math.random() * getRootView().getWidth();
-    }
+    // Do not use,
+    // For random things use Random.class
+    // For Screen size use GameViewActivity params
+
+    //public double randomX() {
+     //   return Math.random() * getRootView().getWidth();
+    //}
 
     //returns a random y - Position on the screen
     public double randomY() {

@@ -25,7 +25,7 @@ public class LevelManager {
         createDefaultLevelList(); //for now, just use the default level order, which is chosen by us
     }
     public static LevelManager getInstance(@NonNull BackgroundManager backgroundManager) {
-        return (INSTANCE!=null) ? INSTANCE : new LevelManager(backgroundManager);
+        return (INSTANCE != null) ? INSTANCE : new LevelManager(backgroundManager);
     }
 
     //Heart of levelMgr: static so more comfortable to call [do not forget the drawback of SparseArrays when calling this method! (although I used valueAt())]
