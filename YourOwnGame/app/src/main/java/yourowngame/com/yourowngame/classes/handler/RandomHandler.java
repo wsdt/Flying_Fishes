@@ -23,11 +23,13 @@ public class RandomHandler {
         }
     }
 
+    /** returns a single Random Int */
     public static int getRandomInt(int minInt, int maxInt) {
         initiateRandom();
         return random.nextInt(maxInt-minInt+1)+minInt;
     }
 
+    /** returns a single Random Float*/
     public static float getRandomFloat(float minFloat, float maxFloat) {
         initiateRandom();
         return random.nextFloat()*(maxFloat-minFloat)+minFloat;

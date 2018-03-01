@@ -42,10 +42,10 @@ public interface Constants {
         interface Barrier {}
         interface Enemy {
             //max/min values so enemies can be created dynamically
-            float speedXmin = 1;
-            float speedXmax = 10; //could be also level dependent :)
-            float speedYmin = 1;
-            float speedYmax = 5;
+            float speedXmin = 0.1f;
+            float speedXmax = 1; //could be also level dependent :) this will surely be level dependent :)
+            float speedYmin = 0.1f;
+            float speedYmax = 1;
 
 
             float defaultRotation = 0;
