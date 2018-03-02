@@ -176,11 +176,21 @@ public class GameView extends SurfaceView {
             e.aimToPlayer(playerOne);
 
         //Check if player hits the view's border
-        if (playerOne.collision(this, playerOne))
+        if (playerOne.hitsTheGround(this, playerOne))
             exitGame();
 
-        if(Enemy.getInstance().collision(this, playerOne))
-            exitGame();
+        for (Enemy e : Enemy.getInstance().getEnemys()){
+
+            /** playerOne.getBitmap is not null, but the width/height might be.. but why? */
+            if(CollisionManager.checkForCollision(playerOne.getBitmap(), (int) playerOne.getPosX(), (int) playerOne.getPosY(), e.getBitmap(), (int) e.getPosX(), (int) e.getPosY()))
+                exitGame();
+
+            /** reference is set, but width is null.. */
+            // System.out.println(playerOne.getBitmap());
+            // System.out.println(playerOne.getBitmap().getWidth());
+            // System.out.println(playerOne.getBitmap().getHeight());
+
+        }
 
         //Update background
         BackgroundManager.getInstance(this).updateAllBackgroundLayers();
@@ -192,15 +202,7 @@ public class GameView extends SurfaceView {
      * 2. Getters & Setters and all of that annoying methods *
      *********************************************************/
 
-    // Do not use,
-    // For random things use Random.class
-    // For Screen size use GameViewActivity params
 
-    //public double randomX() {
-     //   return Math.random() * getRootView().getWidth();
-    //}
-
-    //returns a random y - Position on the screen
     public double randomY() {
         return Math.random() * getRootView().getHeight();
     }

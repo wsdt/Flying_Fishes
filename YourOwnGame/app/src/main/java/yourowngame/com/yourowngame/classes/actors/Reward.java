@@ -17,10 +17,6 @@ public class Reward extends GameObject {
 
     }
 
-    @Override
-    public boolean collision(View view, GameObject obj) {
-        return false;
-    }
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {

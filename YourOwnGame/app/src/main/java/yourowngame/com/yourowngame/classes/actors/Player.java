@@ -18,7 +18,7 @@ public class Player extends GameObject {
     private static final String TAG = "Player";
 
 
-    public Player(double posX, double posY, double speedX, double speedY, int img[],float rotationDegree, @Nullable String name) {
+    public Player(double posX, double posY, double speedX, double speedY, int img[], float rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img,rotationDegree, name);
 
     }
@@ -63,10 +63,9 @@ public class Player extends GameObject {
         }
     }
 
-    @Override
-    public boolean collision(View view, GameObject obj) {
+    public boolean hitsTheGround(View view, GameObject obj) {
         /** The only problem we've got here is, that we need to cut the helicopter images to the best!
-         the current PNG has a margin from about 10-20 pixel, which leads to a collision earlier!
+         the current PNG has a margin from about 10-20 pixel, which leads to a hitsTheGround earlier!
          So we'll need to cut all helicopte images to the maximum! then this method will work just fine*/
         //get the current player and View
         Player playerOne = (Player) obj;
