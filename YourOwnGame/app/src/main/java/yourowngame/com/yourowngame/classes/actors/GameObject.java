@@ -29,6 +29,7 @@ public abstract class GameObject {
     private String name;
     private int[] img;
     private Bitmap bitmap;
+    private Bitmap scaledBitmap; //used for drawing (scaling one time and saving here)
 
 
     public GameObject(double posX, double posY, double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name) {
@@ -58,7 +59,9 @@ public abstract class GameObject {
 
 
 
-    /** getCraftedDynamicBitmap:
+    /** TODO: To enhance performance THIS metho should be drastically minified (especially object allocations, scaling and rotating of bitmaps etc.)
+     *
+     * getCraftedDynamicBitmap:
      *
      * Creates a dynamic bitmap from a drawable res
      *
@@ -156,5 +159,4 @@ public abstract class GameObject {
     public void setImg(int[] img) {
         this.img = img;
     }
-
 }

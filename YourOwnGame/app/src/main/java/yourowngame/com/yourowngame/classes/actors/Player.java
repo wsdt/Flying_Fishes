@@ -1,7 +1,6 @@
 package yourowngame.com.yourowngame.classes.actors;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -19,17 +18,17 @@ public class Player extends GameObject {
 
 
     public Player(double posX, double posY, double speedX, double speedY, int img[], float rotationDegree, @Nullable String name) {
-        super(posX, posY, speedX, speedY, img,rotationDegree, name);
+        super(posX, posY, speedX, speedY, img, rotationDegree, name);
 
     }
 
     /**
-     * @param obj currently not used!
-     * @param goUp check if go up
+     * @param obj       currently not used!
+     * @param goUp      check if go up
      * @param goForward check if go forward
      */
     @Override
-    public void update(GameObject obj, @Nullable Boolean goUp, @Nullable  Boolean goForward) {
+    public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
 
         if (goForward == null && goUp == null) {
             Log.i(TAG, "update: Called update-method without a valid Boolean param!");
@@ -80,10 +79,7 @@ public class Player extends GameObject {
         float playerPosYWithoutImage = (float) playerOne.getPosY();
 
         //compares, if player hits ground or top
-        if(playerPosYWithImage > currentView.getLayout().getHeight() || playerPosYWithoutImage < 0)
-            return true;
-        else
-            return false;
+        return (playerPosYWithImage > currentView.getLayout().getHeight() || playerPosYWithoutImage < 0);
     }
 
     @Override
