@@ -28,11 +28,10 @@ public abstract class GameObject {
     private float rotationDegree; //rotation for simulating flying down/up
     private String name;
     private int[] img;
-    private Rectangle boundingBox;
+    private Bitmap bitmap;
 
 
     public GameObject(double posX, double posY, double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name) {
-        //super(activity);
         this.setPosX(posX);
         this.setPosY(posY);
         this.setSpeedX(speedX);
@@ -41,7 +40,6 @@ public abstract class GameObject {
         this.setName(name);
         this.setImg(img);
 
-        boundingBox = new Rectangle();
     }
     //Default constructor
     public GameObject(){}
@@ -54,11 +52,6 @@ public abstract class GameObject {
      */
     public abstract void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward);
 
-    /**
-     * @param obj check
-     * @return returns whether a collision happened or not!
-     */
-    public abstract boolean collision(View view, GameObject obj);
 
     /** @param loopCount: Loop count from GameLoopThread (given in redraw() method), with this we can create loop-dependent animations :)*/
     public abstract void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception;
@@ -74,6 +67,7 @@ public abstract class GameObject {
      * @param widthInPercent: reduce/enlarge width / if this param OR scaleHeight is null, both values get ignored! Use . as comma ;) --> Values MUST be higher than 0 and should not be higher than 1! (quality)
      * @param heightInPercent: same as scaleWidth. */
     public Bitmap getCraftedDynamicBitmap(@NonNull Activity context, int imgFrame, @Nullable Float rotationDegrees, @Nullable Float widthInPercent, @Nullable Float heightInPercent) throws NoDrawableInArrayFound_Exception {
+
         Log.d(TAG, "getCraftedBitmaps: Trying to craft bitmaps.");
         if (this.getImg().length <= imgFrame && this.getImg().length >= 1) {
                Log.e(TAG, "getCraftedDynamicBitmap: IndexOutOfBounds, could not determine correct drawable for animation. Returning drawable at index 0!");
@@ -83,25 +77,18 @@ public abstract class GameObject {
         Bitmap targetImg = BitmapFactory.decodeResource(context.getResources(), this.getImg()[imgFrame]);
         if (widthInPercent != null && heightInPercent != null) { //must be before rotationDegrees-If
             targetImg = Bitmap.createScaledBitmap(targetImg, (int) (targetImg.getWidth()*widthInPercent), (int) (targetImg.getHeight()*heightInPercent), true);
+
         } //not else if!
         if (rotationDegrees != null) {
             Matrix matrix = new Matrix();
             matrix.postRotate(rotationDegrees);
             targetImg = Bitmap.createBitmap(targetImg, 0, 0, targetImg.getWidth(), targetImg.getHeight(), matrix, true);
         } //not else if (we want to make several combinations)
+
+        setCurrentBitmap(targetImg); /** returning image crashes */
         return targetImg;
     }
 
-    /**
-     * Creates a simple Bitmap from a Drawable res
-     *
-     * @param context context (Always use Activity (subClass of context, when you need an Activity --> getResources won't work if you call this method from an object)
-     * @param img image to be drawn
-     * @return
-     */
-    public Bitmap getCraftedBitmap(@NonNull Activity context, int img){
-        return BitmapFactory.decodeResource(context.getResources(), img);
-    }
 
     public float getRotationDegree() {
         return rotationDegree;
@@ -113,6 +100,15 @@ public abstract class GameObject {
 
 
     /**GETTER/SETTER SHIT ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  * */
+
+    private void setCurrentBitmap(Bitmap b){
+        this.bitmap = b;
+    }
+
+    public Bitmap getBitmap(){
+        return bitmap;
+    }
+
     public double getPosX() {
         return posX;
     }

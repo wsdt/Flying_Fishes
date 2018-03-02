@@ -21,7 +21,7 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
  * during development rich value methods should be on Top
  * draw()
  * update()
- * collision()
+ * hitsTheGround()
  * aimToPlayer()
  *
  *
@@ -49,10 +49,7 @@ public class Enemy extends GameObject {
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {}
 
-    @Override
-    public boolean collision(View view, GameObject obj) {
-        return false;
-    }
+
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
