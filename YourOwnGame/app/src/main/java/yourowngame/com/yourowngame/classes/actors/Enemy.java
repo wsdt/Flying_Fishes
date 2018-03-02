@@ -2,6 +2,7 @@ package yourowngame.com.yourowngame.classes.actors;
 
 import android.app.Activity;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;

@@ -105,7 +105,7 @@ public class GameView extends SurfaceView {
                 R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy");
 
         /** Enemy creation */
-        Enemy.getInstance().createRandomEnemies(this, 5, new int[] {R.drawable.enemy}, "Enemy");
+        Enemy.getInstance().createRandomEnemies(this, 5, new int[] {R.drawable.player_heli_blue_1}, "Enemy");
 
     }
 
@@ -172,24 +172,20 @@ public class GameView extends SurfaceView {
         playerOne.update(null, this.touchHandler.isTouched(), false);
 
         //Update enemies
-        for (Enemy e : Enemy.getInstance().getEnemys())
+        for (Enemy e : Enemy.getInstance().getEnemys()) {
             e.aimToPlayer(playerOne);
 
-        //Check if player hits the view's border
-        if (playerOne.hitsTheGround(this, playerOne))
-            exitGame();
-
-        for (Enemy e : Enemy.getInstance().getEnemys()){
-
-            /** playerOne.getBitmap is not null, but the width/height might be.. but why? */
-            if(CollisionManager.checkForCollision(playerOne.getBitmap(), (int) playerOne.getPosX(), (int) playerOne.getPosY(), e.getBitmap(), (int) e.getPosX(), (int) e.getPosY()))
+            /** playerOne.getBitmap is not null, but the width/height might be.. but why?
+             * --> Presumably, because you call this in GameLoopThread also on top, so the first execution the bitmap
+             * might not drawn yet or similar */
+            if (CollisionManager.checkForCollision(this.playerOne, e)) {
                 exitGame();
+            }
+        }
 
-            /** reference is set, but width is null.. */
-            // System.out.println(playerOne.getBitmap());
-            // System.out.println(playerOne.getBitmap().getWidth());
-            // System.out.println(playerOne.getBitmap().getHeight());
-
+        //Check if player hits the view's border
+        if (playerOne.hitsTheGround(this, playerOne)) {
+            exitGame();
         }
 
         //Update background
