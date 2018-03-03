@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ public class BackgroundLayer_Clouds extends Background {
      */
     public BackgroundLayer_Clouds(@NonNull BackgroundManager backgroundManager, int[] img, String name, float backgroundSpeed) {
         super(backgroundManager, img, name, backgroundSpeed);
-        this.craftClouds(img, Constants.Background.layer1_clouds.anzahlClouds); //also sets simultaneously
     }
 
     /**
@@ -113,8 +113,22 @@ public class BackgroundLayer_Clouds extends Background {
         Log.d(TAG, "craftClouds: Trying to craft clouds.");
         for (int i = 0; i < numberOfClouds; i++) {
             //position of X & Y now set in the Constructor (for easier reading)
-            this.getCraftedClouds().add(new Cloud(BitmapFactory.decodeResource(this.getGameView().getResources(), imgs[RandomHandler.getRandomInt(0,imgs.length-1)])));
+            this.getCraftedClouds().add(new Cloud(BitmapFactory.decodeResource(this.getGameView().getResources(), imgs[RandomHandler.getRandomInt(0, imgs.length - 1)])));
         }
+    }
+
+    /** allObjs == NULL */
+    @Override
+    @SafeVarargs
+    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+        this.craftClouds(this.getImg(), Constants.Background.layer1_clouds.anzahlClouds); //also sets simultaneously
+        return true;
+    }
+
+    @Override
+    public boolean cleanup() {
+        this.craftedClouds = null;
+        return true;
     }
 
 }

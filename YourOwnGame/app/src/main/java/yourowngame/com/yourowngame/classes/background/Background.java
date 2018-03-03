@@ -10,6 +10,7 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 import yourowngame.com.yourowngame.gameEngine.GameView;
+import yourowngame.com.yourowngame.gameEngine.Initializer;
 
 /**
  * Created on 18.02.2018.
@@ -20,7 +21,7 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
  * TODO exception handling
  */
 
-public abstract class Background {
+public abstract class Background implements Initializer {
     private static final String TAG = "Background";
     private int[] img;
     private String name;

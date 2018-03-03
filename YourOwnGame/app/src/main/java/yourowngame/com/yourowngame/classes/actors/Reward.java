@@ -23,4 +23,13 @@ public class Reward extends GameObject {
 
     }
 
+    @Override @SafeVarargs
+    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+        return false;
+    }
+
+    @Override
+    public boolean cleanup() {
+        return false;
+    }
 }

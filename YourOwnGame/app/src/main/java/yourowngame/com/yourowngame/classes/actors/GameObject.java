@@ -20,16 +20,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
+import yourowngame.com.yourowngame.gameEngine.Initializer;
 
 
-public abstract class GameObject {
+public abstract class GameObject implements Initializer {
     private static final String TAG = "GameObject";
     private double posX, posY, speedX, speedY;
     private float rotationDegree; //rotation for simulating flying down/up
     private String name;
     private int[] img;
-    private Bitmap bitmap;
-    private Bitmap scaledBitmap; //used for drawing (scaling one time and saving here)
+    private Bitmap currentBitmap; //just a reference for other classes, so they know which bitmap is active (for collision calculation etc.)
 
 
     public GameObject(double posX, double posY, double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name) {
@@ -88,7 +88,6 @@ public abstract class GameObject {
             targetImg = Bitmap.createBitmap(targetImg, 0, 0, targetImg.getWidth(), targetImg.getHeight(), matrix, true);
         } //not else if (we want to make several combinations)
 
-        setCurrentBitmap(targetImg);
         return targetImg;
     }
 
@@ -103,14 +102,6 @@ public abstract class GameObject {
 
 
     /**GETTER/SETTER SHIT ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  * */
-
-    private void setCurrentBitmap(Bitmap b){
-        this.bitmap = b;
-    }
-
-    public Bitmap getBitmap(){
-        return bitmap;
-    }
 
     public double getPosX() {
         return posX;
@@ -158,5 +149,13 @@ public abstract class GameObject {
 
     public void setImg(int[] img) {
         this.img = img;
+    }
+
+    public Bitmap getCurrentBitmap() {
+        return currentBitmap;
+    }
+
+    public void setCurrentBitmap(Bitmap currentBitmap) {
+        this.currentBitmap = currentBitmap;
     }
 }
