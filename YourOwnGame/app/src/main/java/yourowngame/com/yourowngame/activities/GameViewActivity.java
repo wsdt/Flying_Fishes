@@ -26,11 +26,10 @@ public class GameViewActivity extends AppCompatActivity {
     private static final String TAG = "GameViewActivity";
     private FrameLayout gameLayout;
     private Player playerOne;
-    private Bitmap map; //just for testing purpose
     public static int GAME_HEIGHT;
     public static int GAME_WIDTH;
 
-    private boolean isTouched = false; //Screen is touched, player will move (DrawablePanel manages this)
+
 
     //(1.) Initialize objects
     @Override

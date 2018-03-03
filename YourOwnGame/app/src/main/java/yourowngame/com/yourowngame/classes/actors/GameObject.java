@@ -88,7 +88,7 @@ public abstract class GameObject {
             targetImg = Bitmap.createBitmap(targetImg, 0, 0, targetImg.getWidth(), targetImg.getHeight(), matrix, true);
         } //not else if (we want to make several combinations)
 
-        setCurrentBitmap(targetImg); /** returning image crashes */
+        setCurrentBitmap(targetImg);
         return targetImg;
     }
 

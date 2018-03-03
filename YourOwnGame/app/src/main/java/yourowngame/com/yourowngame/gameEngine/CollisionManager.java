@@ -51,7 +51,7 @@ public class CollisionManager {
 
                 try {
                     for (int i = collisionArea.left; i < collisionArea.right; i++) {
-                        for (int j = collisionArea.top; j < collisionArea.bottom; i++) {
+                        for (int j = collisionArea.top; j < collisionArea.bottom; j++) {
                             int bitmap1Pixel = playerBitmap.getPixel(i - playerPosX, j - playerPosY);
                             int bitmap2Pixel = enemyBitmap.getPixel(i - enemyPosX, j - enemyPosY);
                             if (hasNoTransparentBackground(bitmap1Pixel) && hasNoTransparentBackground(bitmap2Pixel))
@@ -76,7 +76,7 @@ public class CollisionManager {
         int left =   Math.max(rect1.left, rect2.left);
         int top =    Math.max(rect1.top, rect2.top);
         int right =  Math.min(rect1.right, rect2.right);
-        int bottom = Math.max(rect1.bottom, rect2.bottom);
+        int bottom = Math.min(rect1.bottom, rect2.bottom);
 
         return new Rect(left, top, right, bottom);
     }

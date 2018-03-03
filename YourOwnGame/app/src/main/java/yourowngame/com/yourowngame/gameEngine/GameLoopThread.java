@@ -41,6 +41,8 @@ public class GameLoopThread extends Thread {
         long countRenderedCycles = 0;
         Looper.prepare(); //necessary for handlers etc.
 
+        /** start initializing here, if finished, start gameLoop! */
+
         while(isRunning){
             Log.d(TAG, "run: Game loop got started.");
             c = null;

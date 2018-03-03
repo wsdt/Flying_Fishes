@@ -105,7 +105,7 @@ public class GameView extends SurfaceView {
                 R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy");
 
         /** Enemy creation */
-        Enemy.getInstance().createRandomEnemies(this, 5, new int[] {R.drawable.player_heli_blue_1}, "Enemy");
+        Enemy.getInstance().createRandomEnemies(this, 5, new int[] {R.drawable.enemy}, "Enemy");
 
     }
 
@@ -125,13 +125,13 @@ public class GameView extends SurfaceView {
             canvas.drawColor(0, PorterDuff.Mode.CLEAR); //remove previous bitmaps etc. (it does not work to set here only bg color!, because of mode)
 
             try {
-                //draw background
+                // (1.) draw background
                 drawDynamicBackground(canvas);
 
-                //draw enemies
+                // (2.) draw enemies
                 Enemy.getInstance().drawAllEnemies(this.getActivityContext(), canvas, loopCount);
 
-                //draw player
+                // (3.) draw player
                 this.playerOne.draw(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
@@ -175,9 +175,6 @@ public class GameView extends SurfaceView {
         for (Enemy e : Enemy.getInstance().getEnemys()) {
             e.aimToPlayer(playerOne);
 
-            /** playerOne.getBitmap is not null, but the width/height might be.. but why?
-             * --> Presumably, because you call this in GameLoopThread also on top, so the first execution the bitmap
-             * might not drawn yet or similar */
             if (CollisionManager.checkForCollision(this.playerOne, e)) {
                 exitGame();
             }
