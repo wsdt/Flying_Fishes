@@ -21,9 +21,6 @@ public class OnTouchHandler implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
 
-        //Should (not!) always start at false --> so we can hold our finger on screen and jump up continously
-        //isTouched = false;
-
         if(action == MotionEvent.ACTION_DOWN) {
             Log.d(TAG, "onTouch: Screen got touched!");
             isTouched = true;
