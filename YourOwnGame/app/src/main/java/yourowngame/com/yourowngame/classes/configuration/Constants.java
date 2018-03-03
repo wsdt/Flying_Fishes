@@ -51,6 +51,8 @@ public interface Constants {
             float defaultRotation = 0;
             float rotationFlyingUp = 10;
             float rotationFlyingDown = -10;
+            float widthPercentage = 0.35f;
+            float heightPercentage = 0.35f;
         }
         interface Player {
             float defaultRotation = 0;

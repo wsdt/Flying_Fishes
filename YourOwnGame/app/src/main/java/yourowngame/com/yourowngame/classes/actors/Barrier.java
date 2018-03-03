@@ -23,4 +23,13 @@ public class Barrier extends GameObject {
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {}
 
 
+    @Override @SafeVarargs
+    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+        return false;
+    }
+
+    @Override
+    public boolean cleanup() {
+        return false;
+    }
 }

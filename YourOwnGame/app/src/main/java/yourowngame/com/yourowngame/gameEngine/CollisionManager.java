@@ -32,8 +32,8 @@ public class CollisionManager {
      * @return           -> returns true if 1 pixel of both bitmaps is no transparent (-> hitsTheGround)
      */
     public static boolean checkForCollision(@NonNull Player player, @NonNull Enemy enemy) { //<-- more readable and less error-prone
-        Bitmap playerBitmap = player.getBitmap();
-        Bitmap enemyBitmap = enemy.getBitmap();
+        Bitmap playerBitmap = player.getCurrentBitmap();
+        Bitmap enemyBitmap = enemy.getCurrentBitmap();
 
         //Only check for collision if bitmaps are not null (if null, then just return that no collision happened)
         if (playerBitmap != null && enemyBitmap != null) {

@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.classes.actors;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -37,6 +39,10 @@ public class Enemy extends GameObject {
     private static List<Enemy> enemyList = new ArrayList<>();
     private Player player;
 
+    // PRE LOADED ---------------
+    private HashMap<String, Bitmap> loadedBitmaps;
+
+
     public static Enemy getInstance() {
         return INSTANCE == null ? INSTANCE = new Enemy() : INSTANCE;
     }
@@ -54,8 +60,8 @@ public class Enemy extends GameObject {
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        canvas.drawBitmap(this.getCraftedDynamicBitmap(activity, ((int) loopCount % this.getImg().length),
-                this.getRotationDegree(), Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage), (int) this.getPosX(), (int) this.getPosY(), null);
+        this.setCurrentBitmap(this.getLoadedBitmaps().get(this.getRotationDegree()+"_"+((int) loopCount % this.getImg().length)));
+        canvas.drawBitmap(this.getCurrentBitmap(),(int) this.getPosX(), (int) this.getPosY(), null);
     }
 
     public void aimToPlayer(Player player) {
@@ -90,6 +96,7 @@ public class Enemy extends GameObject {
     }
 
     //So we have all parameters we need quite compact in the GameView.class (by creation)
+    //TODO: Current design says this method is called in init() of GameView, but it would be in future maybe more object-oriented if we do that in initialize() below
     public void createRandomEnemies(GameView gameView, int numberOfEnemys, int[] img, @Nullable String name){
         //add enemy to list, numberOfEnemys-1 or the the enemy draws itself too!
         for(int i=0; i <= numberOfEnemys-1; i++) {
@@ -101,5 +108,53 @@ public class Enemy extends GameObject {
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
                     img, Constants.Actors.Enemy.defaultRotation, name));
         }
+    }
+
+    /** OBJ[0]: Activity */
+    @Override @SafeVarargs
+    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+        try {
+            if (allObjs != null) {
+                Log.d(TAG, "initialize: allObjs is not null.");
+                Log.d(TAG, "initialize: AllObj: "+allObjs[0]);
+                if (allObjs[0] instanceof Activity) {
+                    Log.d(TAG, "initialize: Starting with bitmap extraction.");
+                    Activity activity = (Activity) allObjs[0];
+
+                    /*Load all bitmaps [load all rotations and all images from array] -------------------
+                    * String of hashmap has following pattern: */
+                    HashMap<String, Bitmap> loadedBitmaps = new HashMap<>();
+                    Log.d(TAG, "initialize: Enemy img length: "+this.getImg());
+                    for (int imgFrame = 0;imgFrame<this.getImg().length;imgFrame++) {
+                        loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingUp + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Enemy.rotationFlyingUp, Constants.Actors.Enemy.widthPercentage, Constants.Actors.Enemy.heightPercentage));
+                        loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingDown + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Enemy.rotationFlyingUp, Constants.Actors.Enemy.widthPercentage, Constants.Actors.Enemy.heightPercentage));
+                    }
+                    this.setLoadedBitmaps(loadedBitmaps);
+                }
+            } else {return false;}
+        } catch (ClassCastException | NullPointerException | NoDrawableInArrayFound_Exception e) {
+            //This should never be thrown! Just check in try block if null and if instance of to prevent issues!
+            Log.e(TAG, "initialize: Initializing of Player object FAILED! See error below.");
+            e.printStackTrace();
+            return false;
+        }
+        Log.d(TAG, "initialize: Tried to initialize Enemy object!");
+
+        return true;
+    }
+
+    @Override
+    public boolean cleanup() {
+        this.setLoadedBitmaps(null);
+        return true;
+    }
+
+    //GETTER/SETTER -----------------------------------
+    public HashMap<String, Bitmap> getLoadedBitmaps() {
+        return loadedBitmaps;
+    }
+
+    public void setLoadedBitmaps(HashMap<String, Bitmap> loadedBitmaps) {
+        this.loadedBitmaps = loadedBitmaps;
     }
 }

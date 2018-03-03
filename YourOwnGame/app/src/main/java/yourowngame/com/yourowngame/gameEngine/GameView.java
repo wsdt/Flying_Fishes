@@ -107,6 +107,11 @@ public class GameView extends SurfaceView {
         /** Enemy creation */
         Enemy.getInstance().createRandomEnemies(this, 5, new int[] {R.drawable.enemy}, "Enemy");
 
+        //after above initliaze bitmaps etc.
+        /** TODO: Setting instances with image arrays above, BUT WHY the FUCK is img array in initialize() NULL? */
+        playerOne.initialize(this.getActivityContext());
+        Enemy.getInstance().initialize(this.getActivityContext());
+
     }
 
     //initialize components that do not match other categories
@@ -181,7 +186,7 @@ public class GameView extends SurfaceView {
         }
 
         //Check if player hits the view's border
-        if (playerOne.hitsTheGround(this, playerOne)) {
+        if (playerOne.hitsTheGround(this)) {
             exitGame();
         }
 
