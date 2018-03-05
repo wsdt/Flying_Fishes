@@ -42,6 +42,7 @@ public class GameLoopThread extends Thread {
         Looper.prepare(); //necessary for handlers etc.
 
         /** start initializing here, if finished, start gameLoop! */
+        /** view.initialize(); <-- this call should initialize all needed objects for the level*/
 
         while(isRunning){
             Log.d(TAG, "run: Game loop got started.");

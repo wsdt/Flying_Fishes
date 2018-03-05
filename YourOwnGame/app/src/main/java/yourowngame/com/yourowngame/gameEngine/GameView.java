@@ -49,7 +49,6 @@ public class GameView extends SurfaceView {
         initGameObjects();
         initComponents();
 
-
         /**************************************
          * Start of the Surface & Thread Page *
          **************************************/
@@ -105,12 +104,14 @@ public class GameView extends SurfaceView {
                 R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy");
 
         /** Enemy creation */
-        Enemy.getInstance().createRandomEnemies(this, 5, new int[] {R.drawable.enemy}, "Enemy");
+        Enemy.getInstance().createRandomEnemies(this, 5, new int[] {R.drawable.enemy, R.drawable.enemy}, "Enemy");
 
-        //after above initliaze bitmaps etc.
-        /** TODO: Setting instances with image arrays above, BUT WHY the FUCK is img array in initialize() NULL? */
+        //works
         playerOne.initialize(this.getActivityContext());
+
+        //works, but not shown
         Enemy.getInstance().initialize(this.getActivityContext());
+
 
     }
 
@@ -133,7 +134,7 @@ public class GameView extends SurfaceView {
                 // (1.) draw background
                 drawDynamicBackground(canvas);
 
-                // (2.) draw enemies
+                // (2.) draw enemies, remove comment if player succeeds!
                 Enemy.getInstance().drawAllEnemies(this.getActivityContext(), canvas, loopCount);
 
                 // (3.) draw player
@@ -199,7 +200,6 @@ public class GameView extends SurfaceView {
    /*********************************************************
      * 2. Getters & Setters and all of that annoying methods *
      *********************************************************/
-
 
     public double randomY() {
         return Math.random() * getRootView().getHeight();
