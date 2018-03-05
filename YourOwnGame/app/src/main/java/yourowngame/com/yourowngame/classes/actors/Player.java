@@ -86,10 +86,9 @@ public class Player extends GameObject {
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
         this.setCurrentBitmap(loadedBitmaps.get(this.getRotationDegree()+"_"+((int) loopCount%this.getImg().length))); //reference for collision detection etc.
+        //works, the bitmaps are referenced!
+        Log.d(TAG, "current Bitmap is: " + getCurrentBitmap());
         canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
-
-        /*canvas.drawBitmap(this.getCraftedDynamicBitmap(activity, ((int) loopCount % this.getImg().length),
-                this.getRotationDegree(), Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage), (int) this.getPosX(), (int) this.getPosY(), null);*/
     }
 
     //PRELOADING -----------------------------------
@@ -106,10 +105,10 @@ public class Player extends GameObject {
                     /*Load all bitmaps [load all rotations and all images from array] -------------------
                     * String of hashmap has following pattern: */
                     HashMap<String, Bitmap> loadedBitmaps = new HashMap<>();
-                    Log.d(TAG, "initialize: Player img length: "+this.getImg());
-                    for (int imgFrame = 0;imgFrame<this.getImg().length;imgFrame++) {
-                        loadedBitmaps.put(Constants.Actors.Player.rotationFlyingUp + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Player.rotationFlyingUp, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
-                        loadedBitmaps.put(Constants.Actors.Player.rotationFlyingDown + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Player.rotationFlyingUp, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
+                    Log.d(TAG, "initialize: Player img length: "+ this.getImg());
+                    for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
+                        loadedBitmaps.put(Constants.Actors.Player.rotationFlyingUp + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, this.getImg()[imgFrame], Constants.Actors.Player.rotationFlyingUp, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
+                        loadedBitmaps.put(Constants.Actors.Player.rotationFlyingDown + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, this.getImg()[imgFrame], Constants.Actors.Player.rotationFlyingUp, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
                     }
                     this.setLoadedBitmaps(loadedBitmaps);
                 }
@@ -122,7 +121,7 @@ public class Player extends GameObject {
             e.printStackTrace();
             return false;
         }
-        Log.d(TAG, "initialize: Tried to initialize Player object!");
+        Log.d(TAG, "initialize: Initializing Player class successful!");
         return true;
     }
 

@@ -53,11 +53,8 @@ public abstract class GameObject implements Initializer {
      */
     public abstract void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward);
 
-
     /** @param loopCount: Loop count from GameLoopThread (given in redraw() method), with this we can create loop-dependent animations :)*/
     public abstract void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception;
-
-
 
     /** TODO: To enhance performance THIS metho should be drastically minified (especially object allocations, scaling and rotating of bitmaps etc.)
      *
