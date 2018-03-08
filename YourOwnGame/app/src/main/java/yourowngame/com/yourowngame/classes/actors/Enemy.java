@@ -13,11 +13,14 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.annotations.TestingPurpose;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
@@ -65,14 +68,29 @@ public class Enemy extends GameObject {
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
+        printAllBitmapsToLog();
+
         for (Enemy enemy : getEnemys()) {
             //set the bitmap, here is the bug, getLoadedBitmaps() returns null, need to sleep now, im done haha
             //does also not belong here!
             enemy.setCurrentBitmap(enemy.getLoadedBitmaps().get(enemy.getRotationDegree() + "_" + ((int) loopCount % enemy.getImg().length)));
-            Log.d(TAG, "Enemy getBitmap = " + enemy.getLoadedBitmaps().get(enemy.getRotationDegree() + "_" + ((int) loopCount % enemy.getImg().length)));
+            Log.d(TAG, "draw: Enemy getBitmap = " + enemy.getRotationDegree() + "_" + ((int) loopCount % enemy.getImg().length));
             //draw the enemy
             canvas.drawBitmap(enemy.getCurrentBitmap(), (int) enemy.getPosX(), (int) enemy.getPosY(), null);
         }
+    }
+
+
+    @TestingPurpose (
+            lastModified = "08.03.2018 11:30",
+            createdBy = Constants.Developers.WSDT
+    )
+    private void printAllBitmapsToLog() {
+        Log.d(TAG, "printAllBitmapsToLog: Printing all loaded bitmaps to screen.");
+        for (Map.Entry bitmap : getEnemys().get(0).getLoadedBitmaps().entrySet()) {
+            Log.d(TAG, "printAllBitmapsToLog: Bitmap found: "+bitmap.getKey());
+        }
+        Log.d(TAG, "printAllBitmapsToLog: Method ended.");
     }
 
 
@@ -129,6 +147,8 @@ public class Enemy extends GameObject {
                         for (int imgFrame = 0; imgFrame < currentEnemy.getImg().length; imgFrame++) {
                                 //Just create the f* bitmap and pass it onto the currentEnemy
                                 loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingUp + "_" + imgFrame, createBitmap(activity, currentEnemy, imgFrame));
+                            loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingDown + "_" + imgFrame, createBitmap(activity, currentEnemy, imgFrame));
+                            loadedBitmaps.put(Constants.Actors.Enemy.defaultRotation + "_" + imgFrame, createBitmap(activity, currentEnemy, imgFrame));
                                 Log.d(TAG, "Created a bitmap! = " + loadedBitmaps.size());
 
                                 // NOT WORKING, @GetCraftedDynamicBitmap will not work here!

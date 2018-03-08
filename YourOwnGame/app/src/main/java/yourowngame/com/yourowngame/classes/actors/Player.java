@@ -109,6 +109,7 @@ public class Player extends GameObject {
                     for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
                         loadedBitmaps.put(Constants.Actors.Player.rotationFlyingUp + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, this.getImg()[imgFrame], Constants.Actors.Player.rotationFlyingUp, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
                         loadedBitmaps.put(Constants.Actors.Player.rotationFlyingDown + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, this.getImg()[imgFrame], Constants.Actors.Player.rotationFlyingUp, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
+                        loadedBitmaps.put(Constants.Actors.Player.defaultRotation + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, this.getImg()[imgFrame], Constants.Actors.Player.rotationFlyingUp, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
                     }
                     this.setLoadedBitmaps(loadedBitmaps);
                 }
