@@ -88,7 +88,6 @@ public abstract class GameObject implements Initializer {
         return targetImg;
     }
 
-
     public float getRotationDegree() {
         return rotationDegree;
     }

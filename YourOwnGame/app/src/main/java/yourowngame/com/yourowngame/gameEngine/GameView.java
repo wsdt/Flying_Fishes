@@ -45,7 +45,7 @@ public class GameView extends SurfaceView {
         /** Get the layout-res */
         layout = context.getView();
 
-        /** Initialize GameObjects & eq here! */
+        /** Initialize GameObjects & eq here! After initializing, the GameLoop will start!*/
         initGameObjects();
         initComponents();
 
@@ -79,22 +79,7 @@ public class GameView extends SurfaceView {
         });
     }
 
-    public void exitGame() {
-        Toast.makeText(this.getActivityContext(), "Game over", Toast.LENGTH_SHORT).show(); //TODO: why does this shit not show up
-        boolean retry = true;
-        thread.setRunning(false);
-        Log.d(TAG, "exitGame: Trying to exit game."); //but this is logged?
-        while (retry) {
-            try {
-                Log.d(TAG, "exitGame: Trying to join threads.");
-                thread.join();
-                retry = false;
-                this.getActivityContext().finish(); //todo: does not work
-            } catch (InterruptedException | ClassCastException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
 
     //initialize components that match GameObject()
     private void initGameObjects() {
@@ -104,12 +89,10 @@ public class GameView extends SurfaceView {
                 R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy");
 
         /** Enemy creation */
-        Enemy.getInstance().createRandomEnemies(this, 5, new int[] {R.drawable.enemy, R.drawable.enemy}, "Enemy");
+        Enemy.getInstance().createRandomEnemies(5, new int[] {R.drawable.enemy, R.drawable.enemy});
 
-        //works
+        /** Initializing */
         playerOne.initialize(this.getActivityContext());
-
-        //works, but not shown
         Enemy.getInstance().initialize(this.getActivityContext());
 
 
@@ -123,7 +106,6 @@ public class GameView extends SurfaceView {
     /***************************
      * 1. Draw GameObjects here *
      ***************************/
-
     public void redraw(Canvas canvas, long loopCount) { //Create separate method, so we could add some things here
         Log.d(TAG, "redraw: Trying to invalidate/redraw GameView.");
         if (canvas != null) {
@@ -134,8 +116,9 @@ public class GameView extends SurfaceView {
                 // (1.) draw background
                 drawDynamicBackground(canvas);
 
-                // (2.) draw enemies, remove comment if player succeeds!
-                Enemy.getInstance().drawAllEnemies(this.getActivityContext(), canvas, loopCount);
+                // (2.) draw enemies
+                Enemy.getInstance().draw(this.getActivityContext(), canvas, loopCount);
+                //Enemy.getInstance().drawAllEnemies(this.getActivityContext(), canvas, loopCount);
 
                 // (3.) draw player
                 this.playerOne.draw(this.getActivityContext(), canvas, loopCount);
@@ -165,7 +148,6 @@ public class GameView extends SurfaceView {
 
     /** Gets all Layers & draws them! */
     public void drawDynamicBackground(@NonNull Canvas canvas) {
-        //Get current Layer
         BackgroundManager.getInstance(this).drawAllBackgroundLayers(canvas);
     }
 
@@ -196,9 +178,29 @@ public class GameView extends SurfaceView {
     }
 
 
+    /*********************************************************
+     * 3. Game Over Methods *
+     *********************************************************/
+    public void exitGame() {
+        Toast.makeText(this.getActivityContext(), "Game over", Toast.LENGTH_SHORT).show(); //TODO: why does this shit not show up
+        boolean retry = true;
+        thread.setRunning(false);
+        Log.d(TAG, "exitGame: Trying to exit game."); //but this is logged?
+        while (retry) {
+            try {
+                Log.d(TAG, "exitGame: Trying to join threads.");
+                thread.join();
+                retry = false;
+                this.getActivityContext().finish(); //todo: does not work
+            } catch (InterruptedException | ClassCastException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
    /*********************************************************
-     * 2. Getters & Setters and all of that annoying methods *
+     * 4. Getters & Setters and all of that annoying methods *
      *********************************************************/
 
     public double randomY() {
