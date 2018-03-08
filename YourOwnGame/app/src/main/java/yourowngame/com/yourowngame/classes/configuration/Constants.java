@@ -17,7 +17,10 @@ package yourowngame.com.yourowngame.classes.configuration;
  */
 
 public interface Constants {
-    interface Configuration {}
+    interface Developers {
+        String WSDT = "Kevin Riedl (WSDT)";
+        String SOLUTION = "Christof Jori (SOLUTION)";
+    }
 
     interface Ads {
         String admobAppId = "ca-app-pub-8160960481527784~7542998003";
