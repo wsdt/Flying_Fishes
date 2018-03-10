@@ -83,30 +83,6 @@ public class Enemy extends GameObject {
     }
 
 
-    @TestingPurpose (
-            lastModified = "08.03.2018 11:30",
-            createdBy = Constants.Developers.WSDT
-    )
-    private void printAllBitmapsToLog() {
-        Log.d(TAG, "printAllBitmapsToLog: Printing all loaded bitmaps to screen.");
-        for (Map.Entry bitmap : getEnemys().get(0).getLoadedBitmaps().entrySet()) {
-            Log.d(TAG, "printAllBitmapsToLog: Bitmap found: "+bitmap.getKey());
-        }
-        Log.d(TAG, "printAllBitmapsToLog: Method ended.");
-    }
-
-
-    @Deprecated //do not use
-    public void drawAllEnemies(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (Enemy enemy : getEnemys()) {
-            enemy.draw(activity, canvas, loopCount);
-        }
-        if (getEnemys().size() <= 0) { //i am sure this will happen to us ^^
-            Log.w(TAG, "drawAllEnemies: No enemies found. Maybe you did not call createRandomEnemies()!");
-        }
-    }
-
-
     //TODO: Current design says this method is called in init() of GameView, but it would be in future maybe more object-oriented if we do that in initialize() below
     //TODO: i would say the method should be called separately.. but let's flip for it! :D
     /**Should be static, because this method has nothing to do with an instance itself.*/
