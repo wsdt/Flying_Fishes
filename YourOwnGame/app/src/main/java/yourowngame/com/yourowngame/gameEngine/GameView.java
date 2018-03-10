@@ -8,6 +8,9 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Player;
+import yourowngame.com.yourowngame.classes.actors.Projectile;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 
@@ -32,6 +36,7 @@ public class GameView extends SurfaceView {
     private Player playerOne;
     private OnTouchHandler touchHandler;
     private FrameLayout layout;
+    private EditText munition;
     //DO NOT USE THIS (use LevelManager.CURRENT_LEVEL) XX private int level = 0; /** for Background-drawing, amount of enemys etc. */
 
     private GameView(Context context) {
@@ -42,7 +47,7 @@ public class GameView extends SurfaceView {
         super(context);
         this.setActivityContext(context);
 
-        /** Get the layout-res */
+        /** Initialize View Components */
         layout = context.getView();
 
         /** Initialize GameObjects & eq here! After initializing, the GameLoop will start!*/
@@ -91,15 +96,20 @@ public class GameView extends SurfaceView {
         /** Enemy creation */
         Enemy.getInstance().createRandomEnemies(5, new int[] {R.drawable.enemy, R.drawable.enemy});
 
-        /** Initializing */
+        /** Initializing Player*/
         playerOne.initialize(this.getActivityContext());
-        Enemy.getInstance().initialize(this.getActivityContext());
 
+        /** Initializing Enemy */
+        Enemy.getInstance().initialize(this.getActivityContext());
 
     }
 
     //initialize components that do not match other categories
     private void initComponents() {
+        /** add Projectile listener */
+        Button shoot = (Button) activityContext.findViewById(R.id.shoot);
+        shoot.setOnClickListener(new OnClickHandler());
+        /** create OnTouchHandler */
         touchHandler = new OnTouchHandler();
     }
 
@@ -117,17 +127,19 @@ public class GameView extends SurfaceView {
                 drawDynamicBackground(canvas);
 
                 // (2.) draw enemies
-                Enemy.getInstance().draw(this.getActivityContext(), canvas, loopCount);
-                //Enemy.getInstance().drawAllEnemies(this.getActivityContext(), canvas, loopCount);
+                //Enemy.getInstance().draw(this.getActivityContext(), canvas, loopCount);
 
                 // (3.) draw player
-                this.playerOne.draw(this.getActivityContext(), canvas, loopCount);
+                playerOne.draw(this.getActivityContext(), canvas, loopCount);
+
+                // (4.) draw Projectiles
+                playerOne.drawProjectiles(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
                 Log.e(TAG, "redraw: Could not draw images.");
                 e.printStackTrace();
             }
-            Log.d(TAG, "Tried to draw animationdrawable.");
+            Log.d(TAG, "redraw: SUCCESS");
         } else {
             exitGame();
         }
@@ -156,19 +168,24 @@ public class GameView extends SurfaceView {
      * 2. Update GameObjects here *
      *****************************/
     public void updateGameObjects() {
-        //Update the player handling                    should only be true if player collects box or equivalent!
+        /** (1.) update the Player*/                    //should only be true if player collects box or equivalent!
         playerOne.update(null, this.touchHandler.isTouched(), false);
 
-        //Update enemies
+        /** (2.) update the Enemy*/
         for (Enemy e : Enemy.getInstance().getEnemys()) {
             e.aimToPlayer(playerOne);
+
+            Log.d(TAG, "X|Y = " + e.getPosX() + "|" + e.getPosY());
 
             if (CollisionManager.checkForCollision(this.playerOne, e)) {
                 exitGame();
             }
         }
 
-        //Check if player hits the view's border
+        /** update the Bullets*/
+        this.playerOne.updateProjectiles();
+
+       /** Check Collision with Border */
         if (playerOne.hitsTheGround(this)) {
             exitGame();
         }
@@ -217,5 +234,24 @@ public class GameView extends SurfaceView {
 
     public void setActivityContext(Activity activityContext) {
         this.activityContext = activityContext;
+    }
+
+    /**
+     * And thats our sweet OnClickHandler, which will choose between the buttons and action!
+     */
+    class OnClickHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            switch(v.getId()){
+
+                //user touched the fire-button
+                case R.id.shoot:
+                    playerOne.addProjectiles();
+                    break;
+
+                //user touched the move button (which will be later, or we keep the current UI!)
+            }
+
+        }
     }
 }

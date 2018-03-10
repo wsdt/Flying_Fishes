@@ -1,7 +1,10 @@
 package yourowngame.com.yourowngame.activities;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.hardware.display.DisplayManager;
+import android.support.annotation.NonNull;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -28,7 +31,7 @@ public class GameViewActivity extends AppCompatActivity {
     private Player playerOne;
     public static int GAME_HEIGHT;
     public static int GAME_WIDTH;
-
+    private String munition;
 
 
     //(1.) Initialize objects
@@ -44,7 +47,6 @@ public class GameViewActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: Trying to load game.");
         setGameLayout((FrameLayout) findViewById(R.id.gameViewLayout));
-
 
         /** Master-call, create GameView*/
         getGameLayout().addView(new GameView(this));
