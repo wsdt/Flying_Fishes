@@ -49,8 +49,6 @@ public class Projectile extends GameObject {
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {
-        //TODO: following line will be removed in future by initialize
-        //this.setCurrentBitmap(BitmapFactory.decodeResource(activity.getResources(),R.drawable.color_player_bullet));
         canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
