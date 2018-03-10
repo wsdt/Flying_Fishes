@@ -9,8 +9,12 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.gameEngine.GameView;
@@ -19,6 +23,10 @@ import yourowngame.com.yourowngame.gameEngine.Initializer;
 
 public class Player extends GameObject {
     private static final String TAG = "Player";
+    private static final String TAG2 = "Projectile";
+
+    //holds all the projectiles the player shoots
+    private List<Projectile> projectileList = new ArrayList<>();
 
     /*-- Preloaded --*/
     private int intrinsicHeightOfPlayer;
@@ -27,7 +35,6 @@ public class Player extends GameObject {
 
     public Player(double posX, double posY, double speedX, double speedY, int img[], float rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
-
     }
 
     /**
@@ -71,10 +78,6 @@ public class Player extends GameObject {
     }
 
     public boolean hitsTheGround(@NonNull GameView currentView) {
-        /** The only problem we've got here is, that we need to cut the helicopter images to the best!
-         the current PNG has a margin from about 10-20 pixel, which leads to a hitsTheGround earlier!
-         So we'll need to cut all helicopte images to the maximum! then this method will work just fine*/
-
         //Gets the scaled-size of the current player image
         float playerPosYWithImage = (float) this.getPosY() + (this.getIntrinsicHeightOfPlayer() * Constants.GameLogic.GameView.widthInPercentage);
         float playerPosYWithoutImage = (float) this.getPosY();
@@ -85,11 +88,13 @@ public class Player extends GameObject {
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
+        //SET current Bitmap, LOAD current Bitmap, DRAW current Bitmap
         this.setCurrentBitmap(loadedBitmaps.get(this.getRotationDegree()+"_"+((int) loopCount%this.getImg().length))); //reference for collision detection etc.
-        //works, the bitmaps are referenced!
-        Log.d(TAG, "current Bitmap is: " + getCurrentBitmap());
+
         canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
+
+
 
     //PRELOADING -----------------------------------
 
@@ -112,6 +117,9 @@ public class Player extends GameObject {
                         loadedBitmaps.put(Constants.Actors.Player.defaultRotation + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, this.getImg()[imgFrame], Constants.Actors.Player.rotationFlyingUp, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
                     }
                     this.setLoadedBitmaps(loadedBitmaps);
+                    this.setHeightOfBitmap(loadedBitmaps.get(Constants.Actors.Player.rotationFlyingUp + "_" + 0).getHeight());
+                    this.setWidthOfBitmap(loadedBitmaps.get(Constants.Actors.Player.rotationFlyingUp + "_" + 0).getWidth());
+                    Log.d(TAG, "HEIGHT of Bitmap = " + getHeightOfBitmap());
                 }
             } else {
                 return false;
@@ -126,6 +134,8 @@ public class Player extends GameObject {
         return true;
     }
 
+
+
     @Override
     public boolean cleanup() {
         //Set to illegal values/null
@@ -134,7 +144,42 @@ public class Player extends GameObject {
         return true;
     }
 
-    //GETTER/SETTER -------------------------------
+    /***********************************************
+     *             PROJECTILES AREA                *
+     ***********************************************/
+
+    public void addProjectiles(){
+        projectileList.add(new Projectile(this.getPosX() + this.getWidthOfBitmap()/2, this.getPosY() + this.getHeightOfBitmap()/2, 10, 0, new int[]{R.drawable.bullet}, 0, "bullet"));
+    }
+
+    public void drawProjectiles(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount){
+        for (Projectile e : this.projectileList)
+            e.draw(activity, canvas, loopCount);
+    }
+
+    //Here we need to access the array backwards, otherwise we will remove an index, that will be progressed, but isn't there anymore!
+    public void updateProjectiles(){
+        Log.d(TAG2, "Projectile Size = " + this.projectileList.size());
+        if(!this.projectileList.isEmpty()){
+            for (int i = this.projectileList.size() - 1; i > -1; i--){
+                this.projectileList.get(i).update(null, null, null);
+
+                if (this.projectileList.get(i).getPosX() > GameViewActivity.GAME_WIDTH){
+                    Log.e(TAG2, "Bullet removed!");
+                    this.projectileList.remove(this.projectileList.get(i));
+                }
+            }
+        }
+    }
+
+    /*************************
+     *  GETTER & SETTER      *
+     *************************/
+
+    public List getProjectiles(){
+        return projectileList;
+    }
+
     public int getIntrinsicHeightOfPlayer() {
         return intrinsicHeightOfPlayer;
     }

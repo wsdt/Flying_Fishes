@@ -68,14 +68,13 @@ public class Enemy extends GameObject {
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        printAllBitmapsToLog();
+       // printAllBitmapsToLog();
 
         for (Enemy enemy : getEnemys()) {
-            //set the bitmap, here is the bug, getLoadedBitmaps() returns null, need to sleep now, im done haha
-            //does also not belong here!
+            //set the current bitmap
             enemy.setCurrentBitmap(enemy.getLoadedBitmaps().get(enemy.getRotationDegree() + "_" + ((int) loopCount % enemy.getImg().length)));
             Log.d(TAG, "draw: Enemy getBitmap = " + enemy.getRotationDegree() + "_" + ((int) loopCount % enemy.getImg().length));
-            //draw the enemy
+            //draw the current bitmap
             canvas.drawBitmap(enemy.getCurrentBitmap(), (int) enemy.getPosX(), (int) enemy.getPosY(), null);
         }
     }
@@ -145,16 +144,11 @@ public class Enemy extends GameObject {
                         Log.d(TAG, "enemy length = " + getEnemys().size());
                         Log.d(TAG, "enemy img length = " + currentEnemy.getImg().length);
                         for (int imgFrame = 0; imgFrame < currentEnemy.getImg().length; imgFrame++) {
-                                //Just create the f* bitmap and pass it onto the currentEnemy
-                                loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingUp + "_" + imgFrame, createBitmap(activity, currentEnemy, imgFrame));
+
+                            loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingUp + "_" + imgFrame, createBitmap(activity, currentEnemy, imgFrame));
                             loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingDown + "_" + imgFrame, createBitmap(activity, currentEnemy, imgFrame));
                             loadedBitmaps.put(Constants.Actors.Enemy.defaultRotation + "_" + imgFrame, createBitmap(activity, currentEnemy, imgFrame));
                                 Log.d(TAG, "Created a bitmap! = " + loadedBitmaps.size());
-
-                                // NOT WORKING, @GetCraftedDynamicBitmap will not work here!
-                                // loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingUp + "_" + imgFrame, getCraftedDynamicBitmap(activity, e.getImg()[imgFrame], Constants.Actors.Enemy.rotationFlyingUp, Constants.Actors.Enemy.widthPercentage, Constants.Actors.Enemy.heightPercentage));
-                                // loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingDown + "_" + imgFrame, getCraftedDynamicBitmap(activity, e.getImg()[imgFrame], Constants.Actors.Enemy.rotationFlyingUp, Constants.Actors.Enemy.widthPercentage, Constants.Actors.Enemy.heightPercentage));
-                                // Log.d(TAG, "Bitmap added" + loadedBitmaps.size());
                         }
                         currentEnemy.setLoadedBitmaps(loadedBitmaps);
                     }
@@ -190,6 +184,7 @@ public class Enemy extends GameObject {
                 enemyList.get(i).setPosX(enemyList.get(i).getPosX() - enemyList.get(i).getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
             else if(player.getPosX() > enemyList.get(i).getPosX())
                 enemyList.get(i).setPosX(enemyList.get(i).getPosX() + enemyList.get(i).getSpeedX());
+
 
             if(player.getPosY() < enemyList.get(i).getPosY())
                 enemyList.get(i).setPosY(enemyList.get(i).getPosY() - enemyList.get(i).getSpeedY());

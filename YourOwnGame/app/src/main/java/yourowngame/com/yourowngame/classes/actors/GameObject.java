@@ -30,6 +30,7 @@ public abstract class GameObject implements Initializer {
     private String name;
     private int[] img;
     private Bitmap currentBitmap; //just a reference for other classes, so they know which bitmap is active (for collision calculation etc.)
+    private int heightOfBitmap, widthOfBitmap;
 
 
     public GameObject(double posX, double posY, double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name) {
@@ -88,6 +89,11 @@ public abstract class GameObject implements Initializer {
         return targetImg;
     }
 
+    public Bitmap createSimpleBitmap(@NonNull Activity context, int img){
+        return BitmapFactory.decodeResource(context.getResources(), img);
+    }
+
+
     public float getRotationDegree() {
         return rotationDegree;
     }
@@ -97,7 +103,24 @@ public abstract class GameObject implements Initializer {
     }
 
 
+
     /**GETTER/SETTER SHIT ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  * */
+
+    public int getHeightOfBitmap() {
+        return heightOfBitmap;
+    }
+
+    public void setHeightOfBitmap(int heightOfBitmap) {
+        this.heightOfBitmap = heightOfBitmap;
+    }
+
+    public int getWidthOfBitmap() {
+        return widthOfBitmap;
+    }
+
+    public void setWidthOfBitmap(int widthOfBitmap) {
+        this.widthOfBitmap = widthOfBitmap;
+    }
 
     public double getPosX() {
         return posX;

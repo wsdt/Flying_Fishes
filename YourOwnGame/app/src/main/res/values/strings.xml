@@ -17,5 +17,7 @@
     <string name="adManager_error_couldNotLoadAd">Could not load ad. Do you have internet?</string>
     <string name="adManager_msg_rewardAd_whatIsMyReward">After watching this video you spawn a few seconds before the game was over.</string>
     <string name="adManager_success_rewardAd_rewardReceived">You can now continue your game :)</string>
+    <string name="Shoot">Shoot!</string>
+    <string name="munition">Munition: 500/500</string>
 
 </resources>
