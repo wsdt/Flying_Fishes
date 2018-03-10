@@ -2,14 +2,13 @@ package yourowngame.com.yourowngame.gameEngine;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -18,9 +17,10 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Player;
-import yourowngame.com.yourowngame.classes.actors.Projectile;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.classes.handler.DialogMgr;
+import yourowngame.com.yourowngame.classes.handler.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 
 /**
  * Created by Solution on 16.02.2018.
@@ -89,27 +89,27 @@ public class GameView extends SurfaceView {
     //initialize components that match GameObject()
     private void initGameObjects() {
         /** Player creation*/
-        playerOne = new Player(100, getRootView().getHeight() / 4, 5, 2, new int[]{
+        setPlayerOne(new Player(100, getRootView().getHeight() / 4, 5, 2, new int[]{
                 R.drawable.player_heli_blue_1, R.drawable.player_heli_blue_2, R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_4,
-                R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy");
+                R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy"));
 
         /** Enemy creation */
         int[] enemyArray = new int[] {R.drawable.enemy};
         Enemy.createRandomEnemies(5, enemyArray);
 
         /** Initializing Player*/
-        playerOne.initialize(this.getActivityContext());
+        getPlayerOne().initialize(this.getActivityContext());
 
         /** Initializing Enemy */
         Enemy.getInstance(enemyArray).initialize(this.getActivityContext());
 
+        /** Initializes() of backgrounds are in constructor itself */
     }
 
     //initialize components that do not match other categories
     private void initComponents() {
-        /** add Projectile listener */
-        Button shoot = (Button) activityContext.findViewById(R.id.shoot);
-        shoot.setOnClickListener(new OnClickHandler());
+        /*Moved onclick listener to activity (where it belongs)*/
+
         /** create OnTouchHandler */
         touchHandler = new OnTouchHandler();
     }
@@ -131,10 +131,10 @@ public class GameView extends SurfaceView {
                 Enemy.getInstance(null).draw(this.getActivityContext(), canvas, loopCount);
 
                 // (3.) draw player
-                playerOne.draw(this.getActivityContext(), canvas, loopCount);
+                getPlayerOne().draw(this.getActivityContext(), canvas, loopCount);
 
                 // (4.) draw Projectiles
-                playerOne.drawProjectiles(this.getActivityContext(), canvas, loopCount);
+                getPlayerOne().drawProjectiles(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
                 Log.e(TAG, "redraw: Could not draw images.");
@@ -145,19 +145,6 @@ public class GameView extends SurfaceView {
             exitGame();
         }
     }
-
-
-/** Please read: ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- *  I strongly recommend that we always draw and update ALL backgroundlayers (arraylist in BackgroundManager).
- *  Which this we can have more amazing backgrounds and can also reuse single layers by just adding them to the BackgroundManager arraylist.
- *  So, for level-change (at least for the background) we just have to change/rearrange the Arraylist in BackgroundManager.
- *
- *  With this procedure we can e.g. use the cloud layer in level 0, 5, 8
- *  [also maybe in different orders --> as example: we could let other layers behind or before the cloud layer and so on! :)]
- *
- *  Sounds nice, lets keep on track
- * */
-
 
     /** Gets all Layers & draws them! */
     public void drawDynamicBackground(@NonNull Canvas canvas) {
@@ -170,24 +157,24 @@ public class GameView extends SurfaceView {
      *****************************/
     public void updateGameObjects() {
         /** (1.) update the Player*/                    //should only be true if player collects box or equivalent!
-        playerOne.update(null, this.touchHandler.isTouched(), false);
+        getPlayerOne().update(null, this.touchHandler.isTouched(), false);
 
         /** (2.) update the Enemy*/
         for (Enemy e : Enemy.getInstance(null).getEnemys()) {
-            e.aimToPlayer(playerOne);
+            e.aimToPlayer(getPlayerOne());
 
             Log.d(TAG, "X|Y = " + e.getPosX() + "|" + e.getPosY());
 
-            if (CollisionManager.checkForCollision(this.playerOne, e)) {
+            if (CollisionManager.checkForCollision(this.getPlayerOne(), e)) {
                 exitGame();
             }
         }
 
         /** update the Bullets*/
-        this.playerOne.updateProjectiles();
+        this.getPlayerOne().updateProjectiles();
 
        /** Check Collision with Border */
-        if (playerOne.hitsTheGround(this)) {
+        if (getPlayerOne().hitsTheGround(this)) {
             exitGame();
         }
 
@@ -206,7 +193,26 @@ public class GameView extends SurfaceView {
         Log.d(TAG, "exitGame: Trying to exit game."); //but this is logged?
         while (retry) {
             try {
-                Log.d(TAG, "exitGame: Trying to join threads.");
+                Log.d(TAG, "exitGame: Trying to join threads and showing dialog before.");
+                Resources res = getActivityContext().getResources();
+                //TODO: Sth has to be wrong with context
+                (new DialogMgr(this.getActivityContext())).showDialog_Generic(
+                        res.getString(R.string.dialog_generic_gameOver_title),
+                        res.getString(R.string.dialog_generic_gameOver_msg),
+                        res.getString(R.string.dialog_generic_button_positive_gameOverAccept),
+                        res.getString(R.string.dialog_generic_button_negative_gameOverRevive),
+                        R.drawable.app_icon_gameboy, new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
+                            @Override
+                            public void success_is_true() {
+                                //todo: End everything here in future, so we could resume game when entering failure_is_false :)
+                            }
+
+                            @Override
+                            public void failure_is_false() {
+
+                            }
+                        }
+                );
                 thread.join();
                 retry = false;
                 this.getActivityContext().finish(); //todo: does not work
@@ -237,22 +243,11 @@ public class GameView extends SurfaceView {
         this.activityContext = activityContext;
     }
 
-    /**
-     * And thats our sweet OnClickHandler, which will choose between the buttons and action!
-     */
-    class OnClickHandler implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            switch(v.getId()){
+    public Player getPlayerOne() {
+        return playerOne;
+    }
 
-                //user touched the fire-button
-                case R.id.shoot:
-                    playerOne.addProjectiles();
-                    break;
-
-                //user touched the move button (which will be later, or we keep the current UI!)
-            }
-
-        }
+    public void setPlayerOne(Player playerOne) {
+        this.playerOne = playerOne;
     }
 }

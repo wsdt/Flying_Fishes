@@ -17,6 +17,19 @@
     <string name="adManager_error_couldNotLoadAd">Could not load ad. Do you have internet?</string>
     <string name="adManager_msg_rewardAd_whatIsMyReward">After watching this video you spawn a few seconds before the game was over.</string>
     <string name="adManager_success_rewardAd_rewardReceived">You can now continue your game :)</string>
+
+    <!-- DialogMgr -->
+    <string name="dialog_generic_error_title">Dialog error</string>
+    <string name="dialog_generic_error_msg">No text found. Please contact administrator.</string>
+    <string name="dialog_generic_button_positive">OK</string>
+    <string name="dialog_generic_button_negative">Cancel</string>
+    <!-- DialogMgr:GameExit/Over -->
+    <string name="dialog_generic_gameOver_title">Game over</string>
+    <string name="dialog_generic_gameOver_msg">You died!</string>
+    <string name="dialog_generic_button_positive_gameOverAccept">OK</string>
+    <string name="dialog_generic_button_negative_gameOverRevive">Revive</string><!-- TODO: In future with watching rewarded ad -->
+
+    <!-- TODO: Jori Strings (Please categorize also with id WILL get really confusing in future) -->
     <string name="Shoot">Shoot!</string>
     <string name="munition">Munition: 500/500</string>
 

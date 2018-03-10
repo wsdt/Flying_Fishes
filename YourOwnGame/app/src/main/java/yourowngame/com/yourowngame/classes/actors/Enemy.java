@@ -66,6 +66,9 @@ public class Enemy extends GameObject {
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {}
 
 
+    /** BAD DESIGN: Drawing all instances in a non-static method of an arbitrary instance!
+     * --> We should really make an separate instance for Enemy (EnemyFactory or similar)
+     * --> Recommendation: Nested class like in BackgroundLayer-Clouds*/
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
        // printAllBitmapsToLog();

@@ -92,7 +92,6 @@ public class Player extends GameObject {
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
         //SET current Bitmap, LOAD current Bitmap, DRAW current Bitmap
-        //TODO: Animation not displayed (I think bc bitmaps are so fast changed, that we don't see other drawables, maybe use the same int[]imgIndex several times before changing)
         this.setCurrentBitmap(loadedBitmaps.get(this.getRotationDegree()+"_"+((int) loopCount%this.getImg().length))); //reference for collision detection etc.
         Log.d(TAG, "draw: Tried to draw bitmap index: "+this.getRotationDegree()+"_"+((int) loopCount%this.getImg().length)+"/Bitmap->"+this.getCurrentBitmap());
 
@@ -158,7 +157,7 @@ public class Player extends GameObject {
      ***********************************************/
 
     public void addProjectiles(){
-        projectileList.add(new Projectile(this.getPosX() + this.getWidthOfBitmap()/2, this.getPosY() + this.getHeightOfBitmap()/2, 10, 0, new int[]{R.drawable.bullet}, 0, "bullet"));
+        projectileList.add(new Projectile(this.getPosX() + this.getWidthOfBitmap()/2, this.getPosY() + this.getHeightOfBitmap()/2, 10, 0, new int[]{R.drawable.color_player_bullet}, 0, "bullet"));
     }
 
     public void drawProjectiles(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount){
