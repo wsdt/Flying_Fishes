@@ -51,16 +51,16 @@ public interface Constants {
             float speedYmax = 1;
 
 
-            float defaultRotation = 0;
-            float rotationFlyingUp = 10;
-            float rotationFlyingDown = -10;
+            int defaultRotation = 0;
+            int rotationFlyingUp = 10;
+            int rotationFlyingDown = -10;
             float widthPercentage = 0.35f;
             float heightPercentage = 0.35f;
         }
         interface Player {
-            float defaultRotation = 0;
-            float rotationFlyingUp = 5;
-            float rotationFlyingDown = -5;
+            int defaultRotation = 0;
+            int rotationFlyingUp = 5;
+            int rotationFlyingDown = -5;
             float widthPercentage = 0.35f;
             float heightPercentage = 0.35f;
         }

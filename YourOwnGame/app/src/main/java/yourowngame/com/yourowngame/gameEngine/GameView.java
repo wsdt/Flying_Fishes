@@ -94,13 +94,14 @@ public class GameView extends SurfaceView {
                 R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy");
 
         /** Enemy creation */
-        Enemy.getInstance().createRandomEnemies(5, new int[] {R.drawable.enemy, R.drawable.enemy});
+        int[] enemyArray = new int[] {R.drawable.enemy};
+        Enemy.createRandomEnemies(5, enemyArray);
 
         /** Initializing Player*/
         playerOne.initialize(this.getActivityContext());
 
         /** Initializing Enemy */
-        Enemy.getInstance().initialize(this.getActivityContext());
+        Enemy.getInstance(enemyArray).initialize(this.getActivityContext());
 
     }
 
@@ -127,7 +128,7 @@ public class GameView extends SurfaceView {
                 drawDynamicBackground(canvas);
 
                 // (2.) draw enemies
-                //Enemy.getInstance().draw(this.getActivityContext(), canvas, loopCount);
+                Enemy.getInstance(null).draw(this.getActivityContext(), canvas, loopCount);
 
                 // (3.) draw player
                 playerOne.draw(this.getActivityContext(), canvas, loopCount);
@@ -172,7 +173,7 @@ public class GameView extends SurfaceView {
         playerOne.update(null, this.touchHandler.isTouched(), false);
 
         /** (2.) update the Enemy*/
-        for (Enemy e : Enemy.getInstance().getEnemys()) {
+        for (Enemy e : Enemy.getInstance(null).getEnemys()) {
             e.aimToPlayer(playerOne);
 
             Log.d(TAG, "X|Y = " + e.getPosX() + "|" + e.getPosY());

@@ -26,21 +26,21 @@ import yourowngame.com.yourowngame.gameEngine.Initializer;
 public abstract class GameObject implements Initializer {
     private static final String TAG = "GameObject";
     private double posX, posY, speedX, speedY;
-    private float rotationDegree; //rotation for simulating flying down/up
+    private int rotationDegree; //rotation for simulating flying down/up
     private String name;
-    private int[] img;
+    private int[] img; //must not be static (overwriding)
     private Bitmap currentBitmap; //just a reference for other classes, so they know which bitmap is active (for collision calculation etc.)
     private int heightOfBitmap, widthOfBitmap;
 
 
-    public GameObject(double posX, double posY, double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name) {
+    public GameObject(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         this.setPosX(posX);
         this.setPosY(posY);
         this.setSpeedX(speedX);
         this.setSpeedY(speedY);
         this.setRotationDegree(rotationDegree);
         this.setName(name);
-        this.setImg(img);
+        setImg(img);
 
     }
     //Default constructor
@@ -57,8 +57,7 @@ public abstract class GameObject implements Initializer {
     /** @param loopCount: Loop count from GameLoopThread (given in redraw() method), with this we can create loop-dependent animations :)*/
     public abstract void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception;
 
-    /** TODO: To enhance performance THIS metho should be drastically minified (especially object allocations, scaling and rotating of bitmaps etc.)
-     *
+    /**
      * getCraftedDynamicBitmap:
      *
      * Creates a dynamic bitmap from a drawable res
@@ -67,11 +66,11 @@ public abstract class GameObject implements Initializer {
      * @param rotationDegrees: how much should be image tilted or rotated? (in degrees) / if null then image won't be rotated
      * @param widthInPercent: reduce/enlarge width / if this param OR scaleHeight is null, both values get ignored! Use . as comma ;) --> Values MUST be higher than 0 and should not be higher than 1! (quality)
      * @param heightInPercent: same as scaleWidth. */
-    public Bitmap getCraftedDynamicBitmap(@NonNull Activity context, int imgFrame, @Nullable Float rotationDegrees, @Nullable Float widthInPercent, @Nullable Float heightInPercent) throws NoDrawableInArrayFound_Exception {
+    public Bitmap getCraftedDynamicBitmap(@NonNull Activity context, int imgFrame, @Nullable Integer rotationDegrees, @Nullable Float widthInPercent, @Nullable Float heightInPercent) throws NoDrawableInArrayFound_Exception {
 
         Log.d(TAG, "getCraftedBitmaps: Trying to craft bitmaps.");
         if (this.getImg().length <= imgFrame && this.getImg().length >= 1) {
-               Log.e(TAG, "getCraftedDynamicBitmap: IndexOutOfBounds, could not determine correct drawable for animation. Returning drawable at index 0!");
+               Log.e(TAG, "getCraftedDynamicBitmap: IndexOutOfBounds, could not determine correct drawable for animation. Returning drawable at index 0! Provided imgFrame: "+imgFrame);
                imgFrame = 0;
         } else if (this.getImg().length <= 0) { throw new NoDrawableInArrayFound_Exception("getCraftedDynamicBitmap: FATAL EXCEPTION->Integer array (getImg()) has no content! Could not return bitmap."); }
         //not else (because despite normal if method should continue)
@@ -94,11 +93,11 @@ public abstract class GameObject implements Initializer {
     }
 
 
-    public float getRotationDegree() {
+    public int getRotationDegree() {
         return rotationDegree;
     }
 
-    public void setRotationDegree(float rotationDegree) {
+    public void setRotationDegree(int rotationDegree) {
         this.rotationDegree = rotationDegree;
     }
 
