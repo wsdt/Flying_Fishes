@@ -49,18 +49,18 @@ public class Enemy extends GameObject {
     private Player player;
 
     // PRE LOADED ---------------
-    private HashMap<String, Bitmap> loadedBitmaps;
+    private HashMap<String, Bitmap> loadedBitmaps = new HashMap<>();
 
 
-    public static Enemy getInstance() {
-        return INSTANCE == null ? INSTANCE = new Enemy() : INSTANCE;
+    /** TODO: Current design is shit: We should allow here nullable, to avoid further design issues [otherwise we would have to give array always when
+     * TODO: we need the instance. BUT with this design we HAVE TO ensure that instance is already set so null img array is not needed]*/
+    public static Enemy getInstance(@Nullable int[] img) {
+        return INSTANCE == null ? INSTANCE = Enemy.returnRandomEnemy(img) /*Do not use here a default constructor!*/ : INSTANCE;
     }
 
-    public Enemy(double posX, double posY, double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name) {
+    public Enemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
     }
-
-    private Enemy(){};
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {}
@@ -106,15 +106,20 @@ public class Enemy extends GameObject {
 
     //TODO: Current design says this method is called in init() of GameView, but it would be in future maybe more object-oriented if we do that in initialize() below
     //TODO: i would say the method should be called separately.. but let's flip for it! :D
-    public void createRandomEnemies(int numberOfEnemys, int[] img) {
+    /**Should be static, because this method has nothing to do with an instance itself.*/
+    public static void createRandomEnemies(int numberOfEnemys, int[] img) {
         for (int i = 0; i <= numberOfEnemys; i++) {
-            getInstance().enemyList.add(new Enemy(
-                    RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 200),
-                    RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT / 2, GameViewActivity.GAME_HEIGHT),
-                    RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedXmin, Constants.Actors.Enemy.speedXmax),
-                    RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
-                    img, Constants.Actors.Enemy.defaultRotation, "Enemy Nr._" + i+1));
+            getInstance(img).enemyList.add(returnRandomEnemy(img));
         }
+    }
+    //Should be static (for getInstance)
+    private static Enemy returnRandomEnemy(int[] img) {
+        return new Enemy(
+                RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 200),
+                RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT / 2, GameViewActivity.GAME_HEIGHT),
+                RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedXmin, Constants.Actors.Enemy.speedXmax),
+                RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
+                img, Constants.Actors.Enemy.defaultRotation, "Random enemy: "+RandomHandler.getRandomInt(0,100000)/*Just for generating random id (debugging)*/);
     }
 
     /** OBJ[0]: Activity
@@ -138,23 +143,25 @@ public class Enemy extends GameObject {
                     /*Load all bitmaps [load all rotations and all images from array] -------------------
                     * String of hashmap has following pattern: */
 
-                    loadedBitmaps = new HashMap<>();
+                    //Outside loop (because same hashmap, same references!)
+                    for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
+                            /*@Jori: Please read comment in createBitmap()*/
+                        loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingUp + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Enemy.rotationFlyingUp, Constants.Actors.Enemy.widthPercentage, Constants.Actors.Enemy.heightPercentage)/*createBitmap(activity, currentEnemy, imgFrame)*/);
+                        loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingDown + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Enemy.rotationFlyingDown, Constants.Actors.Enemy.widthPercentage, Constants.Actors.Enemy.heightPercentage));
+                        loadedBitmaps.put(Constants.Actors.Enemy.defaultRotation + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Enemy.defaultRotation, Constants.Actors.Enemy.widthPercentage, Constants.Actors.Enemy.heightPercentage));
+                        Log.d(TAG, "initialize: Generated bitmaps->"+Constants.Actors.Enemy.rotationFlyingUp + "_" + imgFrame+"//"+
+                                Constants.Actors.Enemy.rotationFlyingDown + "_" + imgFrame+"//"+
+                                Constants.Actors.Enemy.defaultRotation + "_" + imgFrame);
+                    }
 
+                    //Now set hashmap for all enemies
                     for(Enemy currentEnemy : getEnemys()) {
                         Log.d(TAG, "enemy length = " + getEnemys().size());
-                        Log.d(TAG, "enemy img length = " + currentEnemy.getImg().length);
-                        for (int imgFrame = 0; imgFrame < currentEnemy.getImg().length; imgFrame++) {
-
-                            loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingUp + "_" + imgFrame, createBitmap(activity, currentEnemy, imgFrame));
-                            loadedBitmaps.put(Constants.Actors.Enemy.rotationFlyingDown + "_" + imgFrame, createBitmap(activity, currentEnemy, imgFrame));
-                            loadedBitmaps.put(Constants.Actors.Enemy.defaultRotation + "_" + imgFrame, createBitmap(activity, currentEnemy, imgFrame));
-                                Log.d(TAG, "Created a bitmap! = " + loadedBitmaps.size());
-                        }
                         currentEnemy.setLoadedBitmaps(loadedBitmaps);
                     }
                 }
             } else {return false;}
-        } catch (ClassCastException | NullPointerException e) {
+        } catch (ClassCastException | NullPointerException | NoDrawableInArrayFound_Exception e) {
             //This should never be thrown! Just check in try block if null and if instance of to prevent issues!
             Log.e(TAG, "initialize: Initializing of Enemy object FAILED! See error below.");
             e.printStackTrace();
@@ -195,7 +202,13 @@ public class Enemy extends GameObject {
 
     /** Class intern method for creating bitmaps, getCr...Bitmap wont work, because of this-reference
      * i just implemented a just-get-a-fucking-img-method, because we really need to enhance our current
-     * getCraftedDynamicDrawable-method, neither did I exception handling*/
+     * getCraftedDynamicDrawable-method, neither did I exception handling
+     *
+     * --> Yes we should enhance our getCraftedDynamicBitmap, BUT if we do we should not forget about implementing
+     * scaling, rotating the bitmap [otherwise we would save the same bitmap references multiple times in the hashmap
+     * AND would loose the functionality for animating our bitmaps. So for now, I would say we keep the working method
+     * until some things work. */
+    @Deprecated
     public Bitmap createBitmap(Activity context, Enemy e, int imgFrame){
         return BitmapFactory.decodeResource(context.getResources(), e.getImg()[imgFrame]);
     }

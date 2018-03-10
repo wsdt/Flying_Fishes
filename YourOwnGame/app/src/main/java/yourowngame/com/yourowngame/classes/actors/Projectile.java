@@ -34,7 +34,7 @@ public class Projectile extends GameObject {
     private final String TAG = "Projectile";
     private Bitmap projectile;
 
-    public Projectile(double posX, double posY, double speedX, double speedY, int[] img, float rotationDegree, @Nullable String name) {
+    public Projectile(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
         Log.d(TAG, "New Projectile ready to fire!");
     }
