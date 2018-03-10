@@ -32,11 +32,13 @@ import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exc
 
 public class Projectile extends GameObject {
     private final String TAG = "Projectile";
-    private Bitmap projectile;
+    //Static so we can avoid bitmap creation when firing
+    private static Bitmap sharedBitmap; //TODO: Bad design, because we have made currentBitmap() a non-static member, so we have to do this! :( [maybe we can change that in future]
 
-    public Projectile(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+    public Projectile(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
         Log.d(TAG, "New Projectile ready to fire!");
+        initialize(activity);
     }
 
 
@@ -47,20 +49,46 @@ public class Projectile extends GameObject {
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {
-        this.setCurrentBitmap(BitmapFactory.decodeResource(activity.getResources(), this.getImg()[0]));
+        //TODO: following line will be removed in future by initialize
+        //this.setCurrentBitmap(BitmapFactory.decodeResource(activity.getResources(),R.drawable.color_player_bullet));
         canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
     /** OBJ[0]: Activity */
     @Override @SafeVarargs
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+        try {
+            if (allObjs != null) {
+                if (allObjs[0] instanceof Activity) {
+                    if (getSharedBitmap() == null) { //only do it if null (performance enhancement)
+                        setSharedBitmap(this.getCraftedDynamicBitmap((Activity) allObjs[0],this.getImg().length-1 /*just use first img (works as long as no animation)*/,null,null,null));
+                        Log.d(TAG, "initialize: Shared Bitmap->"+getSharedBitmap());
+                    }
+                    //Always set bullet
+                    this.setCurrentBitmap(getSharedBitmap()); //todo: bad design (but here to avoid further error when calculating collisions with projectiles etc.)
+                }
+            }
+        } catch (ClassCastException | NullPointerException | NoDrawableInArrayFound_Exception e) {
+            Log.e(TAG, "initialize: Could not initialize Projectiles!");
+            e.printStackTrace();
+        }
        return true;
     }
 
 
     @Override
     public boolean cleanup() {
-        return false;
+        setSharedBitmap(null);
+        return true;
+    }
+
+    //GETTER/SETTER ---------------------------
+    public static Bitmap getSharedBitmap() {
+        return sharedBitmap;
+    }
+
+    public static void setSharedBitmap(Bitmap sharedBitmap) {
+        Projectile.sharedBitmap = sharedBitmap;
     }
 
 }
