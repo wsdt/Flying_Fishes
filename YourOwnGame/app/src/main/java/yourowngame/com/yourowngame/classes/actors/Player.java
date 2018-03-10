@@ -156,8 +156,8 @@ public class Player extends GameObject {
      *             PROJECTILES AREA                *
      ***********************************************/
 
-    public void addProjectiles(){
-        projectileList.add(new Projectile(this.getPosX() + this.getWidthOfBitmap()/2, this.getPosY() + this.getHeightOfBitmap()/2, 10, 0, new int[]{R.drawable.color_player_bullet}, 0, "bullet"));
+    public void addProjectiles(@NonNull Activity activity){
+        projectileList.add(new Projectile(activity,this.getPosX() + this.getWidthOfBitmap()/2, this.getPosY() + this.getHeightOfBitmap()/2, 10, 0, new int[]{R.drawable.color_player_bullet}, 0, "bullet"));
     }
 
     public void drawProjectiles(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount){

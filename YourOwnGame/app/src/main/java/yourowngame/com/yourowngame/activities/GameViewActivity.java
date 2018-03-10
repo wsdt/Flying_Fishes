@@ -61,7 +61,7 @@ public class GameViewActivity extends AppCompatActivity {
      * --> Foreach action a own method (Principle: The only reason to change code should be an error) so switch case violates that
      */
     public void onShootBtn(View v) {
-        getGameView().getPlayerOne().addProjectiles();
+        getGameView().getPlayerOne().addProjectiles(this);
     }
 
 
