@@ -39,6 +39,7 @@ public class BackgroundLayer_Clouds extends Background {
      */
     public BackgroundLayer_Clouds(@NonNull BackgroundManager backgroundManager, int[] img, String name, float backgroundSpeed) {
         super(backgroundManager, img, name, backgroundSpeed);
+        initialize(); //now at least one
     }
 
     /**
@@ -89,8 +90,11 @@ public class BackgroundLayer_Clouds extends Background {
      */
     @Override
     public void drawBackground(Canvas canvas) {
-        for (Cloud cloud : this.getCraftedClouds())
+        for (Cloud cloud : this.getCraftedClouds()) {
             canvas.drawBitmap(cloud.cloudImg, cloud.posX, cloud.posY, null);
+            Log.d(TAG, "drawBackground: Tried to draw cloud: "+cloud);
+        }
+        Log.d(TAG, "drawBackground: Tried to draw BgCloudLayer clouds.");
     }
 
     /**
@@ -114,10 +118,11 @@ public class BackgroundLayer_Clouds extends Background {
         for (int i = 0; i < numberOfClouds; i++) {
             //position of X & Y now set in the Constructor (for easier reading)
             this.getCraftedClouds().add(new Cloud(BitmapFactory.decodeResource(this.getGameView().getResources(), imgs[RandomHandler.getRandomInt(0, imgs.length - 1)])));
+            Log.d(TAG, "craftClouds: Added cloud no. "+i);
         }
     }
 
-    /** allObjs == NULL */
+    /** allObjs == NULL/no param to provide */
     @Override
     @SafeVarargs
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
