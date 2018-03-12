@@ -93,7 +93,7 @@ public abstract class GameObject implements Initializer {
     }
 
 
-    public int getRotationDegree() {
+    protected int getRotationDegree() {
         return rotationDegree;
     }
 
