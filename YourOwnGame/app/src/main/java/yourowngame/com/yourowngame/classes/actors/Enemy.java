@@ -52,8 +52,8 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
  *
  */
 
-
-public class Enemy extends GameObject {
+// If we make new realizations (super enemy etc., then we should make this abstract)
+public abstract class Enemy extends GameObject {
     private static final String TAG = "Enemy";
     private List<Enemy> enemyList = new ArrayList<>(); //do not make that static, already Singleton class
     private Player player;
