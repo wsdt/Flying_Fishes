@@ -26,37 +26,41 @@ import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exc
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
-/** PLEASE READ
+/**
+ * So we've been discussing about that class for quite a long time, going for bug to bug..
  *
- * So basically we're doing the following now (based on whatsapp)
+ * I've now made two subclasses (empty) and i think they should be empty for now,
+ * until we've solved our design-problem.
  *
- * We're creating a Singleton-Enemy.class, which provides Enemies for each level
- * The Enemies are getting created in the @createRandomEnemies() method.
+ * We should now start from the beginning, first attempt to create the enemy class
+ * was a total disaster, no need to build on that.
  *
- * If other classes need a reference on that, just use
+ * I deleted the singletone, just causes problems.
  *
- * getInstance().getEnemys()
+ * So basically we could have several possibilities,
  *
- * that will always return the enemys for the current level.
+ * we could:
+ *
+ * (1) create enemys during runtime, every f.e 3 seconds spawns a new enemy
+ * createRandomEnemy() -> addToList (in GameView) -> update/draw() the list
+ *
+ * (2) create enemys BEFORE runtime, then just spawn them (which i would prefer)
+ * as weve already talked about, level 1 - 50 enemies
+ *                               level 2 - 100 enemies ...
+ *
+ *
  *
  */
 
 
 public class Enemy extends GameObject {
     private static final String TAG = "Enemy";
-    private static Enemy INSTANCE;
     private List<Enemy> enemyList = new ArrayList<>(); //do not make that static, already Singleton class
     private Player player;
 
     // PRE LOADED ---------------
     private HashMap<String, Bitmap> loadedBitmaps = new HashMap<>();
 
-
-    /** TODO: Current design is shit: We should allow here nullable, to avoid further design issues [otherwise we would have to give array always when
-     * TODO: we need the instance. BUT with this design we HAVE TO ensure that instance is already set so null img array is not needed]*/
-    public static Enemy getInstance(@Nullable int[] img) {
-        return INSTANCE == null ? INSTANCE = Enemy.returnRandomEnemy(img) /*Do not use here a default constructor!*/ : INSTANCE;
-    }
 
     public Enemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
@@ -66,33 +70,15 @@ public class Enemy extends GameObject {
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {}
 
 
-    /** BAD DESIGN: Drawing all instances in a non-static method of an arbitrary instance!
-     * --> We should really make an separate instance for Enemy (EnemyFactory or similar)
-     * --> Recommendation: Nested class like in BackgroundLayer-Clouds*/
     @Override
-    public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-       // printAllBitmapsToLog();
+    public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {}
 
-        for (Enemy enemy : getEnemys()) {
-            //set the current bitmap
-            enemy.setCurrentBitmap(enemy.getLoadedBitmaps().get(enemy.getRotationDegree() + "_" + ((int) loopCount % enemy.getImg().length)));
-            Log.d(TAG, "draw: Enemy getBitmap = " + enemy.getRotationDegree() + "_" + ((int) loopCount % enemy.getImg().length));
-            //draw the current bitmap
-            canvas.drawBitmap(enemy.getCurrentBitmap(), (int) enemy.getPosX(), (int) enemy.getPosY(), null);
-        }
+    public void createRandomEnemies(int numberOfEnemys, int[] img) {
+
     }
 
-
-    //TODO: Current design says this method is called in init() of GameView, but it would be in future maybe more object-oriented if we do that in initialize() below
-    //TODO: i would say the method should be called separately.. but let's flip for it! :D
-    /**Should be static, because this method has nothing to do with an instance itself.*/
-    public static void createRandomEnemies(int numberOfEnemys, int[] img) {
-        for (int i = 0; i <= numberOfEnemys; i++) {
-            getInstance(img).enemyList.add(returnRandomEnemy(img));
-        }
-    }
-    //Should be static (for getInstance)
-    private static Enemy returnRandomEnemy(int[] img) {
+    //that method has something
+    private Enemy returnRandomEnemy(int[] img) {
         return new Enemy(
                 RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 200),
                 RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT / 2, GameViewActivity.GAME_HEIGHT),
@@ -101,15 +87,6 @@ public class Enemy extends GameObject {
                 img, Constants.Actors.Enemy.defaultRotation, "Random enemy: "+RandomHandler.getRandomInt(0,100000)/*Just for generating random id (debugging)*/);
     }
 
-    /** OBJ[0]: Activity
-     *
-     * We currently do only set the image for each created Enemy, nothing more!
-     * Later on we could create the enemies here.. but lets get it working first
-     *
-     * WORKS NOW! Bug was in the getCraftedDynamicBitmap, which was all the time referencing our fucking getInstance, zum blean haha
-     *
-     * So we really need to optimize the craftBitmap methods, one here, the other one in the gameview.
-     * */
     @Override @SafeVarargs
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
         try {
@@ -160,36 +137,20 @@ public class Enemy extends GameObject {
     /***********************
      *    AI & such stuff  *
      ***********************/
-
     public void aimToPlayer(Player player) {
         this.player = player; //not really necess
 
         for (int i = 0; i < enemyList.size(); i++){
-
             if(player.getPosX() < enemyList.get(i).getPosX())
                 enemyList.get(i).setPosX(enemyList.get(i).getPosX() - enemyList.get(i).getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
             else if(player.getPosX() > enemyList.get(i).getPosX())
                 enemyList.get(i).setPosX(enemyList.get(i).getPosX() + enemyList.get(i).getSpeedX());
-
 
             if(player.getPosY() < enemyList.get(i).getPosY())
                 enemyList.get(i).setPosY(enemyList.get(i).getPosY() - enemyList.get(i).getSpeedY());
             else if(player.getPosY() > enemyList.get(i).getPosY())
                 enemyList.get(i).setPosY(enemyList.get(i).getPosY() + enemyList.get(i).getSpeedY());
         }
-    }
-
-    /** Class intern method for creating bitmaps, getCr...Bitmap wont work, because of this-reference
-     * i just implemented a just-get-a-fucking-img-method, because we really need to enhance our current
-     * getCraftedDynamicDrawable-method, neither did I exception handling
-     *
-     * --> Yes we should enhance our getCraftedDynamicBitmap, BUT if we do we should not forget about implementing
-     * scaling, rotating the bitmap [otherwise we would save the same bitmap references multiple times in the hashmap
-     * AND would loose the functionality for animating our bitmaps. So for now, I would say we keep the working method
-     * until some things work. */
-    @Deprecated
-    public Bitmap createBitmap(Activity context, Enemy e, int imgFrame){
-        return BitmapFactory.decodeResource(context.getResources(), e.getImg()[imgFrame]);
     }
 
     /************************
