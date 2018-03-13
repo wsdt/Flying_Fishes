@@ -46,11 +46,6 @@ public abstract class Background implements Initializer {
     /** abstract method for drawing the Background (Layers should provide a method to draw themselves!*/
     public abstract void drawBackground(Canvas canvas);
 
-
-
-
-
-
     public void setBackgroundSpeed(float backgroundSpeedX){
         this.backgroundSpeedX = backgroundSpeedX;
     }
