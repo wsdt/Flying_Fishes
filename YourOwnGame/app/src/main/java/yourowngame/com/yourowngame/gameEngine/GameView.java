@@ -13,10 +13,15 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Player;
+import yourowngame.com.yourowngame.classes.actors.RoboticEnemy;
+import yourowngame.com.yourowngame.classes.actors.SuperEnemy;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
@@ -36,8 +41,11 @@ public class GameView extends SurfaceView {
     private Player playerOne;
     private OnTouchHandler touchHandler;
     private FrameLayout layout;
-    private EditText munition;
-    //DO NOT USE THIS (use LevelManager.CURRENT_LEVEL) XX private int level = 0; /** for Background-drawing, amount of enemys etc. */
+    private RoboticEnemy roboticEnemyManager;
+    private SuperEnemy superEnemyManager;
+
+    //That little list will later hold all the enemys, iterate through them and draw them all!
+    private List<Enemy> enemyContainer = new ArrayList<>();
 
     private GameView(Context context) {
         super(context);
@@ -95,13 +103,24 @@ public class GameView extends SurfaceView {
 
         /** Enemy creation */
         int[] enemyArray = new int[] {R.drawable.enemy};
-        Enemy.createRandomEnemies(5, enemyArray);
+       // Enemy.createRandomEnemies(5, enemyArray);
 
         /** Initializing Player*/
         getPlayerOne().initialize(this.getActivityContext());
 
-        /** Initializing Enemy */
-        Enemy.getInstance(enemyArray).initialize(this.getActivityContext());
+        /** Initializing Robotic-Enemy */
+        roboticEnemyManager = new RoboticEnemy();
+        roboticEnemyManager.createRandomEnemies(5);
+        roboticEnemyManager.initialize(this.getActivityContext());
+
+        /**Initializing Super-Enemy */
+        superEnemyManager = new SuperEnemy();
+        superEnemyManager.createRandomEnemies(10);
+        superEnemyManager.initialize(this.getActivityContext());
+
+        /** The Enemy-container can now draw all its members, but im not quite happy */
+        enemyContainer.addAll(roboticEnemyManager.getRoboEnemyList());
+        enemyContainer.addAll(superEnemyManager.getSuperEnemyList());
 
         /** Initializes() of backgrounds are in constructor itself */
     }
@@ -127,14 +146,15 @@ public class GameView extends SurfaceView {
                 // (1.) draw background
                 drawDynamicBackground(canvas);
 
-                // (2.) draw enemies
-                Enemy.getInstance(null).draw(this.getActivityContext(), canvas, loopCount);
-
                 // (3.) draw player
                 getPlayerOne().draw(this.getActivityContext(), canvas, loopCount);
 
                 // (4.) draw Projectiles
                 getPlayerOne().drawProjectiles(this.getActivityContext(), canvas, loopCount);
+
+                // (2.) draw enemies
+                roboticEnemyManager.draw(this.getActivityContext(), canvas, loopCount);
+                superEnemyManager.draw(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
                 Log.e(TAG, "redraw: Could not draw images.");
@@ -159,16 +179,9 @@ public class GameView extends SurfaceView {
         /** (1.) update the Player*/                    //should only be true if player collects box or equivalent!
         getPlayerOne().update(null, this.touchHandler.isTouched(), false);
 
-        /** (2.) update the Enemy*/
-        for (Enemy e : Enemy.getInstance(null).getEnemys()) {
-            e.aimToPlayer(getPlayerOne());
-
-            Log.d(TAG, "X|Y = " + e.getPosX() + "|" + e.getPosY());
-
-            if (CollisionManager.checkForCollision(this.getPlayerOne(), e)) {
-                exitGame();
-            }
-        }
+        /** (2.) update the Enemies*/
+        roboticEnemyManager.update(this.playerOne, null, null);
+        superEnemyManager.update(this.playerOne, null, null);
 
         /** update the Bullets*/
         this.getPlayerOne().updateProjectiles();
@@ -186,11 +199,14 @@ public class GameView extends SurfaceView {
     /*********************************************************
      * 3. Game Over Methods *
      *********************************************************/
+
     public void exitGame() {
+        //TODO guess the thread blocks it!
         Toast.makeText(this.getActivityContext(), "Game over", Toast.LENGTH_SHORT).show(); //TODO: why does this shit not show up
         boolean retry = true;
         thread.setRunning(false);
         Log.d(TAG, "exitGame: Trying to exit game."); //but this is logged?
+        Toast.makeText(this.getActivityContext(), "Game over", Toast.LENGTH_SHORT).show();
         while (retry) {
             try {
                 Log.d(TAG, "exitGame: Trying to join threads and showing dialog before.");
