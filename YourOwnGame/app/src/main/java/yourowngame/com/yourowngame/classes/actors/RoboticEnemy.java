@@ -87,8 +87,8 @@ public class RoboticEnemy extends Enemy {
                 Activity activity = (Activity) allObjs[0];
                 roboImages = new Bitmap[2];
                                                                                                                                             //percentage, just for testing now
-                roboImages[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.enemy), 64, 64, false);
-                roboImages[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.enemy), 64, 64, false);
+                roboImages[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.black_enemy_robotic), 64, 64, false);
+                roboImages[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.black_enemy_robotic), 64, 64, false);
 
             } else {
                 Log.d(TAG, "Robo-Enemy: Initialize Failure!");

@@ -101,13 +101,11 @@ public class GameView extends SurfaceView {
                 R.drawable.player_heli_blue_1, R.drawable.player_heli_blue_2, R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_4,
                 R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy"));
 
-        /** Enemy creation */
-        int[] enemyArray = new int[] {R.drawable.enemy};
-       // Enemy.createRandomEnemies(5, enemyArray);
-
         /** Initializing Player*/
         getPlayerOne().initialize(this.getActivityContext());
 
+        /** Enemy creation
+         * TODO: This is level-dependent, we should do this in specific LevelObj! */
         /** Initializing Robotic-Enemy */
         roboticEnemyManager = new RoboticEnemy();
         roboticEnemyManager.createRandomEnemies(5);
