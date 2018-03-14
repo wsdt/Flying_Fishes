@@ -13,6 +13,7 @@ import java.util.List;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.annotations.TestingPurpose;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
@@ -86,9 +87,10 @@ public class SuperEnemy extends Enemy {
             if (allObjs[0] instanceof Activity) {
                 Activity activity = (Activity) allObjs[0];
                 superBitmaps = new Bitmap[2];
-                                                                                                                                    // same here, percentage, just for testing now
-                superBitmaps[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.bomb2), 64, 64, false);
-                superBitmaps[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.bomb2), 64, 64, false);
+
+                // same here, percentage, just for testing now
+                superBitmaps[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.player_heli_blue_1), 64, 64, false);
+                superBitmaps[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.player_heli_blue_2), 64, 64, false);
 
             } else {
                 Log.d(TAG, "Super-Enemy: Initialize Failure!");
