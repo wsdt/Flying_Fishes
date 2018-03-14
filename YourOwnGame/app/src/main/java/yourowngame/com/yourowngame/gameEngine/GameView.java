@@ -21,6 +21,7 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Player;
 import yourowngame.com.yourowngame.classes.actors.RoboticEnemy;
+import yourowngame.com.yourowngame.classes.actors.SpawnEnemy;
 import yourowngame.com.yourowngame.classes.actors.SuperEnemy;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
@@ -139,6 +140,7 @@ public class GameView extends SurfaceView {
                 // (2.) draw enemies
                 RoboticEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
                 SuperEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
+                SpawnEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
                 Log.e(TAG, "redraw: Could not draw images.");
@@ -166,6 +168,7 @@ public class GameView extends SurfaceView {
         /** (2.) update the Enemies*/
         RoboticEnemy.updateAll(this.playerOne, null, null);
         SuperEnemy.updateAll(this.playerOne, null, null);
+        SpawnEnemy.updateAll(this.playerOne, null, null);
 
         /** update the Bullets*/
         this.getPlayerOne().updateProjectiles();

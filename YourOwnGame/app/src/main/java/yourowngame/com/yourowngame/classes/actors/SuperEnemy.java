@@ -22,17 +22,14 @@ import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 
 public class SuperEnemy extends Enemy {
     private static ArrayList<SuperEnemy> enemyList = new ArrayList<>(); //consistent name enemyList :)
-    private static Bitmap[] superBitmaps;
+    private static Bitmap[] images;
     private static final String TAG = "SuperEnemy";
 
     public SuperEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
-    public SuperEnemy() {
-    }
-
-    ;
+    public SuperEnemy() {}
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
@@ -47,8 +44,8 @@ public class SuperEnemy extends Enemy {
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (int i = 0; i < superBitmaps.length; i++) {
-            canvas.drawBitmap(superBitmaps[i], (int) this.getPosX(), (int) this.getPosY(), null);
+        for (int i = 0; i < getImages().length; i++) {
+            canvas.drawBitmap(getImages()[i], (int) this.getPosX(), (int) this.getPosY(), null);
         }
     }
 
@@ -77,11 +74,11 @@ public class SuperEnemy extends Enemy {
         if (allObjs != null) {
             if (allObjs[0] instanceof Activity) {
                 Activity activity = (Activity) allObjs[0];
-                superBitmaps = new Bitmap[2];
+                setImages(new Bitmap[2]);
 
                 // same here, percentage, just for testing now
-                superBitmaps[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.player_heli_blue_1), 64, 64, false);
-                superBitmaps[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.player_heli_blue_2), 64, 64, false);
+                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.player_heli_blue_1), 64, 64, false);
+                getImages()[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.player_heli_blue_2), 64, 64, false);
 
             } else {
                 Log.d(TAG, "Super-Enemy: Initialize Failure!");
@@ -100,24 +97,21 @@ public class SuperEnemy extends Enemy {
         return false;
     }
 
-    public static Bitmap[] getSuperBitmaps() {
-        return superBitmaps;
-    }
 
-    public static void setSuperBitmaps(Bitmap[] superBitmaps) {
-        SuperEnemy.superBitmaps = superBitmaps;
-    }
-
-
-    public String getTAG() {
-        return TAG;
-    }
-
+    //GETTER/SETTER ---------------------------
     public static ArrayList<SuperEnemy> getEnemyList() {
         return enemyList;
     }
 
     public static void setEnemyList(ArrayList<SuperEnemy> enemyList) {
         SuperEnemy.enemyList = enemyList;
+    }
+
+    public static Bitmap[] getImages() {
+        return images;
+    }
+
+    public static void setImages(Bitmap[] images) {
+        SuperEnemy.images = images;
     }
 }
