@@ -4,6 +4,7 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.RoboticEnemy;
+import yourowngame.com.yourowngame.classes.actors.SpawnEnemy;
 import yourowngame.com.yourowngame.classes.actors.SuperEnemy;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_staticBgImg;
@@ -30,7 +31,7 @@ public class Level_HarmlessSky extends Level{
         //Set allEnemies Arraylist
         /** Initializing Robotic-Enemy */
         RoboticEnemy roboticEnemyManager = new RoboticEnemy();
-        roboticEnemyManager.createRandomEnemies(5);
+        roboticEnemyManager.createRandomEnemies(5); //todo: should be static
         roboticEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
 
         /**Initializing Super-Enemy */
@@ -38,8 +39,14 @@ public class Level_HarmlessSky extends Level{
         superEnemyManager.createRandomEnemies(10);
         superEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
 
+        /** Initializing Spawn-Enemies */
+        SpawnEnemy spawnEnemyManager = new SpawnEnemy();
+        spawnEnemyManager.createRandomEnemies(2);
+        spawnEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
+
         this.getAllEnemies().addAll(RoboticEnemy.getEnemyList());
         this.getAllEnemies().addAll(SuperEnemy.getEnemyList());
+        this.getAllEnemies().addAll(SpawnEnemy.getEnemyList());
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
 }

@@ -14,6 +14,7 @@ import java.util.List;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.annotations.TestingPurpose;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
@@ -23,32 +24,27 @@ import yourowngame.com.yourowngame.classes.handler.RandomHandler;
  *
  */
 
-public class RoboticEnemy extends Enemy {
-    private static final String TAG = "RoboEnemy";
+public class SpawnEnemy extends Enemy {
+    private static final String TAG = "SpawnEnemy";
     private static Bitmap[] images;
-    private static ArrayList<RoboticEnemy> enemyList = new ArrayList<>();
+    private static ArrayList<SpawnEnemy> enemyList = new ArrayList<>();
 
-    public RoboticEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+    public SpawnEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
-    public RoboticEnemy(){}
+    public SpawnEnemy(){}
 
-    //This is the standard AI, other enemys will have their own way of trying to kill the player :>
 
-    @Override
+    @Override @TestingPurpose (
+            createdBy = Constants.Developers.WSDT,
+            lastModified = "04.03.2018 : 11:30",
+            deleteWhenUnused = false
+    )
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-        Player player = (Player) obj;
-
-        if(player.getPosX() < this.getPosX())
-            this.setPosX(this.getPosX() - this.getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
-        else if(player.getPosX() > this.getPosX())
-            this.setPosX(this.getPosX() + this.getSpeedX());
-
-        if(player.getPosY() < this.getPosY())
-            this.setPosY(this.getPosY() - this.getSpeedY());
-        else if(player.getPosY() > this.getPosY())
-            this.setPosY(this.getPosY() + this.getSpeedY());
+        //TODO spawn sometimes(!) in different y values
+        this.setPosY(RandomHandler.getRandomFloat(50,300));
+        this.setPosX(this.getPosX() - this.getSpeedX());
     }
 
     public static void updateAll(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
@@ -58,18 +54,18 @@ public class RoboticEnemy extends Enemy {
     }
 
     @Override
-    public void createRandomEnemies(int numberOfRobos){
-        for (int i = 0; i < numberOfRobos; i++){
-            getEnemyList().add(new RoboticEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH),
+    public void createRandomEnemies(int count){
+        for (int i = 0; i < count; i++){
+            getEnemyList().add(new SpawnEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH),
                     RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT / 2, GameViewActivity.GAME_HEIGHT),
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedXmin, Constants.Actors.Enemy.speedXmax),
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
-                    null, Constants.Actors.Enemy.defaultRotation, "RoboEnemy " + i));
-            //img can be null, dynamic-bitmaps can be accessed by the static field roboImages, which gets initialized at start
+                    null, Constants.Actors.Enemy.defaultRotation, "SpawnEnemy " + i));
+            //img can be null, dynamic-bitmaps can be accessed by the static field images, which gets initialized at start
         }
     }
 
-    //in my opinion, a simple bitmap array would match the animation the best!
+    //TODO: in my opinion, a simple bitmap array would match the animation the best! --> YES BUT WE ARE INCONSTENT :( (when we do this we should also do it in Player etc. instead of img[] drawable int arr)
     //but we surely should do something to slow it down
     /** Single enemy should not draw all of them (not object-oriented) */
     @Override
@@ -80,7 +76,7 @@ public class RoboticEnemy extends Enemy {
     }
 
     public static void drawAll(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (RoboticEnemy e : getEnemyList()) {
+        for (SpawnEnemy e : getEnemyList()) {
             Log.d(TAG, "Enemy X | Y : " + e.getPosX() + "|" + e.getPosY());
 
             e.draw(activity,canvas,loopCount);
@@ -89,15 +85,15 @@ public class RoboticEnemy extends Enemy {
 
     @Override
     public <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
-    //we really need to change the initialize, Object params, instanceOf..
+        //we really need to change the initialize, Object params, instanceOf..
 
         if (allObjs != null) {
             if (allObjs[0] instanceof Activity) {
                 Activity activity = (Activity) allObjs[0];
                 setImages(new Bitmap[2]);
-                                                                                                                                            //percentage, just for testing now
-                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.black_enemy_robotic), 64, 64, false);
-                getImages()[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.black_enemy_robotic), 64, 64, false);
+                //TODO: For testing robo img
+                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.app_icon_gameboy), 64, 64, false);
+                getImages()[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.app_icon_gameboy), 64, 64, false);
 
             } else {
                 Log.d(TAG, "Robo-Enemy: Initialize Failure!");
@@ -118,12 +114,12 @@ public class RoboticEnemy extends Enemy {
 
     /** GETTER / SETTER */
 
-    public static ArrayList<RoboticEnemy> getEnemyList() {
+    public static ArrayList<SpawnEnemy> getEnemyList() {
         return enemyList;
     }
 
-    public static void setEnemyList(ArrayList<RoboticEnemy> enemyList) {
-        RoboticEnemy.enemyList = enemyList;
+    public static void setEnemyList(ArrayList<SpawnEnemy> enemyList) {
+        SpawnEnemy.enemyList = enemyList;
     }
 
     public static Bitmap[] getImages() {
@@ -131,7 +127,7 @@ public class RoboticEnemy extends Enemy {
     }
 
     public static void setImages(Bitmap[] images) {
-        RoboticEnemy.images = images;
+        SpawnEnemy.images = images;
     }
 
 }
