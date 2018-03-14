@@ -29,8 +29,8 @@ public class LevelManager {
     }
 
     //Heart of levelMgr: static so more comfortable to call [do not forget the drawback of SparseArrays when calling this method! (although I used valueAt())]
-    public Level getCurrentLevelObj() { //never use get, always valueAt()!
-        Level currLevel = getLevelList().valueAt(getCurrentLevel());
+    public static Level getCurrentLevelObj() {
+        Level currLevel = getLevelList().get(getCurrentLevel());
         if (currLevel == null) {
             Log.w(TAG, "getCurrentLevelObj: Level is null! Currentlevel does not exist!");
         }

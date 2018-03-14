@@ -9,11 +9,9 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.annotations.TestingPurpose;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
@@ -23,60 +21,53 @@ import yourowngame.com.yourowngame.classes.handler.RandomHandler;
  */
 
 public class SuperEnemy extends Enemy {
-
+    private static ArrayList<SuperEnemy> enemyList = new ArrayList<>(); //consistent name enemyList :)
     private static Bitmap[] superBitmaps;
-    private List<SuperEnemy> superEnemyList = new ArrayList<>();
-    private final String TAG = "SuperEnemy";
+    private static final String TAG = "SuperEnemy";
 
     public SuperEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
-    public SuperEnemy(){};
+    public SuperEnemy() {
+    }
+
+    ;
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-        //i know, i know, that looks quite dumb for a superenemy ^^ just to do sth other haha
-        Player player = (Player) obj;
+        this.setPosX(this.getPosX() - this.getSpeedX());
+    }
 
-        for (int i = 0; i < this.getSuperEnemyList().size(); i++){
-            getSuperEnemyList().get(i).setPosX(getSuperEnemyList().get(i).getPosX() - this.getSuperEnemyList().get(i).getSpeedX());
+    public static void updateAll(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
+        for (int i = 0; i < getEnemyList().size(); i++) {
+            getEnemyList().get(i).update(obj,goUp,goForward);
         }
-
-  /*      for (int i = 0; i < this.getSuperEnemyList().size(); i++){
-
-            if(player.getPosX() < this.getSuperEnemyList().get(i).getPosX())
-                this.getSuperEnemyList().get(i).setPosX(this.getSuperEnemyList().get(i).getPosX() - this.getSuperEnemyList().get(i).getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
-            else if(player.getPosX() > this.getSuperEnemyList().get(i).getPosX())
-                this.getSuperEnemyList().get(i).setPosX(this.getSuperEnemyList().get(i).getPosX() + this.getSuperEnemyList().get(i).getSpeedX());
-
-            if(player.getPosY() < this.getSuperEnemyList().get(i).getPosY())
-                this.getSuperEnemyList().get(i).setPosY(this.getSuperEnemyList().get(i).getPosY() - this.getSuperEnemyList().get(i).getSpeedY());
-            else if(player.getPosY() > this.getSuperEnemyList().get(i).getPosY())
-                this.getSuperEnemyList().get(i).setPosY(this.getSuperEnemyList().get(i).getPosY() + this.getSuperEnemyList().get(i).getSpeedY());
-        }
-        */
     }
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (SuperEnemy sE : superEnemyList) {
-            Log.d(TAG, "Enemy 22222222 X | Y : " + sE.getPosX() + "|" + sE.getPosY());
+        for (int i = 0; i < superBitmaps.length; i++) {
+            canvas.drawBitmap(superBitmaps[i], (int) this.getPosX(), (int) this.getPosY(), null);
+        }
+    }
 
-            for (int i = 0; i < superBitmaps.length; i++) {
-                canvas.drawBitmap(superBitmaps[i], (int) sE.getPosX(), (int) sE.getPosY(), null);
-            }
+    public static void drawAll(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
+        for (SuperEnemy e : getEnemyList()) {
+            Log.d(TAG, "Enemy X | Y : " + e.getPosX() + "|" + e.getPosY());
+
+            e.draw(activity, canvas, loopCount);
         }
     }
 
     @Override
     public void createRandomEnemies(int numberOfEnemies) {
-        for (int i = 0; i < numberOfEnemies; i++){
-            superEnemyList.add(new SuperEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH),
-                RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT / 2, GameViewActivity.GAME_HEIGHT),
-                RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedXmin, Constants.Actors.Enemy.speedXmax),
-                RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
-                null, Constants.Actors.Enemy.defaultRotation, "SuperEnemy " + i));
+        for (int i = 0; i < numberOfEnemies; i++) {
+            getEnemyList().add(new SuperEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH),
+                    RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT / 2, GameViewActivity.GAME_HEIGHT),
+                    RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedXmin, Constants.Actors.Enemy.speedXmax),
+                    RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
+                    null, Constants.Actors.Enemy.defaultRotation, "SuperEnemy " + i));
         }
     }
 
@@ -105,7 +96,7 @@ public class SuperEnemy extends Enemy {
 
     @Override
     public boolean cleanup() {
-        superEnemyList = null;
+        setEnemyList(null);
         return false;
     }
 
@@ -117,15 +108,16 @@ public class SuperEnemy extends Enemy {
         SuperEnemy.superBitmaps = superBitmaps;
     }
 
-    public List<SuperEnemy> getSuperEnemyList() {
-        return superEnemyList;
-    }
-
-    public void setSuperEnemyList(List<SuperEnemy> superEnemyList) {
-        this.superEnemyList = superEnemyList;
-    }
 
     public String getTAG() {
         return TAG;
+    }
+
+    public static ArrayList<SuperEnemy> getEnemyList() {
+        return enemyList;
+    }
+
+    public static void setEnemyList(ArrayList<SuperEnemy> enemyList) {
+        SuperEnemy.enemyList = enemyList;
     }
 }

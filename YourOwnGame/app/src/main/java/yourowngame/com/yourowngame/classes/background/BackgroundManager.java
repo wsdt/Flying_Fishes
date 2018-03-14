@@ -2,16 +2,9 @@ package yourowngame.com.yourowngame.classes.background;
 
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.view.ViewTreeObserver;
 
 import java.util.ArrayList;
 
-import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
-import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_staticBgImg;
-import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
@@ -69,7 +62,7 @@ public class BackgroundManager {
         this.setLevelManager(LevelManager.getInstance(this));
 
         //Not really necessary now, because we have the levelManager as member which contains all levels (inkl. backgroundLayers)
-        this.setBackgroundLayers(this.getLevelManager().getCurrentLevelObj().getBackgroundLayers());
+        this.setBackgroundLayers(LevelManager.getCurrentLevelObj().getAllBackgroundLayers());
     }
 
     public void updateAllBackgroundLayers() {

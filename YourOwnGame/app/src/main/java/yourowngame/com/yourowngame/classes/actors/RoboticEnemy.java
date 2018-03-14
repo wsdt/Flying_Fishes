@@ -24,9 +24,9 @@ import yourowngame.com.yourowngame.classes.handler.RandomHandler;
  */
 
 public class RoboticEnemy extends Enemy {
-    private final String TAG = "RoboEnemy";
+    private static final String TAG = "RoboEnemy";
     private static Bitmap[] roboImages;
-    private List<RoboticEnemy> roboEnemyList = new ArrayList<>();
+    private static ArrayList<RoboticEnemy> enemyList = new ArrayList<>();
 
     public RoboticEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
@@ -40,23 +40,27 @@ public class RoboticEnemy extends Enemy {
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
         Player player = (Player) obj;
 
-        for (int i = 0; i < this.getRoboEnemyList().size(); i++){
+        if(player.getPosX() < this.getPosX())
+            this.setPosX(this.getPosX() - this.getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
+        else if(player.getPosX() > this.getPosX())
+            this.setPosX(this.getPosX() + this.getSpeedX());
 
-            if(player.getPosX() < this.getRoboEnemyList().get(i).getPosX())
-                this.getRoboEnemyList().get(i).setPosX(this.getRoboEnemyList().get(i).getPosX() - this.getRoboEnemyList().get(i).getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
-            else if(player.getPosX() > this.getRoboEnemyList().get(i).getPosX())
-                this.getRoboEnemyList().get(i).setPosX(this.getRoboEnemyList().get(i).getPosX() + this.getRoboEnemyList().get(i).getSpeedX());
+        if(player.getPosY() < this.getPosY())
+            this.setPosY(this.getPosY() - this.getSpeedY());
+        else if(player.getPosY() > this.getPosY())
+            this.setPosY(this.getPosY() + this.getSpeedY());
+    }
 
-            if(player.getPosY() < this.getRoboEnemyList().get(i).getPosY())
-                this.getRoboEnemyList().get(i).setPosY(this.getRoboEnemyList().get(i).getPosY() - this.getRoboEnemyList().get(i).getSpeedY());
-            else if(player.getPosY() > this.getRoboEnemyList().get(i).getPosY())
-                this.getRoboEnemyList().get(i).setPosY(this.getRoboEnemyList().get(i).getPosY() + this.getRoboEnemyList().get(i).getSpeedY());
+    public static void updateAll(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
+        for (int i = 0; i < getEnemyList().size(); i++){
+            getEnemyList().get(i).update(obj,goUp,goForward);
         }
     }
+
     @Override
     public void createRandomEnemies(int numberOfRobos){
         for (int i = 0; i < numberOfRobos; i++){
-            roboEnemyList.add(new RoboticEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH),
+            getEnemyList().add(new RoboticEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH),
                     RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT / 2, GameViewActivity.GAME_HEIGHT),
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedXmin, Constants.Actors.Enemy.speedXmax),
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
@@ -67,14 +71,19 @@ public class RoboticEnemy extends Enemy {
 
     //in my opinion, a simple bitmap array would match the animation the best!
     //but we surely should do something to slow it down
+    /** Single enemy should not draw all of them (not object-oriented) */
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-            for (RoboticEnemy e : roboEnemyList) {
-                Log.d(TAG, "Enemy X | Y : " + e.getPosX() + "|" + e.getPosY());
+        for (int i = 0; i < roboImages.length; i++) {
+            canvas.drawBitmap(roboImages[i], (int) this.getPosX(), (int) this.getPosY(), null);
+        }
+    }
 
-            for (int i = 0; i < roboImages.length; i++) {
-                canvas.drawBitmap(roboImages[i], (int) e.getPosX(), (int) e.getPosY(), null);
-            }
+    public static void drawAll(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
+        for (RoboticEnemy e : getEnemyList()) {
+            Log.d(TAG, "Enemy X | Y : " + e.getPosX() + "|" + e.getPosY());
+
+            e.draw(activity,canvas,loopCount);
         }
     }
 
@@ -117,12 +126,12 @@ public class RoboticEnemy extends Enemy {
         RoboticEnemy.roboImages = roboImages;
     }
 
-    public List<RoboticEnemy> getRoboEnemyList() {
-        return roboEnemyList;
+    public static ArrayList<RoboticEnemy> getEnemyList() {
+        return enemyList;
     }
 
-    public void setRoboEnemyList(List<RoboticEnemy> roboEnemyList) {
-        this.roboEnemyList = roboEnemyList;
+    public static void setEnemyList(ArrayList<RoboticEnemy> enemyList) {
+        RoboticEnemy.enemyList = enemyList;
     }
 
 }
