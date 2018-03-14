@@ -24,6 +24,7 @@ import yourowngame.com.yourowngame.classes.actors.RoboticEnemy;
 import yourowngame.com.yourowngame.classes.actors.SuperEnemy;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
 import yourowngame.com.yourowngame.classes.handler.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 
@@ -41,11 +42,10 @@ public class GameView extends SurfaceView {
     private Player playerOne;
     private OnTouchHandler touchHandler;
     private FrameLayout layout;
-    private RoboticEnemy roboticEnemyManager;
-    private SuperEnemy superEnemyManager;
 
     //That little list will later hold all the enemys, iterate through them and draw them all!
-    private List<Enemy> enemyContainer = new ArrayList<>();
+    //DO NOT USE THIS AS MENTIONED BEFORE: private List<Enemy> enemyContainer = new ArrayList<>();
+    // ENEMIES are level-dependent, so specific level obj should own a list with all enemies. (LevelMgr.CURRENT_LEVEL)
 
     private GameView(Context context) {
         super(context);
@@ -104,21 +104,7 @@ public class GameView extends SurfaceView {
         /** Initializing Player*/
         getPlayerOne().initialize(this.getActivityContext());
 
-        /** Enemy creation
-         * TODO: This is level-dependent, we should do this in specific LevelObj! */
-        /** Initializing Robotic-Enemy */
-        roboticEnemyManager = new RoboticEnemy();
-        roboticEnemyManager.createRandomEnemies(5);
-        roboticEnemyManager.initialize(this.getActivityContext());
-
-        /**Initializing Super-Enemy */
-        superEnemyManager = new SuperEnemy();
-        superEnemyManager.createRandomEnemies(10);
-        superEnemyManager.initialize(this.getActivityContext());
-
-        /** The Enemy-container can now draw all its members, but im not quite happy */
-        enemyContainer.addAll(roboticEnemyManager.getRoboEnemyList());
-        enemyContainer.addAll(superEnemyManager.getSuperEnemyList());
+        //enemies are level-dependent, so I moved them to Level-Obj
 
         /** Initializes() of backgrounds are in constructor itself */
     }
@@ -151,8 +137,8 @@ public class GameView extends SurfaceView {
                 getPlayerOne().drawProjectiles(this.getActivityContext(), canvas, loopCount);
 
                 // (2.) draw enemies
-                roboticEnemyManager.draw(this.getActivityContext(), canvas, loopCount);
-                superEnemyManager.draw(this.getActivityContext(), canvas, loopCount);
+                RoboticEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
+                SuperEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
                 Log.e(TAG, "redraw: Could not draw images.");
@@ -178,8 +164,8 @@ public class GameView extends SurfaceView {
         getPlayerOne().update(null, this.touchHandler.isTouched(), false);
 
         /** (2.) update the Enemies*/
-        roboticEnemyManager.update(this.playerOne, null, null);
-        superEnemyManager.update(this.playerOne, null, null);
+        RoboticEnemy.updateAll(this.playerOne, null, null);
+        SuperEnemy.updateAll(this.playerOne, null, null);
 
         /** update the Bullets*/
         this.getPlayerOne().updateProjectiles();
