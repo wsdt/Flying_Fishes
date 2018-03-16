@@ -180,7 +180,6 @@ public class GameView extends SurfaceView {
          * Will fix that tomorrow, somehow collision seems to not work any longer.. kinda drunk :>
          * */
         for (Enemy e : LevelManager.getCurrentLevelObj().getAllEnemies()){
-            Log.d(TAG,"PLAYER Y = "+ playerOne.getPosY() + "ENEMY = " + e.getPosY());
             if(CollisionManager.checkForCollision(getPlayerOne(), e)){
                 exitGame();
             }
