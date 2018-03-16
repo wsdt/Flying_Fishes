@@ -9,12 +9,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
@@ -22,10 +18,11 @@ import yourowngame.com.yourowngame.classes.actors.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Player;
 import yourowngame.com.yourowngame.classes.actors.RoboticEnemy;
 import yourowngame.com.yourowngame.classes.actors.SpawnEnemy;
-import yourowngame.com.yourowngame.classes.actors.SuperEnemy;
+import yourowngame.com.yourowngame.classes.actors.BomberEnemy;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_HarmlessSky;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
 import yourowngame.com.yourowngame.classes.handler.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 
@@ -105,22 +102,19 @@ public class GameView extends SurfaceView {
         /** Initializing Player*/
         getPlayerOne().initialize(this.getActivityContext());
 
-        //enemies are level-dependent, so I moved them to Level-Obj
-
         /** Initializes() of backgrounds are in constructor itself */
     }
 
     //initialize components that do not match other categories
     private void initComponents() {
-        /*Moved onclick listener to activity (where it belongs)*/
 
         /** create OnTouchHandler */
         touchHandler = new OnTouchHandler();
     }
 
-    /***************************
-     * 1. Draw GameObjects here *
-     ***************************/
+    /********************************
+     * 1. D R A W I N G   - A R E A *
+     ********************************/
     public void redraw(Canvas canvas, long loopCount) { //Create separate method, so we could add some things here
         Log.d(TAG, "redraw: Trying to invalidate/redraw GameView.");
         if (canvas != null) {
@@ -139,7 +133,7 @@ public class GameView extends SurfaceView {
 
                 // (2.) draw enemies
                 RoboticEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
-                SuperEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
+                BomberEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
                 SpawnEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
@@ -167,19 +161,30 @@ public class GameView extends SurfaceView {
 
         /** (2.) update the Enemies*/
         RoboticEnemy.updateAll(this.playerOne, null, null);
-        SuperEnemy.updateAll(this.playerOne, null, null);
+        BomberEnemy.updateAll(this.playerOne, null, null);
         SpawnEnemy.updateAll(this.playerOne, null, null);
 
         /** update the Bullets*/
         this.getPlayerOne().updateProjectiles();
 
-       /** Check Collision with Border */
+        /** check Collision with Border */
         if (getPlayerOne().hitsTheGround(this)) {
             exitGame();
         }
 
-        //Update background
+        /** update the background */
         BackgroundManager.getInstance(this).updateAllBackgroundLayers();
+
+        /** check GameObject collisions
+         *
+         * Will fix that tomorrow, somehow collision seems to not work any longer.. kinda drunk :>
+         * */
+        for (Enemy e : LevelManager.getCurrentLevelObj().getAllEnemies()){
+            Log.d(TAG,"PLAYER Y = "+ playerOne.getPosY() + "ENEMY = " + e.getPosY());
+            if(CollisionManager.checkForCollision(getPlayerOne(), e)){
+                exitGame();
+            }
+        }
     }
 
 

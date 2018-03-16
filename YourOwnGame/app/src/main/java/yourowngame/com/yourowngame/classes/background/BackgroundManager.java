@@ -44,7 +44,7 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
 public class BackgroundManager {
 
     private static final String TAG = "BackgroundManager";
-    private ArrayList<Background> backgroundLayers = new ArrayList<Background>();
+    private ArrayList<Background> backgroundLayers = new ArrayList<>();
     private GameView gameView;
     private LevelManager levelManager;
 

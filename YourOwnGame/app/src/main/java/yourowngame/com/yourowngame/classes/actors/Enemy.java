@@ -12,7 +12,7 @@ import java.util.List;
  * GameObject
  * --Enemy
  * ----RoboticEnemy
- * ----SuperEnemy
+ * ----BomberEnemy
  * ----ChemicalEnemy (and so on.. be imaginative!)
  *
  * Drawing, Updating as well as AI-Handling will be processed by the Subclasses,
