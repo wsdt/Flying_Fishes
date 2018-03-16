@@ -61,7 +61,7 @@ public class SpawnEnemy extends Enemy {
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedXmin, Constants.Actors.Enemy.speedXmax),
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
                     null, Constants.Actors.Enemy.defaultRotation, "SpawnEnemy " + i));
-            //img can be null, dynamic-bitmaps can be accessed by the static field images, which gets initialized at start
+            getEnemyList().get(0).setCurrentBitmap(images[0]);
         }
     }
 

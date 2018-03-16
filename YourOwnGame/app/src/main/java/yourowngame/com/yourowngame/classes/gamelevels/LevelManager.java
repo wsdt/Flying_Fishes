@@ -5,7 +5,11 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
+import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_DarkDescent;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_HarmlessSky;
+import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_HauntedForest;
+import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_HeavensGate;
+import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_UnknownLand;
 
 /** Pattern: SINGLETON
  * Why using SparseArray over Hashmap or ArrayList?
@@ -19,6 +23,7 @@ public class LevelManager {
     private static LevelManager INSTANCE;
     private static SparseArray<Level> levelList = new SparseArray<>(); //By changing this, we can have flexible level orders and also are able to iterate over levels (after this level the next one comes etc.)
     private static BackgroundManager backgroundManager; //levels might need the BackgroundManager or/and it's gameView
+    private static Level currLevel;
 
     private LevelManager(@NonNull BackgroundManager backgroundManager) {
         LevelManager.setBackgroundManager(backgroundManager);
@@ -30,7 +35,7 @@ public class LevelManager {
 
     //Heart of levelMgr: static so more comfortable to call [do not forget the drawback of SparseArrays when calling this method! (although I used valueAt())]
     public static Level getCurrentLevelObj() {
-        Level currLevel = getLevelList().get(getCurrentLevel());
+        currLevel = getLevelList().get(getCurrentLevel());
         if (currLevel == null) {
             Log.w(TAG, "getCurrentLevelObj: Level is null! Currentlevel does not exist!");
         }
@@ -44,9 +49,23 @@ public class LevelManager {
         return ++CURRENT_LEVEL; //pre-inkrement to return new current level
     }
 
-    /** This method sets the fallback/normal level order*/
+    /** This method sets the fallback/normal level order
+     *
+     * So the player starts in the harmless sky where he defeats all enemys and is allowed to pass
+     * Heavens-Gate, where he will get a special weapon to proceed further
+     * after been sent back to earth, he needs to pass the hauntedForest, in which arboreal creatures are waiting for him.
+     * After the Forest has ended, he must track trough an unknown land before he can climb down the darkest areas...
+     *
+     * (hahaha damn it :D :D :D) bitte fortführen ! Märchen-Story Stunde 1 war heute am 16.03.2018 vo 0800 - 0815
+     *
+     *
+     * */
     private void createDefaultLevelList() {
-        getLevelList().put(0, new Level_HarmlessSky()); //so this is Level 0, etc.
+        getLevelList().put(0, new Level_HarmlessSky());
+        getLevelList().put(1, new Level_HeavensGate());
+        getLevelList().put(2, new Level_HauntedForest());
+        getLevelList().put(3, new Level_UnknownLand());
+        getLevelList().put(4, new Level_DarkDescent());
         Log.d(TAG, "createDefaultLevelList: Have set the default level list.");
     }
 
