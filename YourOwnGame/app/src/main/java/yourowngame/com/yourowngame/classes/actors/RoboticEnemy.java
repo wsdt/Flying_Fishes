@@ -66,7 +66,7 @@ public class RoboticEnemy extends Enemy {
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
                     null, Constants.Actors.Enemy.defaultRotation, "RoboEnemy " + i));
 
-            getEnemyList().get(0).setCurrentBitmap(images[0]);
+            getEnemyList().get(i).setCurrentBitmap(images[0]);
         }
     }
 

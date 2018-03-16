@@ -66,7 +66,7 @@ public class BomberEnemy extends Enemy {
                     RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
                     null, Constants.Actors.Enemy.defaultRotation, "BomberEnemy " + i));
 
-            getEnemyList().get(0).setCurrentBitmap(images[0]);
+            getEnemyList().get(i).setCurrentBitmap(images[0]);
         }
     }
 
