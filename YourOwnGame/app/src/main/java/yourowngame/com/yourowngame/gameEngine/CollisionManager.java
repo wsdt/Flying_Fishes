@@ -8,6 +8,7 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.actors.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Player;
+import yourowngame.com.yourowngame.classes.actors.Projectile;
 
 /**
  * Created  on 02.03.2018.
@@ -31,7 +32,7 @@ public class CollisionManager {
      * @param enemy      -> x value of first Bitmap
      * @return           -> returns true if 1 pixel of both bitmaps is no transparent (-> hitsTheGround)
      */
-    public static boolean checkForCollision(@NonNull Player player, @NonNull Enemy enemy) { //<-- more readable and less error-prone
+    public static boolean checkCollision(@NonNull Player player, @NonNull Enemy enemy) {
         Bitmap playerBitmap = player.getCurrentBitmap();
         Bitmap enemyBitmap = enemy.getCurrentBitmap();
 
@@ -66,6 +67,43 @@ public class CollisionManager {
         }
         return false;
     }
+
+    public static boolean checkCollision(@NonNull Enemy enemy, @NonNull Projectile projectile) {
+        Bitmap playerBitmap = enemy.getCurrentBitmap();
+        Bitmap enemyBitmap = projectile.getCurrentBitmap();
+
+        if (playerBitmap != null && enemyBitmap != null) {
+
+            int enemyPosX = (int) enemy.getPosX();
+            int enemyPosY = (int) enemy.getPosY();
+            int projectilePosX = (int) projectile.getPosX();
+            int projectilePosY = (int) projectile.getPosY();
+
+            Rect bounds1 = new Rect(enemyPosX, enemyPosY, enemyPosX + playerBitmap.getWidth(), enemyPosY + playerBitmap.getHeight());
+            Rect bounds2 = new Rect(projectilePosX, projectilePosY, projectilePosX + enemyBitmap.getWidth(), projectilePosY + enemyBitmap.getHeight());
+
+            if (Rect.intersects(bounds1, bounds2)) {
+                Rect collisionArea = getCollisionArea(bounds1, bounds2);
+
+                try {
+                    for (int i = collisionArea.left; i < collisionArea.right; i++) {
+                        for (int j = collisionArea.top; j < collisionArea.bottom; j++) {
+                            int bitmap1Pixel = playerBitmap.getPixel(i - enemyPosX, j - enemyPosY);
+                            int bitmap2Pixel = enemyBitmap.getPixel(i - projectilePosX, j - projectilePosY);
+                            if (hasNoTransparentBackground(bitmap1Pixel) && hasNoTransparentBackground(bitmap2Pixel))
+                                return true;
+                        }
+                    }
+                } catch (IllegalArgumentException e) {
+                    //TODO: Only temporary (we should solve this problem!)
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+
+
 
     /**
      * @param rect1 area of colliding bitmap One
