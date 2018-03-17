@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import yourowngame.com.yourowngame.R;
@@ -44,7 +45,6 @@ public class GameViewActivity extends AppCompatActivity {
         /** Master-call, create GameView*/
         this.setGameView(new GameView(this));
         getGameLayout().addView(this.getGameView());
-
     }
 
     //Gets the current dimens, and saves it into STATIC Values, so we dont need to f* pass the activity onto the darkest point of our prog

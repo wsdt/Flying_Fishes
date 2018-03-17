@@ -22,7 +22,6 @@ import yourowngame.com.yourowngame.classes.actors.BomberEnemy;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_HarmlessSky;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
 import yourowngame.com.yourowngame.classes.handler.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 
@@ -40,6 +39,7 @@ public class GameView extends SurfaceView {
     private Player playerOne;
     private OnTouchHandler touchHandler;
     private FrameLayout layout;
+    private Highscore highscore;
 
     //That little list will later hold all the enemys, iterate through them and draw them all!
     //DO NOT USE THIS AS MENTIONED BEFORE: private List<Enemy> enemyContainer = new ArrayList<>();
@@ -107,9 +107,11 @@ public class GameView extends SurfaceView {
 
     //initialize components that do not match other categories
     private void initComponents() {
-
         /** create OnTouchHandler */
         touchHandler = new OnTouchHandler();
+
+        /** create Highscore Counter */
+        highscore = new Highscore();
     }
 
     /********************************
@@ -137,10 +139,10 @@ public class GameView extends SurfaceView {
                 SpawnEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
-                Log.e(TAG, "redraw: Could not draw images.");
+                //Log.e(TAG, "redraw: Could not draw images.");
                 e.printStackTrace();
             }
-            Log.d(TAG, "redraw: SUCCESS");
+            //Log.d(TAG, "redraw: SUCCESS");
         } else {
             exitGame();
         }
@@ -175,22 +177,30 @@ public class GameView extends SurfaceView {
         /** update the background */
         BackgroundManager.getInstance(this).updateAllBackgroundLayers();
 
-        /** check GameObject collisions
-         *
-         * Will fix that tomorrow, somehow collision seems to not work any longer.. kinda drunk :>
-         * */
+        /** check Player-to-Enemy collision */
         for (Enemy e : LevelManager.getCurrentLevelObj().getAllEnemies()){
-            if(CollisionManager.checkForCollision(getPlayerOne(), e)){
+            if(CollisionManager.checkCollision(getPlayerOne(), e)){
+                // (1) Player does not die immediately, but looses lifepoints
+                // (2) Player dies immediately, makes it much harder!
                 exitGame();
+            }
+        }
+
+        /** check Projectile-to-Enemy collision */
+        for (Enemy e : LevelManager.getCurrentLevelObj().getAllEnemies()){
+            for (int i = 0; i < getPlayerOne().getProjectiles().size(); i++){
+                if(CollisionManager.checkCollision(e, getPlayerOne().getProjectileAtPosition(i))){
+                    e.setPosX(GameViewActivity.GAME_WIDTH+100); //after enemy died, spawn 'em a bit outside
+                    highscore.increment(e); //increment the highscore
+                    Log.d(TAG, "Highscore = " + highscore.value());
+                }
             }
         }
     }
 
-
     /*********************************************************
      * 3. Game Over Methods *
      *********************************************************/
-
     public void exitGame() {
         //TODO guess the thread blocks it!
         Toast.makeText(this.getActivityContext(), "Game over", Toast.LENGTH_SHORT).show(); //TODO: why does this shit not show up

@@ -188,6 +188,10 @@ public class Player extends GameObject {
         return projectileList;
     }
 
+    public Projectile getProjectileAtPosition(int pos){
+        return projectileList.get(pos);
+    }
+
     public int getIntrinsicHeightOfPlayer() {
         return intrinsicHeightOfPlayer;
     }
