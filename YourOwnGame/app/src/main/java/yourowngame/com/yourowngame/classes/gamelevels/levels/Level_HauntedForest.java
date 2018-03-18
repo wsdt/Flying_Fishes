@@ -2,10 +2,6 @@ package yourowngame.com.yourowngame.classes.gamelevels.levels;
 
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 
-/**
- * Created by Solution on 16.03.2018.
- */
-
 public class Level_HauntedForest extends Level {
     @Override
     protected void determineBackgroundLayers() {
@@ -14,6 +10,11 @@ public class Level_HauntedForest extends Level {
 
     @Override
     protected void determineAllEnemies() {
+
+    }
+
+    @Override
+    protected void playBackgroundMusic() {
 
     }
 }

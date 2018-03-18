@@ -58,7 +58,10 @@ public class LevelManager {
      *
      * (hahaha damn it :D :D :D) bitte fortführen ! Märchen-Story Stunde 1 war heute am 16.03.2018 vo 0800 - 0815
      *
-     *
+     * In Level 5 the player explores a lonely island, where he meets a girl. The girl was so beautiful, he can't even
+     * trust his eyes. His heart beats, faster and faster. And after taking a breath he thought he was brave enough to
+     * ask her out. But suddenly a large Penis-Enemy was coming around and she ran away. He killed it with his very
+     * special techniques and was lonely forever.
      * */
     private void createDefaultLevelList() {
         getLevelList().put(0, new Level_HarmlessSky());
