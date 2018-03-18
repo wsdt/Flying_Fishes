@@ -27,6 +27,8 @@ import android.view.View;
 
 public class Reward extends GameObject {
 
+    private int reward;
+
     public Reward(double posX, double posY, double speedX, double speedY, int[] img,int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree,name);
     }
@@ -56,5 +58,9 @@ public class Reward extends GameObject {
     @Override
     public boolean cleanup() {
         return false;
+    }
+
+    public int getReward(){
+        return reward;
     }
 }

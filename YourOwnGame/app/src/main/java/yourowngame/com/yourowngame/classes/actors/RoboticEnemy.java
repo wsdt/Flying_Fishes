@@ -34,11 +34,12 @@ public class RoboticEnemy extends Enemy {
      * --> These fields will be set by default from every subclass. So we can modify it at any time.
      *
      * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!*/
-    private int positivePoints = 50;
-    private int negativePoints = (-100);
 
     public RoboticEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
+
+        setPositivePoints(100);
+        setNegativePoints(-100);
     }
 
     public RoboticEnemy(){}

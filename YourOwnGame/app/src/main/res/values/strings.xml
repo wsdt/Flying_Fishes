@@ -32,5 +32,6 @@
     <!-- TODO: Jori Strings (Please categorize also with id WILL get really confusing in future) -->
     <string name="Shoot">Shoot!</string>
     <string name="munition">Munition: 500/500</string>
+    <string name="setting">Einstellungen</string>
 
 </resources>
