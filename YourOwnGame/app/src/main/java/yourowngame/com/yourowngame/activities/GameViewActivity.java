@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.Player;
+import yourowngame.com.yourowngame.classes.handler.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
 /**
@@ -24,6 +25,7 @@ public class GameViewActivity extends AppCompatActivity {
     private static final String TAG = "GameViewActivity";
     private FrameLayout gameLayout;
     private GameView gameView;
+    private static SoundMgr soundMgr = new SoundMgr();
     public static int GAME_HEIGHT;
     public static int GAME_WIDTH;
 
@@ -61,6 +63,7 @@ public class GameViewActivity extends AppCompatActivity {
      * --> Foreach action a own method (Principle: The only reason to change code should be an error) so switch case violates that
      */
     public void onShootBtn(View v) {
+        //TODO: Add shoot sound res --> GameViewActivity.soundMgr.play(this,R.raw.shootSound,false);
         getGameView().getPlayerOne().addProjectiles(this);
     }
 

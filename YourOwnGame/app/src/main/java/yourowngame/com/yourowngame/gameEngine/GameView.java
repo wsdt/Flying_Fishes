@@ -37,9 +37,9 @@ public class GameView extends SurfaceView {
     private SurfaceHolder holder;
     private GameLoopThread thread;
     private Player playerOne;
-    private OnTouchHandler touchHandler;
+    private OnTouchHandler touchHandler = new OnTouchHandler();
     private FrameLayout layout;
-    private Highscore highscore;
+    private Highscore highscore = new Highscore();
 
     //That little list will later hold all the enemys, iterate through them and draw them all!
     //DO NOT USE THIS AS MENTIONED BEFORE: private List<Enemy> enemyContainer = new ArrayList<>();
@@ -58,7 +58,6 @@ public class GameView extends SurfaceView {
 
         /** Initialize GameObjects & eq here! After initializing, the GameLoop will start!*/
         initGameObjects();
-        initComponents();
 
         /**************************************
          * Start of the Surface & Thread Page *
@@ -103,15 +102,6 @@ public class GameView extends SurfaceView {
         getPlayerOne().initialize(this.getActivityContext());
 
         /** Initializes() of backgrounds are in constructor itself */
-    }
-
-    //initialize components that do not match other categories
-    private void initComponents() {
-        /** create OnTouchHandler */
-        touchHandler = new OnTouchHandler();
-
-        /** create Highscore Counter */
-        highscore = new Highscore();
     }
 
     /********************************
@@ -162,6 +152,12 @@ public class GameView extends SurfaceView {
         getPlayerOne().update(null, this.touchHandler.isTouched(), false);
 
         /** (2.) update the Enemies*/
+        /*TODO: We have a list for each enemy class, but also have one with all enemies in Level-Obj (getCurrent()),
+        todo so we could save maybe memory if we dispose enemyList and do it all in Level-Enemy-List. Then we could
+        todo maybe also do sth like this:
+
+            todo: LevelMgr.getCurrentLevelObj().getAllEnemies.updateAll(this.playerOne, null, null);
+        */
         RoboticEnemy.updateAll(this.playerOne, null, null);
         BomberEnemy.updateAll(this.playerOne, null, null);
         SpawnEnemy.updateAll(this.playerOne, null, null);
@@ -182,6 +178,7 @@ public class GameView extends SurfaceView {
             if(CollisionManager.checkCollision(getPlayerOne(), e)){
                 // (1) Player does not die immediately, but looses lifepoints
                 // (2) Player dies immediately, makes it much harder!
+                CollisionManager.playPlayerEnemyCollisionSound(this.getActivityContext());
                 exitGame();
             }
         }
@@ -191,6 +188,10 @@ public class GameView extends SurfaceView {
             for (int i = 0; i < getPlayerOne().getProjectiles().size(); i++){
                 if(CollisionManager.checkCollision(e, getPlayerOne().getProjectileAtPosition(i))){
                     e.setPosX(GameViewActivity.GAME_WIDTH+100); //after enemy died, spawn 'em a bit outside
+
+                    //Play collision sound
+                    CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
+
                     highscore.increment(e); //increment the highscore
                     Log.d(TAG, "Highscore = " + highscore.value());
                 }

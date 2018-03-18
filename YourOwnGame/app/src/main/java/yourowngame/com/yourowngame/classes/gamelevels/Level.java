@@ -5,9 +5,11 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.classes.actors.Enemy;
 import yourowngame.com.yourowngame.classes.background.Background;
+import yourowngame.com.yourowngame.classes.handler.SoundMgr;
 
 public abstract class Level { //which level an object is (1, 5, etc.) should be decided by LevelManager [so more flexible to changes]
     private static final String TAG = "Level";
+    protected static SoundMgr soundMgr = new SoundMgr(); //static because always only one soundMgr instance
     private String levelName; //Level name (maybe to show to user [e.g. Die dunkle Gruft, usw.]
     private ArrayList<Background> allBackgroundLayers = new ArrayList<>(); //Background layers for each level (as Arraylist to avoid NullpointerExceptions, so we just do not allow gaps)
     private ArrayList<Enemy> allEnemies = new ArrayList<>(); //MUST NOT BE STATIC (different levels, different enemies), All enemies on screen (will be spawned again if gone) for specific level
@@ -20,6 +22,7 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
      * and call setAllBackgroundLayers() with it. */
     protected abstract void determineBackgroundLayers();
     protected abstract void determineAllEnemies();
+    protected abstract void playBackgroundMusic();
 
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public ArrayList<Background> getAllBackgroundLayers() {

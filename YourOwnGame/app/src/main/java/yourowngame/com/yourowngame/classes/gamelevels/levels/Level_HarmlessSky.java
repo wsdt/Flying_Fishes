@@ -53,4 +53,9 @@ public class Level_HarmlessSky extends Level{
         this.getAllEnemies().addAll(SpawnEnemy.getEnemyList());
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
+
+    @Override
+    protected void playBackgroundMusic() {
+        //TODO: play bg sound [search resource] --> Level_HarmlessSky.soundMgr.play(LevelManager.getBackgroundManager().getGameView().getActivityContext(),R.raw.bgMusicLvl1,true);
+    }
 }

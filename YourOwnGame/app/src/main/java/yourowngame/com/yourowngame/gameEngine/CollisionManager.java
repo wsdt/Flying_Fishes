@@ -1,14 +1,18 @@
 package yourowngame.com.yourowngame.gameEngine;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Player;
 import yourowngame.com.yourowngame.classes.actors.Projectile;
+import yourowngame.com.yourowngame.classes.handler.SoundMgr;
 
 /**
  * Created  on 02.03.2018.
@@ -21,7 +25,7 @@ import yourowngame.com.yourowngame.classes.actors.Projectile;
  */
 
 public class CollisionManager {
-
+    private static SoundMgr soundMgr = new SoundMgr(); //no setter
     private static final String TAG = "Collision";
 
     /** private Access, no instantiation!*/
@@ -126,4 +130,11 @@ public class CollisionManager {
         return pixel != Color.TRANSPARENT;
     }
 
+    /** Collision Sound effects */
+    public static void playProjectileEnemyCollisionSound(@NonNull Context context) {
+        //TODO: [search for sound res] --> CollisionManager.soundMgr.play(context, R.raw.collisionSound1,false);
+    }
+    public static void playPlayerEnemyCollisionSound(@NonNull Context context) {
+        //TODO: [search for sound res] --> CollisionManager.soundMgr.play(context, R.raw.collisionSound2,false);
+    }
 }

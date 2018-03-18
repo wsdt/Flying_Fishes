@@ -25,6 +25,15 @@ public class BomberEnemy extends Enemy {
     private static Bitmap[] images;
     private static final String TAG = "BomberEnemy";
 
+    /** Used in highscore (only getter/setter, because Highscore is the one who should increment itself) [By default 0, so new enemies would not do anything]
+     * -- PositivePoints: E.g. when user shoot down an enemy, each specific enemy supplies a different amount of points.
+     * -- NegativePoints: E.g. when enemy was not shoot and passed user without colliding, then user get's negative points.
+     * --> These fields will be set by default from every subclass. So we can modify it at any time.
+     *
+     * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!*/
+    private int positivePoints = 100;
+    private int negativePoints = (-100);
+
     public BomberEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
     }
