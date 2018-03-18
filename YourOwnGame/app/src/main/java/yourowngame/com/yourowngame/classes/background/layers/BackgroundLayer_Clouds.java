@@ -80,9 +80,9 @@ public class BackgroundLayer_Clouds extends Background {
             //update cloud
             cloud.updateCloud(cloud.randomSpeed); //Where is the speed defined? couldnt find it!
             //just for logging
-            Log.d(TAG, "updateBackground: Tried to move cloud: Y: " + cloud.posY + " / X: " + (cloud.posX));
+            //Log.d(TAG, "updateBackground: Tried to move cloud: Y: " + cloud.posY + " / X: " + (cloud.posX));
         }
-        Log.d(TAG, "updateBackground: Tried to update BackgroundLayer_Clouds.");
+        //Log.d(TAG, "updateBackground: Tried to update BackgroundLayer_Clouds.");
     }
 
     /**
@@ -92,9 +92,9 @@ public class BackgroundLayer_Clouds extends Background {
     public void drawBackground(Canvas canvas) {
         for (Cloud cloud : this.getCraftedClouds()) {
             canvas.drawBitmap(cloud.cloudImg, cloud.posX, cloud.posY, null);
-            Log.d(TAG, "drawBackground: Tried to draw cloud: "+cloud);
+            //Log.d(TAG, "drawBackground: Tried to draw cloud: "+cloud);
         }
-        Log.d(TAG, "drawBackground: Tried to draw BgCloudLayer clouds.");
+        //Log.d(TAG, "drawBackground: Tried to draw BgCloudLayer clouds.");
     }
 
     /**

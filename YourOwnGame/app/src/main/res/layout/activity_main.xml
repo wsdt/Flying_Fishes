@@ -4,21 +4,35 @@
 <android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainActivity_RL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="0dp"
     android:padding="0dp"
-    android:id="@+id/mainActivity_RL"
     tools:context="yourowngame.com.yourowngame.activities.MainActivity">
 
     <Button
         android:id="@+id/startGame"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:backgroundTint="@color/colorAccent"
         android:padding="20dp"
         android:text="@string/mainActivity_button_startGame" />
+
+    <Button
+        android:id="@+id/settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/startGame"
+        android:layout_alignBottom="@+id/startGame"
+        android:layout_marginLeft="134dp"
+        android:layout_marginStart="134dp"
+        android:layout_toEndOf="@+id/startGame"
+        android:layout_toRightOf="@+id/startGame"
+        android:padding="20dp"
+        android:text="@string/setting" />
 
 </android.widget.RelativeLayout>

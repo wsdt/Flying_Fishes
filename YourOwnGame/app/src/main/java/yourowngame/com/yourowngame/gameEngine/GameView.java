@@ -89,8 +89,6 @@ public class GameView extends SurfaceView {
         });
     }
 
-
-
     //initialize components that match GameObject()
     private void initGameObjects() {
         /** Player creation*/
@@ -117,13 +115,13 @@ public class GameView extends SurfaceView {
                 // (1.) draw background
                 drawDynamicBackground(canvas);
 
-                // (3.) draw player
+                // (2.) draw player
                 getPlayerOne().draw(this.getActivityContext(), canvas, loopCount);
 
-                // (4.) draw Projectiles
+                // (3.) draw Projectiles
                 getPlayerOne().drawProjectiles(this.getActivityContext(), canvas, loopCount);
 
-                // (2.) draw enemies
+                // (4.) draw enemies
                 RoboticEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
                 BomberEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
                 SpawnEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
@@ -157,6 +155,8 @@ public class GameView extends SurfaceView {
         todo maybe also do sth like this:
 
             todo: LevelMgr.getCurrentLevelObj().getAllEnemies.updateAll(this.playerOne, null, null);
+
+            todo why not! :D
         */
         RoboticEnemy.updateAll(this.playerOne, null, null);
         BomberEnemy.updateAll(this.playerOne, null, null);
@@ -187,12 +187,15 @@ public class GameView extends SurfaceView {
         for (Enemy e : LevelManager.getCurrentLevelObj().getAllEnemies()){
             for (int i = 0; i < getPlayerOne().getProjectiles().size(); i++){
                 if(CollisionManager.checkCollision(e, getPlayerOne().getProjectileAtPosition(i))){
-                    e.setPosX(GameViewActivity.GAME_WIDTH+100); //after enemy died, spawn 'em a bit outside
-
-                    //Play collision sound
+                    //enemy dies, spawns on the other side
+                    e.setPosX(GameViewActivity.GAME_WIDTH+100);
+                    //projectile needs to be deleted
+                    getPlayerOne().getProjectiles().remove(getPlayerOne().getProjectileAtPosition(i));
+                    //play sound when enemy dies
                     CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
+                    //increment the players highscore
+                    highscore.increment(e);
 
-                    highscore.increment(e); //increment the highscore
                     Log.d(TAG, "Highscore = " + highscore.value());
                 }
             }
@@ -200,7 +203,7 @@ public class GameView extends SurfaceView {
     }
 
     /*********************************************************
-     * 3. Game Over Methods *
+     * 3. Game Over Methods                                  *
      *********************************************************/
     public void exitGame() {
         //TODO guess the thread blocks it!

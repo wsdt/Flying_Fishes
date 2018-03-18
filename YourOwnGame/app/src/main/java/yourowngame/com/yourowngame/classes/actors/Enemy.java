@@ -31,8 +31,8 @@ public abstract class Enemy extends GameObject {
      * --> These fields will be set by default from every subclass. So we can modify it at any time.
      *
      * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!*/
-    private int positivePoints = 0;
-    private int negativePoints = 0;
+    private int positivePoints;
+    private int negativePoints;
     //Specific Levels contain an Arraylist with all enemies this class implements arraylist here (so they have the same name)
 
     public Enemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
@@ -44,8 +44,6 @@ public abstract class Enemy extends GameObject {
     public abstract void createRandomEnemies(int numberOfEnemies);
 
     public Enemy(){}
-
-
 
     /** Highscore methods */
     public int getPositivePoints() {
