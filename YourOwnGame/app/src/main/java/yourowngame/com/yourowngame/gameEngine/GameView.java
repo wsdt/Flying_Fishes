@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -41,16 +42,23 @@ public class GameView extends SurfaceView {
     private FrameLayout layout;
     private Highscore highscore = new Highscore();
 
-    //That little list will later hold all the enemys, iterate through them and draw them all!
-    //DO NOT USE THIS AS MENTIONED BEFORE: private List<Enemy> enemyContainer = new ArrayList<>();
     // ENEMIES are level-dependent, so specific level obj should own a list with all enemies. (LevelMgr.CURRENT_LEVEL)
 
-    private GameView(Context context) {
-        super(context);
-    } //dummy constructor for android tools
+    /** Without this method our app will crash, keep it XML needs this constructor */
+    public GameView(Context context, AttributeSet attrs) {
+        super(context, attrs, 0);
+    }
 
-    public GameView(GameViewActivity context) {
+    /** Constructor for creating in runtime (not used currently, but recommended to keep though)*/
+    public GameView(Context context) {
         super(context);
+    }
+
+    /** This method MUST NOT be called in constructor,
+     * moved GameView-Creation to XML so btns might be in foreground,
+     * but there we can't call canvas.lock (so thread can't be started unless
+     * activity:onCreate() is done.*/
+    public void startGame(GameViewActivity context) {
         this.setActivityContext(context);
 
         /** Initialize View Components */
@@ -59,13 +67,14 @@ public class GameView extends SurfaceView {
         /** Initialize GameObjects & eq here! After initializing, the GameLoop will start!*/
         initGameObjects();
 
+        /** React to user input */
+        getRootView().setOnTouchListener(touchHandler);
+
         /**************************************
          * Start of the Surface & Thread Page *
          **************************************/
         thread = new GameLoopThread(this);
         holder = getHolder();
-
-        getRootView().setOnTouchListener(touchHandler);
 
         //Callback-method: 3 Types
         holder.addCallback(new SurfaceHolder.Callback() {
@@ -206,38 +215,43 @@ public class GameView extends SurfaceView {
      * 3. Game Over Methods                                  *
      *********************************************************/
     public void exitGame() {
-        //TODO guess the thread blocks it!
-        Toast.makeText(this.getActivityContext(), "Game over", Toast.LENGTH_SHORT).show(); //TODO: why does this shit not show up
         boolean retry = true;
         thread.setRunning(false);
         Log.d(TAG, "exitGame: Trying to exit game."); //but this is logged?
-        Toast.makeText(this.getActivityContext(), "Game over", Toast.LENGTH_SHORT).show();
         while (retry) {
             try {
                 Log.d(TAG, "exitGame: Trying to join threads and showing dialog before.");
-                Resources res = getActivityContext().getResources();
-                //TODO: Sth has to be wrong with context
-                (new DialogMgr(this.getActivityContext())).showDialog_Generic(
-                        res.getString(R.string.dialog_generic_gameOver_title),
-                        res.getString(R.string.dialog_generic_gameOver_msg),
-                        res.getString(R.string.dialog_generic_button_positive_gameOverAccept),
-                        res.getString(R.string.dialog_generic_button_negative_gameOverRevive),
-                        R.drawable.app_icon_gameboy, new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
-                            @Override
-                            public void success_is_true() {
-                                //todo: End everything here in future, so we could resume game when entering failure_is_false :)
-                            }
+                getActivityContext().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Resources res = getActivityContext().getResources();
+                        (new DialogMgr(getActivityContext())).showDialog_Generic(
+                                res.getString(R.string.dialog_generic_gameOver_title),
+                                res.getString(R.string.dialog_generic_gameOver_msg),
+                                res.getString(R.string.dialog_generic_button_positive_gameOverAccept),
+                                res.getString(R.string.dialog_generic_button_negative_gameOverRevive),
+                                R.drawable.app_icon_gameboy, new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
+                                    @Override
+                                    public void success_is_true() {
+                                        //End everything here in future, so we could resume game when entering failure_is_false :)
+                                        try {
+                                            thread.join();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        getActivityContext().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
+                                    }
 
-                            @Override
-                            public void failure_is_false() {
+                                    @Override
+                                    public void failure_is_false() {
 
-                            }
-                        }
-                );
-                thread.join();
+                                    }
+                                }
+                        );
+                    }
+                });
                 retry = false;
-                this.getActivityContext().finish(); //todo: does not work
-            } catch (InterruptedException | ClassCastException e) {
+            } catch (ClassCastException e) {
                 e.printStackTrace();
             }
         }

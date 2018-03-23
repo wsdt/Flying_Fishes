@@ -19,7 +19,10 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
 
     /** Level realizations should have a fallback/default background
      * This method should calculate or simply just create the allBackgroundLayers-SparseArray
-     * and call setAllBackgroundLayers() with it. */
+     * and call setAllBackgroundLayers() with it.
+     *
+     * TODO: Ok good idea! I think the easiest fallback-procedure would be just adding fallback layers/enemies etc.
+     * TODO: into default level object/members (e.g. instead of new ArrayList<>() --> new ArrayList<>({all Objs})*/
     protected abstract void determineBackgroundLayers();
     protected abstract void determineAllEnemies();
     protected abstract void playBackgroundMusic();

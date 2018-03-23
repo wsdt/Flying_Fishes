@@ -45,8 +45,10 @@ public class GameViewActivity extends AppCompatActivity {
         setGameLayout((FrameLayout) findViewById(R.id.gameViewLayout));
 
         /** Master-call, create GameView*/
-        this.setGameView(new GameView(this));
-        getGameLayout().addView(this.getGameView());
+        setGameView(((GameView) findViewById(R.id.gameView)));
+        getGameView().startGame(this);
+        /*this.setGameView(new GameView(this));
+        getGameLayout().addView(this.getGameView());*/
     }
 
     //Gets the current dimens, and saves it into STATIC Values, so we dont need to f* pass the activity onto the darkest point of our prog

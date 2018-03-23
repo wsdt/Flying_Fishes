@@ -15,6 +15,8 @@ import yourowngame.com.yourowngame.classes.configuration.Constants;
  */
 
 public class GameLoopThread extends Thread {
+    /** @link GameLoopThread#isRunning: {true}->Gameloop will be executed || {false}->Gameloop stopped/paused
+      * */
     //refers to the view
     private GameView view;
     private Handler uiHandler; //necessary for redrawing view
