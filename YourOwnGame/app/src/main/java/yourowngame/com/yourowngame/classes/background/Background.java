@@ -21,7 +21,7 @@ import yourowngame.com.yourowngame.gameEngine.Initializer;
  * TODO exception handling
  */
 
-public abstract class Background implements Initializer {
+public abstract class Background implements Initializer, IBackground {
     private static final String TAG = "Background";
     private int[] img;
     private String name;

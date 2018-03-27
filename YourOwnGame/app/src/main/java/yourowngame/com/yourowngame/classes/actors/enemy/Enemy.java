@@ -1,10 +1,12 @@
-package yourowngame.com.yourowngame.classes.actors;
+package yourowngame.com.yourowngame.classes.actors.enemy;
 
 import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import yourowngame.com.yourowngame.classes.actors.GameObject;
 
 /**
  * So if we use the following pattern
@@ -22,7 +24,7 @@ import java.util.List;
  *
  */
 
-public abstract class Enemy extends GameObject {
+public abstract class Enemy extends GameObject implements IEnemy {
     //private static final String TAG = "Enemy";
 
     /** Used in highscore (only getter/setter, because Highscore is the one who should increment itself) [By default 0, so new enemies would not do anything]

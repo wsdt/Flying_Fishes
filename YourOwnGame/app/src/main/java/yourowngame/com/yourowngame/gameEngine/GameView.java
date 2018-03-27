@@ -11,15 +11,15 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.actors.Enemy;
-import yourowngame.com.yourowngame.classes.actors.Player;
-import yourowngame.com.yourowngame.classes.actors.RoboticEnemy;
-import yourowngame.com.yourowngame.classes.actors.SpawnEnemy;
-import yourowngame.com.yourowngame.classes.actors.BomberEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.actors.player.IPlayer;
+import yourowngame.com.yourowngame.classes.actors.player.Player;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RoboticEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.SpawnEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BomberEnemy;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
@@ -103,7 +103,7 @@ public class GameView extends SurfaceView {
         /** Player creation*/
         setPlayerOne(new Player(100, getRootView().getHeight() / 4, 5, 2, new int[]{
                 R.drawable.player_heli_blue_1, R.drawable.player_heli_blue_2, R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_4,
-                R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy"));
+                R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2}, IPlayer.DEFAULT_ROTATION, "Rezy"));
 
         /** Initializing Player*/
         getPlayerOne().initialize(this.getActivityContext());
