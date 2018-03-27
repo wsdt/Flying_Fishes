@@ -1,30 +1,27 @@
-package yourowngame.com.yourowngame.classes.actors;
+package yourowngame.com.yourowngame.classes.actors.player;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.annotations.TestingPurpose;
+import yourowngame.com.yourowngame.classes.actors.GameObject;
+import yourowngame.com.yourowngame.classes.actors.Projectile;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 import yourowngame.com.yourowngame.gameEngine.Initializer;
 
 
-public class Player extends GameObject {
+public class Player extends GameObject implements IPlayer {
     private static final String TAG = "Player";
     private static final String TAG2 = "Projectile";
 
@@ -56,11 +53,11 @@ public class Player extends GameObject {
             // if player "jumps" the y value decreases (cause y grows towards the bottom of the view)
             if (goUp != null) {
                 if (goUp) {
-                    this.setPosY(this.getPosY() - this.getSpeedY() * Constants.Actors.GameObject.MOVE_UP_MULTIPLIER);
-                    this.setRotationDegree(Constants.Actors.Player.rotationFlyingUp);
+                    this.setPosY(this.getPosY() - this.getSpeedY() * MOVE_UP_MULTIPLIER);
+                    this.setRotationDegree(ROTATION_UP);
                 } else {
                     this.setPosY(this.getPosY() + this.getSpeedY());
-                    this.setRotationDegree(Constants.Actors.Player.rotationFlyingDown);
+                    this.setRotationDegree(ROTATION_DOWN);
                 } //if false go down
             } else {
                 Log.i(TAG, "updateY: Ignoring goUp. Because parameter null.");
@@ -115,18 +112,18 @@ public class Player extends GameObject {
                     HashMap<String, Bitmap> loadedBitmaps = new HashMap<>();
                     Log.d(TAG, "initialize: Player img length: "+ getImg().length);
                     for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
-                        loadedBitmaps.put(Constants.Actors.Player.rotationFlyingUp + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Player.rotationFlyingUp, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
-                        loadedBitmaps.put(Constants.Actors.Player.rotationFlyingDown + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Player.rotationFlyingDown, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
-                        loadedBitmaps.put(Constants.Actors.Player.defaultRotation + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Player.defaultRotation, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
+                        loadedBitmaps.put(ROTATION_UP + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, ROTATION_UP, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
+                        loadedBitmaps.put(ROTATION_DOWN + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, ROTATION_DOWN, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
+                        loadedBitmaps.put(DEFAULT_ROTATION + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, DEFAULT_ROTATION, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
                         Log.d(TAG, "initialize: Loaded following bitmaps->"+
-                                Constants.Actors.Player.rotationFlyingUp + "_" + imgFrame+"//"+
-                                Constants.Actors.Player.rotationFlyingDown + "_" + imgFrame+"//"+
-                                Constants.Actors.Player.defaultRotation + "_" +imgFrame
+                                ROTATION_UP + "_" + imgFrame+"//"+
+                                ROTATION_DOWN + "_" + imgFrame+"//"+
+                                DEFAULT_ROTATION + "_" +imgFrame
                         );
                     }
                     this.setLoadedBitmaps(loadedBitmaps);
-                    this.setHeightOfBitmap(loadedBitmaps.get(Constants.Actors.Player.rotationFlyingUp + "_" + 0).getHeight());
-                    this.setWidthOfBitmap(loadedBitmaps.get(Constants.Actors.Player.rotationFlyingUp + "_" + 0).getWidth());
+                    this.setHeightOfBitmap(loadedBitmaps.get(ROTATION_UP + "_" + 0).getHeight());
+                    this.setWidthOfBitmap(loadedBitmaps.get(ROTATION_UP + "_" + 0).getWidth());
                     Log.d(TAG, "HEIGHT of Bitmap = " + getHeightOfBitmap());
                 }
             } else {

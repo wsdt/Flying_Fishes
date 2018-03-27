@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.actors;
+package yourowngame.com.yourowngame.classes.actors.enemy.specializations;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -9,12 +9,12 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.annotations.TestingPurpose;
+import yourowngame.com.yourowngame.classes.actors.GameObject;
+import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
@@ -24,10 +24,10 @@ import yourowngame.com.yourowngame.classes.handler.RandomHandler;
  *
  */
 
-public class SpawnEnemy extends Enemy {
-    private static final String TAG = "SpawnEnemy";
+public class RoboticEnemy extends Enemy {
+    private static final String TAG = "RoboEnemy";
     private static Bitmap[] images;
-    private static ArrayList<SpawnEnemy> enemyList = new ArrayList<>();
+    private static ArrayList<RoboticEnemy> enemyList = new ArrayList<>();
 
     /** Used in highscore (only getter/setter, because Highscore is the one who should increment itself) [By default 0, so new enemies would not do anything]
      * -- PositivePoints: E.g. when user shoot down an enemy, each specific enemy supplies a different amount of points.
@@ -36,26 +36,30 @@ public class SpawnEnemy extends Enemy {
      *
      * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!*/
 
-
-    public SpawnEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+    public RoboticEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
 
-        setPositivePoints(250);
+        setPositivePoints(100);
         setNegativePoints(-100);
     }
 
-    public SpawnEnemy(){}
+    public RoboticEnemy(){}
 
+    //This is the standard AI, other enemys will have their own way of trying to kill the player :>
 
-    @Override @TestingPurpose (
-            createdBy = Constants.Developers.WSDT,
-            lastModified = "04.03.2018 : 11:30",
-            deleteWhenUnused = false
-    )
+    @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-        //TODO spawn sometimes(!) in different y values
-        this.setPosY(RandomHandler.getRandomFloat(50,300));
-        this.setPosX(this.getPosX() - this.getSpeedX());
+        Player player = (Player) obj;
+
+        if(player.getPosX() < this.getPosX())
+            this.setPosX(this.getPosX() - this.getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
+        else if(player.getPosX() > this.getPosX())
+            this.setPosX(this.getPosX() + this.getSpeedX());
+
+        if(player.getPosY() < this.getPosY())
+            this.setPosY(this.getPosY() - this.getSpeedY());
+        else if(player.getPosY() > this.getPosY())
+            this.setPosY(this.getPosY() + this.getSpeedY());
     }
 
     public static void updateAll(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
@@ -65,19 +69,19 @@ public class SpawnEnemy extends Enemy {
     }
 
     @Override
-    public void createRandomEnemies(int count){
-        for (int i = 0; i < count; i++){
-            getEnemyList().add(new SpawnEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH),
+    public void createRandomEnemies(int numberOfRobos){
+        for (int i = 0; i < numberOfRobos; i++){
+            getEnemyList().add(new RoboticEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH),
                     RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT / 2, GameViewActivity.GAME_HEIGHT),
-                    RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedXmin, Constants.Actors.Enemy.speedXmax),
-                    RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
-                    null, Constants.Actors.Enemy.defaultRotation, "Spawn"));
+                    RandomHandler.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
+                    RandomHandler.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
+                    null, DEFAULT_ROTATION, "Robotic"));
 
             getEnemyList().get(i).setCurrentBitmap(images[0]);
         }
     }
 
-    //TODO: in my opinion, a simple bitmap array would match the animation the best! --> YES BUT WE ARE INCONSTENT :( (when we do this we should also do it in Player etc. instead of img[] drawable int arr)
+    //in my opinion, a simple bitmap array would match the animation the best!
     //but we surely should do something to slow it down
     /** Single enemy should not draw all of them (not object-oriented) */
     @Override
@@ -88,24 +92,24 @@ public class SpawnEnemy extends Enemy {
     }
 
     public static void drawAll(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (SpawnEnemy e : getEnemyList()) {
+        for (RoboticEnemy e : getEnemyList()) {
             Log.d(TAG, "Enemy X | Y : " + e.getPosX() + "|" + e.getPosY());
 
             e.draw(activity,canvas,loopCount);
         }
     }
 
-    @Override @SafeVarargs
-    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
-        //we really need to change the initialize, Object params, instanceOf..
+    @Override
+    public <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+    //we really need to change the initialize, Object params, instanceOf..
 
         if (allObjs != null) {
             if (allObjs[0] instanceof Activity) {
                 Activity activity = (Activity) allObjs[0];
                 setImages(new Bitmap[2]);
-                //TODO: For testing robo img
-                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.app_icon_gameboy), 64, 64, false);
-                getImages()[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.app_icon_gameboy), 64, 64, false);
+                                                                                                                                            //percentage, just for testing now
+                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.black_enemy_robotic), 64, 64, false);
+                getImages()[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.black_enemy_robotic), 64, 64, false);
 
             } else {
                 Log.d(TAG, "Robo-Enemy: Initialize Failure!");
@@ -126,12 +130,12 @@ public class SpawnEnemy extends Enemy {
 
     /** GETTER / SETTER */
 
-    public static ArrayList<SpawnEnemy> getEnemyList() {
+    public static ArrayList<RoboticEnemy> getEnemyList() {
         return enemyList;
     }
 
-    public static void setEnemyList(ArrayList<SpawnEnemy> enemyList) {
-        SpawnEnemy.enemyList = enemyList;
+    public static void setEnemyList(ArrayList<RoboticEnemy> enemyList) {
+        RoboticEnemy.enemyList = enemyList;
     }
 
     public static Bitmap[] getImages() {
@@ -139,7 +143,7 @@ public class SpawnEnemy extends Enemy {
     }
 
     public static void setImages(Bitmap[] images) {
-        SpawnEnemy.images = images;
+        RoboticEnemy.images = images;
     }
 
 }

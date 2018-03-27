@@ -4,13 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.actors.Enemy;
-import yourowngame.com.yourowngame.classes.actors.Player;
+import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.Projectile;
 import yourowngame.com.yourowngame.classes.handler.SoundMgr;
 

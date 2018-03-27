@@ -1,5 +1,7 @@
 package yourowngame.com.yourowngame.classes.configuration;
 
+import yourowngame.com.yourowngame.classes.annotations.Delete;
+
 /**
  * Constants interfaces are referencing NOT translateable (global) values [e.g. numbers, auth-tokens, arbitrary strings etc.].
  * If a string can be translated (sensefully) then place it into Strings.xml Resource file!
@@ -22,69 +24,15 @@ public interface Constants {
         String SOLUTION = "Christof Jori (SOLUTION)";
     }
 
-    interface Ads {
-        String admobAppId = "ca-app-pub-8160960481527784~7542998003";
-        boolean useTestAds = true;
-        interface TestAds {
-            String bannerAdUnit = "ca-app-pub-3940256099942544/6300978111";
-            String interstitialAdUnit = "ca-app-pub-3940256099942544/1033173712";
-            String rewardedVideoAdUnit = "ca-app-pub-3940256099942544/5224354917";
-            //Native Advanced and native express could be also used! (see AdMob)
-        }
-        interface RealAds { //Important: Real and TestAds interface should have the SAME members!
-            String bannerAdUnit = "ca-app-pub-8160960481527784/3864920525";
-            String interstitialAdUnit = "ca-app-pub-8160960481527784/1753283579";
-            String rewardedVideoAdUnit = TestAds.rewardedVideoAdUnit; //TODO: For rewarded ad we need to now the reward to create it! (used test ad temporary)
-        }
-    }
-
-    interface Actors {
-        interface GameObject {
-            int MOVE_UP_MULTIPLIER = 2;     //Jump Speed multiplied by MOVE_UP_MULTIPLIER
-        }
-        interface Barrier {}
-        interface Enemy {
-            //max/min values so enemies can be created dynamically
-            float speedXmin = 1.5f;
-            float speedXmax = 5; //could be also level dependent :) this will surely be level dependent :)
-            float speedYmin = 1.5f;
-            float speedYmax = 5;
-
-
-            int defaultRotation = 0;
-            int rotationFlyingUp = 10;
-            int rotationFlyingDown = -10;
-            float widthPercentage = 0.35f;
-            float heightPercentage = 0.35f;
-        }
-        interface Player {
-            int defaultRotation = 0;
-            int rotationFlyingUp = 5;
-            int rotationFlyingDown = -5;
-            float widthPercentage = 0.35f;
-            float heightPercentage = 0.35f;
-        }
-        interface Reward {}
-    }
-
+    @Delete (
+            createdBy = Developers.WSDT,
+            description = "Please verify and delete.",
+            lastModified = "27.03.2018 21:50"
+    )
     interface GameLogic {
-        interface GameLoopThread {
-            int maxFramesSkipable = 5;
-            int maxFPS = 50;
-        }
         interface GameView {
-            float widthInPercentage = 0.35f;
+            float widthInPercentage = 0.35f; //this values is used in player.class (todo: we are sure this values is used correctly?)
             float heightInPercentage = 0.35f;
-        }
-    }
-
-    interface Background {
-        float defaultBgSpeed = 0.01f; //the lower the no. the slower the skyElements (e.g. layer1: Clouds)
-        interface layer1_clouds {
-            int anzahlClouds = 10;
-            float randomYplacementInPercentageCloud = 0.40f; //top 40% where clouds can appear
-            float randomCloudSpeedMax = 5f;
-            float randomCloudSpeedMin = 1f; //do not place 0!
         }
     }
 }

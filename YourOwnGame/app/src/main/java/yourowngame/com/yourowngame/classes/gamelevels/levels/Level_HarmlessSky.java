@@ -3,11 +3,13 @@ package yourowngame.com.yourowngame.classes.gamelevels.levels;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.actors.BomberEnemy;
-import yourowngame.com.yourowngame.classes.actors.RoboticEnemy;
-import yourowngame.com.yourowngame.classes.actors.SpawnEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BomberEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RoboticEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.SpawnEnemy;
+import yourowngame.com.yourowngame.classes.background.IBackground;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_staticBgImg;
+import yourowngame.com.yourowngame.classes.background.layers.IBackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
@@ -17,15 +19,15 @@ import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
  */
 
 
-public class Level_HarmlessSky extends Level{
+public class Level_HarmlessSky extends Level implements IBackground {
     private static final String TAG = "Lvl_HarmlessSky";
 
     @Override
     protected void determineBackgroundLayers() {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
         * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
-        this.getAllBackgroundLayers().add(new BackgroundLayer_staticBgImg(LevelManager.getBackgroundManager(), R.color.colorSkyBlue, "Sky", Constants.Background.defaultBgSpeed));
-        this.getAllBackgroundLayers().add(new BackgroundLayer_Clouds(LevelManager.getBackgroundManager(), new int[]{R.drawable.bglayer_1_cloud_1,R.drawable.bglayer_1_cloud_2,R.drawable.bglayer_1_cloud_3}, "Heaven", Constants.Background.defaultBgSpeed));
+        this.getAllBackgroundLayers().add(new BackgroundLayer_staticBgImg(LevelManager.getBackgroundManager(), R.color.colorSkyBlue, "Sky", DEFAULT_BG_SPEED));
+        this.getAllBackgroundLayers().add(new BackgroundLayer_Clouds(LevelManager.getBackgroundManager(), new int[]{R.drawable.bglayer_1_cloud_1,R.drawable.bglayer_1_cloud_2,R.drawable.bglayer_1_cloud_3}, "Heaven", DEFAULT_BG_SPEED));
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)
     }

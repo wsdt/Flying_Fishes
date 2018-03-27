@@ -5,11 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.actors.Player;
 import yourowngame.com.yourowngame.classes.handler.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
