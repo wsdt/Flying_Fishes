@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.actors;
+package yourowngame.com.yourowngame.classes.actors.enemy.specializations;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.actors.GameObject;
+import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
@@ -72,9 +74,9 @@ public class BomberEnemy extends Enemy {
         for (int i = 0; i < numberOfEnemies; i++) {
             getEnemyList().add(new BomberEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH),
                     RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT / 2, GameViewActivity.GAME_HEIGHT),
-                    RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedXmin, Constants.Actors.Enemy.speedXmax),
-                    RandomHandler.getRandomFloat(Constants.Actors.Enemy.speedYmin, Constants.Actors.Enemy.speedYmax),
-                    null, Constants.Actors.Enemy.defaultRotation, "Bomber"));
+                    RandomHandler.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
+                    RandomHandler.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
+                    null, DEFAULT_ROTATION, "Bomber"));
 
             getEnemyList().get(i).setCurrentBitmap(images[0]);
         }

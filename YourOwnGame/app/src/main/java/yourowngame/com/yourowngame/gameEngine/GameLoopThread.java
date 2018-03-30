@@ -14,7 +14,7 @@ import yourowngame.com.yourowngame.classes.configuration.Constants;
  *
  */
 
-public class GameLoopThread extends Thread {
+public class GameLoopThread extends Thread implements IGameLoopThread {
     /** @link GameLoopThread#isRunning: {true}->Gameloop will be executed || {false}->Gameloop stopped/paused
       * */
     //refers to the view
@@ -72,11 +72,11 @@ public class GameLoopThread extends Thread {
                         }
                     }
 
-                    while (sleepTime < 0 && framesSkipped < Constants.GameLogic.GameLoopThread.maxFramesSkipable) { //= Max frames skipped
+                    while (sleepTime < 0 && framesSkipped < MAX_FRAMES_SKIPPABLE) { //= Max frames skipped
                         //catch up, update without rendering
                         view.updateGameObjects();
                         //add frame period to check if in next frame
-                        sleepTime += (1000 / Constants.GameLogic.GameLoopThread.maxFPS); //FRAMEPERIOD = 1000 / 50 [50 = MAX_FPS]
+                        sleepTime += (1000 / MAX_FPS); //FRAMEPERIOD = 1000 / 50 [50 = MAX_FPS]
                         framesSkipped++;
                     }
                     Log.d(TAG, "run: Started cycle at "+beginTime+"\nTime-Difference (to ending): "+timeDiff);

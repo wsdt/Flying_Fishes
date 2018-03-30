@@ -3,7 +3,7 @@ package yourowngame.com.yourowngame.classes.gamelevels;
 
 import java.util.ArrayList;
 
-import yourowngame.com.yourowngame.classes.actors.Enemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.handler.SoundMgr;
 
