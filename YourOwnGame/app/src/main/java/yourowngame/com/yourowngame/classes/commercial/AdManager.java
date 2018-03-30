@@ -18,9 +18,8 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.configuration.Constants;
 
-public class AdManager {
+public class AdManager implements IAdManager {
     private Activity context;
     private static final String TAG = "AdManager";
 
@@ -32,13 +31,13 @@ public class AdManager {
     }
 
     private void initializeAdmob() {
-        MobileAds.initialize(this.getContext(), Constants.Ads.admobAppId);
+        MobileAds.initialize(this.getContext(), ADMOB_ID);
         Log.d(TAG, "initializeAdMob: Tried to initialize Admob.");
     }
 
 
     public RewardedVideoAd loadRewardedVideoInRewardActivity(@NonNull final Activity activityContext, @Nullable RewardedVideoAdListener adListener, @Nullable final Intent goToActivityAfterShown) {
-        final String REWARDED_VIDEO_ID = Constants.Ads.useTestAds ? Constants.Ads.TestAds.rewardedVideoAdUnit : Constants.Ads.RealAds.rewardedVideoAdUnit;
+        final String REWARDED_VIDEO_ID = USE_TEST_ADS ? TEST_ADS.REWARDED_AD_UNIT : REAL_ADS.REWARDED_AD_UNIT;
 
         final RewardedVideoAd rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(activityContext);
         rewardedVideoAd.setRewardedVideoAdListener((adListener == null) ? new RewardedVideoAdListener() {
@@ -115,7 +114,7 @@ public class AdManager {
 
     public void loadFullPageAd(@Nullable final AdListener adListener, @Nullable final Intent goToActivityAfterShown) {
         //IMPORTANT: ADMOB-GUIDELINE only place interestials between activities with contents and not too much!! Showing Fullpage Ad only allowed if loadingActivity shows BEFORE ad! (see: https://support.google.com/admob/answer/6201362?hl=de&ref_topic=2745287)
-        final String FULLPAGE_ID = Constants.Ads.useTestAds ? Constants.Ads.TestAds.interstitialAdUnit : Constants.Ads.RealAds.interstitialAdUnit;
+        final String FULLPAGE_ID = USE_TEST_ADS ? TEST_ADS.INTERSTITIAL_AD_UNIT : REAL_ADS.INTERSTITIAL_AD_UNIT;
 
         final InterstitialAd fullpageAd = new InterstitialAd(getContext());
         fullpageAd.setAdUnitId(FULLPAGE_ID);
@@ -156,7 +155,7 @@ public class AdManager {
     }
 
     public void loadBannerAd(final RelativeLayout viewGroup) {
-        final String BANNER_ID = Constants.Ads.useTestAds ? Constants.Ads.TestAds.bannerAdUnit : Constants.Ads.RealAds.bannerAdUnit;
+        final String BANNER_ID = USE_TEST_ADS ? TEST_ADS.BANNER_AD_UNIT : REAL_ADS.BANNER_AD_UNIT;
 
         final AdView adView = new AdView(getContext());
         adView.setAdSize(AdSize.SMART_BANNER); //IMPORTANT: adsize and adunit should be added in the same manner! (programmatically | xml)

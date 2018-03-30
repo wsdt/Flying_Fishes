@@ -1,10 +1,7 @@
 package yourowngame.com.yourowngame.gameEngine;
 
-import yourowngame.com.yourowngame.classes.actors.BomberEnemy;
-import yourowngame.com.yourowngame.classes.actors.Enemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Reward;
-import yourowngame.com.yourowngame.classes.actors.RoboticEnemy;
-import yourowngame.com.yourowngame.classes.actors.SpawnEnemy;
 
 /**
  * Created  on 17.03.2018.

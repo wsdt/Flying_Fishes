@@ -24,7 +24,7 @@ import yourowngame.com.yourowngame.classes.handler.RandomHandler;
  * from the Background.class
  */
 
-public class BackgroundLayer_Clouds extends Background {
+public class BackgroundLayer_Clouds extends Background implements IBackgroundLayer_Clouds {
     private ArrayList<Cloud> craftedClouds;
     private static final String TAG = "BackgroundLayer_Clouds";
 
@@ -53,10 +53,10 @@ public class BackgroundLayer_Clouds extends Background {
 
         public Cloud(Bitmap cloudImg) {
             this.posX = RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 1500);
-            this.posY = RandomHandler.getRandomFloat(0, (int) (GameViewActivity.GAME_HEIGHT * Constants.Background.layer1_clouds.randomYplacementInPercentageCloud));
+            this.posY = RandomHandler.getRandomFloat(0, (int) (GameViewActivity.GAME_HEIGHT * CLOUD_RANDOM_Y_PLACEMENT_IN_PERCENTAGE));
             ;
             this.cloudImg = cloudImg;
-            this.randomSpeed = RandomHandler.getRandomFloat(Constants.Background.layer1_clouds.randomCloudSpeedMin, Constants.Background.layer1_clouds.randomCloudSpeedMax);
+            this.randomSpeed = RandomHandler.getRandomFloat(CLOUD_RANDOM_SPEED_MIN, CLOUD_RANDOM_SPEED_MAX);
         }
 
         //this methods updates the cloud
@@ -126,7 +126,7 @@ public class BackgroundLayer_Clouds extends Background {
     @Override
     @SafeVarargs
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
-        this.craftClouds(this.getImg(), Constants.Background.layer1_clouds.anzahlClouds); //also sets simultaneously
+        this.craftClouds(this.getImg(), AMOUNT_CLOUDS); //also sets simultaneously
         return true;
     }
 
