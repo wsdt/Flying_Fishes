@@ -82,7 +82,8 @@ public class RoboticEnemy extends Enemy {
 
     //in my opinion, a simple bitmap array would match the animation the best!
     //but we surely should do something to slow it down
-    /** Single enemy should not draw all of them (not object-oriented) */
+    /** Single enemy should not draw all of them (not object-oriented)
+     * that's what i've always wanted to prevent..*/
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
         for (int i = 0; i < getImages().length; i++) {

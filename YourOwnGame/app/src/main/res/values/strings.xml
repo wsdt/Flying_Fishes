@@ -9,6 +9,7 @@
     <!-- MainActivity -->
     <string name="mainActivity_button_startGame">Starten!</string>
     <string name="mainActivity_imageView_contentDescription">App Welcome Picture</string>
+    <string name="setting">Settings</string>
 
     <!-- LoadingActivity -->
     <string name="loadingActivity_imageView_contentDescription">App-Icon</string>
@@ -29,9 +30,8 @@
     <string name="dialog_generic_button_positive_gameOverAccept">OK</string>
     <string name="dialog_generic_button_negative_gameOverRevive">Revive</string><!-- TODO: In future with watching rewarded ad -->
 
-    <!-- TODO: Jori Strings (Please categorize also with id WILL get really confusing in future) -->
-    <string name="Shoot">Shoot!</string>
-    <string name="munition">Munition: 500/500</string>
-    <string name="setting">Einstellungen</string>
+    <!-- GameView Str -->
+    <string name="shoot">Shoot!</string>
+    <string name="highscoreLbl">Highscore = </string>
 
 </resources>

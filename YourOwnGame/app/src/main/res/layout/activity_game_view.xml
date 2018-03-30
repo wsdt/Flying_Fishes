@@ -14,9 +14,22 @@
     <yourowngame.com.yourowngame.gameEngine.GameView
         android:id="@+id/gameView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <!-- TODO: Button is not visible [presumably behind bg]  -->
+    <!-- shouldnt the UIs be placed here >inside< the view? -->
+
+    </yourowngame.com.yourowngame.gameEngine.GameView>
+
+    <TextView
+        android:id="@+id/highscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="250dp"
+        android:text="@string/highscoreLbl"
+        android:textColor="@color/colorAccent"
+        android:textSize="25sp"
+        android:shadowColor="@color/colorAccent"
+        android:textStyle="bold"    />
 
     <Button
         android:id="@+id/shoot"
@@ -25,7 +38,8 @@
         android:background="@color/colorAccent"
         android:onClick="onShootBtn"
         android:padding="5dp"
-        android:text="@string/Shoot"
+        android:text="@string/shoot"
         android:textColor="@color/colorWhite" />
+
 
 </FrameLayout>

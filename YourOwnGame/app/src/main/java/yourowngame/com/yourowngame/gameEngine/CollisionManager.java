@@ -20,7 +20,7 @@ import yourowngame.com.yourowngame.classes.handler.SoundMgr;
  * The CollisionManager checks whether two bitmaps are
  * colliding or not, if they collide, then he gets the "area-of-colliding"
  * -> the pixels that overlap and if just 1 pixel of both images
- * does not contain transparent background, the hitsTheGround occurred.
+ * does not contain transparent background, the collision occurred.
  *
  */
 

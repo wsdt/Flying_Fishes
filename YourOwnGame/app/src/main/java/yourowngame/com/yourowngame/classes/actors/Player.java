@@ -30,10 +30,11 @@ public class Player extends GameObject {
 
     //holds all the projectiles the player shoots
     private List<Projectile> projectileList = new ArrayList<>();
+    private static Bitmap[] images;
 
     /*-- Preloaded --*/
     private int intrinsicHeightOfPlayer;
-    private HashMap<String,Bitmap> loadedBitmaps; //must not be static
+    //private HashMap<String,Bitmap> loadedBitmaps; //must not be static
 
 
     public Player(double posX, double posY, double speedX, double speedY, int img[], int rotationDegree, @Nullable String name) {
@@ -91,11 +92,10 @@ public class Player extends GameObject {
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        //SET current Bitmap, LOAD current Bitmap, DRAW current Bitmap
-        this.setCurrentBitmap(loadedBitmaps.get(this.getRotationDegree()+"_"+((int) loopCount%this.getImg().length))); //reference for collision detection etc.
-        Log.d(TAG, "draw: Tried to draw bitmap index: "+this.getRotationDegree()+"_"+((int) loopCount%this.getImg().length)+"/Bitmap->"+this.getCurrentBitmap());
-
-        canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
+        for (int i = 0; i < getImages().length; i++) {
+            setCurrentBitmap(getImages()[i]); /** here we need to adjust the current bitmap, just for collision detection!*/
+            canvas.drawBitmap(getImages()[i], (int) this.getPosX(), (int) this.getPosY(), null);
+        }
     }
 
 
@@ -110,34 +110,30 @@ public class Player extends GameObject {
                     Activity activity = (Activity) allObjs[0];
                     this.setIntrinsicHeightOfPlayer(activity.getResources().getDrawable(this.getImg()[0]).getIntrinsicHeight());
 
-                    /*Load all bitmaps [load all rotations and all images from array] -------------------
-                    * String of hashmap has following pattern: */
-                    HashMap<String, Bitmap> loadedBitmaps = new HashMap<>();
-                    Log.d(TAG, "initialize: Player img length: "+ getImg().length);
-                    for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
-                        loadedBitmaps.put(Constants.Actors.Player.rotationFlyingUp + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Player.rotationFlyingUp, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
-                        loadedBitmaps.put(Constants.Actors.Player.rotationFlyingDown + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Player.rotationFlyingDown, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
-                        loadedBitmaps.put(Constants.Actors.Player.defaultRotation + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, Constants.Actors.Player.defaultRotation, Constants.Actors.Player.widthPercentage, Constants.Actors.Player.heightPercentage));
-                        Log.d(TAG, "initialize: Loaded following bitmaps->"+
-                                Constants.Actors.Player.rotationFlyingUp + "_" + imgFrame+"//"+
-                                Constants.Actors.Player.rotationFlyingDown + "_" + imgFrame+"//"+
-                                Constants.Actors.Player.defaultRotation + "_" +imgFrame
-                        );
-                    }
-                    this.setLoadedBitmaps(loadedBitmaps);
-                    this.setHeightOfBitmap(loadedBitmaps.get(Constants.Actors.Player.rotationFlyingUp + "_" + 0).getHeight());
-                    this.setWidthOfBitmap(loadedBitmaps.get(Constants.Actors.Player.rotationFlyingUp + "_" + 0).getWidth());
-                    Log.d(TAG, "HEIGHT of Bitmap = " + getHeightOfBitmap());
+                    //TODO animation is too fast, if we manage it to progress the min of 25 fps or 30, we could highly improve performance
+                   setImages(new Bitmap[4]);
+                   images[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.player_heli_blue_1), 128, 128, false);
+                   images[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.player_heli_blue_2), 128, 128, false);
+                   images[2] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.player_heli_blue_3), 128, 128, false);
+                   images[3] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.player_heli_blue_4), 128, 128, false);
+
+                   //just use the first one, no further calculation needed, works fine
+                   this.setHeightOfBitmap(images[0].getHeight());
+                   this.setWidthOfBitmap(images[0].getWidth());
+
+                   Log.d(TAG, "HEIGHT of Bitmap = " + getHeightOfBitmap());
                 }
+
             } else {
                 return false;
             }
-        } catch (ClassCastException | NullPointerException | NoDrawableInArrayFound_Exception e) {
+        } catch (ClassCastException | NullPointerException e) {
             //This should never be thrown! Just check in try block if null and if instance of to prevent issues!
             Log.e(TAG, "initialize: Initializing of Player object FAILED! See error below.");
             e.printStackTrace();
             return false;
         }
+
         Log.d(TAG, "initialize: Initializing Player class successful!");
         return true;
     }
@@ -148,7 +144,7 @@ public class Player extends GameObject {
     public boolean cleanup() {
         //Set to illegal values/null
         this.setIntrinsicHeightOfPlayer(Initializer.PRIMITIVES_ILLEGAL_VALUE);
-        this.setLoadedBitmaps(null);
+        images = null;
         return true;
     }
 
@@ -183,7 +179,6 @@ public class Player extends GameObject {
     /*************************
      *  GETTER & SETTER      *
      *************************/
-
     public List getProjectiles(){
         return projectileList;
     }
@@ -199,13 +194,12 @@ public class Player extends GameObject {
     public void setIntrinsicHeightOfPlayer(int intrinsicHeightOfPlayer) {
         this.intrinsicHeightOfPlayer = intrinsicHeightOfPlayer;
     }
-
-    public HashMap<String, Bitmap> getLoadedBitmaps() {
-        return loadedBitmaps;
+    public static Bitmap[] getImages() {
+        return images;
     }
 
-    public void setLoadedBitmaps(HashMap<String, Bitmap> loadedBitmaps) {
-        this.loadedBitmaps = loadedBitmaps;
+    public static void setImages(Bitmap[] images) {
+        Player.images = images;
     }
 }
 
