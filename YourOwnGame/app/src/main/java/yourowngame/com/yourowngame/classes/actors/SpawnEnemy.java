@@ -77,7 +77,6 @@ public class SpawnEnemy extends Enemy {
         }
     }
 
-    //TODO: in my opinion, a simple bitmap array would match the animation the best! --> YES BUT WE ARE INCONSTENT :( (when we do this we should also do it in Player etc. instead of img[] drawable int arr)
     //but we surely should do something to slow it down
     /** Single enemy should not draw all of them (not object-oriented) */
     @Override

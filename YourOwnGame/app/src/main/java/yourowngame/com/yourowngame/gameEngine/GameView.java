@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
@@ -41,6 +41,9 @@ public class GameView extends SurfaceView {
     private OnTouchHandler touchHandler = new OnTouchHandler();
     private FrameLayout layout;
     private Highscore highscore = new Highscore();
+    private TextView highscoreTxt;
+    private TextView scorerPts;
+
 
     // ENEMIES are level-dependent, so specific level obj should own a list with all enemies. (LevelMgr.CURRENT_LEVEL)
 
@@ -63,6 +66,7 @@ public class GameView extends SurfaceView {
 
         /** Initialize View Components */
         layout = context.getView();
+        highscoreTxt = (TextView) context.findViewById(R.id.highscore);
 
         /** Initialize GameObjects & eq here! After initializing, the GameLoop will start!*/
         initGameObjects();
@@ -103,12 +107,13 @@ public class GameView extends SurfaceView {
         /** Player creation*/
         setPlayerOne(new Player(100, getRootView().getHeight() / 4, 5, 2, new int[]{
                 R.drawable.player_heli_blue_1, R.drawable.player_heli_blue_2, R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_4,
-                R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2},Constants.Actors.Player.defaultRotation, "Rezy"));
+                R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2}, Constants.Actors.Player.defaultRotation, "Rezy"));
 
         /** Initializing Player*/
         getPlayerOne().initialize(this.getActivityContext());
 
         /** Initializes() of backgrounds are in constructor itself */
+
     }
 
     /********************************
@@ -135,6 +140,9 @@ public class GameView extends SurfaceView {
                 BomberEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
                 SpawnEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
 
+                // (5.) update the UI-Thread
+                updateOnUIThread();
+
             } catch (Exception e) {
                 //Log.e(TAG, "redraw: Could not draw images.");
                 e.printStackTrace();
@@ -144,6 +152,18 @@ public class GameView extends SurfaceView {
             exitGame();
         }
     }
+
+    public void updateOnUIThread(){
+        //TODO if we want to update the UIs we need to access the main UI Thread
+        getActivityContext().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // (1.) update the highscore-Text
+                highscoreTxt.setText(getResources().getString(R.string.highscoreLbl) + " " + highscore.value());
+            }
+        });
+    }
+
 
     /** Gets all Layers & draws them! */
     public void drawDynamicBackground(@NonNull Canvas canvas) {
@@ -165,7 +185,7 @@ public class GameView extends SurfaceView {
 
             todo: LevelMgr.getCurrentLevelObj().getAllEnemies.updateAll(this.playerOne, null, null);
 
-            todo why not! :D
+            todo we should really do this, because if level changes, we would have all changes concentrated in the level class
         */
         RoboticEnemy.updateAll(this.playerOne, null, null);
         BomberEnemy.updateAll(this.playerOne, null, null);
@@ -209,6 +229,7 @@ public class GameView extends SurfaceView {
                 }
             }
         }
+
     }
 
     /*********************************************************

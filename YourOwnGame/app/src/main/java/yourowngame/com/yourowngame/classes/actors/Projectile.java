@@ -33,7 +33,11 @@ import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exc
 public class Projectile extends GameObject {
     private final String TAG = "Projectile";
     //Static so we can avoid bitmap creation when firing
-    private static Bitmap sharedBitmap; //TODO: Bad design, because we have made currentBitmap() a non-static member, so we have to do this! :( [maybe we can change that in future]
+
+    //TODO: Bad design, because we have made currentBitmap() a non-static member, so we have to do this! :( [maybe we can change that in future]
+    //TODO: absolutely, we currently have bitmap-arrays as images[], the currentBitmap which only holds the latest bitmap for collission and this sharedBitmap here...
+    private static Bitmap sharedBitmap;
+
 
     public Projectile(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);

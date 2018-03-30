@@ -47,8 +47,7 @@ public class GameViewActivity extends AppCompatActivity {
         /** Master-call, create GameView*/
         setGameView(((GameView) findViewById(R.id.gameView)));
         getGameView().startGame(this);
-        /*this.setGameView(new GameView(this));
-        getGameLayout().addView(this.getGameView());*/
+
     }
 
     //Gets the current dimens, and saves it into STATIC Values, so we dont need to f* pass the activity onto the darkest point of our prog
@@ -59,6 +58,8 @@ public class GameViewActivity extends AppCompatActivity {
         GAME_HEIGHT = displayMetrics.heightPixels;
         Log.d(TAG, "HEIGHT = " + GAME_HEIGHT + "WIDTH = " + GAME_WIDTH);
     }
+
+
 
     /**
      * Custom OnClickListeners (recommendation: add them directly in xml)
