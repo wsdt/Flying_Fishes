@@ -21,7 +21,6 @@ import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RoboticE
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.SpawnEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BomberEnemy;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
-import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
 import yourowngame.com.yourowngame.classes.handler.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
@@ -34,7 +33,7 @@ import yourowngame.com.yourowngame.classes.handler.interfaces.ExecuteIfTrueSucce
 
 public class GameView extends SurfaceView {
     private static final String TAG = "GameView";
-    private Activity activityContext;
+    private GameViewActivity activityContext;
     private SurfaceHolder holder;
     private GameLoopThread thread;
     private Player playerOne;
@@ -109,6 +108,14 @@ public class GameView extends SurfaceView {
         getPlayerOne().initialize(this.getActivityContext());
 
         /** Initializes() of backgrounds are in constructor itself */
+
+        /** Prepare Highscore */
+        this.getHighscore().addListener(new IHighscore_Observer() {
+            @Override
+            public void onHighscoreChanged() {
+                getActivityContext().setNewHighscoreOnUI(getHighscore());
+            }
+        });
     }
 
     /********************************
@@ -203,9 +210,9 @@ public class GameView extends SurfaceView {
                     //play sound when enemy dies
                     CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
                     //increment the players highscore
-                    highscore.increment(e);
+                    getHighscore().increment(e);
 
-                    Log.d(TAG, "Highscore = " + highscore.value());
+                    Log.d(TAG, "Highscore = " + getHighscore().getValue());
                 }
             }
         }
@@ -227,7 +234,7 @@ public class GameView extends SurfaceView {
                         Resources res = getActivityContext().getResources();
                         (new DialogMgr(getActivityContext())).showDialog_Generic(
                                 res.getString(R.string.dialog_generic_gameOver_title),
-                                res.getString(R.string.dialog_generic_gameOver_msg),
+                                String.format(res.getString(R.string.dialog_generic_gameOver_msg),getHighscore().getValue()),
                                 res.getString(R.string.dialog_generic_button_positive_gameOverAccept),
                                 res.getString(R.string.dialog_generic_button_negative_gameOverRevive),
                                 R.drawable.app_icon_gameboy, new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
@@ -270,11 +277,11 @@ public class GameView extends SurfaceView {
         return layout;
     }
 
-    public Activity getActivityContext() {
+    public GameViewActivity getActivityContext() {
         return activityContext;
     }
 
-    public void setActivityContext(Activity activityContext) {
+    public void setActivityContext(GameViewActivity activityContext) {
         this.activityContext = activityContext;
     }
 
@@ -284,5 +291,13 @@ public class GameView extends SurfaceView {
 
     public void setPlayerOne(Player playerOne) {
         this.playerOne = playerOne;
+    }
+
+    public Highscore getHighscore() {
+        return highscore;
+    }
+
+    public void setHighscore(Highscore highscore) {
+        this.highscore = highscore;
     }
 }

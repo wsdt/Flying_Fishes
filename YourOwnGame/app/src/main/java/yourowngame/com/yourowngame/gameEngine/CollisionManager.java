@@ -30,7 +30,7 @@ public class CollisionManager {
 
     /**
      * @param player     -> first Bitmap
-     * @param enemy      -> x value of first Bitmap
+     * @param enemy      -> x getValue of first Bitmap
      * @return           -> returns true if 1 pixel of both bitmaps is no transparent (-> hitsTheGround)
      */
     public static boolean checkCollision(@NonNull Player player, @NonNull Enemy enemy) {
