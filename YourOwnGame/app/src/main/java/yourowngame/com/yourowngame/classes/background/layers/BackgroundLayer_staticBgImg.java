@@ -14,7 +14,7 @@ public class BackgroundLayer_staticBgImg extends Background {
     private static final String TAG = "BackgroundLayer_static";
     private int preParsedBgColor; //small performance enhancement
 
-    /** @param bgColor: By only allowing one integer value we ensure that at least one color has to be given and not more than one color is provided (because we would ignore it)*/
+    /** @param bgColor: By only allowing one integer getValue we ensure that at least one color has to be given and not more than one color is provided (because we would ignore it)*/
     public BackgroundLayer_staticBgImg(@NonNull BackgroundManager backgroundManager, int bgColor, String name, float backgroundSpeed) {
         super(backgroundManager, new int[] {bgColor}, name, backgroundSpeed);
 

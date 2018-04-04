@@ -9,7 +9,6 @@
     <!-- MainActivity -->
     <string name="mainActivity_button_startGame">Starten!</string>
     <string name="mainActivity_imageView_contentDescription">App Welcome Picture</string>
-    <string name="setting">Settings</string>
 
     <!-- LoadingActivity -->
     <string name="loadingActivity_imageView_contentDescription">App-Icon</string>
@@ -26,12 +25,17 @@
     <string name="dialog_generic_button_negative">Cancel</string>
     <!-- DialogMgr:GameExit/Over -->
     <string name="dialog_generic_gameOver_title">Game over</string>
-    <string name="dialog_generic_gameOver_msg">You died!</string>
+    <string name="dialog_generic_gameOver_msg">You died! Your points: %1$d</string>
     <string name="dialog_generic_button_positive_gameOverAccept">OK</string>
     <string name="dialog_generic_button_negative_gameOverRevive">Revive</string><!-- TODO: In future with watching rewarded ad -->
 
-    <!-- GameView Str -->
-    <string name="shoot">Shoot!</string>
-    <string name="highscoreLbl">Highscore = </string>
+    <!-- GameActivity -->
+    <string name="gameActivity_highscore_lbl">Highscore</string>
+    <string name="gameActivity_highscore_val">0</string> <!-- Default highscore -->
+
+    <!-- TODO: Jori Strings (Please categorize also with id WILL get really confusing in future) -->
+    <string name="Shoot">Shoot!</string>
+    <string name="munition">Munition: 500/500</string>
+    <string name="setting">Einstellungen</string>
 
 </resources>

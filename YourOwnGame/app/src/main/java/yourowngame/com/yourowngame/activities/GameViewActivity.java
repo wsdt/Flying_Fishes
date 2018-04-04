@@ -1,15 +1,18 @@
 package yourowngame.com.yourowngame.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.handler.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.GameView;
+import yourowngame.com.yourowngame.gameEngine.Highscore;
 
 /**
  * The GameViewActivity does only add the GameView!
@@ -24,6 +27,7 @@ public class GameViewActivity extends AppCompatActivity {
     private FrameLayout gameLayout;
     private GameView gameView;
     private static SoundMgr soundMgr = new SoundMgr();
+    private TextView highscoreVal;
     public static int GAME_HEIGHT;
     public static int GAME_WIDTH;
 
@@ -36,8 +40,8 @@ public class GameViewActivity extends AppCompatActivity {
 
         getGameDimens();
 
-        /*If we want to hide actionbar: (but I think we could add pause button etc. in actionbar)
-        if (getSupportActionBar() == null) {Log.i(TAG, "Actionbar already gone/hidden.");} else {getSupportActionBar().hide();}*/
+        /* Set highscore val textview */
+        this.setHighscoreVal((TextView) findViewById(R.id.highscoreVal));
 
         Log.d(TAG, "onCreate: Trying to load game.");
         setGameLayout((FrameLayout) findViewById(R.id.gameViewLayout));
@@ -45,7 +49,6 @@ public class GameViewActivity extends AppCompatActivity {
         /** Master-call, create GameView*/
         setGameView(((GameView) findViewById(R.id.gameView)));
         getGameView().startGame(this);
-
     }
 
     //Gets the current dimens, and saves it into STATIC Values, so we dont need to f* pass the activity onto the darkest point of our prog
@@ -57,8 +60,6 @@ public class GameViewActivity extends AppCompatActivity {
         Log.d(TAG, "HEIGHT = " + GAME_HEIGHT + "WIDTH = " + GAME_WIDTH);
     }
 
-
-
     /**
      * Custom OnClickListeners (recommendation: add them directly in xml)
      * --> Foreach action a own method (Principle: The only reason to change code should be an error) so switch case violates that
@@ -66,6 +67,16 @@ public class GameViewActivity extends AppCompatActivity {
     public void onShootBtn(View v) {
         //TODO: Add shoot sound res --> GameViewActivity.soundMgr.play(this,R.raw.shootSound,false);
         getGameView().getPlayerOne().addProjectiles(this);
+    }
+
+    /** This method should only be called by Observer-Pattern! (better performance)*/
+    public void setNewHighscoreOnUI(@NonNull final Highscore highscore) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getHighscoreVal().setText(highscore.getValue()+"");
+            }
+        });
     }
 
 
@@ -97,6 +108,14 @@ public class GameViewActivity extends AppCompatActivity {
 
     public void setGameView(GameView gameView) {
         this.gameView = gameView;
+    }
+
+    public TextView getHighscoreVal() {
+        return highscoreVal;
+    }
+
+    public void setHighscoreVal(TextView highscoreVal) {
+        this.highscoreVal = highscoreVal;
     }
 }
 
