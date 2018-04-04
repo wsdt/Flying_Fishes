@@ -22,7 +22,7 @@ public class DialogMgr {
     /**
      * @param lblNegativeBtn: By providing an empty string ("") [not null!] there will only the OK button added
      */
-    public void showDialog_Generic(@Nullable String title, @Nullable String msg, @Nullable String lblPositiveBtn, @Nullable String lblNegativeBtn, int icon, @Nullable final ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation executeIfTrueSuccess_or_ifFalseFailure_afterCompletation) { //to nullable icon just put a negative value in it
+    public void showDialog_Generic(@Nullable String title, @Nullable String msg, @Nullable String lblPositiveBtn, @Nullable String lblNegativeBtn, int icon, @Nullable final ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation executeIfTrueSuccess_or_ifFalseFailure_afterCompletation) { //to nullable icon just put a negative getValue in it
         Log.d(TAG, "showDialog_Generic: Trying to show dialog.");
         if (!getContext().isFinishing()) { //really important
             Log.d(TAG, "showDialog_Generic: Allowed to show dialog.");

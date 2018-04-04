@@ -50,7 +50,7 @@ public class Player extends GameObject implements IPlayer {
         } else {
             // Update Y
             // replaced x/y game starts at 0|0 which is the top left corner of the view
-            // if player "jumps" the y value decreases (cause y grows towards the bottom of the view)
+            // if player "jumps" the y getValue decreases (cause y grows towards the bottom of the view)
             if (goUp != null) {
                 if (goUp) {
                     this.setPosY(this.getPosY() - this.getSpeedY() * MOVE_UP_MULTIPLIER);
