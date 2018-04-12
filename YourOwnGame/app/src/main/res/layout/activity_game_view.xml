@@ -2,6 +2,7 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/gameViewLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,17 +31,58 @@
 
     <TextView
         android:id="@+id/highscoreLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginRight="150dp"
         android:text="@string/gameActivity_highscore_lbl"
         android:textSize="20sp"
-        android:layout_gravity="top|end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:visibility="invisible" />
+
     <TextView
         android:id="@+id/highscoreVal"
-        android:textSize="20sp"
-        android:layout_gravity="top|end"
-        android:text="@string/gameActivity_highscore_val"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginRight="50dp"
+        android:text="@string/gameActivity_highscore_val"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <TextView
+            android:id="@+id/highscoreCoins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/coinsLbl"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="49dp"
+            android:layout_marginRight="49dp"
+            android:text="250"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/pointsLbl"
+            android:layout_width="16dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="146dp"
+            android:layout_marginRight="146dp"
+            app:srcCompat="@drawable/points" />
+
+        <ImageView
+            android:id="@+id/coinsLbl"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignLeft="@+id/pointsLbl"
+            android:layout_alignStart="@+id/pointsLbl"
+            android:layout_below="@+id/pointsLbl"
+            app:srcCompat="@drawable/goldicon" />
+    </RelativeLayout>
 
 </FrameLayout>

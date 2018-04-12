@@ -192,8 +192,6 @@ public class GameView extends SurfaceView {
         /** check Player-to-Enemy collision */
         for (Enemy e : LevelManager.getCurrentLevelObj().getAllEnemies()){
             if(CollisionManager.checkCollision(getPlayerOne(), e)){
-                // (1) Player does not die immediately, but looses lifepoints
-                // (2) Player dies immediately, makes it much harder!
                 CollisionManager.playPlayerEnemyCollisionSound(this.getActivityContext());
                 exitGame();
             }
@@ -204,11 +202,12 @@ public class GameView extends SurfaceView {
             for (int i = 0; i < getPlayerOne().getProjectiles().size(); i++){
                 if(CollisionManager.checkCollision(e, getPlayerOne().getProjectileAtPosition(i))){
                     //enemy dies, spawns on the other side
-                    e.setPosX(GameViewActivity.GAME_WIDTH+100);
+                    e.setPosX(GameViewActivity.GAME_WIDTH+100); //random maybe better
                     //projectile needs to be deleted
                     getPlayerOne().getProjectiles().remove(getPlayerOne().getProjectileAtPosition(i));
                     //play sound when enemy dies
                     CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
+
                     //increment the players highscore
                     getHighscore().increment(e);
 
