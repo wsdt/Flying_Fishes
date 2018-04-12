@@ -101,7 +101,6 @@ public class GameViewActivity extends AppCompatActivity {
         return gameLayout.getHeight();
     }
 
-
     public GameView getGameView() {
         return gameView;
     }
