@@ -1,7 +1,7 @@
 
 Kleines Verzeichnis:
 
-(1). Road To Alpha-Release
+(1). Road To Alpha-Release 
 (2). Ergänzungen für spätere Updates/Releases
 (3). Anregungen, Ideen
 (4). Kritikpunkte, Meinungen
