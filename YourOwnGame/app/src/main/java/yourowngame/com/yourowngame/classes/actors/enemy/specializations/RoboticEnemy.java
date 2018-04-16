@@ -102,8 +102,8 @@ public class RoboticEnemy extends Enemy {
         }
     }
 
-    @Override
-    public <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+    @Override @SafeVarargs
+    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
     //we really need to change the initialize, Object params, instanceOf..
 
         if (allObjs != null) {
