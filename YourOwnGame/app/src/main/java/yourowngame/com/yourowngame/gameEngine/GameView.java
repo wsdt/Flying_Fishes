@@ -28,6 +28,7 @@ import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
+import yourowngame.com.yourowngame.classes.handler.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.classes.handler.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 
 /**
@@ -267,6 +268,9 @@ public class GameView extends SurfaceView {
                     }
                 });
                 retry = false;
+
+                //save highscore before cleaning
+                new SharedPrefStorageMgr(this.getActivityContext()).saveNewHighscoreEntry(getHighscore().getValue());
 
                 //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
                 if (!cleanupGameField()) {
