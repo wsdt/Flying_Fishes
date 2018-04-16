@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
  * purposes. You can also set several parameters to make the testing
  * reason more clear. */
 
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.SOURCE)
 public @interface TestingPurpose {
     GregorianCalendar now = new GregorianCalendar();
 

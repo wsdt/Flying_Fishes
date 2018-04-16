@@ -29,15 +29,15 @@ public class MainActivity extends AppCompatActivity {
         //Load Banner Ad (declared as a member of class, so we could easily display more)
         //this.setAdManager(new AdManager(this));
         //this.getAdManager().loadBannerAd((RelativeLayout) findViewById(R.id.mainActivity_RL));
+    }
 
-        startGame = (Button) findViewById(R.id.startGame);
-        startGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(view.getContext(), GameViewActivity.class));
-            }
-        });
+    //GAME BUTTONS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public void startGame(View view) {
+        startActivity(new Intent(this, GameViewActivity.class));
+    }
 
+    public void showHighscore(View view) {
+        startActivity(new Intent(this, HighscoreActivity.class));
     }
 
 
