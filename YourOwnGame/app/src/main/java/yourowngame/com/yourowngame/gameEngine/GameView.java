@@ -211,7 +211,7 @@ public class GameView extends SurfaceView {
                     getPlayerOne().getProjectiles().remove(getPlayerOne().getProjectileAtPosition(i));
                     //play sound when enemy dies
                     CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
-                    //increment the players highscore
+                    //increment the players highScore
                     getHighscore().increment(e);
                     //if the highscore is over/equal 5_000, reset highscore, add 1 Coin (later on 10_000 be better)
                     if(getHighscore().getValue() >= 5_000){
@@ -241,7 +241,7 @@ public class GameView extends SurfaceView {
                         Resources res = getActivityContext().getResources();
                         (new DialogMgr(getActivityContext())).showDialog_Generic(
                                 res.getString(R.string.dialog_generic_gameOver_title),
-                                String.format(res.getString(R.string.dialog_generic_gameOver_msg),getHighscore().getValue()),
+                                String.format(res.getString(R.string.dialog_generic_gameOver_msg), getHighscore().getValue()),
                                 res.getString(R.string.dialog_generic_button_positive_gameOverAccept),
                                 res.getString(R.string.dialog_generic_button_negative_gameOverRevive),
                                 R.drawable.app_icon_gameboy, new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {

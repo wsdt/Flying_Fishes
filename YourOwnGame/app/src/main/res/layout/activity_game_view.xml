@@ -12,20 +12,6 @@
     android:background="@color/colorPrimaryDark">
 
 
-    <Button
-        android:id="@+id/shoot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:alpha="0.1"
-        android:background="@color/colorAccent"
-        android:onClick="onShootBtn"
-        android:padding="5dp"
-        android:text="@string/Shoot"
-        android:textColor="@color/colorWhite" />
-
     <yourowngame.com.yourowngame.gameEngine.GameView
         android:id="@+id/gameView"
         android:layout_width="match_parent"
@@ -58,6 +44,20 @@
             android:text="0"
             android:textSize="20sp" />
 
+        <Button
+            android:id="@+id/shoot"
+            android:layout_width="313dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:alpha="0.1"
+            android:background="#ffffff"
+            android:onClick="onShootBtn"
+            android:padding="5dp"
+            android:text="@string/shoot"
+            android:textColor="@color/colorWhite" />
+
         <ImageView
             android:id="@+id/pointsLbl"
             android:layout_width="32dp"
@@ -73,9 +73,9 @@
             android:id="@+id/coinsLbl"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_alignLeft="@+id/pointsLbl"
+            android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/pointsLbl"
-            android:layout_below="@+id/pointsLbl"
+            android:layout_marginTop="42dp"
             app:srcCompat="@drawable/goldicon" />
 
     </RelativeLayout>

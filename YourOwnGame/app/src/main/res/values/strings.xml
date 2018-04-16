@@ -25,18 +25,18 @@
     <string name="dialog_generic_button_negative">Cancel</string>
     <!-- DialogMgr:GameExit/Over -->
     <string name="dialog_generic_gameOver_title">Game over</string>
-    <string name="dialog_generic_gameOver_msg">You died! Your points: %1$d</string>
+    <string name="dialog_generic_gameOver_msg">You died! Your Points = %1$d </string>
     <string name="dialog_generic_button_positive_gameOverAccept">OK</string>
     <string name="dialog_generic_button_negative_gameOverRevive">Revive</string><!-- TODO: In future with watching rewarded ad -->
 
     <!-- GameActivity -->
     <string name="gameActivity_highscore_lbl">Highscore</string>
-    <string name="gameActivity_highscore_val">0</string> <!-- Default highscore -->
+    <string name="gameActivity_highscore_val">0</string> <!-- Default highScore -->
 
-    <!-- TODO: Jori Strings (Please categorize also with id WILL get really confusing in future) -->
-    <string name="Shoot">Shoot!</string>
-    <string name="munition">Munition: 500/500</string>
-    <string name="setting">Einstellungen</string>
+    <!-- UI Descriptions -->
+    <string name="shoot">Shoot!</string>
+    <string name="munition">Ammunition: 500/500</string>
+    <string name="settings">Settings</string>
     <string name="yourGame">Your Game</string>
 
 </resources>
