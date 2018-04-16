@@ -109,7 +109,7 @@ public class BomberEnemy extends Enemy {
     @Override
     public boolean cleanup() {
         setEnemyList(null);
-        return false;
+        return true;
     }
 
 
