@@ -43,7 +43,7 @@ public class Level_HarmlessSky extends Level implements IBackground {
         /**Initializing Super-Enemy */
         BomberEnemy bomberEnemyManager = new BomberEnemy();
         bomberEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
-        bomberEnemyManager.createRandomEnemies(10);
+        bomberEnemyManager.createRandomEnemies(5);
 
         /** Initializing Spawn-Enemies */
         SpawnEnemy spawnEnemyManager = new SpawnEnemy();

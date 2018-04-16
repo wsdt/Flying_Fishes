@@ -169,7 +169,7 @@ public class Player extends GameObject implements IPlayer {
             for (int i = this.projectileList.size() - 1; i > -1; i--){
                 this.projectileList.get(i).update(null, null, null);
 
-                if (this.projectileList.get(i).getPosX() > GameViewActivity.GAME_WIDTH){
+                if (this.projectileList.get(i).getPosX() > GameViewActivity.GAME_WIDTH-50){
                     Log.e(TAG2, "Bullet removed!");
                     this.projectileList.remove(this.projectileList.get(i));
                 }

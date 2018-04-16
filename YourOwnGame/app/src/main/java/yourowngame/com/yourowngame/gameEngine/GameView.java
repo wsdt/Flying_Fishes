@@ -12,6 +12,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
 
+import java.util.Random;
+
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
@@ -23,6 +25,7 @@ import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BomberEn
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
+import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 import yourowngame.com.yourowngame.classes.handler.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 
 /**
@@ -40,6 +43,7 @@ public class GameView extends SurfaceView {
     private OnTouchHandler touchHandler = new OnTouchHandler();
     private FrameLayout layout;
     private Highscore highscore = new Highscore();
+    private Highscore coins = new Highscore();
 
     // ENEMIES are level-dependent, so specific level obj should own a list with all enemies. (LevelMgr.CURRENT_LEVEL)
 
@@ -113,7 +117,7 @@ public class GameView extends SurfaceView {
         this.getHighscore().addListener(new IHighscore_Observer() {
             @Override
             public void onHighscoreChanged() {
-                getActivityContext().setNewHighscoreOnUI(getHighscore());
+                getActivityContext().setNewHighscoreOnUI(getHighscore(), getCoinsHighscore());
             }
         });
     }
@@ -202,14 +206,18 @@ public class GameView extends SurfaceView {
             for (int i = 0; i < getPlayerOne().getProjectiles().size(); i++){
                 if(CollisionManager.checkCollision(e, getPlayerOne().getProjectileAtPosition(i))){
                     //enemy dies, spawns on the other side
-                    e.setPosX(GameViewActivity.GAME_WIDTH+100); //random maybe better
+                    e.resetWidthAndHeightOfEnemy();
                     //projectile needs to be deleted
                     getPlayerOne().getProjectiles().remove(getPlayerOne().getProjectileAtPosition(i));
                     //play sound when enemy dies
                     CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
-
                     //increment the players highscore
                     getHighscore().increment(e);
+                    //if the highscore is over/equal 5_000, reset highscore, add 1 Coin (later on 10_000 be better)
+                    if(getHighscore().getValue() >= 5_000){
+                        getCoinsHighscore().increment();
+                        getHighscore().resetCounter();
+                    }
 
                     Log.d(TAG, "Highscore = " + getHighscore().getValue());
                 }
@@ -296,7 +304,11 @@ public class GameView extends SurfaceView {
         return highscore;
     }
 
+    public Highscore getCoinsHighscore() { return coins; }
+
     public void setHighscore(Highscore highscore) {
         this.highscore = highscore;
     }
+
+    public void setCoinsHighscore(Highscore coins) {this.coins = coins; }
 }

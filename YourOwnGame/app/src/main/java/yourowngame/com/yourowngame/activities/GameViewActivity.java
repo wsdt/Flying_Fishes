@@ -27,7 +27,7 @@ public class GameViewActivity extends AppCompatActivity {
     private FrameLayout gameLayout;
     private GameView gameView;
     private static SoundMgr soundMgr = new SoundMgr();
-    private TextView highscoreVal;
+    private TextView highscoreVal, coinsVal; //first one for the points, second for the coins
     public static int GAME_HEIGHT;
     public static int GAME_WIDTH;
 
@@ -42,6 +42,8 @@ public class GameViewActivity extends AppCompatActivity {
 
         /* Set highscore val textview */
         this.setHighscoreVal((TextView) findViewById(R.id.highscoreVal));
+        setCoinsVal((TextView) findViewById(R.id.highscoreCoins));
+
 
         Log.d(TAG, "onCreate: Trying to load game.");
         setGameLayout((FrameLayout) findViewById(R.id.gameViewLayout));
@@ -70,11 +72,13 @@ public class GameViewActivity extends AppCompatActivity {
     }
 
     /** This method should only be called by Observer-Pattern! (better performance)*/
-    public void setNewHighscoreOnUI(@NonNull final Highscore highscore) {
+    public void setNewHighscoreOnUI(@NonNull final Highscore highscore, @NonNull final Highscore coins) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 getHighscoreVal().setText(highscore.getValue()+"");
+                getCoinsVal().setText(""+coins.getValue());
+
             }
         });
     }
@@ -113,9 +117,13 @@ public class GameViewActivity extends AppCompatActivity {
         return highscoreVal;
     }
 
+    public TextView getCoinsVal() { return coinsVal; }
+
     public void setHighscoreVal(TextView highscoreVal) {
         this.highscoreVal = highscoreVal;
     }
+
+    public void setCoinsVal(TextView coinsVal) {this.coinsVal = coinsVal;}
 }
 
 

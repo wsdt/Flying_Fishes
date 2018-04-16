@@ -37,5 +37,6 @@
     <string name="Shoot">Shoot!</string>
     <string name="munition">Munition: 500/500</string>
     <string name="setting">Einstellungen</string>
+    <string name="yourGame">Your Game</string>
 
 </resources>

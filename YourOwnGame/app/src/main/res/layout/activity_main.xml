@@ -29,7 +29,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:padding="20dp"
-        android:text="@string/setting" />
+        android:text="@string/yourGame" />
 
     <Button
         android:id="@+id/highscoreBtn"
