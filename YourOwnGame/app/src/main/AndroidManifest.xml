@@ -14,8 +14,8 @@
         <activity
             android:name=".activities.MainActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -25,15 +25,17 @@
         </activity>
         <activity
             android:name=".activities.GameViewActivity"
-            android:theme="@style/SplashTheme"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/SplashTheme" />
 
         <!-- screenOrientation and configChanges so only portrait mode -->
-        <activity android:name=".activities.CreditActivity"
-            android:theme="@style/SplashTheme"
+        <activity
+            android:name=".activities.CreditActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/SplashTheme" />
+        <activity android:name=".activities.HighscoreActivity"></activity>
     </application>
 
 </manifest>

@@ -22,7 +22,9 @@ import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RoboticEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.SpawnEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BomberEnemy;
+import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
+import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
@@ -265,10 +267,28 @@ public class GameView extends SurfaceView {
                     }
                 });
                 retry = false;
+
+                //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
+                if (!cleanupGameField()) {
+                    Log.e(TAG, "exitGame: Cleanup failed!");
+                }
             } catch (ClassCastException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    /** Frees resources by calling all cleanup()-realizations of initializer-objects. */
+    private boolean cleanupGameField() {
+        boolean wasSuccessful = this.getPlayerOne().cleanup();
+        for (Enemy enemy : LevelManager.getCurrentLevelObj().getAllEnemies()) {
+            wasSuccessful &= enemy.cleanup();
+        }
+        for (Background background : LevelManager.getCurrentLevelObj().getAllBackgroundLayers()) {
+            wasSuccessful &= background.cleanup();
+        }
+        Log.d(TAG, "cleanupGameField: Tried to cleanup resources. ");
+        return wasSuccessful;
     }
 
 
