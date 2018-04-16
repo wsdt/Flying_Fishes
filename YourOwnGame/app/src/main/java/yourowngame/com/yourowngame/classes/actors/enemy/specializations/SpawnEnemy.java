@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
@@ -53,9 +54,11 @@ public class SpawnEnemy extends Enemy {
             deleteWhenUnused = false
     )
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-        //TODO spawn sometimes(!) in different y values
-        this.setPosY(RandomHandler.getRandomFloat(50,300));
+        resetIfOutOfBounds();
+
+        //add a smooth movement here
         this.setPosX(this.getPosX() - this.getSpeedX());
+
     }
 
     public static void updateAll(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
@@ -67,8 +70,8 @@ public class SpawnEnemy extends Enemy {
     @Override
     public void createRandomEnemies(int count){
         for (int i = 0; i < count; i++){
-            getEnemyList().add(new SpawnEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH),
-                    RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT / 2, GameViewActivity.GAME_HEIGHT),
+            getEnemyList().add(new SpawnEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+                    RandomHandler.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
                     RandomHandler.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
                     RandomHandler.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
                     null, DEFAULT_ROTATION, "Spawn"));

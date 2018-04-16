@@ -49,6 +49,8 @@ public class RoboticEnemy extends Enemy {
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
+        resetIfOutOfBounds();
+
         Player player = (Player) obj;
 
         if(player.getPosX() < this.getPosX())
@@ -71,8 +73,8 @@ public class RoboticEnemy extends Enemy {
     @Override
     public void createRandomEnemies(int numberOfRobos){
         for (int i = 0; i < numberOfRobos; i++){
-            getEnemyList().add(new RoboticEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH),
-                    RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT / 2, GameViewActivity.GAME_HEIGHT),
+            getEnemyList().add(new RoboticEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+                    RandomHandler.getRandomInt(0, GameViewActivity.GAME_HEIGHT + 100),
                     RandomHandler.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
                     RandomHandler.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
                     null, DEFAULT_ROTATION, "Robotic"));

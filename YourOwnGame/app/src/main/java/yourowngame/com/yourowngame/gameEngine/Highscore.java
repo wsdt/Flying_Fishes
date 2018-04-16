@@ -43,6 +43,12 @@ public class Highscore {
         notifyAllListeners();
     }
 
+    /** increment just once */
+    public void increment(){
+        counter++;
+        notifyAllListeners();
+    }
+
     /** enemys leaves the screen without getting killed, so the player's highscore decreases*/
     public void decrement(Enemy e) {
         counter -= e.getNegativePoints();

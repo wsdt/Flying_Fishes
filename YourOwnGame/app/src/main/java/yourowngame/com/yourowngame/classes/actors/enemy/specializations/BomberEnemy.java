@@ -46,6 +46,7 @@ public class BomberEnemy extends Enemy {
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
         this.setPosX(this.getPosX() - this.getSpeedX());
+        resetIfOutOfBounds();
     }
 
     public static void updateAll(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
@@ -72,8 +73,8 @@ public class BomberEnemy extends Enemy {
     @Override
     public void createRandomEnemies(int numberOfEnemies) {
         for (int i = 0; i < numberOfEnemies; i++) {
-            getEnemyList().add(new BomberEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH),
-                    RandomHandler.getRandomInt(GameViewActivity.GAME_HEIGHT / 2, GameViewActivity.GAME_HEIGHT),
+            getEnemyList().add(new BomberEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+                    RandomHandler.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
                     RandomHandler.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
                     RandomHandler.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
                     null, DEFAULT_ROTATION, "Bomber"));
@@ -91,8 +92,8 @@ public class BomberEnemy extends Enemy {
                 setImages(new Bitmap[2]);
 
                 // same here, percentage, just for testing now
-                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.bomb2), 64, 64, false);
-                getImages()[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.bomb2), 64, 64, false);
+                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.bomb2), 108, 56, false);
+                getImages()[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.bomb2), 108, 56, false);
 
             } else {
                 Log.d(TAG, "Super-Enemy: Initialize Failure!");
