@@ -6,11 +6,8 @@ import android.util.Log;
 
 import java.util.Random;
 
-import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.configuration.Constants;
-import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 import yourowngame.com.yourowngame.gameEngine.GameView;
-import yourowngame.com.yourowngame.gameEngine.Initializer;
+import yourowngame.com.yourowngame.gameEngine.interfaces.Initializer;
 
 /**
  * Created on 18.02.2018.

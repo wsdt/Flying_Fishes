@@ -62,15 +62,6 @@ public class GameViewActivity extends AppCompatActivity {
         Log.d(TAG, "HEIGHT = " + GAME_HEIGHT + "WIDTH = " + GAME_WIDTH);
     }
 
-    /**
-     * Custom OnClickListeners (recommendation: add them directly in xml)
-     * --> Foreach action a own method (Principle: The only reason to change code should be an error) so switch case violates that
-     */
-    public void onShootBtn(View v) {
-        //TODO: Add shoot sound res --> GameViewActivity.soundMgr.play(this,R.raw.shootSound,false);
-        getGameView().getPlayerOne().addProjectiles(this);
-    }
-
     /** This method should only be called by Observer-Pattern! (better performance)*/
     public void setNewHighscoreOnUI(@NonNull final Highscore highscore, @NonNull final Highscore coins) {
         this.runOnUiThread(new Runnable() {
@@ -82,7 +73,6 @@ public class GameViewActivity extends AppCompatActivity {
             }
         });
     }
-
 
     //GETTER/SETTER (Base class)
     public FrameLayout getGameLayout() {
