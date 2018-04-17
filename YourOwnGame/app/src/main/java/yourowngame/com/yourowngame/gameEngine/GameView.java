@@ -1,6 +1,5 @@
 package yourowngame.com.yourowngame.gameEngine;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -12,10 +11,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
 
-import java.util.Random;
-
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.actors.Projectile;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.player.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
@@ -24,12 +22,11 @@ import yourowngame.com.yourowngame.classes.actors.enemy.specializations.SpawnEne
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BomberEnemy;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
-import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
-import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 import yourowngame.com.yourowngame.classes.handler.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.classes.handler.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
+import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
 
 /**
  * Created by Solution on 16.02.2018.
@@ -44,6 +41,7 @@ public class GameView extends SurfaceView {
     private GameLoopThread thread;
     private Player playerOne;
     private OnTouchHandler touchHandler = new OnTouchHandler();
+    private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
     private FrameLayout layout;
     private Highscore highscore = new Highscore();
     private Highscore coins = new Highscore();
@@ -74,7 +72,7 @@ public class GameView extends SurfaceView {
         initGameObjects();
 
         /** React to user input */
-        getRootView().setOnTouchListener(touchHandler);
+        getRootView().setOnTouchListener(multiTouchHandler);
 
         /**************************************
          * Start of the Surface & Thread Page *
@@ -169,21 +167,22 @@ public class GameView extends SurfaceView {
      * 2. Update GameObjects here *
      *****************************/
     public void updateGameObjects() {
-        /** (1.) update the Player*/                    //should only be true if player collects box or equivalent!
-        getPlayerOne().update(null, this.touchHandler.isTouched(), false);
+        /** (1.) update the Player*/           //^here we will later add a another boolean, for older devices, so each touch results in a move of the player!
+        getPlayerOne().update(null, this.multiTouchHandler.isMoving() || this.multiTouchHandler.isMultiTouched(), false);
 
-        /** (2.) update the Enemies*/
-        /*TODO: We have a list for each enemy class, but also have one with all enemies in Level-Obj (getCurrent()),
-        todo so we could save maybe memory if we dispose enemyList and do it all in Level-Enemy-List. Then we could
-        todo maybe also do sth like this:
-
-            todo: LevelMgr.getCurrentLevelObj().getAllEnemies.updateAll(this.playerOne, null, null);
-
-            todo why not! :D
+        /** (2.) update the Enemies
+        TODO: Placing the Enemies in their respective Place
+            -> LevelMgr.getCurrentLevelObj().getAllEnemies.updateAll(this.playerOne, null, null);
         */
         RoboticEnemy.updateAll(this.playerOne, null, null);
         BomberEnemy.updateAll(this.playerOne, null, null);
         SpawnEnemy.updateAll(this.playerOne, null, null);
+
+        /** Check Shooting */
+        if(multiTouchHandler.isShooting()){
+            getPlayerOne().addProjectiles(activityContext);
+            multiTouchHandler.setShootingToFalse();
+        }
 
         /** update the Bullets*/
         this.getPlayerOne().updateProjectiles();
@@ -286,7 +285,8 @@ public class GameView extends SurfaceView {
     private boolean cleanupGameField() {
         boolean wasSuccessful = this.getPlayerOne().cleanup();
         for (Enemy enemy : LevelManager.getCurrentLevelObj().getAllEnemies()) {
-            wasSuccessful &= enemy.cleanup();
+            //wasSuccessful &= enemy.cleanup();
+            enemy.resetWidthAndHeightOfEnemy();
         }
         for (Background background : LevelManager.getCurrentLevelObj().getAllBackgroundLayers()) {
             wasSuccessful &= background.cleanup();

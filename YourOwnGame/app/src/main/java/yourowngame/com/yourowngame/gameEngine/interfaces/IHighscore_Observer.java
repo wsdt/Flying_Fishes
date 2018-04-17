@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.gameEngine;
+package yourowngame.com.yourowngame.gameEngine.interfaces;
 
 /** Observer-Pattern: Notifies GameActivity when Highscore has changed (if so then update UI = better performance :)) */
 public interface IHighscore_Observer {
