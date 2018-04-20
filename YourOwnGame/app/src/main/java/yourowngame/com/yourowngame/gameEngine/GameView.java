@@ -42,11 +42,10 @@ public class GameView extends SurfaceView {
     private GameViewActivity activityContext;
     private SurfaceHolder holder;
     private GameLoopThread thread;
-    private Player playerOne;
     private OnTouchHandler touchHandler = new OnTouchHandler();
     private FrameLayout layout;
     private Highscore highscore = new Highscore();
-    private Highscore coins = new Highscore();
+    private Highscore coins = new Highscore(); //todo: might work, but yeah could cause confusion in future
 
     // ENEMIES are level-dependent, so specific level obj should own a list with all enemies. (LevelMgr.CURRENT_LEVEL)
 
@@ -106,16 +105,6 @@ public class GameView extends SurfaceView {
 
     //initialize components that match GameObject()
     private void initGameObjects() {
-        /** Player creation*/
-        setPlayerOne(new Player(100, getRootView().getHeight() / 4, 5, 2, new int[]{
-                R.drawable.player_heli_blue_1, R.drawable.player_heli_blue_2, R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_4,
-                R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2}, IPlayer.DEFAULT_ROTATION, "Rezy"));
-
-        /** Initializing Player*/
-        getPlayerOne().initialize(this.getActivityContext());
-
-        /** Initializes() of backgrounds are in constructor itself */
-
         /** Prepare Highscore */
         this.getHighscore().addListener(new IHighscore_Observer() {
             @Override
@@ -123,6 +112,8 @@ public class GameView extends SurfaceView {
                 getActivityContext().setNewHighscoreOnUI(getHighscore(), getCoinsHighscore());
             }
         });
+
+        //LevelManager.getInstance(BackgroundManager.getInstance(this)).createDefaultLevelList(); //for recrafting level objs (unfortunately necessary)
     }
 
     /********************************
@@ -139,10 +130,10 @@ public class GameView extends SurfaceView {
                 drawDynamicBackground(canvas);
 
                 // (2.) draw player
-                getPlayerOne().draw(this.getActivityContext(), canvas, loopCount);
+                LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().draw(this.getActivityContext(), canvas, loopCount);
 
                 // (3.) draw Projectiles
-                getPlayerOne().drawProjectiles(this.getActivityContext(), canvas, loopCount);
+                LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().drawProjectiles(this.getActivityContext(), canvas, loopCount);
 
                 // (4.) draw enemies
                 RoboticEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
@@ -170,7 +161,7 @@ public class GameView extends SurfaceView {
      *****************************/
     public void updateGameObjects() {
         /** (1.) update the Player*/                    //should only be true if player collects box or equivalent!
-        getPlayerOne().update(null, this.touchHandler.isTouched(), false);
+        LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().update(null, this.touchHandler.isTouched(), false);
 
         /** (2.) update the Enemies*/
         /*TODO: We have a list for each enemy class, but also have one with all enemies in Level-Obj (getCurrent()),
@@ -181,15 +172,15 @@ public class GameView extends SurfaceView {
 
             todo why not! :D
         */
-        RoboticEnemy.updateAll(this.playerOne, null, null);
-        BomberEnemy.updateAll(this.playerOne, null, null);
-        SpawnEnemy.updateAll(this.playerOne, null, null);
+        RoboticEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
+        BomberEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
+        SpawnEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
 
         /** update the Bullets*/
-        this.getPlayerOne().updateProjectiles();
+        LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().updateProjectiles();
 
         /** check Collision with Border */
-        if (getPlayerOne().hitsTheGround(this)) {
+        if (LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().hitsTheGround(this)) {
             exitGame();
         }
 
@@ -197,21 +188,21 @@ public class GameView extends SurfaceView {
         BackgroundManager.getInstance(this).updateAllBackgroundLayers();
 
         /** check Player-to-Enemy collision */
-        for (Enemy e : LevelManager.getCurrentLevelObj().getAllEnemies()){
-            if(CollisionManager.checkCollision(getPlayerOne(), e)){
+        for (Enemy e : LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllEnemies()){
+            if(CollisionManager.checkCollision(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), e)){
                 CollisionManager.playPlayerEnemyCollisionSound(this.getActivityContext());
                 exitGame();
             }
         }
 
         /** check Projectile-to-Enemy collision */
-        for (Enemy e : LevelManager.getCurrentLevelObj().getAllEnemies()){
-            for (int i = 0; i < getPlayerOne().getProjectiles().size(); i++){
-                if(CollisionManager.checkCollision(e, getPlayerOne().getProjectileAtPosition(i))){
+        for (Enemy e : LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllEnemies()){
+            for (int i = 0; i < LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().getProjectiles().size(); i++){
+                if(CollisionManager.checkCollision(e, LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().getProjectileAtPosition(i))){
                     //enemy dies, spawns on the other side
                     e.resetWidthAndHeightOfEnemy();
                     //projectile needs to be deleted
-                    getPlayerOne().getProjectiles().remove(getPlayerOne().getProjectileAtPosition(i));
+                    LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().getProjectiles().remove(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().getProjectileAtPosition(i));
                     //play sound when enemy dies
                     CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
                     //increment the players highscore
@@ -273,26 +264,12 @@ public class GameView extends SurfaceView {
                 new SharedPrefStorageMgr(this.getActivityContext()).saveNewHighscoreEntry(getHighscore().getValue());
 
                 //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
-                if (!cleanupGameField()) {
-                    Log.e(TAG, "exitGame: Cleanup failed!");
-                }
+                LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().cleanUpLevelProperties();
+
             } catch (ClassCastException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    /** Frees resources by calling all cleanup()-realizations of initializer-objects. */
-    private boolean cleanupGameField() {
-        boolean wasSuccessful = this.getPlayerOne().cleanup();
-        for (Enemy enemy : LevelManager.getCurrentLevelObj().getAllEnemies()) {
-            wasSuccessful &= enemy.cleanup();
-        }
-        for (Background background : LevelManager.getCurrentLevelObj().getAllBackgroundLayers()) {
-            wasSuccessful &= background.cleanup();
-        }
-        Log.d(TAG, "cleanupGameField: Tried to cleanup resources. ");
-        return wasSuccessful;
     }
 
 
@@ -314,14 +291,6 @@ public class GameView extends SurfaceView {
 
     public void setActivityContext(GameViewActivity activityContext) {
         this.activityContext = activityContext;
-    }
-
-    public Player getPlayerOne() {
-        return playerOne;
-    }
-
-    public void setPlayerOne(Player playerOne) {
-        this.playerOne = playerOne;
     }
 
     public Highscore getHighscore() {
