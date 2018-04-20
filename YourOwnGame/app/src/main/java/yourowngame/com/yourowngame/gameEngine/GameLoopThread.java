@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.gameEngine.interfaces.IGameLoopThread;
 
 /**
  * Created by Solution on 16.02.2018.

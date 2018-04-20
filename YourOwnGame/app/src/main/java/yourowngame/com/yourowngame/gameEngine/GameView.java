@@ -1,6 +1,5 @@
 package yourowngame.com.yourowngame.gameEngine;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -12,10 +11,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
 
-import java.util.Random;
-
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.actors.Projectile;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.player.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
@@ -24,12 +22,11 @@ import yourowngame.com.yourowngame.classes.actors.enemy.specializations.SpawnEne
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BomberEnemy;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
-import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
-import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 import yourowngame.com.yourowngame.classes.handler.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.classes.handler.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
+import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
 
 /**
  * Created by Solution on 16.02.2018.
@@ -43,6 +40,7 @@ public class GameView extends SurfaceView {
     private SurfaceHolder holder;
     private GameLoopThread thread;
     private OnTouchHandler touchHandler = new OnTouchHandler();
+    private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
     private FrameLayout layout;
     private Highscore highscore = new Highscore();
     private Highscore coins = new Highscore(); //todo: might work, but yeah could cause confusion in future
@@ -73,7 +71,7 @@ public class GameView extends SurfaceView {
         initGameObjects();
 
         /** React to user input */
-        getRootView().setOnTouchListener(touchHandler);
+        getRootView().setOnTouchListener(multiTouchHandler);
 
         /**************************************
          * Start of the Surface & Thread Page *
@@ -160,8 +158,8 @@ public class GameView extends SurfaceView {
      * 2. Update GameObjects here *
      *****************************/
     public void updateGameObjects() {
-        /** (1.) update the Player*/                    //should only be true if player collects box or equivalent!
-        LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().update(null, this.touchHandler.isTouched(), false);
+        /** (1.) update the Player*/           //^here we will later add a another boolean, for older devices, so each touch results in a move of the player!
+        LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().update(null, this.multiTouchHandler.isMultiTouched(), false);
 
         /** (2.) update the Enemies*/
         /*TODO: We have a list for each enemy class, but also have one with all enemies in Level-Obj (getCurrent()),
@@ -170,11 +168,20 @@ public class GameView extends SurfaceView {
 
             todo: LevelMgr.getCurrentLevelObj().getAllEnemies.updateAll(this.playerOne, null, null);
 
-            todo why not! :D
+
+        /** (2.) update the Enemies
+        TODO: Placing the Enemies in their respective Place
+            -> LevelMgr.getCurrentLevelObj().getAllEnemies.updateAll(this.playerOne, null, null);
         */
         RoboticEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
         BomberEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
         SpawnEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
+
+        /** Check Shooting */
+        if(multiTouchHandler.isShooting()){
+            LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().addProjectiles(getActivityContext());
+            multiTouchHandler.setShootingToFalse();
+        }
 
         /** update the Bullets*/
         LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().updateProjectiles();
@@ -205,7 +212,7 @@ public class GameView extends SurfaceView {
                     LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().getProjectiles().remove(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().getProjectileAtPosition(i));
                     //play sound when enemy dies
                     CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
-                    //increment the players highscore
+                    //increment the players highScore
                     getHighscore().increment(e);
                     //if the highscore is over/equal 5_000, reset highscore, add 1 Coin (later on 10_000 be better)
                     if(getHighscore().getValue() >= 5_000){
@@ -235,7 +242,7 @@ public class GameView extends SurfaceView {
                         Resources res = getActivityContext().getResources();
                         (new DialogMgr(getActivityContext())).showDialog_Generic(
                                 res.getString(R.string.dialog_generic_gameOver_title),
-                                String.format(res.getString(R.string.dialog_generic_gameOver_msg),getHighscore().getValue()),
+                                String.format(res.getString(R.string.dialog_generic_gameOver_msg), getHighscore().getValue()),
                                 res.getString(R.string.dialog_generic_button_positive_gameOverAccept),
                                 res.getString(R.string.dialog_generic_button_negative_gameOverRevive),
                                 R.drawable.app_icon_gameboy, new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
@@ -271,7 +278,6 @@ public class GameView extends SurfaceView {
             }
         }
     }
-
 
    /*********************************************************
      * 4. Getters & Setters and all of that annoying methods *

@@ -32,6 +32,7 @@ import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exc
 
 public class Projectile extends GameObject {
     private final String TAG = "Projectile";
+    private static int fireRate = 0;
     //Static so we can avoid bitmap creation when firing
 
     //TODO: Bad design, because we have made currentBitmap() a non-static member, so we have to do this! :( [maybe we can change that in future]
@@ -92,5 +93,15 @@ public class Projectile extends GameObject {
     public static void setSharedBitmap(Bitmap sharedBitmap) {
         Projectile.sharedBitmap = sharedBitmap;
     }
+    public static void incrementFireRate(){
+        fireRate++;
+    }
 
+    public static int getFireRate(){
+        return fireRate;
+    }
+
+    public static void resetFireRate(){
+        fireRate = 0;
+    }
 }

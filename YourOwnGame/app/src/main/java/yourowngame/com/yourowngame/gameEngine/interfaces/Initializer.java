@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.gameEngine;
+package yourowngame.com.yourowngame.gameEngine.interfaces;
 
 import android.support.annotation.Nullable;
 

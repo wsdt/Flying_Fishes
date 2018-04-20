@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.gameEngine;
+package yourowngame.com.yourowngame.gameEngine.interfaces;
 
 
 public interface IGameLoopThread {

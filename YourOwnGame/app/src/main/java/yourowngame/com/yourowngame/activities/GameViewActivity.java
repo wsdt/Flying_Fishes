@@ -85,7 +85,6 @@ public class GameViewActivity extends AppCompatActivity {
         });
     }
 
-
     //GETTER/SETTER (Base class)
     public FrameLayout getGameLayout() {
         return gameLayout;
