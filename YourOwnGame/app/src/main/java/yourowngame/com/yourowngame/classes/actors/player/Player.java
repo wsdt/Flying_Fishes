@@ -19,7 +19,7 @@ import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.gameEngine.GameView;
-import yourowngame.com.yourowngame.gameEngine.Initializer;
+import yourowngame.com.yourowngame.gameEngine.interfaces.Initializer;
 
 
 public class Player extends GameObject implements IPlayer {

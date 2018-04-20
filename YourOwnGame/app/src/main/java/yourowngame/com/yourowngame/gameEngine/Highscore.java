@@ -8,6 +8,7 @@ import java.util.List;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.Reward;
+import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
 
 /**
  * Created  on 17.03.2018.
