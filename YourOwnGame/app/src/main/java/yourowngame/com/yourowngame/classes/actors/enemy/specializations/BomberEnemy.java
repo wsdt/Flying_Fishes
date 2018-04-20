@@ -84,8 +84,8 @@ public class BomberEnemy extends Enemy {
     }
 
 
-    @Override
-    public <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+    @Override @SafeVarargs
+    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
         if (allObjs != null) {
             if (allObjs[0] instanceof Activity) {
                 Activity activity = (Activity) allObjs[0];
@@ -108,7 +108,8 @@ public class BomberEnemy extends Enemy {
 
     @Override
     public boolean cleanup() {
-        setEnemyList(null);
+        setEnemyList(new ArrayList<BomberEnemy>());
+        setImages(null);
         return true;
     }
 

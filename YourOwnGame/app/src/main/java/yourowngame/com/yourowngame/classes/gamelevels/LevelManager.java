@@ -4,12 +4,10 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.SparseArray;
 
+import java.util.ArrayList;
+
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_DarkDescent;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_HarmlessSky;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_HauntedForest;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_HeavensGate;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_UnknownLand;
 
 /** Pattern: SINGLETON
  * Why using SparseArray over Hashmap or ArrayList?
@@ -21,23 +19,24 @@ public class LevelManager {
     private static int CURRENT_LEVEL = 0; //Global level variable so everybody knows which level now is (should be only adapted by LevelManager, so NO SETTER)
     private static final String TAG = "LevelManager";
     private static LevelManager INSTANCE;
-    private static SparseArray<Level> levelList = new SparseArray<>(); //By changing this, we can have flexible level orders and also are able to iterate over levels (after this level the next one comes etc.)
+    private static ArrayList<Level> levelList; //By changing this, we can have flexible level orders and also are able to iterate over levels (after this level the next one comes etc.)
     private static BackgroundManager backgroundManager; //levels might need the BackgroundManager or/and it's gameView
-    private static Level currLevel;
 
     private LevelManager(@NonNull BackgroundManager backgroundManager) {
+        Log.d(TAG, "LevelMgr: Creating new instance of LevelMgr.");
         LevelManager.setBackgroundManager(backgroundManager);
         createDefaultLevelList(); //for now, just use the default level order, which is chosen by us
+        INSTANCE = this;
     }
     public static LevelManager getInstance(@NonNull BackgroundManager backgroundManager) {
         return (INSTANCE != null) ? INSTANCE : new LevelManager(backgroundManager);
     }
 
     //Heart of levelMgr: static so more comfortable to call [do not forget the drawback of SparseArrays when calling this method! (although I used valueAt())]
-    public static Level getCurrentLevelObj() {
-        currLevel = getLevelList().get(getCurrentLevel());
+    public Level getCurrentLevelObj() {
+        Level currLevel = getLevelList().get(getCurrentLevel());
         if (currLevel == null) {
-            Log.w(TAG, "getCurrentLevelObj: Level is null! Currentlevel does not exist!");
+            Log.w(TAG, "getCurrentLevelObj: Level is null! Currentlevel does not exist->"+CURRENT_LEVEL);
         }
         return currLevel;
     }
@@ -63,12 +62,13 @@ public class LevelManager {
      * ask her out. But suddenly a large Penis-Enemy was coming around and she ran away. He killed it with his very
      * special techniques and was lonely forever.
      * */
-    private void createDefaultLevelList() {
-        getLevelList().put(0, new Level_HarmlessSky());
-        getLevelList().put(1, new Level_HeavensGate());
-        getLevelList().put(2, new Level_HauntedForest());
-        getLevelList().put(3, new Level_UnknownLand());
-        getLevelList().put(4, new Level_DarkDescent());
+    public void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray
+        setLevelList(new ArrayList<Level>()); //for restarting to avoid nullpointer and resetting levellist (here so we force this method to be called)
+        getLevelList().add(new Level_HarmlessSky());
+        /*getLevelList().put(new Level_HeavensGate());
+        getLevelList().put(new Level_HauntedForest());
+        getLevelList().put(new Level_UnknownLand());
+        getLevelList().put(new Level_DarkDescent());*/
         Log.d(TAG, "createDefaultLevelList: Have set the default level list.");
     }
 
@@ -77,13 +77,16 @@ public class LevelManager {
         return CURRENT_LEVEL;
     }
 
-    public static SparseArray<Level> getLevelList() {
+    public ArrayList<Level> getLevelList() {
+        if (levelList == null) {
+            createDefaultLevelList();
+        }
         return levelList;
     }
 
     /** @param levelList: SparseArray makes it possible to set levels at the desired index, also when there might be gaps
      * (similar to Hashmaps, but here are SparseArrays more efficient) */
-    public static void setLevelList(SparseArray<Level> levelList) {
+    public static void setLevelList(ArrayList<Level> levelList) {
         LevelManager.levelList = levelList;
     }
 

@@ -127,8 +127,9 @@ public class RoboticEnemy extends Enemy {
 
     @Override
     public boolean cleanup() {
+        setEnemyList(new ArrayList<RoboticEnemy>());
         setImages(null);
-        return false;
+        return true;
     }
 
     /** GETTER / SETTER */

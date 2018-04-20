@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
+import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
@@ -62,7 +63,7 @@ public class BackgroundManager {
         this.setLevelManager(LevelManager.getInstance(this));
 
         //Not really necessary now, because we have the levelManager as member which contains all levels (inkl. backgroundLayers)
-        this.setBackgroundLayers(LevelManager.getCurrentLevelObj().getAllBackgroundLayers());
+        this.setBackgroundLayers(LevelManager.getInstance(this).getCurrentLevelObj().getAllBackgroundLayers());
     }
 
     public void updateAllBackgroundLayers() {

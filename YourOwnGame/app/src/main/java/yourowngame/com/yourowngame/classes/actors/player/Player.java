@@ -17,6 +17,7 @@ import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.Projectile;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
+import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 import yourowngame.com.yourowngame.gameEngine.Initializer;
 
@@ -35,6 +36,8 @@ public class Player extends GameObject implements IPlayer {
 
     public Player(double posX, double posY, double speedX, double speedY, int img[], int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
+
+        this.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
     }
 
     /**

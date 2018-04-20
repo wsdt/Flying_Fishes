@@ -122,8 +122,9 @@ public class SpawnEnemy extends Enemy {
 
     @Override
     public boolean cleanup() {
+        setEnemyList(new ArrayList<SpawnEnemy>());
         setImages(null);
-        return false;
+        return true;
     }
 
     /** GETTER / SETTER */

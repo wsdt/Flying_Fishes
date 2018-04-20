@@ -10,6 +10,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.background.BackgroundManager;
+import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 import yourowngame.com.yourowngame.gameEngine.Highscore;
@@ -68,7 +70,7 @@ public class GameViewActivity extends AppCompatActivity {
      */
     public void onShootBtn(View v) {
         //TODO: Add shoot sound res --> GameViewActivity.soundMgr.play(this,R.raw.shootSound,false);
-        getGameView().getPlayerOne().addProjectiles(this);
+        LevelManager.getInstance(BackgroundManager.getInstance(this.getGameView())).getCurrentLevelObj().getPlayer().addProjectiles(this);
     }
 
     /** This method should only be called by Observer-Pattern! (better performance)*/
