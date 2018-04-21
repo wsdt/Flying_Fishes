@@ -2,25 +2,20 @@ package yourowngame.com.yourowngame.classes.gamelevels.levels;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BomberEnemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RoboticEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.SpawnEnemy;
 import yourowngame.com.yourowngame.classes.actors.player.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
-import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.background.IBackground;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_staticBgImg;
-import yourowngame.com.yourowngame.classes.background.layers.IBackgroundLayer_Clouds;
-import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
-import yourowngame.com.yourowngame.gameEngine.Initializer;
+
 
 /**
  * LEVEL ONE
@@ -51,23 +46,23 @@ public class Level_HarmlessSky extends Level implements IBackground {
     @Override
     protected void determineAllEnemies() { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
         //Set allEnemies Arraylist
-        /** Initializing Robotic-Enemy */
-        RoboticEnemy roboticEnemyManager = new RoboticEnemy();
-        roboticEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
-        roboticEnemyManager.createRandomEnemies(5); //todo: should be static
-
-        /**Initializing Super-Enemy */
+        /** Initializing Bomber-Enemy */
         BomberEnemy bomberEnemyManager = new BomberEnemy();
         bomberEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
-        bomberEnemyManager.createRandomEnemies(5);
+        bomberEnemyManager.createRandomEnemies(2); //todo: should be static
+
+        /**Initializing Super-Enemy */
+        RocketEnemy rocketEnemyManager = new RocketEnemy();
+        rocketEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
+        rocketEnemyManager.createRandomEnemies(5);
 
         /** Initializing Spawn-Enemies */
         SpawnEnemy spawnEnemyManager = new SpawnEnemy();
         spawnEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
         spawnEnemyManager.createRandomEnemies(2);
 
-        this.getAllEnemies().addAll(RoboticEnemy.getEnemyList());
         this.getAllEnemies().addAll(BomberEnemy.getEnemyList());
+        this.getAllEnemies().addAll(RocketEnemy.getEnemyList());
         this.getAllEnemies().addAll(SpawnEnemy.getEnemyList());
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }

@@ -93,15 +93,4 @@ public class Projectile extends GameObject {
     public static void setSharedBitmap(Bitmap sharedBitmap) {
         Projectile.sharedBitmap = sharedBitmap;
     }
-    public static void incrementFireRate(){
-        fireRate++;
-    }
-
-    public static int getFireRate(){
-        return fireRate;
-    }
-
-    public static void resetFireRate(){
-        fireRate = 0;
-    }
 }

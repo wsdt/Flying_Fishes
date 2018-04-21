@@ -2,6 +2,11 @@ package yourowngame.com.yourowngame.classes.actors.player;
 
 
 public interface IPlayer {
+
+    /**Fire Rate settings */
+    float fireRateMax = 1f;
+    float fireRateMin = 0f;
+
     /**Jump Speed multiplied by MOVE_UP_MULTIPLIER*/
     int MOVE_UP_MULTIPLIER = 2;
 

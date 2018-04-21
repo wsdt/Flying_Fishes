@@ -39,13 +39,11 @@ public class GameViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
-
         getGameDimens();
 
         /* Set highscore val textview */
         this.setHighscoreVal((TextView) findViewById(R.id.highscoreVal));
         setCoinsVal((TextView) findViewById(R.id.highscoreCoins));
-
 
         Log.d(TAG, "onCreate: Trying to load game.");
         setGameLayout((FrameLayout) findViewById(R.id.gameViewLayout));

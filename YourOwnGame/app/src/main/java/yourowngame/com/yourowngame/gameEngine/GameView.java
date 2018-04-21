@@ -13,14 +13,10 @@ import android.widget.FrameLayout;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.actors.Projectile;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
-import yourowngame.com.yourowngame.classes.actors.player.IPlayer;
-import yourowngame.com.yourowngame.classes.actors.player.Player;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RoboticEnemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.SpawnEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BomberEnemy;
-import yourowngame.com.yourowngame.classes.background.Background;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.SpawnEnemy;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
@@ -39,11 +35,11 @@ public class GameView extends SurfaceView {
     private GameViewActivity activityContext;
     private SurfaceHolder holder;
     private GameLoopThread thread;
-    private OnTouchHandler touchHandler = new OnTouchHandler();
+    
     private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
     private FrameLayout layout;
     private Highscore highscore = new Highscore();
-    private Highscore coins = new Highscore(); //todo: might work, but yeah could cause confusion in future
+    private Highscore coins = new Highscore(); //todo: might work, but yeah could cause confusion in future, you're totally right! should get its own class.
 
     // ENEMIES are level-dependent, so specific level obj should own a list with all enemies. (LevelMgr.CURRENT_LEVEL)
 
@@ -134,8 +130,8 @@ public class GameView extends SurfaceView {
                 LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().drawProjectiles(this.getActivityContext(), canvas, loopCount);
 
                 // (4.) draw enemies
-                RoboticEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
                 BomberEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
+                RocketEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
                 SpawnEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
@@ -159,7 +155,7 @@ public class GameView extends SurfaceView {
      *****************************/
     public void updateGameObjects() {
         /** (1.) update the Player*/           //^here we will later add a another boolean, for older devices, so each touch results in a move of the player!
-        LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().update(null, this.multiTouchHandler.isMultiTouched(), false);
+        LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().update(null, this.multiTouchHandler.isMultiTouched() || this.multiTouchHandler.isMoving(), false);
 
         /** (2.) update the Enemies*/
         /*TODO: We have a list for each enemy class, but also have one with all enemies in Level-Obj (getCurrent()),
@@ -173,14 +169,14 @@ public class GameView extends SurfaceView {
         TODO: Placing the Enemies in their respective Place
             -> LevelMgr.getCurrentLevelObj().getAllEnemies.updateAll(this.playerOne, null, null);
         */
-        RoboticEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
         BomberEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
+        RocketEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
         SpawnEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
 
         /** Check Shooting */
         if(multiTouchHandler.isShooting()){
             LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().addProjectiles(getActivityContext());
-            multiTouchHandler.setShootingToFalse();
+            multiTouchHandler.stopShooting();
         }
 
         /** update the Bullets*/
