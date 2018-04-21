@@ -17,26 +17,27 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
  * */
 
 public class OnMultiTouchHandler implements View.OnTouchListener{
+    private final String TAG = "OnMultiTouchHandler";
+
     private MotionEvent.PointerCoords firstTouch = new MotionEvent.PointerCoords();
     private MotionEvent.PointerCoords secondTouch = new MotionEvent.PointerCoords();
-    private final String TAG = "OnMultiTouchHandler";
     private boolean isMoving = false;
     private boolean isShooting = false;
     private boolean isMultiTouching = false;
+    private boolean isHolding = false;
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         float gameWidth = GameViewActivity.GAME_WIDTH;
         int eventAction = event.getActionMasked();
 
-        //at every start, set them to false
-
-        /** check for Multi-Touch -> work just not-so-fine, my brain starts to glow :)*/
+        /** Check for Multi-Touch*/
         if(event.getPointerCount() > 1 ){
             event.getPointerCoords(0, firstTouch);
             event.getPointerCoords(1, secondTouch);
 
             if(eventAction == MotionEvent.ACTION_POINTER_DOWN) {
+                Log.d(TAG, "MultiTouch, User moves and shoots");
                 isMultiTouching = true;
                 isShooting = true;
             }else if(eventAction == MotionEvent.ACTION_POINTER_UP) {
@@ -44,22 +45,28 @@ public class OnMultiTouchHandler implements View.OnTouchListener{
             }
         }
 
-        /** Check for Single-Touch -> works just fine :) !*/
-
+        /** Check for Single-Touch!*/
         if(event.getPointerCount() == 1) {
             event.getPointerCoords(0, firstTouch);
 
+            /** Check if left*/
             if (eventAction == MotionEvent.ACTION_DOWN && firstTouch.x < gameWidth / 2) {
+                Log.d(TAG, "SingleTouch, User moves");
                 isMoving = true;
             } else if (eventAction == MotionEvent.ACTION_UP){
                 isMoving = false;
             }
 
+            /** Check if right */
             if(eventAction == MotionEvent.ACTION_DOWN && firstTouch.x > gameWidth / 2){
+                Log.d(TAG, "SingleTouch, User shoots");
                 isShooting = true;
             }else if (eventAction == MotionEvent.ACTION_UP){
                 isShooting = false;
             }
+
+            /** Check if he holds the touch for x-seconds */
+            //..
         }
         return false;
     }
@@ -78,7 +85,11 @@ public class OnMultiTouchHandler implements View.OnTouchListener{
         return isShooting;
     }
 
-    public void setShootingToFalse(){
+    public boolean isHolding(){
+        return isHolding;
+    }
+
+    public void stopShooting(){
         isShooting = false;
     }
 

@@ -65,7 +65,7 @@ public class LevelManager {
     public void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray
         setLevelList(new ArrayList<Level>()); //for restarting to avoid nullpointer and resetting levellist (here so we force this method to be called)
         getLevelList().add(new Level_HarmlessSky());
-        /*getLevelList().put(new Level_HeavensGate());
+        /*getLevelList().put(new Level_UnknownLand());
         getLevelList().put(new Level_HauntedForest());
         getLevelList().put(new Level_UnknownLand());
         getLevelList().put(new Level_DarkDescent());*/

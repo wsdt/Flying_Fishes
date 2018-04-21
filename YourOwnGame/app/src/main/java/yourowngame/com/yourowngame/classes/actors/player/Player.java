@@ -26,8 +26,9 @@ public class Player extends GameObject implements IPlayer {
     private static final String TAG = "Player";
     private static final String TAG2 = "Projectile";
 
-    //holds all the projectiles the player shoots
+    //Projectiles
     private List<Projectile> projectileList = new ArrayList<>();
+    private float fireRate = 0.5f; //fire rate from 1 to 0
 
     /*-- Preloaded --*/
     private int intrinsicHeightOfPlayer;
@@ -51,9 +52,6 @@ public class Player extends GameObject implements IPlayer {
         if (goForward == null && goUp == null) {
             Log.i(TAG, "update: Called update-method without a valid Boolean param!");
         } else {
-            // Update Y
-            // replaced x/y game starts at 0|0 which is the top left corner of the view
-            // if player "jumps" the y getValue decreases (cause y grows towards the bottom of the view)
             if (goUp != null) {
                 if (goUp) {
                     this.setPosY(this.getPosY() - this.getSpeedY() * MOVE_UP_MULTIPLIER);
@@ -81,12 +79,10 @@ public class Player extends GameObject implements IPlayer {
     }
 
     public boolean hitsTheGround(@NonNull GameView currentView) {
-        //Gets the scaled-size of the current player image
-        float playerPosYWithImage = (float) this.getPosY() + (this.getIntrinsicHeightOfPlayer() * Constants.GameLogic.GameView.widthInPercentage);
         float playerPosYWithoutImage = (float) this.getPosY();
 
         //compares, if player hits ground or top
-        return (playerPosYWithImage > currentView.getLayout().getHeight() || playerPosYWithoutImage < 0);
+        return (getWidthOfPlayer() > currentView.getLayout().getHeight() || playerPosYWithoutImage < 0);
     }
 
     @Override
@@ -207,5 +203,27 @@ public class Player extends GameObject implements IPlayer {
     public void setLoadedBitmaps(HashMap<String, Bitmap> loadedBitmaps) {
         this.loadedBitmaps = loadedBitmaps;
     }
+
+    public float getWidthOfPlayer(){
+        return (float) this.getPosY() + (this.getIntrinsicHeightOfPlayer() * Constants.GameLogic.GameView.widthInPercentage);
+    }
+
+    public void incrementFireRate(){
+        fireRate += 0.1;
+        if(fireRate > IPlayer.fireRateMax)
+            fireRate = IPlayer.fireRateMax; //max
+    }
+
+    public void decrementFireRate(){
+        fireRate -= 0.1;
+        if(fireRate < IPlayer.fireRateMin)
+            fireRate = IPlayer.fireRateMin; //min
+    }
+
+    public float getFireRate(){
+        return fireRate;
+    }
+
+
 }
 

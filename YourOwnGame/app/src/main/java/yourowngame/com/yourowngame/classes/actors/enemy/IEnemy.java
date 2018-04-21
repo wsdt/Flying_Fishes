@@ -8,6 +8,10 @@ public interface IEnemy {
     float SPEED_Y_MIN = 1.5f;
     float SPEED_Y_MAX = 5;
 
+    //for giving our game some difficulty, the rocketEnemys should be really fast (an be increasing if game gets further!)
+    float ROCKET_SPEED_MIN = 8;
+    float ROCKET_SPEED_MAX = 10;
+
 
     int DEFAULT_ROTATION = 0;
     int ROTATION_UP = 10;
