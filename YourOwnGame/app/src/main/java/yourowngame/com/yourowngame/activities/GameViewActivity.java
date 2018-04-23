@@ -76,8 +76,8 @@ public class GameViewActivity extends AppCompatActivity {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getHighscoreVal().setText(highscore.getValue()+"");
-                getCoinsVal().setText(""+coins.getValue());
+                getHighscoreVal().setText(String.valueOf(highscore.getValue())); //pure integers are not allowed by setText() so we transform it to a string
+                getCoinsVal().setText(String.valueOf(coins.getValue()));
 
             }
         });
