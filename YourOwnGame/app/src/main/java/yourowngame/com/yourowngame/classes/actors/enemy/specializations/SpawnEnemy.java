@@ -106,8 +106,8 @@ public class SpawnEnemy extends Enemy {
                 Activity activity = (Activity) allObjs[0];
                 setImages(new Bitmap[2]);
                 //TODO: For testing robo img
-                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.app_icon_gameboy), 64, 64, false);
-                getImages()[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.app_icon_gameboy), 64, 64, false);
+                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.spawn3), 96, 96, false);
+                getImages()[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.spawn3), 96, 96, false);
 
             } else {
                 Log.d(TAG, "Robo-Enemy: Initialize Failure!");
