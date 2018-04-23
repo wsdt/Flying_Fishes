@@ -2,45 +2,43 @@
 
 <!-- TOP Layout MUST be a Relativelayout (every activity where we want to display a banner) -->
 <android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainActivity_RL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="0dp"
-    android:padding="0dp"
+    android:background="@color/colorBlack"
     tools:context="yourowngame.com.yourowngame.activities.MainActivity">
 
-    <Button
-        android:id="@+id/startGame"
-        android:onClick="startGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:backgroundTint="@color/colorAccent"
-        android:padding="20dp"
-        android:text="@string/mainActivity_button_startGame" />
 
-    <Button
-        android:id="@+id/settings"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:padding="20dp"
-        android:text="@string/yourGame" />
 
-    <Button
-        android:id="@+id/highscoreBtn"
-        android:onClick="showHighscore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+    <LinearLayout
+        android:id="@+id/btnList"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:padding="20dp"
-        android:text="Highscore" />
+        android:layout_alignParentEnd="true"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnStartGame"
+            style="@style/menu_btn"
+            android:layout_marginTop="15dp"
+            android:onClick="startGame"
+            android:text="@string/mainActivity_button_startGame" />
+
+        <Button
+            android:id="@+id/btnHighscore"
+            style="@style/menu_btn"
+            android:layout_marginTop="15dp"
+            android:onClick="showHighscore"
+            android:text="@string/mainActivity_button_highscores" />
+
+        <Button
+            android:id="@+id/btnSettings"
+            style="@style/menu_btn"
+            android:layout_marginTop="15dp"
+            android:text="@string/mainActivity_button_settings" />
+    </LinearLayout>
 
 </android.widget.RelativeLayout>

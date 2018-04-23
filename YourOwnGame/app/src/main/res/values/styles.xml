@@ -23,6 +23,7 @@
     <!-- LoadingScreen -->
     <style name="SplashTheme" parent="Theme.AppCompat.Light">
         <item name="android:windowNoTitle">true</item>
+        <item name="actionBarTheme">@style/AppTheme.NoActionBar</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -54,5 +55,18 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- BUTTONS ######################################################## -->
+    <style name="menu_btn">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/btn_menu</item>
+        <item name="android:shadowColor">@color/colorShadow</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
 
 </resources>
