@@ -1,14 +1,11 @@
 <resources>
     <!-- GLOBAL -->
-    <string name="appName">Your Own Game!</string>
-
-    <string name="gameViewActivity">GameView</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="appName">Create your own Game</string>
 
     <!-- MainActivity -->
-    <string name="mainActivity_button_startGame">Starten!</string>
-    <string name="mainActivity_imageView_contentDescription">App Welcome Picture</string>
+    <string name="mainActivity_button_startGame">Start</string>
+    <string name="mainActivity_button_highscores">Highscores</string>
+    <string name="mainActivity_button_settings">Settings</string>
 
     <!-- LoadingActivity -->
     <string name="loadingActivity_imageView_contentDescription">App-Icon</string>
@@ -30,9 +27,10 @@
     <string name="dialog_generic_button_negative_gameOverRevive">Revive</string><!-- TODO: In future with watching rewarded ad -->
 
     <!-- GameActivity -->
-    <string name="gameActivity_highscore_lbl">Highscore</string>
     <string name="gameActivity_highscore_val">0</string> <!-- Default highScore -->
 
+    <!-- TODO: PLEASE ORDER ALL STRINGS AS SEEN ABOVE OR WITH ANOTHER STRUCTURE, OTHERWISE THIS FILE WILL BE HORRIBLE SOON :( -->
+    <string name="gameViewActivity">GameView</string>
     <!-- UI Descriptions -->
     <string name="shoot">Shoot!</string>
     <string name="munition">Ammunition: 500/500</string>

@@ -36,7 +36,7 @@ public class AdManager implements IAdManager {
     }
 
 
-    public RewardedVideoAd loadRewardedVideoInRewardActivity(@NonNull final Activity activityContext, @Nullable RewardedVideoAdListener adListener, @Nullable final Intent goToActivityAfterShown) {
+    /*public RewardedVideoAd loadRewardedVideoInRewardActivity(@NonNull final Activity activityContext, @Nullable RewardedVideoAdListener adListener, @Nullable final Intent goToActivityAfterShown) {
         final String REWARDED_VIDEO_ID = USE_TEST_ADS ? TEST_ADS.REWARDED_AD_UNIT : REAL_ADS.REWARDED_AD_UNIT;
 
         final RewardedVideoAd rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(activityContext);
@@ -109,7 +109,7 @@ public class AdManager implements IAdManager {
         Log.d(TAG, "loadRewardedVideoInRewardActivity: Tried to load rewarded video.");
 
         return rewardedVideoAd;
-    }
+    }*/
 
 
     public void loadFullPageAd(@Nullable final AdListener adListener, @Nullable final Intent goToActivityAfterShown) {
