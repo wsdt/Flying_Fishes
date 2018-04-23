@@ -27,6 +27,7 @@ public class HighscoreActivity extends AppCompatActivity {
 
     private void printHighscoreEntry(int points) {
         TextView highscoreEntry = new TextView(this);
+        highscoreEntry.setTextColor(getResources().getColor(R.color.colorWhite));
         highscoreEntry.setText(points+" Points");
         getHighscoreList().addView(highscoreEntry);
     }
@@ -38,6 +39,7 @@ public class HighscoreActivity extends AppCompatActivity {
         }
         if (highscoreList.size() <= 0) {
             TextView noEntryFound = new TextView(this);
+            noEntryFound.setTextColor(getResources().getColor(R.color.colorWhite));
             noEntryFound.setText("No entry found.");
             getHighscoreList().addView(noEntryFound);
         }
