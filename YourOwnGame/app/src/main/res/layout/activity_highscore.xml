@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.HighscoreActivity">
+    android:background="@color/colorBlack"
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/highscoreList"
-        android:orientation="vertical"
+    <TextView
+        style="@style/heading_1"
+        android:text="@string/mainActivity_button_highscores" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</ScrollView>
+        android:layout_height="match_parent"
+        tools:context=".activities.HighscoreActivity">
+
+        <LinearLayout
+            android:id="@+id/highscoreList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+</RelativeLayout>
