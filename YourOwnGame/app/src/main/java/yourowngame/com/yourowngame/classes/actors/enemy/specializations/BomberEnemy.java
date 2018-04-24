@@ -45,17 +45,16 @@ public class BomberEnemy extends Enemy {
 
         Player player = (Player) obj;
 
-        if(player.getPosX() < this.getPosX())
-            this.setPosX(this.getPosX() - this.getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
-        else if(player.getPosX() > this.getPosX())
-            this.setPosX(this.getPosX() + this.getSpeedX());
+            if (player.getPosX() < this.getPosX())
+                this.setPosX(this.getPosX() - this.getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
+            else if (player.getPosX() > this.getPosX())
+                this.setPosX(this.getPosX() + this.getSpeedX());
 
-        this.setPosX(this.getPosX() - this.getSpeedX());
+            if (player.getPosY() < this.getPosY())
+                this.setPosY(this.getPosY() - this.getSpeedY());
+            else if (player.getPosY() > this.getPosY())
+                this.setPosY(this.getPosY() + this.getSpeedY());
 
-        if(player.getPosY() < this.getPosY())
-            this.setPosY(this.getPosY() - this.getSpeedY());
-        else if(player.getPosY() > this.getPosY())
-            this.setPosY(this.getPosY() + this.getSpeedY());
 
             //@TODO it somehow doesnt look smooth, i dont know, not good if they're overlapping and bouncing all the time
             //@TODO maybe for other enemys?
