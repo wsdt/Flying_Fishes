@@ -48,7 +48,7 @@
     </style>
 
     <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
+        <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
     </style>
 
@@ -75,6 +75,32 @@
         <item name="android:layout_width">200dp</item>
         <item name="android:layout_height">35dp</item>
         <item name="android:background">@drawable/btn_menu</item>
+        <item name="android:shadowColor">@color/colorShadow</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+    <!-- Button red -->
+    <style name="menu_btn_red">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/btn_menu_red</item>
+        <item name="android:shadowColor">@color/colorShadow</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+    <!-- Button white/black -->
+    <style name="menu_btn_white">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/btn_menu_white</item>
         <item name="android:shadowColor">@color/colorShadow</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>

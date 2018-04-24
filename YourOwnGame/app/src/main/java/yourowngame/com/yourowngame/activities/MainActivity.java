@@ -1,6 +1,8 @@
 package yourowngame.com.yourowngame.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
         //Load Banner Ad (declared as a member of class, so we could easily display more)
         //this.setAdManager(new AdManager(this));
         //this.getAdManager().loadBannerAd((RelativeLayout) findViewById(R.id.mainActivity_RL));
+
+        ActionBar bar = getSupportActionBar();
+        bar.hide();
+
     }
 
     //GAME BUTTONS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
-    <!-- For more custom views use: angrytools.com/android/button :) -->
+    <!-- For more custom views use: :) -->
     <corners
         android:topLeftRadius="0dp"
         android:topRightRadius="0dp"
@@ -11,7 +11,7 @@
         android:angle="45"
         android:centerX="60%"
         android:centerColor="#303F9F"
-        android:startColor="#111"
+        android:startColor="#600"
         android:endColor="#111"
         android:type="linear"
         />

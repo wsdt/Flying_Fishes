@@ -28,8 +28,8 @@ public class Level_HarmlessSky extends Level implements IBackground {
     @Override
     protected void determinePlayer() {
         this.setPlayer(new Player(100, LevelManager.getBackgroundManager().getGameView().getRootView().getHeight() / 4, 5, 2, new int[]{
-                R.drawable.rezy_spritesheet02, R.drawable.rezy_spritesheet02, R.drawable.rezy_spritesheet03, R.drawable.rezy_spritesheet04,
-                R.drawable.rezy_spritesheet02, R.drawable.rezy_spritesheet02}, IPlayer.DEFAULT_ROTATION, "Rezy"));
+                R.drawable.albert_128, R.drawable.albert_128, R.drawable.albert_128, R.drawable.albert_128,
+                R.drawable.albert_128, R.drawable.albert_128}, IPlayer.DEFAULT_ROTATION, "Rezy"));
     }
 
     @Override
@@ -51,10 +51,10 @@ public class Level_HarmlessSky extends Level implements IBackground {
         bomberEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
         bomberEnemyManager.createRandomEnemies(2); //todo: should be static
 
-        /**Initializing Super-Enemy */
+        /**Initializing Rocket-Enemy */
         RocketEnemy rocketEnemyManager = new RocketEnemy();
         rocketEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
-        rocketEnemyManager.createRandomEnemies(5);
+        rocketEnemyManager.createRandomEnemies(10);
 
         /** Initializing Spawn-Enemies */
         SpawnEnemy spawnEnemyManager = new SpawnEnemy();

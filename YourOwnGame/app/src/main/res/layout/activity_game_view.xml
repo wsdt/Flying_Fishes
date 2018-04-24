@@ -17,8 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- TODO: Button is not visible [presumably behind bg]  -->
-
     <TextView
         android:id="@+id/highscoreVal"
         android:layout_width="wrap_content"
@@ -60,8 +58,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/pointsLbl"
-            android:layout_marginTop="42dp"
+            android:layout_marginTop="46dp"
             app:srcCompat="@drawable/goldicon" />
 
     </RelativeLayout>
