@@ -21,10 +21,10 @@ import yourowngame.com.yourowngame.classes.handler.RandomHandler;
  * Created on 12.03.2018.
  */
 
-public class RocketEnemy extends Enemy {
-    private static ArrayList<RocketEnemy> enemyList = new ArrayList<>(); //consistent name enemyList :)
+public class RocketFish extends Enemy {
+    private static ArrayList<RocketFish> enemyList = new ArrayList<>(); //consistent name enemyList :)
     private static Bitmap[] images;
-    private static final String TAG = "RocketEnemy";
+    private static final String TAG = "RocketFish";
 
     /** Used in highscore (only getter/setter, because Highscore is the one who should increment itself) [By default 0, so new enemies would not do anything]
      * -- PositivePoints: E.g. when user shoot down an enemy, each specific enemy supplies a different amount of points.
@@ -33,14 +33,14 @@ public class RocketEnemy extends Enemy {
      *
      * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!*/
 
-    public RocketEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+    public RocketFish(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
 
         setPositivePoints(100);
         setNegativePoints(-100);
     }
 
-    public RocketEnemy() {}
+    public RocketFish() {}
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
@@ -62,7 +62,7 @@ public class RocketEnemy extends Enemy {
     }
 
     public static void drawAll(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (RocketEnemy e : getEnemyList()) {
+        for (RocketFish e : getEnemyList()) {
             Log.d(TAG, "Enemy X | Y : " + e.getPosX() + "|" + e.getPosY());
 
             e.draw(activity, canvas, loopCount);
@@ -72,7 +72,7 @@ public class RocketEnemy extends Enemy {
     @Override
     public void createRandomEnemies(int numberOfEnemies) {
         for (int i = 0; i < numberOfEnemies; i++) {
-            getEnemyList().add(new RocketEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+            getEnemyList().add(new RocketFish(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
                     RandomHandler.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
                     RandomHandler.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
                     RandomHandler.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
@@ -88,11 +88,10 @@ public class RocketEnemy extends Enemy {
         if (allObjs != null) {
             if (allObjs[0] instanceof Activity) {
                 Activity activity = (Activity) allObjs[0];
-                setImages(new Bitmap[2]);
+                setImages(new Bitmap[1]);
 
                 // same here, percentage, just for testing now
-                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.bomb2), 108, 56, false);
-                getImages()[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.bomb2), 108, 56, false);
+                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.rocketfish), 108, 108, false);
 
             } else {
                 Log.d(TAG, "Super-Enemy: Initialize Failure!");
@@ -107,19 +106,19 @@ public class RocketEnemy extends Enemy {
 
     @Override
     public boolean cleanup() {
-        setEnemyList(new ArrayList<RocketEnemy>());
+        setEnemyList(new ArrayList<RocketFish>());
         setImages(null);
         return true;
     }
 
 
     //GETTER/SETTER ---------------------------
-    public static ArrayList<RocketEnemy> getEnemyList() {
+    public static ArrayList<RocketFish> getEnemyList() {
         return enemyList;
     }
 
-    public static void setEnemyList(ArrayList<RocketEnemy> enemyList) {
-        RocketEnemy.enemyList = enemyList;
+    public static void setEnemyList(ArrayList<RocketFish> enemyList) {
+        RocketFish.enemyList = enemyList;
     }
 
     public static Bitmap[] getImages() {
@@ -127,6 +126,6 @@ public class RocketEnemy extends Enemy {
     }
 
     public static void setImages(Bitmap[] images) {
-        RocketEnemy.images = images;
+        RocketFish.images = images;
     }
 }
