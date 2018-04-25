@@ -4,9 +4,9 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketEnemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BomberEnemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.SpawnEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFish;
 import yourowngame.com.yourowngame.classes.actors.player.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
@@ -28,8 +28,8 @@ public class Level_HarmlessSky extends Level implements IBackground {
     @Override
     protected void determinePlayer() {
         this.setPlayer(new Player(100, LevelManager.getBackgroundManager().getGameView().getRootView().getHeight() / 4, 5, 2, new int[]{
-                R.drawable.albert_128, R.drawable.albert_128, R.drawable.albert_128, R.drawable.albert_128,
-                R.drawable.albert_128, R.drawable.albert_128}, IPlayer.DEFAULT_ROTATION, "Rezy"));
+                R.drawable.hugo_64, R.drawable.hugo_64, R.drawable.hugo_64, R.drawable.hugo_64,
+                R.drawable.hugo_64, R.drawable.hugo_64}, IPlayer.DEFAULT_ROTATION, " "));
     }
 
     @Override
@@ -47,23 +47,23 @@ public class Level_HarmlessSky extends Level implements IBackground {
     protected void determineAllEnemies() { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
         //Set allEnemies Arraylist
         /** Initializing Bomber-Enemy */
-        BomberEnemy bomberEnemyManager = new BomberEnemy();
-        bomberEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
-        bomberEnemyManager.createRandomEnemies(2); //todo: should be static
+        HappenEnemy happenEnemyManager = new HappenEnemy();
+        happenEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
+        happenEnemyManager.createRandomEnemies(2); //todo: should be static
 
         /**Initializing Rocket-Enemy */
-        RocketEnemy rocketEnemyManager = new RocketEnemy();
+        RocketFish rocketEnemyManager = new RocketFish();
         rocketEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
         rocketEnemyManager.createRandomEnemies(10);
 
         /** Initializing Spawn-Enemies */
-        SpawnEnemy spawnEnemyManager = new SpawnEnemy();
-        spawnEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
-        spawnEnemyManager.createRandomEnemies(2);
+        BobaEnemy bobaManager = new BobaEnemy();
+        bobaManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
+        bobaManager.createRandomEnemies(2);
 
-        this.getAllEnemies().addAll(BomberEnemy.getEnemyList());
-        this.getAllEnemies().addAll(RocketEnemy.getEnemyList());
-        this.getAllEnemies().addAll(SpawnEnemy.getEnemyList());
+        this.getAllEnemies().addAll(HappenEnemy.getEnemyList());
+        this.getAllEnemies().addAll(RocketFish.getEnemyList());
+        this.getAllEnemies().addAll(BobaEnemy.getEnemyList());
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
 

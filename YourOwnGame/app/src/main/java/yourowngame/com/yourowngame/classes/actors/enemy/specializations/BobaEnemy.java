@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
@@ -25,10 +24,10 @@ import yourowngame.com.yourowngame.classes.handler.RandomHandler;
  *
  */
 
-public class SpawnEnemy extends Enemy {
-    private static final String TAG = "SpawnEnemy";
+public class BobaEnemy extends Enemy {
+    private static final String TAG = "BobaEnemy";
     private static Bitmap[] images;
-    private static ArrayList<SpawnEnemy> enemyList = new ArrayList<>();
+    private static ArrayList<BobaEnemy> enemyList = new ArrayList<>();
 
     /** Used in highscore (only getter/setter, because Highscore is the one who should increment itself) [By default 0, so new enemies would not do anything]
      * -- PositivePoints: E.g. when user shoot down an enemy, each specific enemy supplies a different amount of points.
@@ -38,14 +37,14 @@ public class SpawnEnemy extends Enemy {
      * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!*/
 
 
-    public SpawnEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+    public BobaEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
 
         setPositivePoints(250);
         setNegativePoints(-100);
     }
 
-    public SpawnEnemy(){}
+    public BobaEnemy(){}
 
 
     @Override @TestingPurpose (
@@ -70,7 +69,7 @@ public class SpawnEnemy extends Enemy {
     @Override
     public void createRandomEnemies(int count){
         for (int i = 0; i < count; i++){
-            getEnemyList().add(new SpawnEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+            getEnemyList().add(new BobaEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
                     RandomHandler.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
                     RandomHandler.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
                     RandomHandler.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
@@ -90,7 +89,7 @@ public class SpawnEnemy extends Enemy {
     }
 
     public static void drawAll(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (SpawnEnemy e : getEnemyList()) {
+        for (BobaEnemy e : getEnemyList()) {
             Log.d(TAG, "Enemy X | Y : " + e.getPosX() + "|" + e.getPosY());
 
             e.draw(activity,canvas,loopCount);
@@ -106,8 +105,8 @@ public class SpawnEnemy extends Enemy {
                 Activity activity = (Activity) allObjs[0];
                 setImages(new Bitmap[2]);
                 //TODO: For testing robo img
-                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.spawn3), 96, 96, false);
-                getImages()[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.spawn3), 96, 96, false);
+                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.boba), 96, 96, false);
+                getImages()[1] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.boba), 96, 96, false);
 
             } else {
                 Log.d(TAG, "Robo-Enemy: Initialize Failure!");
@@ -122,19 +121,19 @@ public class SpawnEnemy extends Enemy {
 
     @Override
     public boolean cleanup() {
-        setEnemyList(new ArrayList<SpawnEnemy>());
+        setEnemyList(new ArrayList<BobaEnemy>());
         setImages(null);
         return true;
     }
 
     /** GETTER / SETTER */
 
-    public static ArrayList<SpawnEnemy> getEnemyList() {
+    public static ArrayList<BobaEnemy> getEnemyList() {
         return enemyList;
     }
 
-    public static void setEnemyList(ArrayList<SpawnEnemy> enemyList) {
-        SpawnEnemy.enemyList = enemyList;
+    public static void setEnemyList(ArrayList<BobaEnemy> enemyList) {
+        BobaEnemy.enemyList = enemyList;
     }
 
     public static Bitmap[] getImages() {
@@ -142,7 +141,7 @@ public class SpawnEnemy extends Enemy {
     }
 
     public static void setImages(Bitmap[] images) {
-        SpawnEnemy.images = images;
+        BobaEnemy.images = images;
     }
 
 }

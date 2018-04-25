@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
-import yourowngame.com.yourowngame.classes.actors.Reward;
+import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
 
 /**
@@ -39,7 +39,7 @@ public class Highscore {
     }
 
     /** increment method for reward */
-    public void increment(Reward r){
+    public void increment(Fruit r){
         counter += r.getReward();
         notifyAllListeners();
     }

@@ -15,8 +15,8 @@ import yourowngame.com.yourowngame.classes.handler.RandomHandler;
  *
  * GameObject
  * --Enemy
- * ----BomberEnemy
- * ----RocketEnemy
+ * ----HappenEnemy
+ * ----RocketFish
  * ----ChemicalEnemy (and so on.. be imaginative!)
  *
  * Drawing, Updating as well as AI-Handling will be processed by the Subclasses,

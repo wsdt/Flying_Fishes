@@ -14,9 +14,9 @@ import android.widget.FrameLayout;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BomberEnemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketEnemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.SpawnEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFish;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
@@ -130,9 +130,9 @@ public class GameView extends SurfaceView {
                 LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().drawProjectiles(this.getActivityContext(), canvas, loopCount);
 
                 // (4.) draw enemies
-                BomberEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
-                RocketEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
-                SpawnEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
+                HappenEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
+                RocketFish.drawAll(this.getActivityContext(), canvas, loopCount);
+                BobaEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
                 //Log.e(TAG, "redraw: Could not draw images.");
@@ -169,9 +169,9 @@ public class GameView extends SurfaceView {
         TODO: Placing the Enemies in their respective Place
             -> LevelMgr.getCurrentLevelObj().getAllEnemies.updateAll(this.playerOne, null, null);
         */
-        BomberEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
-        RocketEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
-        SpawnEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
+        HappenEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
+        RocketFish.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
+        BobaEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
 
         /** Check Shooting */
         if(multiTouchHandler.isShooting()){

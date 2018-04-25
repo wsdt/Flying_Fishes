@@ -23,19 +23,19 @@ import yourowngame.com.yourowngame.classes.handler.RandomHandler;
  *
  */
 
-public class BomberEnemy extends Enemy {
+public class HappenEnemy extends Enemy {
     private static final String TAG = "RoboEnemy";
     private static Bitmap[] images;
-    private static ArrayList<BomberEnemy> enemyList = new ArrayList<>();
+    private static ArrayList<HappenEnemy> enemyList = new ArrayList<>();
 
-    public BomberEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+    public HappenEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
 
         setPositivePoints(100);
         setNegativePoints(-100);
     }
 
-    public BomberEnemy(){}
+    public HappenEnemy(){}
 
     //This is the standard AI, other enemys will have their own way of trying to kill the player :>
 
@@ -72,7 +72,7 @@ public class BomberEnemy extends Enemy {
     @Override
     public void createRandomEnemies(int numberOfRobos){
         for (int i = 0; i < numberOfRobos; i++){
-            getEnemyList().add(new BomberEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+            getEnemyList().add(new HappenEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
                     RandomHandler.getRandomInt(0, GameViewActivity.GAME_HEIGHT + 100),
                     RandomHandler.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
                     RandomHandler.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
@@ -94,7 +94,7 @@ public class BomberEnemy extends Enemy {
     }
 
     public static void drawAll(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (BomberEnemy e : getEnemyList()) {
+        for (HappenEnemy e : getEnemyList()) {
             Log.d(TAG, "Enemy X | Y : " + e.getPosX() + "|" + e.getPosY());
 
             e.draw(activity,canvas,loopCount);
@@ -110,7 +110,7 @@ public class BomberEnemy extends Enemy {
                 Activity activity = (Activity) allObjs[0];
                 setImages(new Bitmap[1]);
                                                                                                                                             //percentage, just for testing now
-                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.flyingbombernew), 128, 128, false);
+                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.happen2), 96, 96, false);
 
             } else {
                 Log.d(TAG, "Robo-Enemy: Initialize Failure!");
@@ -125,19 +125,19 @@ public class BomberEnemy extends Enemy {
 
     @Override
     public boolean cleanup() {
-        setEnemyList(new ArrayList<BomberEnemy>());
+        setEnemyList(new ArrayList<HappenEnemy>());
         setImages(null);
         return true;
     }
 
     /** GETTER / SETTER */
 
-    public static ArrayList<BomberEnemy> getEnemyList() {
+    public static ArrayList<HappenEnemy> getEnemyList() {
         return enemyList;
     }
 
-    public static void setEnemyList(ArrayList<BomberEnemy> enemyList) {
-        BomberEnemy.enemyList = enemyList;
+    public static void setEnemyList(ArrayList<HappenEnemy> enemyList) {
+        HappenEnemy.enemyList = enemyList;
     }
 
     public static Bitmap[] getImages() {
@@ -145,7 +145,7 @@ public class BomberEnemy extends Enemy {
     }
 
     public static void setImages(Bitmap[] images) {
-        BomberEnemy.images = images;
+        HappenEnemy.images = images;
     }
 
 }
