@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.background.layers;
+package yourowngame.com.yourowngame.classes.background.layers.interfaces;
 
 
 public interface IBackgroundLayer_Clouds {

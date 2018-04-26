@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.actors.player;
+package yourowngame.com.yourowngame.classes.actors.player.interfaces;
 
 
 public interface IPlayer {

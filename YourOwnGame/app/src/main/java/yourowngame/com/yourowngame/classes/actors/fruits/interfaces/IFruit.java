@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.actors.fruits.specializations;
+package yourowngame.com.yourowngame.classes.actors.fruits.interfaces;
 
 public interface IFruit {
     float SPEED_X_MIN = 5f;

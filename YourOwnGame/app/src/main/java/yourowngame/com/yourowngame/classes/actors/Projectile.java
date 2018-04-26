@@ -2,19 +2,11 @@ package yourowngame.com.yourowngame.classes.actors;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 
 /**

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
-import yourowngame.com.yourowngame.classes.configuration.Constants;
+import yourowngame.com.yourowngame.classes.background.layers.interfaces.IBackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 
 /**

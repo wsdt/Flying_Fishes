@@ -1,11 +1,6 @@
 package yourowngame.com.yourowngame.classes.handler;
 
-import android.util.Log;
-
 import java.util.Random;
-
-import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.configuration.Constants;
 
 /*
 * Renamed to RandomHandler, for improving Cohesion of Class

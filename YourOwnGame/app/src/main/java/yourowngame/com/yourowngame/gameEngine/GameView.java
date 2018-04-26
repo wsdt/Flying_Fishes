@@ -17,7 +17,9 @@ import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFish;
+import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
+import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
 import yourowngame.com.yourowngame.classes.handler.SharedPrefStorageMgr;
@@ -225,6 +227,8 @@ public class GameView extends SurfaceView {
     /*********************************************************
      * 3. Game Over Methods                                  *
      *********************************************************/
+    @Bug (byDeveloper = Constants.Developers.WSDT,
+        problem = "Exit itself works and everything is cleaned. But the restart itself does not work, because game starts from the same point.")
     public void exitGame() {
         boolean retry = true;
         thread.setRunning(false);

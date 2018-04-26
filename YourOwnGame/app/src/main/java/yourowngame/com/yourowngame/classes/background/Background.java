@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.Random;
 
+import yourowngame.com.yourowngame.classes.background.interfaces.IBackground;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 import yourowngame.com.yourowngame.gameEngine.interfaces.Initializer;
 
