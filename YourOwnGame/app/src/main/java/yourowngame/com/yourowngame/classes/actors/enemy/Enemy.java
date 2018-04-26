@@ -53,6 +53,7 @@ public abstract class Enemy extends GameObject implements IEnemy {
     //             for X [GAME_WIDTH | GAME_WIDTH + 100]
     //             for Y [     0     |    GAME_HEIGHT  ]
     // so we can easily control this behavior by just editing it here!
+    //Now also used in cleanup()
     public void resetWidthAndHeightOfEnemy(){
         setPosX(RandomHandler.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 50));
         setPosY(RandomHandler.getRandomFloat(0, GameViewActivity.GAME_HEIGHT));

@@ -41,6 +41,6 @@ public class DynamiteEnemy extends Enemy{
 
     @Override
     public boolean cleanup() {
-        return false;
+        return true;
     }
 }

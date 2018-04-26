@@ -125,8 +125,7 @@ public class HappenEnemy extends Enemy {
 
     @Override
     public boolean cleanup() {
-        setEnemyList(new ArrayList<HappenEnemy>());
-        setImages(null);
+        resetWidthAndHeightOfEnemy(); //just reset y/x
         return true;
     }
 

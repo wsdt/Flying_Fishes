@@ -26,6 +26,6 @@ public class Avocis extends Fruit {
 
     @Override
     public boolean cleanup() {
-        return false;
+        return true;
     }
 }

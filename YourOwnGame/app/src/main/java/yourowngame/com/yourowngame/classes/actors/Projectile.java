@@ -73,7 +73,6 @@ public class Projectile extends GameObject {
 
     @Override
     public boolean cleanup() {
-        setSharedBitmap(null);
         return true;
     }
 
