@@ -15,6 +15,7 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 
@@ -28,7 +29,7 @@ public class HappenEnemy extends Enemy {
     private static Bitmap[] images;
     private static ArrayList<HappenEnemy> enemyList = new ArrayList<>();
 
-    public HappenEnemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+    public HappenEnemy(double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
 
         setPositivePoints(100);
@@ -76,16 +77,14 @@ public class HappenEnemy extends Enemy {
                     RandomHandler.getRandomInt(0, GameViewActivity.GAME_HEIGHT + 100),
                     RandomHandler.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
                     RandomHandler.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
-                    null, DEFAULT_ROTATION, "Robotic"));
+                    new int[] {R.drawable.enemy_happen_1,R.drawable.enemy_happen_2}, DEFAULT_ROTATION, "Robotic"));
 
-            getEnemyList().get(i).setCurrentBitmap(images[0]);
+            getEnemyList().get(i).setCurrentBitmap(getImages()[0]);
         }
     }
 
     //in my opinion, a simple bitmap array would match the animation the best!
     //but we surely should do something to slow it down
-    /** Single enemy should not draw all of them (not object-oriented)
-     * that's what i've always wanted to prevent..*/
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
         for (int i = 0; i < getImages().length; i++) {
@@ -101,26 +100,34 @@ public class HappenEnemy extends Enemy {
         }
     }
 
-    @Override @SafeVarargs
+    @Override
+    @SafeVarargs
+    @Enhance(message = {"I get crazy, we have a really bad design here/everywhere with thousands of different Image getters/setters etc. " +
+            "Additionally we are not consistent because player has another directive.",
+    "Additionally we should consider putting the initialize() method of all enemies into the abstract base class because they will all look the same!"})
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
-    //we really need to change the initialize, Object params, instanceOf..
+        //we really need to change the initialize, Object params, instanceOf..
 
-        if (allObjs != null) {
-            if (allObjs[0] instanceof Activity) {
-                Activity activity = (Activity) allObjs[0];
-                setImages(new Bitmap[1]);
-                                                                                                                                            //percentage, just for testing now
-                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.happen2), 96, 96, false);
+        try {
+            if (allObjs != null && !isInitialized) {
+                if (allObjs[0] instanceof Activity) {
+                    Activity activity = (Activity) allObjs[0];
+                    setImages(new Bitmap[this.getImg().length]);
 
-            } else {
-                Log.d(TAG, "Robo-Enemy: Initialize Failure!");
-                return false;
+                    for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
+                        getImages()[imgFrame] = this.getCraftedDynamicBitmap(activity, imgFrame, DEFAULT_ROTATION, null, null);
+                    }
+                } else {
+                    Log.d(TAG, "Happen-Enemy: Initialize Failure!");
+                }
+                Log.d(TAG, "Happen-Enemy: Successfully initialized!");
+                isInitialized = true;
             }
-            Log.d(TAG, "Robo-Enemy: Successfully initialized!");
-            return true;
+        } catch (NoDrawableInArrayFound_Exception | ClassCastException | NullPointerException e) {
+            Log.d(TAG, "Happen-Enemy: Initialize Failure!");
+            e.printStackTrace();
         }
-        Log.d(TAG, "Robo-Enemy: Initialize Failure!");
-        return false;
+        return isInitialized;
     }
 
     @Override

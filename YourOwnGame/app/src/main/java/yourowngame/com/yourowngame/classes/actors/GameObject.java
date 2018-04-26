@@ -21,15 +21,17 @@ public abstract class GameObject implements Initializer {
     private Bitmap currentBitmap; //just a reference for other classes, so they know which bitmap is active (for collision calculation etc.)
     private int heightOfBitmap, widthOfBitmap;
 
+    protected boolean isInitialized = false; //should be only set to true in initialize() --> no getter setter because only class itself should have access
 
-    public GameObject(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+
+    public GameObject(double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
         this.setPosX(posX);
         this.setPosY(posY);
         this.setSpeedX(speedX);
         this.setSpeedY(speedY);
         this.setRotationDegree(rotationDegree);
         this.setName(name);
-        setImg(img);
+        this.setImg(img);
 
     }
     //Default constructor
@@ -78,11 +80,6 @@ public abstract class GameObject implements Initializer {
 
         return targetImg;
     }
-
-    public Bitmap createSimpleBitmap(@NonNull Activity context, int img){
-        return BitmapFactory.decodeResource(context.getResources(), img);
-    }
-
 
     protected int getRotationDegree() {
         return rotationDegree;

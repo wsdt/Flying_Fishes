@@ -14,6 +14,7 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 
@@ -33,7 +34,7 @@ public class RocketFish extends Enemy {
      *
      * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!*/
 
-    public RocketFish(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+    public RocketFish(double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
 
         setPositivePoints(100);
@@ -76,31 +77,41 @@ public class RocketFish extends Enemy {
                     RandomHandler.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
                     RandomHandler.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
                     RandomHandler.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
-                    null, DEFAULT_ROTATION, "Bomber"));
+                    new int[]{R.drawable.enemy_rocketfish}, DEFAULT_ROTATION, "Bomber"));
 
-            getEnemyList().get(i).setCurrentBitmap(images[0]);
+            getEnemyList().get(i).setCurrentBitmap(getImages()[0]);
         }
     }
 
 
-    @Override @SafeVarargs
+    @Override
+    @SafeVarargs
+    @Enhance(message = {"I get crazy, we have a really bad design here/everywhere with thousands of different Image getters/setters etc. " +
+            "Additionally we are not consistent because player has another directive.",
+            "Additionally we should consider putting the initialize() method of all enemies into the abstract base class because they will all look the same!"})
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
-        if (allObjs != null) {
-            if (allObjs[0] instanceof Activity) {
-                Activity activity = (Activity) allObjs[0];
-                setImages(new Bitmap[1]);
+        //we really need to change the initialize, Object params, instanceOf..
 
-                // same here, percentage, just for testing now
-                getImages()[0] = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.rocketfish), 108, 108, false);
+        try {
+            if (allObjs != null && !isInitialized) {
+                if (allObjs[0] instanceof Activity) {
+                    Activity activity = (Activity) allObjs[0];
+                    setImages(new Bitmap[this.getImg().length]);
 
-            } else {
-                Log.d(TAG, "Super-Enemy: Initialize Failure!");
-                return false;
+                    for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
+                        getImages()[imgFrame] = this.getCraftedDynamicBitmap(activity, imgFrame, DEFAULT_ROTATION, null, null);
+                    }
+                } else {
+                    Log.d(TAG, "Robo-Enemy: Initialize Failure!");
+                    return false;
+                }
+                Log.d(TAG, "Robo-Enemy: Successfully initialized!");
+                return true;
             }
-            Log.d(TAG, "Super-Enemy: Successfully initialized!");
-            return true;
+        } catch (NoDrawableInArrayFound_Exception | ClassCastException | NullPointerException e) {
+            Log.d(TAG, "Robo-Enemy: Initialize Failure!");
+            e.printStackTrace();
         }
-        Log.d(TAG, "Super-Enemy: Initialize Failure!");
         return false;
     }
 

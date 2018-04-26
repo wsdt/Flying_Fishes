@@ -34,8 +34,8 @@ public class DynamiteEnemy extends Enemy{
 
     }
 
-    @Override
-    public <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+    @Override @SafeVarargs
+    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
         return false;
     }
 
