@@ -254,6 +254,13 @@ public class GameView extends SurfaceView {
                                         } catch (InterruptedException e) {
                                             e.printStackTrace();
                                         }
+
+                                        //save highscore before cleaning
+                                        new SharedPrefStorageMgr(getActivityContext()).saveNewHighscoreEntry(getHighscore().getValue());
+
+                                        //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
+                                        LevelManager.getInstance(BackgroundManager.getInstance(GameView.this)).getCurrentLevelObj().cleanUpLevelProperties();
+
                                         getActivityContext().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
                                     }
 
@@ -266,12 +273,6 @@ public class GameView extends SurfaceView {
                     }
                 });
                 retry = false;
-
-                //save highscore before cleaning
-                new SharedPrefStorageMgr(this.getActivityContext()).saveNewHighscoreEntry(getHighscore().getValue());
-
-                //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
-                LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().cleanUpLevelProperties();
 
             } catch (ClassCastException e) {
                 e.printStackTrace();
