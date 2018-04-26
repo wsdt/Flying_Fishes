@@ -22,7 +22,7 @@ import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.DialogMgr;
-import yourowngame.com.yourowngame.classes.handler.SharedPrefStorageMgr;
+import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.classes.handler.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
 

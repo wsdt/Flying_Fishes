@@ -3,12 +3,18 @@ package yourowngame.com.yourowngame.gameEngine;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.Transient;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created  on 17.03.2018.
@@ -30,6 +36,13 @@ public class Highscore {
     /** Currently both non-static (not sure if this is good, but so we can have multiple highscore with own listeners at the same time [but maybe non-sense])*/
     private int counter = 0; //IMPORTANT-> Counter and registeredListenersList should be BOTH STATIC or BOTH NON-STATIC! (otherwise complications!)
     private List<IHighscore_Observer> registeredListeners = new ArrayList<>();
+
+    public Highscore(int counter) {
+        this.counter = counter;
+    }
+
+    public Highscore() {
+    }
 
 
     /** increment method for enemy */
@@ -86,5 +99,13 @@ public class Highscore {
             iHighscore_observer.onHighscoreChanged();
         }
         Log.d(TAG, "notifyAllListeners: Notified all highscore listeners.");
+    }
+
+    public int getCounter() {
+        return this.counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 }
