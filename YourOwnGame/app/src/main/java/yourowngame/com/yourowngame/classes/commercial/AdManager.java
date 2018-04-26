@@ -2,7 +2,6 @@ package yourowngame.com.yourowngame.classes.commercial;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -14,10 +13,9 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.reward.RewardItem;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.commercial.interfaces.IAdManager;
 
 public class AdManager implements IAdManager {
     private Activity context;

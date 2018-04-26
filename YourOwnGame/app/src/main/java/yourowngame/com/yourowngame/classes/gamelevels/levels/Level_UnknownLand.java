@@ -1,7 +1,7 @@
 package yourowngame.com.yourowngame.classes.gamelevels.levels;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.actors.player.IPlayer;
+import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;

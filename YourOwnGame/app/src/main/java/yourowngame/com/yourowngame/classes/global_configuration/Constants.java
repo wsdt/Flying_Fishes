@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.configuration;
+package yourowngame.com.yourowngame.classes.global_configuration;
 
 import yourowngame.com.yourowngame.classes.annotations.Delete;
 

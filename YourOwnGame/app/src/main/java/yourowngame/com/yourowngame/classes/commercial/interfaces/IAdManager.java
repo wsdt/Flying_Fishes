@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.commercial;
+package yourowngame.com.yourowngame.classes.commercial.interfaces;
 
 /** Extracted from Constants interface (better separation of concern)
  * --> By extracting it to an separate interface again and not simply

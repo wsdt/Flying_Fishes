@@ -1,13 +1,10 @@
 package yourowngame.com.yourowngame.classes.actors.enemy;
 
-import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
+import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 
 /**

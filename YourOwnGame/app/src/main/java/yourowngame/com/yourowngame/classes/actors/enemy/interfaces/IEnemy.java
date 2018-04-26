@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.actors.enemy;
+package yourowngame.com.yourowngame.classes.actors.enemy.interfaces;
 
 
 public interface IEnemy {
