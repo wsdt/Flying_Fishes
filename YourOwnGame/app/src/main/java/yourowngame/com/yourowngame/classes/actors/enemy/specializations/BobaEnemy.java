@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.annotations.Test;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
-import yourowngame.com.yourowngame.classes.annotations.TestingPurpose;
 import yourowngame.com.yourowngame.classes.configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
@@ -47,11 +47,7 @@ public class BobaEnemy extends Enemy {
     public BobaEnemy(){}
 
 
-    @Override @TestingPurpose (
-            createdBy = Constants.Developers.WSDT,
-            lastModified = "04.03.2018 : 11:30",
-            deleteWhenUnused = false
-    )
+    @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
         resetIfOutOfBounds();
 
