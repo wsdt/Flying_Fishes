@@ -21,6 +21,6 @@ public interface IPlayer {
 
     /** Scaling of image in percentage of original size of bitmap
      * (todo: maybe scale img so this is not necessary?)*/
-    float SCALED_WIDTH_PERCENTAGE = 0.35f;
-    float SCALED_HEIGHT_PERCENTAGE = 0.35f;
+    float SCALED_WIDTH_PERCENTAGE = 1f;
+    float SCALED_HEIGHT_PERCENTAGE = 1f;
 }

@@ -28,8 +28,7 @@ public class Level_HarmlessSky extends Level implements IBackground {
     @Override
     protected void determinePlayer() {
         this.setPlayer(new Player(100, LevelManager.getBackgroundManager().getGameView().getRootView().getHeight() / 4, 5, 2, new int[]{
-                R.drawable.hugo_64, R.drawable.hugo_64, R.drawable.hugo_64, R.drawable.hugo_64,
-                R.drawable.hugo_64, R.drawable.hugo_64}, IPlayer.DEFAULT_ROTATION, " "));
+                R.drawable.player_hugo}, IPlayer.DEFAULT_ROTATION, "Hugo"));
     }
 
     @Override

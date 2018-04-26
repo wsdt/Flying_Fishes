@@ -64,8 +64,10 @@ public abstract class GameObject implements Initializer {
         } else if (this.getImg().length <= 0) { throw new NoDrawableInArrayFound_Exception("getCraftedDynamicBitmap: FATAL EXCEPTION->Integer array (getImg()) has no content! Could not return bitmap."); }
         //not else (because despite normal if method should continue)
         Bitmap targetImg = BitmapFactory.decodeResource(context.getResources(), this.getImg()[imgFrame]);
-        if (widthInPercent != null && heightInPercent != null) { //must be before rotationDegrees-If
-            targetImg = Bitmap.createScaledBitmap(targetImg, (int) (targetImg.getWidth()*widthInPercent), (int) (targetImg.getHeight()*heightInPercent), true);
+        if ((widthInPercent != null && heightInPercent != null)) { //must be before rotationDegrees-If
+            if ((widthInPercent != 1 && heightInPercent != 1)) { //so we also don't scale if factor is 1
+                targetImg = Bitmap.createScaledBitmap(targetImg, (int) (targetImg.getWidth() * widthInPercent), (int) (targetImg.getHeight() * heightInPercent), true);
+            }
 
         } //not else if!
         if (rotationDegrees != null) {
