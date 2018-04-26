@@ -47,17 +47,14 @@ public class Level_HarmlessSky extends Level implements IBackground {
         //Set allEnemies Arraylist
         /** Initializing Bomber-Enemy */
         HappenEnemy happenEnemyManager = new HappenEnemy();
-        happenEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
         happenEnemyManager.createRandomEnemies(2); //todo: should be static
 
         /**Initializing Rocket-Enemy */
         RocketFish rocketEnemyManager = new RocketFish();
-        rocketEnemyManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
         rocketEnemyManager.createRandomEnemies(10);
 
         /** Initializing Spawn-Enemies */
         BobaEnemy bobaManager = new BobaEnemy();
-        bobaManager.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
         bobaManager.createRandomEnemies(2);
 
         this.getAllEnemies().addAll(HappenEnemy.getEnemyList());

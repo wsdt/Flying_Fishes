@@ -1,10 +1,12 @@
 package yourowngame.com.yourowngame.classes.actors.enemy;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
+import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 
 /**
@@ -38,8 +40,10 @@ public abstract class Enemy extends GameObject implements IEnemy {
 
     public Enemy(){}
 
-    public Enemy(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+    public Enemy(double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
+
+        this.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
     }
 
     /** we also need to make sure that those enemies who pass the player and the screen rejoin at the end of the scene! */
