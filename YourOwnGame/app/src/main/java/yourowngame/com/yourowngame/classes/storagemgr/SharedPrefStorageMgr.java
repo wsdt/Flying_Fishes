@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.handler;
+package yourowngame.com.yourowngame.classes.storagemgr;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
+import yourowngame.com.yourowngame.classes.handler.RandomHandler;
 
 import static yourowngame.com.yourowngame.classes.handler.interfaces.ISharedPrefStorageMgr.*;
 
@@ -40,7 +42,7 @@ public class SharedPrefStorageMgr {
 
     public void saveNewHighscoreEntry(int points) {
         //random for no conflicts by saving (bad technique i know, but we delete this class in future so I am lazy)
-        this.getSharedPreferences().edit().putInt(SP_ENTRY_PREFIX+"_"+RandomHandler.getRandomInt(0, 999999999),points).apply();
+        this.getSharedPreferences().edit().putInt(SP_ENTRY_PREFIX+"_"+ RandomHandler.getRandomInt(0, 999999999),points).apply();
     }
 
     public void clearHighscore() {

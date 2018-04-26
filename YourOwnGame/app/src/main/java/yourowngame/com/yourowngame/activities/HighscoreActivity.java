@@ -8,7 +8,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.handler.SharedPrefStorageMgr;
+import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
 
 public class HighscoreActivity extends AppCompatActivity {
     private SharedPrefStorageMgr sharedPreferencesStorageMgr;
