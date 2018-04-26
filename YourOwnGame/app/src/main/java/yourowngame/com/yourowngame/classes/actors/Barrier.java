@@ -30,6 +30,6 @@ public class Barrier extends GameObject {
 
     @Override
     public boolean cleanup() {
-        return false;
+        return true;
     }
 }

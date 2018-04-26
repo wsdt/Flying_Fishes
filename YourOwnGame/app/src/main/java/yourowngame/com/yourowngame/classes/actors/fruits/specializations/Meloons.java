@@ -26,6 +26,6 @@ public class Meloons extends Fruit {
 
     @Override
     public boolean cleanup() {
-        return false;
+        return true;
     }
 }

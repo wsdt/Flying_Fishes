@@ -115,8 +115,7 @@ public class BobaEnemy extends Enemy {
 
     @Override
     public boolean cleanup() {
-        setEnemyList(new ArrayList<BobaEnemy>());
-        setImages(null);
+        resetWidthAndHeightOfEnemy(); //just reset y/x
         return true;
     }
 

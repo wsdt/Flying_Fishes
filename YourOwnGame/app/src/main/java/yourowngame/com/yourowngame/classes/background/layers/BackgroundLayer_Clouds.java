@@ -132,7 +132,6 @@ public class BackgroundLayer_Clouds extends Background implements IBackgroundLay
 
     @Override
     public boolean cleanup() {
-        this.craftedClouds = null;
         return true;
     }
 

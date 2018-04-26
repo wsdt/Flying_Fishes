@@ -25,6 +25,6 @@ public class Pinapos extends Fruit {
 
     @Override
     public boolean cleanup() {
-        return false;
+        return true;
     }
 }

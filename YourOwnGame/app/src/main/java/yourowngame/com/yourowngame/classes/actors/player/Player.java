@@ -143,9 +143,7 @@ public class Player extends GameObject implements IPlayer {
 
     @Override
     public boolean cleanup() {
-        //Set to illegal values/null
-        this.setIntrinsicHeightOfPlayer(Initializer.PRIMITIVES_ILLEGAL_VALUE);
-        this.setLoadedBitmaps(null);
+        this.setPosY(LevelManager.getBackgroundManager().getGameView().getRootView().getHeight() / 4); //reset y when hitting ground
         return true;
     }
 
