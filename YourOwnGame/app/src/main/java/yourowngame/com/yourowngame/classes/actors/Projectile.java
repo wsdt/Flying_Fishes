@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
+import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 
 /**
  * Created by Solution on 27.02.2018.
@@ -73,6 +74,7 @@ public class Projectile extends GameObject {
 
     @Override
     public boolean cleanup() {
+        this.setPosY(LevelManager.getBackgroundManager().getGameView().getRootView().getWidth()+15); //outside of display to prevent projectiles hitting new enemies altough projectiles were fired in previous game
         return true;
     }
 

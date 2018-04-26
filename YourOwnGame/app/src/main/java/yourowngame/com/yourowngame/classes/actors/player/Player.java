@@ -20,7 +20,6 @@ import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.gameEngine.GameView;
-import yourowngame.com.yourowngame.gameEngine.interfaces.Initializer;
 
 
 public class Player extends GameObject implements IPlayer {
@@ -144,6 +143,9 @@ public class Player extends GameObject implements IPlayer {
     @Override
     public boolean cleanup() {
         this.setPosY(LevelManager.getBackgroundManager().getGameView().getRootView().getHeight() / 4); //reset y when hitting ground
+        for (Projectile projectile : getProjectileList()){
+            projectile.cleanup();
+        }
         return true;
     }
 
@@ -152,24 +154,24 @@ public class Player extends GameObject implements IPlayer {
      ***********************************************/
 
     public void addProjectiles(@NonNull Activity activity){
-        projectileList.add(new Projectile(activity,this.getPosX() + this.getWidthOfBitmap()/2, this.getPosY() + this.getHeightOfBitmap()/2, 10, 0, new int[]{R.drawable.color_player_bullet}, 0, "bullet"));
+        getProjectileList().add(new Projectile(activity,this.getPosX() + this.getWidthOfBitmap()/2, this.getPosY() + this.getHeightOfBitmap()/2, 10, 0, new int[]{R.drawable.color_player_bullet}, 0, "bullet"));
     }
 
     public void drawProjectiles(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount){
-        for (Projectile e : this.projectileList)
+        for (Projectile e : this.getProjectileList())
             e.draw(activity, canvas, loopCount);
     }
 
     //Here we need to access the array backwards, otherwise we will remove an index, that will be progressed, but isn't there anymore!
     public void updateProjectiles(){
-        Log.d(TAG2, "Projectile Size = " + this.projectileList.size());
-        if(!this.projectileList.isEmpty()){
-            for (int i = this.projectileList.size() - 1; i > -1; i--){
-                this.projectileList.get(i).update(null, null, null);
+        Log.d(TAG2, "Projectile Size = " + this.getProjectileList().size());
+        if(!this.getProjectileList().isEmpty()){
+            for (int i = this.getProjectileList().size() - 1; i > -1; i--){
+                this.getProjectileList().get(i).update(null, null, null);
 
-                if (this.projectileList.get(i).getPosX() > GameViewActivity.GAME_WIDTH-50){
+                if (this.getProjectileList().get(i).getPosX() > GameViewActivity.GAME_WIDTH-50){
                     Log.e(TAG2, "Bullet removed!");
-                    this.projectileList.remove(this.projectileList.get(i));
+                    this.getProjectileList().remove(this.getProjectileList().get(i));
                 }
             }
         }
@@ -180,11 +182,11 @@ public class Player extends GameObject implements IPlayer {
      *************************/
 
     public List getProjectiles(){
-        return projectileList;
+        return getProjectileList();
     }
 
     public Projectile getProjectileAtPosition(int pos){
-        return projectileList.get(pos);
+        return getProjectileList().get(pos);
     }
 
     public int getIntrinsicHeightOfPlayer() {
@@ -224,5 +226,12 @@ public class Player extends GameObject implements IPlayer {
     }
 
 
+    public List<Projectile> getProjectileList() {
+        return projectileList;
+    }
+
+    public void setProjectileList(List<Projectile> projectileList) {
+        this.projectileList = projectileList;
+    }
 }
 
