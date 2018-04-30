@@ -34,7 +34,7 @@ public class Highscore {
     public Highscore() {
     }
 
-    /** increment method for reward */
+    /** increment method for reward (e.g. enemies or fruits are extending form that interface) */
     public <R extends IHighscore_RewardableObj> void increment(R rewardableObj){
         counter += rewardableObj.getReward();
         notifyAllListeners();

@@ -13,6 +13,9 @@ import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
 
 //TODO: This class might/should be connected/reviewed by Google-Play-Services in future or similar!
+
+/** Class not fine-tuned yet (strings.xml etc.), because this activity will be changed completely in
+ * future (nicer UI etc.) */
 public class HighscoreActivity extends AppCompatActivity {
     private SharedPrefStorageMgr sharedPreferencesStorageMgr;
     private LinearLayout highscoreList;
