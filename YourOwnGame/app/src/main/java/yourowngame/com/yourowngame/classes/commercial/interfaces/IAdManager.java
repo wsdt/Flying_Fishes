@@ -20,6 +20,6 @@ public interface IAdManager {
     interface REAL_ADS { //Important: Real and TestAds interface should have the SAME members!
         String BANNER_AD_UNIT = "ca-app-pub-8160960481527784/3864920525";
         String INTERSTITIAL_AD_UNIT = "ca-app-pub-8160960481527784/1753283579";
-        String REWARDED_AD_UNIT = TEST_ADS.REWARDED_AD_UNIT; //TODO: For rewarded ad we need to now the reward to create it! (used test ad temporary)
+        String REWARDED_AD_UNIT = "ca-app-pub-8160960481527784/1776532289";
     }
 }

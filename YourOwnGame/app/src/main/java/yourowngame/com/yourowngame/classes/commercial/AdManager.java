@@ -2,6 +2,7 @@ package yourowngame.com.yourowngame.classes.commercial;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -13,9 +14,14 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.commercial.interfaces.IAdManager;
+import yourowngame.com.yourowngame.classes.manager.HelperClass;
+import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 
 public class AdManager implements IAdManager {
     private Activity context;
@@ -33,12 +39,14 @@ public class AdManager implements IAdManager {
         Log.d(TAG, "initializeAdMob: Tried to initialize Admob.");
     }
 
-
-    /*public RewardedVideoAd loadRewardedVideoInRewardActivity(@NonNull final Activity activityContext, @Nullable RewardedVideoAdListener adListener, @Nullable final Intent goToActivityAfterShown) {
+    //TODO: Use this method in future to show ads to revive game
+    public RewardedVideoAd loadRewardedVideoInRewardActivity(@NonNull final Activity activityContext, @Nullable final ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation executeIfTrueSuccess_or_ifFalseFailure_afterCompletation, @Nullable final Intent goToActivityAfterShown) {
         final String REWARDED_VIDEO_ID = USE_TEST_ADS ? TEST_ADS.REWARDED_AD_UNIT : REAL_ADS.REWARDED_AD_UNIT;
 
         final RewardedVideoAd rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(activityContext);
-        rewardedVideoAd.setRewardedVideoAdListener((adListener == null) ? new RewardedVideoAdListener() {
+        rewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+            boolean gotRewarded = false; //maybe there is a more beautiful solution
+
             @Override
             public void onRewardedVideoAdLoaded() {
                 //just in case validate whether app is loaded
@@ -69,16 +77,22 @@ public class AdManager implements IAdManager {
                     Log.d(TAG, "onRewardedVideoAdClosed: gotoActivity is not null.");
                     getContext().startActivity(goToActivityAfterShown);
                 } else {
-                    //IMPORTANT: In this case (because this ad has its own activity) we finish the activity if no target activity is specified.
-                    Log.d(TAG, "onRewardedVideoAdClosed: Tried to finish activity.");
-                    activityContext.finish();
+                    if (!gotRewarded) {
+                        //if we got rewarded the game should continue
+                        //IMPORTANT: In this case (because this ad has its own activity) we finish the activity if no target activity is specified.
+                        Log.d(TAG, "onRewardedVideoAdClosed: Tried to finish activity.");
+                        activityContext.finish();
+                    }
                 }
             }
 
             @Override
             public void onRewarded(RewardItem rewardItem) {
-                //Maybe other rewardMessage?
                 Toast.makeText(activityContext, R.string.adManager_success_rewardAd_rewardReceived, Toast.LENGTH_LONG).show();
+                gotRewarded = true;
+
+                //maybe if this does not work, try it in onRewardedVideoAdClosed()
+                if (executeIfTrueSuccess_or_ifFalseFailure_afterCompletation != null) {executeIfTrueSuccess_or_ifFalseFailure_afterCompletation.success_is_true();}
             }
 
             @Override
@@ -99,15 +113,22 @@ public class AdManager implements IAdManager {
                     Log.d(TAG, "onRewardedVideoAdFailedToLoad: Tried to finish activity.");
                     activityContext.finish();
                 }
+
+                if (executeIfTrueSuccess_or_ifFalseFailure_afterCompletation != null) {executeIfTrueSuccess_or_ifFalseFailure_afterCompletation.failure_is_false();}
             }
-        } : adListener); //add given listener or create default one
+
+            @Override
+            public void onRewardedVideoCompleted() {
+
+            }
+        });
         Log.d(TAG, "loadRewardedVideoInRewardActivity: Created reward video instance etc.");
 
         rewardedVideoAd.loadAd(REWARDED_VIDEO_ID, new AdRequest.Builder().build());
         Log.d(TAG, "loadRewardedVideoInRewardActivity: Tried to load rewarded video.");
 
         return rewardedVideoAd;
-    }*/
+    }
 
 
     public void loadFullPageAd(@Nullable final AdListener adListener, @Nullable final Intent goToActivityAfterShown) {

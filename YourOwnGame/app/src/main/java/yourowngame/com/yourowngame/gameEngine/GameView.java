@@ -19,6 +19,7 @@ import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEn
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFish;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
+import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.manager.DialogMgr;
@@ -266,7 +267,20 @@ public class GameView extends SurfaceView {
 
                                     @Override
                                     public void failure_is_false() {
+                                        //E.g. revive button clicked
+                                        new AdManager(GameView.this.getActivityContext()).loadRewardedVideoInRewardActivity(
+                                                GameView.this.getActivityContext(), new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
+                                                    @Override
+                                                    public void success_is_true() {
+                                                        //TODO: put here revive method/procedure (e.g. put all positions a few seconds back!)
+                                                    }
 
+                                                    @Override
+                                                    public void failure_is_false() {
+                                                        //don't revive
+                                                    }
+                                                }, null //don't change activity, because user want to be revived!
+                                        );
                                     }
                                 }
                         );
