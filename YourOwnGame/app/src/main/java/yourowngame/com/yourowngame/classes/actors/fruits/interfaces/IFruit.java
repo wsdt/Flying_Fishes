@@ -11,4 +11,10 @@ public interface IFruit {
     float appearingTimeMelons  = 0.3f;   //  30 secs
     float appearingTimeAvocis  = 0.5f;   //  50 secs
     float appearingTimePinapos = 0.9f;   //    90 secs
+
+    interface REWARDS {
+        int AVOCIS_FRUIT = 50;
+        int MELOONS_FRUIT = 100;
+        int PINAPOS_FRUIT = 200;
+    }
 }

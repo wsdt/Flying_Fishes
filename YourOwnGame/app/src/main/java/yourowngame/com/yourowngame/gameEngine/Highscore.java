@@ -3,31 +3,21 @@ package yourowngame.com.yourowngame.gameEngine;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Property;
-import org.greenrobot.greendao.annotation.Transient;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
+import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
+import yourowngame.com.yourowngame.classes.annotations.Delete;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created  on 17.03.2018.
  * <p>
  * a Highscore.class that provides a simple counter, to count the highscore
  *
- * So basically the highscore class only provides 2 methods
- *
  * @increment: add points to the highscore
- * @decrement: remove points from the highscore
- *
- * That class looks wonderful!
- *
  */
 
 public class Highscore {
@@ -44,28 +34,22 @@ public class Highscore {
     public Highscore() {
     }
 
-
-    /** increment method for enemy */
-    public void increment(Enemy e){
-        counter += e.getPositivePoints();
-        notifyAllListeners();
-    }
-
     /** increment method for reward */
-    public void increment(Fruit r){
-        counter += r.getReward();
+    public <R extends IHighscore_RewardableObj> void increment(R rewardableObj){
+        counter += rewardableObj.getReward();
         notifyAllListeners();
     }
 
     /** increment just once */
+    @Delete(description = "Delete method after coins Highscore has it's own class.")
     public void increment(){
         counter++;
         notifyAllListeners();
     }
 
-    /** enemys leaves the screen without getting killed, so the player's highscore decreases*/
+    @Delete(description = "I think we should not decrease the user's highscore (instead just make it harder to get points)")
     public void decrement(Enemy e) {
-        counter -= e.getNegativePoints();
+        counter -= 1; //e.getNegativePoints();
         //Set to 0, to avoid negative values
         if (counter < 0) {
             counter = 0;
@@ -99,13 +83,5 @@ public class Highscore {
             iHighscore_observer.onHighscoreChanged();
         }
         Log.d(TAG, "notifyAllListeners: Notified all highscore listeners.");
-    }
-
-    public int getCounter() {
-        return this.counter;
-    }
-
-    public void setCounter(int counter) {
-        this.counter = counter;
     }
 }

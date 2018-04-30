@@ -18,4 +18,12 @@ public interface IEnemy {
     int ROTATION_DOWN = -10;
     float SCALED_WIDTH_PERCENTAGE = 0.35f;
     float SCALED_HEIGHT_PERCENTAGE = 0.35f;
+
+    /*Highscore rewards for enemies here which are used in getReward() */
+    interface REWARDS {
+        int BOBA_ENEMY = 100;
+        int DYNAMITE_ENEMY = 150;
+        int HAPPEN_ENEMY = 75;
+        int ROCKETFISH_ENEMY = 50;
+    }
 }

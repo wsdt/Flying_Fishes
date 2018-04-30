@@ -30,9 +30,6 @@ public class HappenEnemy extends Enemy {
 
     public HappenEnemy(double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
-
-        setPositivePoints(100);
-        setNegativePoints(-100);
     }
 
     public HappenEnemy(){}
@@ -153,4 +150,9 @@ public class HappenEnemy extends Enemy {
         HappenEnemy.images = images;
     }
 
+    /** Get reward method for highscore */
+    @Override
+    public int getReward() {
+        return REWARDS.HAPPEN_ENEMY;
+    }
 }
