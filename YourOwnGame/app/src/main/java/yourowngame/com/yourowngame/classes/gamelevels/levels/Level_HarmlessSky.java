@@ -6,7 +6,7 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFish;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
@@ -50,7 +50,7 @@ public class Level_HarmlessSky extends Level implements IBackground {
         happenEnemyManager.createRandomEnemies(2); //todo: should be static
 
         /**Initializing Rocket-Enemy */
-        RocketFish rocketEnemyManager = new RocketFish();
+        RocketFishEnemy rocketEnemyManager = new RocketFishEnemy();
         rocketEnemyManager.createRandomEnemies(10);
 
         /** Initializing Spawn-Enemies */
@@ -58,7 +58,7 @@ public class Level_HarmlessSky extends Level implements IBackground {
         bobaManager.createRandomEnemies(2);
 
         this.getAllEnemies().addAll(HappenEnemy.getEnemyList());
-        this.getAllEnemies().addAll(RocketFish.getEnemyList());
+        this.getAllEnemies().addAll(RocketFishEnemy.getEnemyList());
         this.getAllEnemies().addAll(BobaEnemy.getEnemyList());
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }

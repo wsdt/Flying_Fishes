@@ -16,8 +16,9 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFish;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
@@ -42,6 +43,9 @@ public class GameView extends SurfaceView {
     private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
     private FrameLayout layout;
     private Highscore highscore = new Highscore();
+
+    @Enhance (message = "Please make an own class for the coins (maybe extend from Highscore), I think this" +
+            "could cause confusion in future. ")
     private Highscore coins = new Highscore(); //todo: might work, but yeah could cause confusion in future, you're totally right! should get its own class.
 
     // ENEMIES are level-dependent, so specific level obj should own a list with all enemies. (LevelMgr.CURRENT_LEVEL)
@@ -134,7 +138,7 @@ public class GameView extends SurfaceView {
 
                 // (4.) draw enemies
                 HappenEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
-                RocketFish.drawAll(this.getActivityContext(), canvas, loopCount);
+                RocketFishEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
                 BobaEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
@@ -173,7 +177,7 @@ public class GameView extends SurfaceView {
             -> LevelMgr.getCurrentLevelObj().getAllEnemies.updateAll(this.playerOne, null, null);
         */
         HappenEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
-        RocketFish.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
+        RocketFishEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
         BobaEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
 
         /** Check Shooting */
@@ -213,10 +217,9 @@ public class GameView extends SurfaceView {
                     CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
                     //increment the players highScore
                     getHighscore().increment(e);
-                    //if the highscore is over/equal 5_000, reset highscore, add 1 Coin (later on 10_000 be better)
+                    //if the highscore is over/equal 5_000, add 1 Coin (later on 10_000 be better)
                     if(getHighscore().getValue() >= 5_000){
                         getCoinsHighscore().increment();
-                        getHighscore().resetCounter();
                     }
 
                     Log.d(TAG, "Highscore = " + getHighscore().getValue());

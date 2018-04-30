@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
+import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 
 public class Pinapos extends Fruit {
     public Pinapos(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
@@ -26,5 +27,11 @@ public class Pinapos extends Fruit {
     @Override
     public boolean cleanup() {
         return true;
+    }
+
+    /** Get reward method for highscore */
+    @Override
+    public int getReward() {
+        return IFruit.REWARDS.PINAPOS_FRUIT;
     }
 }

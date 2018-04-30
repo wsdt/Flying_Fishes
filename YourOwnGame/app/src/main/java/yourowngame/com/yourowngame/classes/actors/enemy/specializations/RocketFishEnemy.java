@@ -21,8 +21,8 @@ import yourowngame.com.yourowngame.classes.manager.RandomMgr;
  * Created on 12.03.2018.
  */
 
-public class RocketFish extends Enemy {
-    private static ArrayList<RocketFish> enemyList = new ArrayList<>(); //consistent name enemyList :)
+public class RocketFishEnemy extends Enemy {
+    private static ArrayList<RocketFishEnemy> enemyList = new ArrayList<>(); //consistent name enemyList :)
     private static Bitmap[] images;
     private static final String TAG = "RocketFish";
 
@@ -33,14 +33,11 @@ public class RocketFish extends Enemy {
      *
      * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!*/
 
-    public RocketFish(double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
+    public RocketFishEnemy(double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
-
-        setPositivePoints(100);
-        setNegativePoints(-100);
     }
 
-    public RocketFish() {}
+    public RocketFishEnemy() {}
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
@@ -62,7 +59,7 @@ public class RocketFish extends Enemy {
     }
 
     public static void drawAll(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (RocketFish e : getEnemyList()) {
+        for (RocketFishEnemy e : getEnemyList()) {
             Log.d(TAG, "Enemy X | Y : " + e.getPosX() + "|" + e.getPosY());
 
             e.draw(activity, canvas, loopCount);
@@ -72,7 +69,7 @@ public class RocketFish extends Enemy {
     @Override
     public void createRandomEnemies(int numberOfEnemies) {
         for (int i = 0; i < numberOfEnemies; i++) {
-            getEnemyList().add(new RocketFish(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+            getEnemyList().add(new RocketFishEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
                     RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
                     RandomMgr.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
                     RandomMgr.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
@@ -120,14 +117,19 @@ public class RocketFish extends Enemy {
         return true;
     }
 
+    /** Get reward method for highscore */
+    @Override
+    public int getReward() {
+        return REWARDS.ROCKETFISH_ENEMY;
+    }
 
     //GETTER/SETTER ---------------------------
-    public static ArrayList<RocketFish> getEnemyList() {
+    public static ArrayList<RocketFishEnemy> getEnemyList() {
         return enemyList;
     }
 
-    public static void setEnemyList(ArrayList<RocketFish> enemyList) {
-        RocketFish.enemyList = enemyList;
+    public static void setEnemyList(ArrayList<RocketFishEnemy> enemyList) {
+        RocketFishEnemy.enemyList = enemyList;
     }
 
     public static Bitmap[] getImages() {
@@ -135,6 +137,6 @@ public class RocketFish extends Enemy {
     }
 
     public static void setImages(Bitmap[] images) {
-        RocketFish.images = images;
+        RocketFishEnemy.images = images;
     }
 }

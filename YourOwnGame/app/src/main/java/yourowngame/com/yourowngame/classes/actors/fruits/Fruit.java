@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import yourowngame.com.yourowngame.classes.actors.GameObject;
+import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
 
 /**
  * PLEASE READ
@@ -27,16 +28,9 @@ import yourowngame.com.yourowngame.classes.actors.GameObject;
  */
 
 
-public abstract class Fruit extends GameObject {
-
-    private int reward;
-
+public abstract class Fruit extends GameObject implements IHighscore_RewardableObj {
     public Fruit(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree,name);
-    }
-
-    private enum rewards{
-        MELOONS, AVOCIS, PINAPOS,
     }
 
     @Override
@@ -53,8 +47,4 @@ public abstract class Fruit extends GameObject {
 
     @Override
     public abstract boolean cleanup();
-
-    public int getReward(){
-        return reward;
-    }
 }

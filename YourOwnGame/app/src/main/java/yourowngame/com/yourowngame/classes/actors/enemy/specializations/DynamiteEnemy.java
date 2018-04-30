@@ -43,4 +43,10 @@ public class DynamiteEnemy extends Enemy{
     public boolean cleanup() {
         return true;
     }
+
+    /** Get reward method for highscore */
+    @Override
+    public int getReward() {
+        return REWARDS.DYNAMITE_ENEMY;
+    }
 }

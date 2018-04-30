@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
+import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 
 public class Meloons extends Fruit {
 
@@ -27,5 +28,11 @@ public class Meloons extends Fruit {
     @Override
     public boolean cleanup() {
         return true;
+    }
+
+    /** Get reward method for highscore */
+    @Override
+    public int getReward() {
+        return IFruit.REWARDS.MELOONS_FRUIT;
     }
 }

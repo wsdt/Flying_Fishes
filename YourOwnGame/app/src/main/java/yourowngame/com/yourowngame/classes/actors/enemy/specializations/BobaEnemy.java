@@ -38,9 +38,6 @@ public class BobaEnemy extends Enemy {
 
     public BobaEnemy(double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
-
-        setPositivePoints(250);
-        setNegativePoints(-100);
     }
 
     public BobaEnemy() {
@@ -154,4 +151,10 @@ public class BobaEnemy extends Enemy {
         BobaEnemy.images = images;
     }
 
+
+    /** Get reward method for highscore */
+    @Override
+    public int getReward() {
+        return REWARDS.BOBA_ENEMY;
+    }
 }
