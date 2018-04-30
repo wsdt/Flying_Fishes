@@ -14,7 +14,7 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.background.layers.interfaces.IBackgroundLayer_Clouds;
-import yourowngame.com.yourowngame.classes.handler.RandomHandler;
+import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 /**
  * First Layer class, which provides clouds in the sky (how wonderful!)
@@ -52,11 +52,11 @@ public class BackgroundLayer_Clouds extends Background implements IBackgroundLay
         public float randomSpeed;
 
         public Cloud(Bitmap cloudImg) {
-            this.posX = RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 1500);
-            this.posY = RandomHandler.getRandomFloat(0, (int) (GameViewActivity.GAME_HEIGHT * CLOUD_RANDOM_Y_PLACEMENT_IN_PERCENTAGE));
+            this.posX = RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 1500);
+            this.posY = RandomMgr.getRandomFloat(0, (int) (GameViewActivity.GAME_HEIGHT * CLOUD_RANDOM_Y_PLACEMENT_IN_PERCENTAGE));
             ;
             this.cloudImg = cloudImg;
-            this.randomSpeed = RandomHandler.getRandomFloat(CLOUD_RANDOM_SPEED_MIN, CLOUD_RANDOM_SPEED_MAX);
+            this.randomSpeed = RandomMgr.getRandomFloat(CLOUD_RANDOM_SPEED_MIN, CLOUD_RANDOM_SPEED_MAX);
         }
 
         //this methods updates the cloud
@@ -117,7 +117,7 @@ public class BackgroundLayer_Clouds extends Background implements IBackgroundLay
         Log.d(TAG, "craftClouds: Trying to craft clouds.");
         for (int i = 0; i < numberOfClouds; i++) {
             //position of X & Y now set in the Constructor (for easier reading)
-            this.getCraftedClouds().add(new Cloud(BitmapFactory.decodeResource(this.getGameView().getResources(), imgs[RandomHandler.getRandomInt(0, imgs.length - 1)])));
+            this.getCraftedClouds().add(new Cloud(BitmapFactory.decodeResource(this.getGameView().getResources(), imgs[RandomMgr.getRandomInt(0, imgs.length - 1)])));
             Log.d(TAG, "craftClouds: Added cloud no. "+i);
         }
     }

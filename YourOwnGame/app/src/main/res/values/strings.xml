@@ -2,6 +2,12 @@
     <!-- GLOBAL -->
     <string name="appName">Create your own Game</string>
 
+    <!-- Content Descriptions of images etc. -->
+    <string name="mainActivity_welcomeImg">The Game</string>
+
+    <!-- HelperClass -->
+    <string name="helperClass_getAppVersion_error">x.x.x</string><!-- maybe very short error phrase? -->
+
     <!-- MainActivity -->
     <string name="mainActivity_button_startGame">Start</string>
     <string name="mainActivity_button_highscores">Highscores</string>

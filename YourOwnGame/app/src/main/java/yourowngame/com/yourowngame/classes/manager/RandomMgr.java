@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.handler;
+package yourowngame.com.yourowngame.classes.manager;
 
 import java.util.Random;
 
@@ -7,7 +7,7 @@ import java.util.Random;
 * Handles Random-Values in any case!
 *
  */
-public class RandomHandler {
+public class RandomMgr {
     private final String TAG = "RandomHandler";
     private static Random random;
 

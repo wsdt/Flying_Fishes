@@ -2,7 +2,6 @@ package yourowngame.com.yourowngame.classes.actors.enemy.specializations;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +15,7 @@ import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
-import yourowngame.com.yourowngame.classes.handler.RandomHandler;
+import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 /**
  * Created on 12.03.2018.
@@ -73,10 +72,10 @@ public class RocketFish extends Enemy {
     @Override
     public void createRandomEnemies(int numberOfEnemies) {
         for (int i = 0; i < numberOfEnemies; i++) {
-            getEnemyList().add(new RocketFish(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
-                    RandomHandler.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
-                    RandomHandler.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
-                    RandomHandler.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
+            getEnemyList().add(new RocketFish(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+                    RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
+                    RandomMgr.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
+                    RandomMgr.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
                     new int[]{R.drawable.enemy_rocketfish}, DEFAULT_ROTATION, "Bomber"));
 
             getEnemyList().get(i).setCurrentBitmap(getImages()[0]);

@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.handler.interfaces;
+package yourowngame.com.yourowngame.classes.manager.interfaces;
 
 public interface ISharedPrefStorageMgr {
     String SP_HIGHSCORE = "data_HIGHSCORE";

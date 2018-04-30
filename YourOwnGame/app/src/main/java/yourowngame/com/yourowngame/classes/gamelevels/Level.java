@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
-import yourowngame.com.yourowngame.classes.handler.SoundMgr;
+import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 
 public abstract class Level { //which level an object is (1, 5, etc.) should be decided by LevelManager [so more flexible to changes]
     private static final String TAG = "Level";

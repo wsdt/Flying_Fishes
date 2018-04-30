@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.handler.interfaces;
+package yourowngame.com.yourowngame.classes.manager.interfaces;
 
 /** Used for async operations to provide consistent way of executing sth after specified operation is done
  * --> REALLY USEFUL :) [used this for inAppPurchases]*/

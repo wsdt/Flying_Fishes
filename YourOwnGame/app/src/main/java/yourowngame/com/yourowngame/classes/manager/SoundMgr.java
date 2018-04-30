@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.handler;
+package yourowngame.com.yourowngame.classes.manager;
 
 
 import android.content.Context;
