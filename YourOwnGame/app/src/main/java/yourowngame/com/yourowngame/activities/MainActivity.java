@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
@@ -20,8 +21,6 @@ import yourowngame.com.yourowngame.classes.manager.HelperClass;
  */
 
 public class MainActivity extends AppCompatActivity {
-    private AdManager adManager;
-    private Button startGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Load Banner Ad (declared as a member of class, so we could easily display more)
-        //this.setAdManager(new AdManager(this));
-        //this.getAdManager().loadBannerAd((RelativeLayout) findViewById(R.id.mainActivity_RL));
+        new AdManager(this).loadBannerAd((RelativeLayout) findViewById(R.id.mainActivity_RL));
 
 
         //Hide actionbar if it is not already hidden
@@ -50,15 +48,5 @@ public class MainActivity extends AppCompatActivity {
 
     public void showHighscore(View view) {
         startActivity(new Intent(this, HighscoreActivity.class));
-    }
-
-
-    //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public AdManager getAdManager() {
-        return this.adManager;
-    }
-
-    public void setAdManager(AdManager adManager) {
-        this.adManager = adManager;
     }
 }

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/colorBlack"
+    android:id="@+id/highscoreActivity_RL"
     android:layout_height="wrap_content">
 
     <TextView

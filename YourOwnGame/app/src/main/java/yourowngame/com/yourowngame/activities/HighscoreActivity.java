@@ -3,11 +3,13 @@ package yourowngame.com.yourowngame.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
 
 public class HighscoreActivity extends AppCompatActivity {
@@ -23,6 +25,9 @@ public class HighscoreActivity extends AppCompatActivity {
         setHighscoreList((LinearLayout) findViewById(R.id.highscoreActivity_highscoreList));
 
         printAllHighscoreEntries();
+
+        // Load ads
+        new AdManager(this).loadBannerAd((RelativeLayout) findViewById(R.id.highscoreActivity_RL));
     }
 
     private void printHighscoreEntry(int points) {
