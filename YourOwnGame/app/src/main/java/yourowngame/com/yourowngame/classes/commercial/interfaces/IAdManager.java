@@ -1,12 +1,14 @@
 package yourowngame.com.yourowngame.classes.commercial.interfaces;
 
+import yourowngame.com.yourowngame.BuildConfig;
+
 /** Extracted from Constants interface (better separation of concern)
  * --> By extracting it to an separate interface again and not simply
  * making it to class members we could add here several methods etc. */
 
 public interface IAdManager {
     String ADMOB_ID = "ca-app-pub-8160960481527784~7542998003";
-    boolean USE_TEST_ADS = true;
+    boolean USE_TEST_ADS = BuildConfig.BUILD_TYPE.equals("debug"); //so the build type decides whether test ads are shown or not.
 
     interface TEST_ADS {
         String BANNER_AD_UNIT = "ca-app-pub-3940256099942544/6300978111";
