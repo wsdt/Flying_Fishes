@@ -241,6 +241,8 @@ public class GameView extends SurfaceView {
                     @Override
                     public void run() {
                         Resources res = getActivityContext().getResources();
+
+
                         (new DialogMgr(getActivityContext())).showDialog_Generic(
                                 res.getString(R.string.dialog_generic_gameOver_title),
                                 String.format(res.getString(R.string.dialog_generic_gameOver_msg), getHighscore().getValue()),
@@ -249,20 +251,7 @@ public class GameView extends SurfaceView {
                                 R.drawable.app_icon_gameboy, new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
                                     @Override
                                     public void success_is_true() {
-                                        //End everything here in future, so we could resume game when entering failure_is_false :)
-                                        try {
-                                            thread.join();
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                        //save highscore before cleaning
-                                        new SharedPrefStorageMgr(getActivityContext()).saveNewHighscoreEntry(getHighscore().getValue());
-
-                                        //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
-                                        LevelManager.getInstance(BackgroundManager.getInstance(GameView.this)).getCurrentLevelObj().cleanUpLevelProperties();
-
-                                        getActivityContext().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
+                                        exitGameNow();
                                     }
 
                                     @Override
@@ -277,7 +266,8 @@ public class GameView extends SurfaceView {
 
                                                     @Override
                                                     public void failure_is_false() {
-                                                        //don't revive
+                                                        //don't revive so just do nothing, because rewarded ad does this for us (but to restart game do success from outer interface)
+                                                        exitGameNow(); //sozusagen doch kein revive
                                                     }
                                                 }, null //don't change activity, because user want to be revived!
                                         );
@@ -292,6 +282,25 @@ public class GameView extends SurfaceView {
                 e.printStackTrace();
             }
         }
+    }
+
+    /** Small helper method for exitGame(), which really cleans/exits the game WITHOUT any validation!
+     * A wrong call will surely cause an exception. */
+    private void exitGameNow() {
+        //End everything here in future, so we could resume game when entering failure_is_false :)
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //save highscore before cleaning
+        new SharedPrefStorageMgr(getActivityContext()).saveNewHighscoreEntry(getHighscore().getValue());
+
+        //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
+        LevelManager.getInstance(BackgroundManager.getInstance(GameView.this)).getCurrentLevelObj().cleanUpLevelProperties();
+
+        getActivityContext().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
     }
 
    /*********************************************************
