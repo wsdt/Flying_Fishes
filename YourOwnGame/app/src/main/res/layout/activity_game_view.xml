@@ -13,12 +13,12 @@
 
 
     <yourowngame.com.yourowngame.gameEngine.GameView
-        android:id="@+id/gameView"
+        android:id="@+id/gameViewActivity_gameView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/highscoreVal"
+        android:id="@+id/gameViewActivity_highscoreVal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
@@ -31,10 +31,10 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/highscoreCoins"
+            android:id="@+id/gameViewActivity_highscoreCoins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/coinsLbl"
+            android:layout_alignBottom="@+id/gameViewActivity_coinsLbl"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="49dp"
@@ -43,7 +43,7 @@
             android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/pointsLbl"
+            android:id="@+id/gameViewActivity_pointsLbl"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentEnd="true"
@@ -54,7 +54,7 @@
             app:srcCompat="@drawable/points" />
 
         <ImageView
-            android:id="@+id/coinsLbl"
+            android:id="@+id/gameViewActivity_coinsLbl"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentTop="true"

@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.handler;
+package yourowngame.com.yourowngame.classes.manager;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -8,7 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.handler.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
+import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 
 public class DialogMgr {
     private Activity context;

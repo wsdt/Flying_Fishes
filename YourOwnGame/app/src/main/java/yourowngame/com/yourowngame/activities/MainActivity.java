@@ -1,16 +1,16 @@
 package yourowngame.com.yourowngame.activities;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
+import yourowngame.com.yourowngame.classes.manager.HelperClass;
 
 /**
  *
@@ -32,9 +32,15 @@ public class MainActivity extends AppCompatActivity {
         //this.setAdManager(new AdManager(this));
         //this.getAdManager().loadBannerAd((RelativeLayout) findViewById(R.id.mainActivity_RL));
 
-        ActionBar bar = getSupportActionBar();
-        bar.hide();
 
+        //Hide actionbar if it is not already hidden
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+
+        //Show current app version to user
+        ((TextView) findViewById(R.id.mainActivity_appVersion)).setText(HelperClass.getAppVersion(this,true));
     }
 
     //GAME BUTTONS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

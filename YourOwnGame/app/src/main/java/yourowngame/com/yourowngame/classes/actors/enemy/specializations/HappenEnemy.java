@@ -2,7 +2,6 @@ package yourowngame.com.yourowngame.classes.actors.enemy.specializations;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,7 +16,7 @@ import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
-import yourowngame.com.yourowngame.classes.handler.RandomHandler;
+import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 /**
  * Created  on 12.03.2018.
@@ -73,10 +72,10 @@ public class HappenEnemy extends Enemy {
     @Override
     public void createRandomEnemies(int numberOfRobos){
         for (int i = 0; i < numberOfRobos; i++){
-            getEnemyList().add(new HappenEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
-                    RandomHandler.getRandomInt(0, GameViewActivity.GAME_HEIGHT + 100),
-                    RandomHandler.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
-                    RandomHandler.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
+            getEnemyList().add(new HappenEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+                    RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT + 100),
+                    RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
+                    RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
                     new int[] {R.drawable.enemy_happen_1,R.drawable.enemy_happen_2}, DEFAULT_ROTATION, "Robotic"));
 
             getEnemyList().get(i).setCurrentBitmap(getImages()[0]);

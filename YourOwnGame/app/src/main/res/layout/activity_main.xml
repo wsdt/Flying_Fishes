@@ -9,8 +9,22 @@
     android:layout_height="match_parent"
     android:addStatesFromChildren="true"
     android:background="@color/thegame_grey">
+
+    <!-- AppVersion will be determined by onCreate() -->
+    <TextView
+        android:id="@+id/mainActivity_appVersion"
+        style="@style/defaultText"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
-        android:id="@+id/btnList"
+        android:id="@+id/mainActivity_btnList"
         android:layout_width="545dp"
         android:layout_height="197dp"
         android:layout_alignParentBottom="true"
@@ -19,7 +33,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnStartGame"
+            android:id="@+id/mainActivity_btnStartGame"
             style="@style/menu_btn_white"
             android:layout_width="500dp"
             android:layout_marginTop="15dp"
@@ -27,15 +41,17 @@
             android:text="@string/mainActivity_button_startGame" />
 
         <Button
-            android:id="@+id/btnHighscore"
+            android:id="@+id/mainActivity_btnHighscore"
             style="@style/menu_btn_white"
             android:layout_width="500dp"
             android:layout_marginTop="15dp"
             android:onClick="showHighscore"
             android:text="@string/mainActivity_button_highscores" />
 
+        <!-- hide until we have settings to set (when we have, then just remove visibility attribute) -->
         <Button
-            android:id="@+id/btnSettings"
+            android:id="@+id/mainActivity_btnSettings"
+            android:visibility="gone"
             style="@style/menu_btn_white"
             android:layout_width="500dp"
             android:layout_marginTop="15dp"
@@ -43,7 +59,8 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/mainActivity_welcomeImg"
+        android:contentDescription="@string/mainActivity_welcomeImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

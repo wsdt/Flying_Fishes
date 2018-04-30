@@ -20,7 +20,7 @@ public class HighscoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_highscore);
 
         setSharedPreferencesStorageMgr(new SharedPrefStorageMgr(this));
-        setHighscoreList((LinearLayout) findViewById(R.id.highscoreList));
+        setHighscoreList((LinearLayout) findViewById(R.id.highscoreActivity_highscoreList));
 
         printAllHighscoreEntries();
     }

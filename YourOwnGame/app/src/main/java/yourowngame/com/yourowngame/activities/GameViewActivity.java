@@ -12,7 +12,7 @@ import android.widget.TextView;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
-import yourowngame.com.yourowngame.classes.handler.SoundMgr;
+import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 import yourowngame.com.yourowngame.gameEngine.Highscore;
 
@@ -42,14 +42,14 @@ public class GameViewActivity extends AppCompatActivity {
         getGameDimens();
 
         /* Set highscore val textview */
-        this.setHighscoreVal((TextView) findViewById(R.id.highscoreVal));
-        setCoinsVal((TextView) findViewById(R.id.highscoreCoins));
+        this.setHighscoreVal((TextView) findViewById(R.id.gameViewActivity_highscoreVal));
+        setCoinsVal((TextView) findViewById(R.id.gameViewActivity_highscoreCoins));
 
         Log.d(TAG, "onCreate: Trying to load game.");
         setGameLayout((FrameLayout) findViewById(R.id.gameViewLayout));
 
         /** Master-call, create GameView*/
-        setGameView(((GameView) findViewById(R.id.gameView)));
+        setGameView(((GameView) findViewById(R.id.gameViewActivity_gameView)));
         getGameView().startGame(this);
     }
 

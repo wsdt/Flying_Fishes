@@ -15,7 +15,7 @@ import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
-import yourowngame.com.yourowngame.classes.handler.RandomHandler;
+import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 /**
  * Created  on 12.03.2018.
@@ -65,10 +65,10 @@ public class BobaEnemy extends Enemy {
     @Override
     public void createRandomEnemies(int count) {
         for (int i = 0; i < count; i++) {
-            getEnemyList().add(new BobaEnemy(RandomHandler.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
-                    RandomHandler.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
-                    RandomHandler.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
-                    RandomHandler.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
+            getEnemyList().add(new BobaEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+                    RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
+                    RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
+                    RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
                     new int[]{R.drawable.enemy_boba}, DEFAULT_ROTATION, "Spawn"));
 
             getEnemyList().get(i).setCurrentBitmap(getImages()[0]);

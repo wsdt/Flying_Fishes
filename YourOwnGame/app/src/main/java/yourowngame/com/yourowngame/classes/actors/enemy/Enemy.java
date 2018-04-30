@@ -7,7 +7,7 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
-import yourowngame.com.yourowngame.classes.handler.RandomHandler;
+import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 /**
  * So if we use the following pattern
@@ -59,8 +59,8 @@ public abstract class Enemy extends GameObject implements IEnemy {
     // so we can easily control this behavior by just editing it here!
     //Now also used in cleanup()
     public void resetWidthAndHeightOfEnemy(){
-        setPosX(RandomHandler.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 50));
-        setPosY(RandomHandler.getRandomFloat(0, GameViewActivity.GAME_HEIGHT));
+        setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 50));
+        setPosY(RandomMgr.getRandomFloat(0, GameViewActivity.GAME_HEIGHT));
     }
 
     /** Would be very if this would be static, but Android (at least our min sdk) does not allow this to be abstract neither in an interface :( */
