@@ -80,6 +80,8 @@ public class AdManager implements IAdManager {
                     if (!gotRewarded) {
                         //if we got rewarded the game should continue
                         //IMPORTANT: In this case (because this ad has its own activity) we finish the activity if no target activity is specified.
+                       if (executeIfTrueSuccess_or_ifFalseFailure_afterCompletation != null) {executeIfTrueSuccess_or_ifFalseFailure_afterCompletation.failure_is_false();}
+
                         Log.d(TAG, "onRewardedVideoAdClosed: Tried to finish activity.");
                         activityContext.finish();
                     }
