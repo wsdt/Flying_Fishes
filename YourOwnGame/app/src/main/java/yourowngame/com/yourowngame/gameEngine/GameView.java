@@ -17,11 +17,9 @@ import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
-import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
-import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.manager.DialogMgr;
 import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
@@ -99,7 +97,7 @@ public class GameView extends SurfaceView {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                exitGame();
+                startExitGameProcedure();
             }
         });
     }
@@ -147,7 +145,7 @@ public class GameView extends SurfaceView {
             }
             //Log.d(TAG, "redraw: SUCCESS");
         } else {
-            exitGame();
+            startExitGameProcedure();
         }
     }
 
@@ -191,7 +189,7 @@ public class GameView extends SurfaceView {
 
         /** check Collision with Border */
         if (LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().hitsTheGround(this)) {
-            exitGame();
+            startExitGameProcedure();
         }
 
         /** update the background */
@@ -201,7 +199,7 @@ public class GameView extends SurfaceView {
         for (Enemy e : LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllEnemies()){
             if(CollisionManager.checkCollision(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), e)){
                 CollisionManager.playPlayerEnemyCollisionSound(this.getActivityContext());
-                exitGame();
+                startExitGameProcedure();
             }
         }
 
@@ -231,15 +229,13 @@ public class GameView extends SurfaceView {
     /*********************************************************
      * 3. Game Over Methods                                  *
      *********************************************************/
-    @Bug (byDeveloper = Constants.Developers.WSDT,
-        problem = "Exit itself works and everything is cleaned. But the restart itself does not work, because game starts from the same point.")
-    public void exitGame() {
+    public void startExitGameProcedure() {
         boolean retry = true;
         thread.setRunning(false);
-        Log.d(TAG, "exitGame: Trying to exit game."); //but this is logged?
+        Log.d(TAG, "startExitGameProcedure: Trying to exit game."); //but this is logged?
         while (retry) {
             try {
-                Log.d(TAG, "exitGame: Trying to join threads and showing dialog before.");
+                Log.d(TAG, "startExitGameProcedure: Trying to join threads and showing dialog before.");
                 getActivityContext().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -287,7 +283,7 @@ public class GameView extends SurfaceView {
         }
     }
 
-    /** Small helper method for exitGame(), which really cleans/exits the game WITHOUT any validation!
+    /** Small helper method for startExitGameProcedure(), which really cleans/exits the game WITHOUT any validation!
      * A wrong call will surely cause an exception. */
     private void exitGameNow() {
         //End everything here in future, so we could resume game when entering failure_is_false :)
