@@ -40,7 +40,7 @@ public interface Initializer {
      *
      * @param allObjs: Used to provide necessary objects for operations.
      * @return hasSucceeded: returns false if error happened or true if everything went good. */
-    <OBJ> boolean  initialize(@Nullable OBJ... allObjs);
+    <OBJ> boolean initialize(@Nullable OBJ... allObjs);
 
     /** Removes all objects from ram (is called e.g. when game is exited or
      * an class with it's instances isn't needed anymore.

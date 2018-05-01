@@ -28,6 +28,11 @@ public class Level_UnknownLand extends Level {
     }
 
     @Override
+    protected void determineFruits() {
+
+    }
+
+    @Override
     protected void playBackgroundMusic() {
 
     }

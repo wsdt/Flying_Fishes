@@ -14,7 +14,6 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
-import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
@@ -67,13 +66,13 @@ public class HappenEnemy extends Enemy {
     }
 
     @Override
-    public void createRandomEnemies(int numberOfRobos){
-        for (int i = 0; i < numberOfRobos; i++){
+    public void createRandomEnemies(int numberOfHappens){
+        for (int i = 0; i < numberOfHappens; i++){
             getEnemyList().add(new HappenEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
                     RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT + 100),
                     RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
                     RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
-                    new int[] {R.drawable.enemy_happen_1,R.drawable.enemy_happen_2}, DEFAULT_ROTATION, "Robotic"));
+                    new int[] {R.drawable.enemy_happen_1}, DEFAULT_ROTATION, "Robotic"));
 
             getEnemyList().get(i).setCurrentBitmap(getImages()[0]);
         }
@@ -97,13 +96,7 @@ public class HappenEnemy extends Enemy {
     }
 
     @Override
-    @SafeVarargs
-    @Enhance(message = {"I get crazy, we have a really bad design here/everywhere with thousands of different Image getters/setters etc. " +
-            "Additionally we are not consistent because player has another directive.",
-    "Additionally we should consider putting the initialize() method of all enemies into the abstract base class because they will all look the same!"})
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
-        //we really need to change the initialize, Object params, instanceOf..
-
         try {
             if (allObjs != null && !isInitialized) {
                 if (allObjs[0] instanceof Activity) {
@@ -133,7 +126,6 @@ public class HappenEnemy extends Enemy {
     }
 
     /** GETTER / SETTER */
-
     public static ArrayList<HappenEnemy> getEnemyList() {
         return enemyList;
     }

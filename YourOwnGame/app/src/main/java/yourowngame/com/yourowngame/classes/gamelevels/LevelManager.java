@@ -48,20 +48,6 @@ public class LevelManager {
         return ++CURRENT_LEVEL; //pre-inkrement to return new current level
     }
 
-    /** This method sets the fallback/normal level order
-     *
-     * So the player starts in the harmless sky where he defeats all enemys and is allowed to pass
-     * Heavens-Gate, where he will get a special weapon to proceed further
-     * after been sent back to earth, he needs to pass the hauntedForest, in which arboreal creatures are waiting for him.
-     * After the Forest has ended, he must track trough an unknown land before he can climb down the darkest areas...
-     *
-     * (hahaha damn it :D :D :D) bitte fortführen ! Märchen-Story Stunde 1 war heute am 16.03.2018 vo 0800 - 0815
-     *
-     * In Level 5 the player explores a lonely island, where he meets a girl. The girl was so beautiful, he can't even
-     * trust his eyes. His heart beats, faster and faster. And after taking a breath he thought he was brave enough to
-     * ask her out. But suddenly a large Penis-Enemy was coming around and she ran away. He killed it with his very
-     * special techniques and was lonely forever.
-     * */
     public void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray
         setLevelList(new ArrayList<Level>()); //for restarting to avoid nullpointer and resetting levellist (here so we force this method to be called)
         getLevelList().add(new Level_HarmlessSky());
