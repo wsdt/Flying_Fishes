@@ -211,9 +211,6 @@ public class GameView extends SurfaceView {
                     //increment the players highScore
                     getHighscore().increment(e);
                     //if the highscore is over/equal 5_000, add 1 Coin (later on 10_000 be better)
-                    if(getHighscore().getValue() >= 5_000){
-                        getCoinsHighscore().increment();
-                    }
 
                     Log.d(TAG, "Highscore = " + getHighscore().getValue());
                 }

@@ -43,7 +43,7 @@ public class GameViewActivity extends AppCompatActivity {
 
         /* Set highscore val textview */
         this.setHighscoreVal((TextView) findViewById(R.id.gameViewActivity_highscoreVal));
-        setCoinsVal((TextView) findViewById(R.id.gameViewActivity_highscoreCoins));
+
 
         Log.d(TAG, "onCreate: Trying to load game.");
         setGameLayout((FrameLayout) findViewById(R.id.gameViewLayout));
@@ -77,7 +77,6 @@ public class GameViewActivity extends AppCompatActivity {
             @Override
             public void run() {
                 getHighscoreVal().setText(String.valueOf(highscore.getValue())); //pure integers are not allowed by setText() so we transform it to a string
-                getCoinsVal().setText(String.valueOf(coins.getValue()));
 
             }
         });

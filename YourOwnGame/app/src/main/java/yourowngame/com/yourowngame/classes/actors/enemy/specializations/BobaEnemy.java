@@ -52,7 +52,7 @@ public class BobaEnemy extends Enemy {
     @Override
     public void createRandomEnemies(int count) {
         for (int i = 0; i < count; i++) {
-            getEnemyList().add(new BobaEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+            getEnemyList().add(new BobaEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH),
                     RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
                     RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
                     RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),

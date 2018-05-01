@@ -12,7 +12,9 @@ import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 
 public abstract class Fruit extends GameObject implements IHighscore_RewardableObj, IFruit {
 
-    public boolean isCollected = false;
+    public boolean isCollected  = false;
+    public boolean isOutOfBound = false;
+    public int spawnTime = 0;
 
     public Fruit(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree,name);
@@ -30,7 +32,6 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
 
     @Override
     public abstract boolean cleanup();
-
 
     public abstract void isGone();
 
