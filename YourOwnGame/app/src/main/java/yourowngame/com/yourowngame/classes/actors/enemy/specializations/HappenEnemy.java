@@ -72,7 +72,8 @@ public class HappenEnemy extends Enemy {
                     RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT + 100),
                     RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
                     RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
-                    new int[] {R.drawable.enemy_happen_1}, DEFAULT_ROTATION, "Robotic"));
+                    new int[] {R.drawable.enemy_happen_1, R.drawable.enemy_happen_2,
+                            R.drawable.enemy_happen_3,R.drawable.enemy_happen_2}, DEFAULT_ROTATION, "Robotic"));
 
             getEnemyList().get(i).setCurrentBitmap(getImages()[0]);
         }
