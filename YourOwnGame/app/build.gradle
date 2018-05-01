@@ -43,16 +43,16 @@ android {
     }
 }
 
-apply plugin: 'org.greenrobot.greendao'
+/*apply plugin: 'org.greenrobot.greendao'
 
-/* Database Schema version (increment if structure changed)*/
+// Database Schema version (increment if structure changed)
 greendao {
     schemaVersion 1
-}
+}*/
 
 dependencies {
     /*Android ORM*/
-    implementation 'org.greenrobot:greendao:3.2.2'
+    //implementation 'org.greenrobot:greendao:3.2.2'
 
     implementation 'com.android.support:design:27.1.1'
     compile 'com.google.android.gms:play-services-ads:15.0.0'
