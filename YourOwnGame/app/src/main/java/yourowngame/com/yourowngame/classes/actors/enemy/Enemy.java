@@ -39,7 +39,7 @@ public abstract class Enemy extends GameObject implements IEnemy, IHighscore_Rew
     // so we can easily control this behavior by just editing it here!
     //Now also used in cleanup()
     public void resetWidthAndHeightOfEnemy(){
-        setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 50));
+        setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
         setPosY(RandomMgr.getRandomFloat(0, GameViewActivity.GAME_HEIGHT));
     }
 

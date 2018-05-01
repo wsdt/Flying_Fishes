@@ -68,7 +68,7 @@ public class HappenEnemy extends Enemy {
     @Override
     public void createRandomEnemies(int numberOfHappens){
         for (int i = 0; i < numberOfHappens; i++){
-            getEnemyList().add(new HappenEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+            getEnemyList().add(new HappenEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH),
                     RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT + 100),
                     RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
                     RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),

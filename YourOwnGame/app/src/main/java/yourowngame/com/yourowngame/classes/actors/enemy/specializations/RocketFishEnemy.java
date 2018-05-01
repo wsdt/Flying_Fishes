@@ -13,6 +13,7 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
@@ -69,7 +70,7 @@ public class RocketFishEnemy extends Enemy {
     @Override
     public void createRandomEnemies(int numberOfEnemies) {
         for (int i = 0; i < numberOfEnemies; i++) {
-            getEnemyList().add(new RocketFishEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100),
+            getEnemyList().add(new RocketFishEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH),
                     RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
                     RandomMgr.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
                     RandomMgr.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
