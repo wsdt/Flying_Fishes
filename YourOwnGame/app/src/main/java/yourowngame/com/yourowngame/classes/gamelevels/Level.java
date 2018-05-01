@@ -6,6 +6,9 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Avoci;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Pinapo;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
@@ -16,7 +19,14 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     private String levelName; //Level name (maybe to show to user [e.g. Die dunkle Gruft, usw.]
     private Player player;
     private ArrayList<Background> allBackgroundLayers = new ArrayList<>(); //Background layers for each level (as Arraylist to avoid NullpointerExceptions, so we just do not allow gaps)
-    private ArrayList<Enemy> allEnemies = new ArrayList<>(); //MUST NOT BE STATIC (different levels, different enemies), All enemies on screen (will be spawned again if gone) for specific level
+    private ArrayList<Enemy> allEnemies = new ArrayList<>(); //MUST NOT BE STATIC (different levels, different enemies), All enemies on screen (will be spawned again if isGone) for specific level
+    private Meloon m;
+    private Pinapo p;
+    private Avoci a;
+    //spawntime for fruits
+    private int spawnTimeMeloon = 1;
+    private int spawnTimePinapo = 2;
+    private int spawnTimeAvoci  = 3;
     //TODO: other level-dependent members/values
 
     public Level() {
@@ -24,6 +34,7 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
         determinePlayer();
         determineBackgroundLayers();
         determineAllEnemies();
+        determineFruits();
         Log.d(TAG, "Level: ###################### ENDED LOADING LEVEL ##################################");
     }
 
@@ -42,6 +53,7 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     protected abstract void determinePlayer();
     protected abstract void determineBackgroundLayers();
     protected abstract void determineAllEnemies();
+    protected abstract void determineFruits();
     protected abstract void playBackgroundMusic();
     public abstract void cleanUpLevelProperties();
 
@@ -76,5 +88,33 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    /****************************************
+     *              FRUITS                  *
+     ****************************************/
+
+    public void setMeloon(Meloon m) {
+        this.m = m;
+    }
+
+    public void setAvoci(Avoci a) {
+        this.a = a;
+    }
+
+    public void setPinapo(Pinapo p) {
+        this.p = p;
+    }
+
+    public Pinapo getPinapo() {
+        return p;
+    }
+
+    public Meloon getMeloon() {
+        return m;
+    }
+ 
+    public Avoci getAvoci() {
+        return a;
     }
 }

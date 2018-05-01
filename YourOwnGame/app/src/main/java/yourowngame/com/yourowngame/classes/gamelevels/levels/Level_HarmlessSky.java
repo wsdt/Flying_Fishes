@@ -7,6 +7,7 @@ import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
@@ -61,6 +62,16 @@ public class Level_HarmlessSky extends Level implements IBackground {
         this.getAllEnemies().addAll(RocketFishEnemy.getEnemyList());
         this.getAllEnemies().addAll(BobaEnemy.getEnemyList());
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
+    }
+
+    @Override
+    protected void determineFruits() {
+        /****************************
+         *  FRUIT INITIALIZING AREA *
+         ****************************/
+
+        /** initializing ONE Meloon */
+        this.setMeloon(new Meloon().createMeloon());
     }
 
     @Override

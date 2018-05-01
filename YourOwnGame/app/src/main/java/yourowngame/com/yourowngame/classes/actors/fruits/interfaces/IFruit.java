@@ -6,6 +6,8 @@ public interface IFruit {
     float SPEED_Y_MIN = 5f;
     float SPEED_Y_MAX = 10f;
 
+    float DEFAULT_ROTATION = 0f;
+
    // appearing time, in which time the fruits are visible on the screen
    // 0.1 indicates all 10 seconds, 1 would be all 100 seconds
     float appearingTimeMelons  = 0.3f;   //  30 secs

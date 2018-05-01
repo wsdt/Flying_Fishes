@@ -54,7 +54,7 @@ public class BackgroundLayer_Clouds extends Background implements IBackgroundLay
         public Cloud(Bitmap cloudImg) {
             this.posX = RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 1500);
             this.posY = RandomMgr.getRandomFloat(0, (int) (GameViewActivity.GAME_HEIGHT * CLOUD_RANDOM_Y_PLACEMENT_IN_PERCENTAGE));
-            ;
+
             this.cloudImg = cloudImg;
             this.randomSpeed = RandomMgr.getRandomFloat(CLOUD_RANDOM_SPEED_MIN, CLOUD_RANDOM_SPEED_MAX);
         }

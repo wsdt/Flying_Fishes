@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.support.annotation.NonNull;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.Projectile;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
@@ -71,9 +72,9 @@ public class CollisionManager {
 
     public static boolean checkCollision(@NonNull Enemy enemy, @NonNull Projectile projectile) {
         Bitmap playerBitmap = enemy.getCurrentBitmap();
-        Bitmap enemyBitmap = projectile.getCurrentBitmap();
+        Bitmap projectileBitmap = projectile.getCurrentBitmap();
 
-        if (playerBitmap != null && enemyBitmap != null) {
+        if (playerBitmap != null && projectileBitmap != null) {
 
             int enemyPosX = (int) enemy.getPosX();
             int enemyPosY = (int) enemy.getPosY();
@@ -81,7 +82,7 @@ public class CollisionManager {
             int projectilePosY = (int) projectile.getPosY();
 
             Rect bounds1 = new Rect(enemyPosX, enemyPosY, enemyPosX + playerBitmap.getWidth(), enemyPosY + playerBitmap.getHeight());
-            Rect bounds2 = new Rect(projectilePosX, projectilePosY, projectilePosX + enemyBitmap.getWidth(), projectilePosY + enemyBitmap.getHeight());
+            Rect bounds2 = new Rect(projectilePosX, projectilePosY, projectilePosX + projectileBitmap.getWidth(), projectilePosY + projectileBitmap.getHeight());
 
             if (Rect.intersects(bounds1, bounds2)) {
                 Rect collisionArea = getCollisionArea(bounds1, bounds2);
@@ -90,7 +91,43 @@ public class CollisionManager {
                     for (int i = collisionArea.left; i < collisionArea.right; i++) {
                         for (int j = collisionArea.top; j < collisionArea.bottom; j++) {
                             int bitmap1Pixel = playerBitmap.getPixel(i - enemyPosX, j - enemyPosY);
-                            int bitmap2Pixel = enemyBitmap.getPixel(i - projectilePosX, j - projectilePosY);
+                            int bitmap2Pixel = projectileBitmap.getPixel(i - projectilePosX, j - projectilePosY);
+                            if (hasNoTransparentBackground(bitmap1Pixel) && hasNoTransparentBackground(bitmap2Pixel))
+                                return true;
+                        }
+                    }
+                } catch (IllegalArgumentException e) {
+                    //TODO: Only temporary (we should solve this problem!)
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkCollision(@NonNull Player player, @NonNull Fruit fruit) {
+        Bitmap playerBitmap = player.getCurrentBitmap();
+        Bitmap fruitBitmap = fruit.getCurrentBitmap();
+
+        //Only check for collision if bitmaps are not null (if null, then just return that no collision happened)
+        if (playerBitmap != null && fruitBitmap != null) {
+            //when constraint above ok, then assign rest
+            int playerPosX = (int) player.getPosX();
+            int playerPosY = (int) player.getPosY();
+            int fruitPosX = (int) fruit.getPosX();
+            int fruitPosY = (int) fruit.getPosY();
+
+            Rect bounds1 = new Rect(playerPosX, playerPosY, playerPosX + playerBitmap.getWidth(), playerPosY + playerBitmap.getHeight());
+            Rect bounds2 = new Rect(fruitPosX, fruitPosY, fruitPosX + fruitBitmap.getWidth(), fruitPosY + fruitBitmap.getHeight());
+
+            if (Rect.intersects(bounds1, bounds2)) {
+                Rect collisionArea = getCollisionArea(bounds1, bounds2);
+
+                try {
+                    for (int i = collisionArea.left; i < collisionArea.right; i++) {
+                        for (int j = collisionArea.top; j < collisionArea.bottom; j++) {
+                            int bitmap1Pixel = playerBitmap.getPixel(i - playerPosX, j - playerPosY);
+                            int bitmap2Pixel = fruitBitmap.getPixel(i - fruitPosX, j - fruitPosY);
                             if (hasNoTransparentBackground(bitmap1Pixel) && hasNoTransparentBackground(bitmap2Pixel))
                                 return true;
                         }

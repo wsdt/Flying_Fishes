@@ -139,6 +139,9 @@ public class GameView extends SurfaceView {
                 RocketFishEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
                 BobaEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
 
+                // (5.) draw fruits, need to implement a timer, to push a fruit
+                LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getMeloon().draw(this.getActivityContext(), canvas, loopCount);
+
             } catch (Exception e) {
                 //Log.e(TAG, "redraw: Could not draw images.");
                 e.printStackTrace();
@@ -163,20 +166,12 @@ public class GameView extends SurfaceView {
         LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().update(null, this.multiTouchHandler.isMultiTouched() || this.multiTouchHandler.isMoving(), false);
 
         /** (2.) update the Enemies*/
-        /*TODO: We have a list for each enemy class, but also have one with all enemies in Level-Obj (getCurrent()),
-        todo so we could save maybe memory if we dispose enemyList and do it all in Level-Enemy-List. Then we could
-        todo maybe also do sth like this:
-
-            todo: LevelMgr.getCurrentLevelObj().getAllEnemies.updateAll(this.playerOne, null, null);
-
-
-        /** (2.) update the Enemies
-        TODO: Placing the Enemies in their respective Place
-            -> LevelMgr.getCurrentLevelObj().getAllEnemies.updateAll(this.playerOne, null, null);
-        */
         HappenEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
         RocketFishEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
         BobaEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
+
+        /** (3.) update the Fruits*/
+        LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getMeloon().update(null, null, null);
 
         /** Check Shooting */
         if(multiTouchHandler.isShooting()){
@@ -223,6 +218,17 @@ public class GameView extends SurfaceView {
                     Log.d(TAG, "Highscore = " + getHighscore().getValue());
                 }
             }
+        }
+
+        /** Check player to Fruit Collision
+         *
+         * i know, we could just check which subclass it is, but again, bad smell
+         * */
+        if(CollisionManager.checkCollision(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(),
+                                           LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getMeloon())){
+            //Eats fruit, collects it, fruit vanishes
+            Log.d(TAG, "Player collected a Meloon");
+            LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getMeloon().collected();
         }
     }
 
