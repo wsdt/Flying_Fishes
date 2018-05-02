@@ -12,9 +12,9 @@ public class Level_UnknownLand extends Level {
 
     @Override
     protected void determinePlayer() {
-        this.setPlayer(new Player(100, LevelManager.getBackgroundManager().getGameView().getRootView().getHeight() / 4, 5, 2, new int[]{
+        /*this.setPlayer(new Player(100, LevelManager.getBackgroundManager().getGameView().getRootView().getHeight() / 4, 5, 2, new int[]{
                 R.drawable.player_heli_blue_1, R.drawable.player_heli_blue_2, R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_4,
-                R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2}, IPlayer.DEFAULT_ROTATION, "Rezy"));
+                R.drawable.player_heli_blue_3, R.drawable.player_heli_blue_2}, IPlayer.DEFAULT_ROTATION, "Rezy"));*/
     }
 
     @Override
