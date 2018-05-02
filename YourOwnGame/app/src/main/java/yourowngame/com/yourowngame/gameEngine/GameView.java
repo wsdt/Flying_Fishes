@@ -165,6 +165,7 @@ public class GameView extends SurfaceView {
      * 2. Update GameObjects here *
      *****************************/
     public void updateGameObjects() {
+
         /** (1.) update the Player*/           //^here we will later add a another boolean, for older devices, so each touch results in a move of the player!
         LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().update(null, this.multiTouchHandler.isMultiTouched() || this.multiTouchHandler.isMoving(), false);
 
