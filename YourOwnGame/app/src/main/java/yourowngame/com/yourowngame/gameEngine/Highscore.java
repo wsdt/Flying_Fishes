@@ -42,12 +42,14 @@ public class Highscore {
 
     /** increment just once */
     @Delete(description = "Delete method after coins Highscore has it's own class.")
+    @Deprecated
     public void increment(){
         counter++;
         notifyAllListeners();
     }
 
     @Delete(description = "I think we should not decrease the user's highscore (instead just make it harder to get points)")
+    @Deprecated
     public void decrement(Enemy e) {
         counter -= 1; //e.getNegativePoints();
         //Set to 0, to avoid negative values

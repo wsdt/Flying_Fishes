@@ -11,6 +11,7 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
@@ -20,11 +21,10 @@ public class Meloon extends Fruit {
 
     private static Bitmap[] images;
 
-    private Meloon(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+    public Meloon(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
-    public Meloon(){}
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
@@ -36,20 +36,6 @@ public class Meloon extends Fruit {
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {
         canvas.drawBitmap(images[0], (int) getPosX(), (int) getPosY(), null);
         Log.d(TAG,"POS X MELOON  ==  " + this.getPosX());
-    }
-
-    @Deprecated
-    public Meloon createMeloon(){
-        Meloon meloon = new Meloon((RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 100)),
-                RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT + 100),
-                SPEED_X,    //Speed x -> should be constant, so all fruits come in at the same time!
-                SPEED_Y,    //Speed y
-                new int[] {R.drawable.meloon}, (int) DEFAULT_ROTATION, "Meloon");
-
-        meloon.setCurrentBitmap(images[0]);
-
-
-        return meloon;
     }
 
     @Override
@@ -83,10 +69,10 @@ public class Meloon extends Fruit {
 
     @Override
     public void isGone() {
-        if(getPosX() < 0 || isCollected) {
+        if(getPosX() < 0 || isCollected()) {
             this.setPosX(GameViewActivity.GAME_WIDTH + OFF_TIME_MELOON);
             this.setPosY(RandomMgr.getRandomFloat(100, GameViewActivity.GAME_HEIGHT-100));
-            isCollected = false;
+            setCollected(false);
         }
     }
 
@@ -94,7 +80,7 @@ public class Meloon extends Fruit {
     @Override
     public void collected() {
         //just for now, we need some good advice here
-        this.isCollected = true;
+        this.setCollected(true);
     }
 
     /** Get reward method for highscore */

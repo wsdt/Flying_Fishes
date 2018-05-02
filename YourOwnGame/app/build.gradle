@@ -6,8 +6,8 @@ android {
         applicationId "solution_wsdt.com.yourowngame"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
-        versionName "0.0.1" /* Auch mehrstellig: {major changes}.{minor changes}.{bug fixes} */
+        versionCode 2
+        versionName "0.0.2" /* Auch mehrstellig: {major changes}.{minor changes}.{bug fixes} */
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

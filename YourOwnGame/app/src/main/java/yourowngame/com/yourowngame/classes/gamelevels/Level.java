@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Avoci;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Pinapo;
@@ -20,13 +21,7 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     private Player player;
     private ArrayList<Background> allBackgroundLayers = new ArrayList<>(); //Background layers for each level (as Arraylist to avoid NullpointerExceptions, so we just do not allow gaps)
     private ArrayList<Enemy> allEnemies = new ArrayList<>(); //MUST NOT BE STATIC (different levels, different enemies), All enemies on screen (will be spawned again if isGone) for specific level
-    private Meloon m;
-    private Pinapo p;
-    private Avoci a;
-    //spawntime for fruits
-    private int spawnTimeMeloon = 1;
-    private int spawnTimePinapo = 2;
-    private int spawnTimeAvoci  = 3;
+    private ArrayList<Fruit> allFruits = new ArrayList<>();
     //TODO: other level-dependent members/values
 
     public Level() {
@@ -90,31 +85,11 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
         this.player = player;
     }
 
-    /****************************************
-     *              FRUITS                  *
-     ****************************************/
-
-    public void setMeloon(Meloon m) {
-        this.m = m;
+    public ArrayList<Fruit> getAllFruits() {
+        return allFruits;
     }
 
-    public void setAvoci(Avoci a) {
-        this.a = a;
-    }
-
-    public void setPinapo(Pinapo p) {
-        this.p = p;
-    }
-
-    public Pinapo getPinapo() {
-        return p;
-    }
-
-    public Meloon getMeloon() {
-        return m;
-    }
- 
-    public Avoci getAvoci() {
-        return a;
+    public void setAllFruits(ArrayList<Fruit> allFruits) {
+        this.allFruits = allFruits;
     }
 }
