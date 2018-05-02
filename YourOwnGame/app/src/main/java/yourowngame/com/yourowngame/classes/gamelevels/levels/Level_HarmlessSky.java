@@ -7,6 +7,7 @@ import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
+import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
@@ -47,6 +48,8 @@ public class Level_HarmlessSky extends Level implements IBackground {
     protected void determineAllEnemies() { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
         //Set allEnemies Arraylist
         /** Initializing Bomber-Enemy */
+
+        //TODO: Use EnemyMgr in future
         HappenEnemy happenEnemyManager = new HappenEnemy();
         happenEnemyManager.createRandomEnemies(1); //todo: should be static
 
@@ -70,8 +73,7 @@ public class Level_HarmlessSky extends Level implements IBackground {
          *  FRUIT INITIALIZING AREA *
          ****************************/
 
-        /** initializing ONE Meloon */
-        this.setMeloon(new Meloon().createMeloon());
+        this.getAllFruits().add(FruitMgr.createMeloon());
     }
 
     @Override

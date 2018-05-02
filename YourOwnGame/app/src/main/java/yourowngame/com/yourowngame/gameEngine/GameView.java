@@ -17,6 +17,7 @@ import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
+import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
@@ -125,6 +126,8 @@ public class GameView extends SurfaceView {
             canvas.drawColor(0, PorterDuff.Mode.CLEAR); //remove previous bitmaps etc. (it does not work to set here only bg color!, because of mode)
 
             try {
+                //TODO: Überarbeiten. Alles vom LevelObj rausholen!
+
                 // (1.) draw background
                 drawDynamicBackground(canvas);
 
@@ -140,7 +143,7 @@ public class GameView extends SurfaceView {
                 BobaEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
 
                 // (5.) draw fruits, need to implement a timer, to push a fruit
-                LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getMeloon().draw(this.getActivityContext(), canvas, loopCount);
+                LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllFruits().get(0).draw(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
                 //Log.e(TAG, "redraw: Could not draw images.");
@@ -171,7 +174,7 @@ public class GameView extends SurfaceView {
         BobaEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
 
         /** (3.) update the Fruits*/
-        LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getMeloon().update(null, null, null);
+        LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllFruits().get(0).update(null, null, null);
 
         /** Check Shooting */
         if(multiTouchHandler.isShooting()){
@@ -221,11 +224,15 @@ public class GameView extends SurfaceView {
          *
          * i know, we could just check which subclass it is, but again, bad smell
          * */
-        if(CollisionManager.checkCollision(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(),
-                                           LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getMeloon())){
-            //Eats fruit, collects it, fruit vanishes
-            Log.d(TAG, "Player collected a Meloon");
-            LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getMeloon().collected();
+        for (Fruit fruit : LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllFruits()) {
+            if (CollisionManager.checkCollision(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(),
+                    LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllFruits().get(0))) {
+                fruit.collected();
+                getHighscore().increment(fruit);
+
+                //Eats fruit, collects it, fruit vanishes
+                Log.d(TAG, "Player collected a fruit.");
+            }
         }
     }
 
