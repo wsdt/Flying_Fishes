@@ -120,8 +120,7 @@ public class GameView extends SurfaceView {
         this.getHighscore().addListener(new IHighscore_Observer() {
             @Override
             public void onHighscoreChanged() {
-                //TODO: bad design, but for now with only 2 levels ok
-                if ((getHighscore().getValue()>ILevelManager.LEVEL_TWO && LevelManager.getCurrentLevel() == 0)) {
+                if (LevelManager.getInstance(BackgroundManager.getInstance(GameView.this)).getCurrentLevelObj().areLevelAssignmentsAchieved()) {
                     LevelManager.getInstance(BackgroundManager.getInstance(GameView.this)).initiateLevelChangeProcess();
                 }
             }

@@ -96,6 +96,12 @@ public class Level_NightRider extends Level {
     }
 
     @Override
+    public boolean areLevelAssignmentsAchieved() {
+        //just let it endless until we have a third lvl etc. (so last level should always return false)
+        return false;
+    }
+
+    @Override
     protected void playBackgroundMusic() {
         //TODO: play bg sound [search resource] --> Level_HarmlessSky.soundMgr.play(LevelManager.getBackgroundManager().getGameView().getActivityContext(),R.raw.bgMusicLvl1,true);
     }

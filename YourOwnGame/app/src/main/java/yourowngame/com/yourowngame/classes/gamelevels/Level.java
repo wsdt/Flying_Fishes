@@ -49,6 +49,9 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     protected abstract void playBackgroundMusic();
     public abstract void cleanUpLevelProperties();
 
+    /** Place in this method all to validating params like highscore etc. and return true if
+     * conditions are met. So GameView knows it can increase the level.*/
+    public abstract boolean areLevelAssignmentsAchieved();
 
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public ArrayList<Background> getAllBackgroundLayers() {

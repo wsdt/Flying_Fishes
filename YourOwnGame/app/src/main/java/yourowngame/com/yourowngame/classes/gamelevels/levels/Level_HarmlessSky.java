@@ -96,6 +96,15 @@ public class Level_HarmlessSky extends Level {
     }
 
     @Override
+    public boolean areLevelAssignmentsAchieved() {
+        if (LevelManager.getBackgroundManager().getGameView().getHighscore().getValue() > 1000) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
     protected void playBackgroundMusic() {
         //TODO: play bg sound [search resource] --> Level_HarmlessSky.soundMgr.play(LevelManager.getBackgroundManager().getGameView().getActivityContext(),R.raw.bgMusicLvl1,true);
     }
