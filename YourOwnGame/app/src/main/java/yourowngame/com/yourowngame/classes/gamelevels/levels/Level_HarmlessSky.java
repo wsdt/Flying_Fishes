@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.gamelevels.levels;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
@@ -7,16 +8,19 @@ import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
+import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.interfaces.IBackground;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_staticBgImg;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.gameEngine.GameView;
 
 
 /**
@@ -92,6 +96,39 @@ public class Level_HarmlessSky extends Level implements IBackground {
         }
 
         Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
+    }
+
+    @Override
+    @Enhance (message = "Change update-method to update() without params so iterating over all possible. Make" +
+            "interface Updatable, Drawable etc.")
+    public void updateLevelProperties() {
+        //Update player
+        this.getPlayer().update(null,
+                LevelManager.getBackgroundManager().getGameView().getMultiTouchHandler().isMultiTouched() || LevelManager.getBackgroundManager().getGameView().getMultiTouchHandler().isMoving(),
+                false);
+
+        //Update all enemies
+        for (Enemy enemy : this.getAllEnemies()) {
+            enemy.update(this.getPlayer(), null, null);
+        }
+
+        //Update all fruits
+        for (Fruit fruit : this.getAllFruits()) {
+            fruit.update(null,null,null);
+        }
+
+        //Update bglayers
+        for (Background background : this.getAllBackgroundLayers()) {
+            background.updateBackground();
+        }
+
+        //Update bullets
+        this.getPlayer().updateProjectiles();
+    }
+
+    @Override
+    public void drawLevelProperties() {
+
     }
 
     @Override

@@ -73,7 +73,7 @@ public class GameView extends SurfaceView {
         initGameObjects();
 
         /** React to user input */
-        getRootView().setOnTouchListener(multiTouchHandler);
+        getRootView().setOnTouchListener(getMultiTouchHandler());
 
         /**************************************
          * Start of the Surface & Thread Page *
@@ -166,33 +166,16 @@ public class GameView extends SurfaceView {
      *****************************/
     public void updateGameObjects() {
 
-        /** (1.) update the Player*/           //^here we will later add a another boolean, for older devices, so each touch results in a move of the player!
-        LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().update(null, this.multiTouchHandler.isMultiTouched() || this.multiTouchHandler.isMoving(), false);
-
-        /** (2.) update the Enemies*/
-        HappenEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
-        RocketFishEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
-        BobaEnemy.updateAll(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), null, null);
-
-        /** (3.) update the Fruits*/
-        LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllFruits().get(0).update(null, null, null);
-
         /** Check Shooting */
-        if(multiTouchHandler.isShooting()){
+        if(getMultiTouchHandler().isShooting()){
             LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().addProjectiles(getActivityContext());
-            multiTouchHandler.stopShooting();
+            getMultiTouchHandler().stopShooting();
         }
-
-        /** update the Bullets*/
-        LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().updateProjectiles();
 
         /** check Collision with Border */
         if (LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().hitsTheGround(this)) {
             startExitGameProcedure();
         }
-
-        /** update the background */
-        BackgroundManager.getInstance(this).updateAllBackgroundLayers();
 
         /** check Player-to-Enemy collision */
         for (Enemy e : LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllEnemies()){
@@ -344,4 +327,12 @@ public class GameView extends SurfaceView {
     }
 
     public void setCoinsHighscore(Highscore coins) {this.coins = coins; }
+
+    public OnMultiTouchHandler getMultiTouchHandler() {
+        return multiTouchHandler;
+    }
+
+    public void setMultiTouchHandler(OnMultiTouchHandler multiTouchHandler) {
+        this.multiTouchHandler = multiTouchHandler;
+    }
 }
