@@ -8,11 +8,15 @@ import android.support.annotation.Nullable;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
+import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 
 @Enhance(message = {"Maybe replace isCollected/isOutOfBound etc. with Zustandsmuster",
     "Bitmap/Drawable int array consistency!"})
+@Bug (priority = Bug.Priority.MEDIUM,byDeveloper = Constants.Developers.WSDT,
+    problem = "When showing more than one fruit (see level 2 - meloons) and eating one of them BOTH disappear.")
 public abstract class Fruit extends GameObject implements IHighscore_RewardableObj, IFruit.DEFAULT_FRUIT_PROPERTIES {
     private boolean isCollected  = false;
     private boolean isOutOfBound = false;

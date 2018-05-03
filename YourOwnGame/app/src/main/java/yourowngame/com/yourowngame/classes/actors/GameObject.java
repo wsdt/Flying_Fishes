@@ -9,10 +9,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
+import yourowngame.com.yourowngame.classes.gamelevels.interfaces.IDrawAble;
+import yourowngame.com.yourowngame.classes.gamelevels.interfaces.IUpdateAble;
 import yourowngame.com.yourowngame.gameEngine.interfaces.Initializer;
 
 
-public abstract class GameObject implements Initializer {
+public abstract class GameObject implements Initializer, IUpdateAble, IDrawAble {
     private static final String TAG = "GameObject";
     private double posX, posY, speedX, speedY;
     private int rotationDegree; //rotation for simulating flying down/up
@@ -37,16 +39,6 @@ public abstract class GameObject implements Initializer {
     //Default constructor
     public GameObject(){}
 
-    /**
-     * method which its only use is to update the objects x and y axis!
-     *
-     * @param goUp check if object goes up
-     * @param goForward check if object goes down
-     */
-    public abstract void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward);
-
-    /** @param loopCount: Loop count from GameLoopThread (given in redraw() method), with this we can create loop-dependent animations :)*/
-    public abstract void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception;
 
     /**
      * getCraftedDynamicBitmap:

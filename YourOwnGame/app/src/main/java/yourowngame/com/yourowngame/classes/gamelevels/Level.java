@@ -4,11 +4,13 @@ package yourowngame.com.yourowngame.classes.gamelevels;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
+import yourowngame.com.yourowngame.classes.gamelevels.interfaces.IDrawAble;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 
 public abstract class Level { //which level an object is (1, 5, etc.) should be decided by LevelManager [so more flexible to changes]
@@ -50,7 +52,14 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     public abstract void cleanUpLevelProperties();
 
     /** Place in this method all to validating params like highscore etc. and return true if
-     * conditions are met. So GameView knows it can increase the level.*/
+     * conditions are met. So GameView knows it can increase the level.
+     *
+     * This method can e.g. validate whether user has enough highscore-points, gathered enough
+     * fruits or was fast enough killing enough RocketEnemies etc. (we can be creative here in
+     * future).
+     *
+     * Only thing is we have to make sure that this method is called everytime relevant values change.
+     * Currently it is only called when the highscore changes! */
     public abstract boolean areLevelAssignmentsAchieved();
 
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

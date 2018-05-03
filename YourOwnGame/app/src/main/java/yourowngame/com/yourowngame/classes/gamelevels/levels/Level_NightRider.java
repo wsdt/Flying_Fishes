@@ -53,7 +53,7 @@ public class Level_NightRider extends Level {
         this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(HappenEnemy.class,1));
 
         /**Initializing Rocket-Enemy */
-       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(RocketFishEnemy.class, 5));
+       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(RocketFishEnemy.class, 12)); //damit die Leute derweil wirklich was zum Spielen haben haha
 
         /** Initializing Spawn-Enemies */
         this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(BobaEnemy.class, 1));
