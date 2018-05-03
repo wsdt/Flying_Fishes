@@ -34,7 +34,6 @@ public abstract class Background implements Initializer, IBackground {
         this.setBackgroundSpeed(backgroundSpeed);
         this.setBackgroundManager(backgroundManager);
         this.setRandom(new Random()); //for random height/y of clouds etc.
-
     }
 
 

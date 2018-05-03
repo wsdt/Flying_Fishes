@@ -7,9 +7,6 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Avoci;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Pinapo;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
@@ -29,7 +26,7 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
         determinePlayer();
         determineBackgroundLayers();
         determineAllEnemies();
-        determineFruits();
+        determineAllFruits();
         Log.d(TAG, "Level: ###################### ENDED LOADING LEVEL ##################################");
     }
 
@@ -48,7 +45,7 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     protected abstract void determinePlayer();
     protected abstract void determineBackgroundLayers();
     protected abstract void determineAllEnemies();
-    protected abstract void determineFruits();
+    protected abstract void determineAllFruits();
     protected abstract void playBackgroundMusic();
     public abstract void cleanUpLevelProperties();
 

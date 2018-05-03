@@ -39,7 +39,7 @@ public class BackgroundLayer_Clouds extends Background implements IBackgroundLay
      */
     public BackgroundLayer_Clouds(@NonNull BackgroundManager backgroundManager, int[] img, String name, float backgroundSpeed) {
         super(backgroundManager, img, name, backgroundSpeed);
-        initialize(); //now at least one
+        this.initialize(); //now at least one
     }
 
     /**
