@@ -7,8 +7,6 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_HarmlessSky;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_LostPlace;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_UnknownLand;
 
 /**
  * Pattern: SINGLETON
@@ -57,7 +55,6 @@ public class LevelManager {
     public void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray
         setLevelList(new ArrayList<Level>()); //for restarting to avoid nullpointer and resetting levellist (here so we force this method to be called)
         getLevelList().add(new Level_HarmlessSky());
-        getLevelList().add(new Level_LostPlace());
         /*getLevelList().put(new Level_HauntedForest());
         getLevelList().put(new Level_UnknownLand());
         getLevelList().put(new Level_DarkDescent());*/

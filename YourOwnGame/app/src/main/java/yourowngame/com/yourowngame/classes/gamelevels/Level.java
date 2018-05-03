@@ -51,6 +51,8 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     protected abstract void determineFruits();
     protected abstract void playBackgroundMusic();
     public abstract void cleanUpLevelProperties();
+    public abstract void updateLevelProperties();
+    public abstract void drawLevelProperties();
 
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public ArrayList<Background> getAllBackgroundLayers() {
