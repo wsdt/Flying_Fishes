@@ -18,12 +18,13 @@ import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
+import static yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy.ROCKETFISH_ENEMY_PROPERTIES.SPEED_X_MIN;
+
 /**
  * Created on 12.03.2018.
  */
 
-public class RocketFishEnemy extends Enemy {
-    private static ArrayList<RocketFishEnemy> enemyList = new ArrayList<>(); //consistent name enemyList :)
+public class RocketFishEnemy extends Enemy implements IEnemy.ROCKETFISH_ENEMY_PROPERTIES {
     private static Bitmap[] images;
     private static final String TAG = "RocketFish";
 
@@ -38,7 +39,19 @@ public class RocketFishEnemy extends Enemy {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
-    public RocketFishEnemy() {}
+    /** Creates random enemy */
+    public RocketFishEnemy() {
+        super(); //also call super constr! (initializing)
+
+        this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
+        this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
+        this.setSpeedX(RandomMgr.getRandomFloat(IEnemy.ROCKETFISH_ENEMY_PROPERTIES.SPEED_X_MIN, IEnemy.ROCKETFISH_ENEMY_PROPERTIES.SPEED_X_MAX));
+        this.setSpeedY(RandomMgr.getRandomFloat(IEnemy.ROCKETFISH_ENEMY_PROPERTIES.SPEED_Y_MIN, IEnemy.ROCKETFISH_ENEMY_PROPERTIES.SPEED_Y_MAX));
+        this.setRotationDegree(DEFAULT_ROTATION);
+        this.setName("Bomber");
+
+        this.setCurrentBitmap(getImages()[0]);
+    }
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
@@ -46,37 +59,11 @@ public class RocketFishEnemy extends Enemy {
         resetIfOutOfBounds();
     }
 
-    public static void updateAll(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-        for (int i = 0; i < getEnemyList().size(); i++) {
-            getEnemyList().get(i).update(obj,goUp,goForward);
-        }
-    }
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
         for (int i = 0; i < getImages().length; i++) {
             canvas.drawBitmap(getImages()[i], (int) this.getPosX(), (int) this.getPosY(), null);
-        }
-    }
-
-    public static void drawAll(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (RocketFishEnemy e : getEnemyList()) {
-            Log.d(TAG, "Enemy X | Y : " + e.getPosX() + "|" + e.getPosY());
-
-            e.draw(activity, canvas, loopCount);
-        }
-    }
-
-    @Override
-    public void createRandomEnemies(int numberOfEnemies) {
-        for (int i = 0; i < numberOfEnemies; i++) {
-            getEnemyList().add(new RocketFishEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH),
-                    RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
-                    RandomMgr.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
-                    RandomMgr.getRandomFloat(ROCKET_SPEED_MIN, ROCKET_SPEED_MAX),
-                    new int[]{R.drawable.enemy_rocketfish}, DEFAULT_ROTATION, "Bomber"));
-
-            getEnemyList().get(i).setCurrentBitmap(getImages()[0]);
         }
     }
 
@@ -88,6 +75,7 @@ public class RocketFishEnemy extends Enemy {
             "Additionally we should consider putting the initialize() method of all enemies into the abstract base class because they will all look the same!"})
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
         //we really need to change the initialize, Object params, instanceOf..
+        this.setImg(IMAGE_FRAMES); //current design (bad!)
 
         try {
             if (allObjs != null && !isInitialized) {
@@ -121,18 +109,10 @@ public class RocketFishEnemy extends Enemy {
     /** Get reward method for highscore */
     @Override
     public int getReward() {
-        return REWARDS.ROCKETFISH_ENEMY;
+        return IEnemy.ROCKETFISH_ENEMY_PROPERTIES.HIGHSCORE_REWARD;
     }
 
     //GETTER/SETTER ---------------------------
-    public static ArrayList<RocketFishEnemy> getEnemyList() {
-        return enemyList;
-    }
-
-    public static void setEnemyList(ArrayList<RocketFishEnemy> enemyList) {
-        RocketFishEnemy.enemyList = enemyList;
-    }
-
     public static Bitmap[] getImages() {
         return images;
     }

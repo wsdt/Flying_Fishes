@@ -10,11 +10,17 @@ import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 
-public class Pinapo extends Fruit {
+public class Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTIES {
     private Bitmap[] images;
 
     public Pinapo(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
+    }
+
+    /**Create random fruit*/
+    public Pinapo() {
+        super(); //also call super constr! (initializing)
+        //TODO: see Meloon
     }
 
     @Override
@@ -50,6 +56,6 @@ public class Pinapo extends Fruit {
     /** Get reward method for highscore */
     @Override
     public int getReward() {
-        return IFruit.REWARDS.PINAPOS_FRUIT;
+        return IFruit.PINAPOS_FRUIT_PROPERTIES.HIGHSCORE_REWARD;
     }
 }

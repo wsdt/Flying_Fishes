@@ -15,7 +15,7 @@ import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
-public class Meloon extends Fruit {
+public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
     private final String TAG = "Meloon";
     private Meloon meloon = null;
 
@@ -23,6 +23,20 @@ public class Meloon extends Fruit {
 
     public Meloon(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
+    }
+
+    /**Creates random fruit*/
+    public Meloon() {
+        super(); //also call super constr! (initializing)
+
+        this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
+        this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
+        this.setSpeedX(SPEED_X);
+        this.setSpeedY(SPEED_Y);
+        this.setRotationDegree(DEFAULT_ROTATION);
+        this.setName("Meloon");
+
+        this.setCurrentBitmap(Meloon.getImages()[0]);
     }
 
 
@@ -40,6 +54,8 @@ public class Meloon extends Fruit {
 
     @Override
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+        this.setImg(IMAGE_FRAMES);
+
         try {
             if (allObjs != null && !isInitialized) {
                 if (allObjs[0] instanceof Activity) {
@@ -64,13 +80,14 @@ public class Meloon extends Fruit {
 
     @Override
     public boolean cleanup() {
+        isGone(); //currently just do like the meloon is away
         return true;
     }
 
     @Override
     public void isGone() {
         if(getPosX() < 0 || isCollected()) {
-            this.setPosX(GameViewActivity.GAME_WIDTH + OFF_TIME_MELOON);
+            this.setPosX(GameViewActivity.GAME_WIDTH + IFruit.DEFAULT_FRUIT_PROPERTIES.OFF_TIME);
             this.setPosY(RandomMgr.getRandomFloat(100, GameViewActivity.GAME_HEIGHT-100));
             setCollected(false);
         }
@@ -86,7 +103,7 @@ public class Meloon extends Fruit {
     /** Get reward method for highscore */
     @Override
     public int getReward() {
-        return IFruit.REWARDS.MELOONS_FRUIT;
+        return IFruit.MELOON_FRUIT_PROPERTIES.HIGHSCORE_REWARD;
     }
 
     /*******************
