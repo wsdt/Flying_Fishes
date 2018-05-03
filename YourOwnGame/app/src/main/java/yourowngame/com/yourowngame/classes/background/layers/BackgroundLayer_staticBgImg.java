@@ -19,7 +19,7 @@ public class BackgroundLayer_staticBgImg extends Background {
         super(backgroundManager, new int[] {bgColor}, name, backgroundSpeed);
 
         //After all, preparse color resource, so we do not have to do it in drawBg()
-        initialize(bgColor); //now at least one
+        this.initialize(bgColor); //now at least one
     }
 
     @Override
@@ -58,6 +58,7 @@ public class BackgroundLayer_staticBgImg extends Background {
 
     @Override
     public boolean cleanup() {
+        //its more efficient to do here nothing for this layer
         return true;
     }
 }

@@ -24,6 +24,7 @@ import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.gamelevels.interfaces.ILevelManager;
 import yourowngame.com.yourowngame.classes.manager.DialogMgr;
 import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
@@ -112,6 +113,17 @@ public class GameView extends SurfaceView {
             @Override
             public void onHighscoreChanged() {
                 getActivityContext().setNewHighscoreOnUI(getHighscore(), getCoinsHighscore());
+            }
+        });
+
+        //maybe change level if highscore above certain value
+        this.getHighscore().addListener(new IHighscore_Observer() {
+            @Override
+            public void onHighscoreChanged() {
+                //TODO: bad design, but for now with only 2 levels ok
+                if ((getHighscore().getValue()>ILevelManager.LEVEL_TWO && LevelManager.getCurrentLevel() == 0)) {
+                    LevelManager.getInstance(BackgroundManager.getInstance(GameView.this)).initiateLevelChangeProcess();
+                }
             }
         });
 
@@ -315,6 +327,7 @@ public class GameView extends SurfaceView {
 
         //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
         LevelManager.getInstance(BackgroundManager.getInstance(GameView.this)).getCurrentLevelObj().cleanUpLevelProperties();
+        LevelManager.resetGame(); //reset gameLevelState so user starts from level 0 again.
 
         getActivityContext().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
     }

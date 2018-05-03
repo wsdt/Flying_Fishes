@@ -11,8 +11,8 @@ import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFi
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
-import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
+import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.interfaces.IBackground;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
@@ -26,7 +26,7 @@ import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
  */
 
 
-public class Level_HarmlessSky extends Level {
+public class Level_NightRider extends Level {
     private static final String TAG = "Lvl_HarmlessSky";
 
     @Override
@@ -39,8 +39,8 @@ public class Level_HarmlessSky extends Level {
     protected void determineBackgroundLayers() {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
         * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
-        this.getAllBackgroundLayers().add(new BackgroundLayer_staticBgImg(LevelManager.getBackgroundManager(), R.color.colorSkyBlue, "Sky", IBackground.DEFAULT_BG_SPEED));
-        this.getAllBackgroundLayers().add(new BackgroundLayer_Clouds(LevelManager.getBackgroundManager(), new int[]{R.drawable.bglayer_1_cloud_1,R.drawable.bglayer_1_cloud_2,R.drawable.bglayer_1_cloud_3}, "Heaven", IBackground.DEFAULT_BG_SPEED));
+        this.getAllBackgroundLayers().add(new BackgroundLayer_staticBgImg(LevelManager.getBackgroundManager(), R.color.colorPrimaryDark, "DarkSky", IBackground.DEFAULT_BG_SPEED));
+        this.getAllBackgroundLayers().add(new BackgroundLayer_Clouds(LevelManager.getBackgroundManager(), new int[]{R.drawable.bglayer_1_cloud_2}, "Gewitter", IBackground.DEFAULT_BG_SPEED));
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)
@@ -53,7 +53,7 @@ public class Level_HarmlessSky extends Level {
         this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(HappenEnemy.class,1));
 
         /**Initializing Rocket-Enemy */
-       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(RocketFishEnemy.class, 1));
+       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(RocketFishEnemy.class, 5));
 
         /** Initializing Spawn-Enemies */
         this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(BobaEnemy.class, 1));
@@ -67,7 +67,7 @@ public class Level_HarmlessSky extends Level {
          *  FRUIT INITIALIZING AREA *
          ****************************/
 
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(Meloon.class,1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(Meloon.class,2));
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
     }

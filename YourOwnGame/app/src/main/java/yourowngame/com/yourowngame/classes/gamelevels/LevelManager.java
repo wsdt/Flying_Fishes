@@ -2,11 +2,13 @@ package yourowngame.com.yourowngame.classes.gamelevels;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_HarmlessSky;
+import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_NightRider;
 
 /**
  * Pattern: SINGLETON
@@ -47,14 +49,33 @@ public class LevelManager {
      * This method is called when user achieved a level and is allowed to play the next one.
      * The new level will be returned.
      */
-    public int levelAchieved() {
+    private int levelAchieved() {
         Log.d(TAG, "levelAchieved: User achieved current level. Entered next level. Ensure that level exists (sparseArray) and change components (enemies, bg etc.)");
-        return ++CURRENT_LEVEL; //pre-inkrement to return new current level
+
+        if ((CURRENT_LEVEL+1) >= getLevelList().size()) { //is next lvl indexoutofbonds?
+            Log.w(TAG, "levelAchieved: Can't go into next level, because this is the LAST one!");
+            //TODO: Maybe make Game won dialoge/toast etc. (but has no stress) with strings.xml
+            return CURRENT_LEVEL;
+        } else {
+            //TODO: show dialoge/toast with strings.xml that level was achieved.
+            Toast.makeText(getBackgroundManager().getGameView().getActivityContext(), "Level "+CURRENT_LEVEL+" achieved. Entrying level "+(CURRENT_LEVEL+1), Toast.LENGTH_SHORT).show();
+            return ++CURRENT_LEVEL; //pre-inkrement to return new current level
+        }
+    }
+
+    public int initiateLevelChangeProcess() {
+        Log.d(TAG, "initiateLevelChangeProcess: Trying to change level.");
+
+        this.getCurrentLevelObj().cleanUpLevelProperties(); //remove everything from display
+
+        //After this call the levelObj reference has been changed! So clean up the game field before (remove all enemies etc.)
+        return levelAchieved();
     }
 
     public void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray
         setLevelList(new ArrayList<Level>()); //for restarting to avoid nullpointer and resetting levellist (here so we force this method to be called)
         getLevelList().add(new Level_HarmlessSky());
+        getLevelList().add(new Level_NightRider());
         /*getLevelList().put(new Level_HauntedForest());
         getLevelList().put(new Level_UnknownLand());
         getLevelList().put(new Level_DarkDescent());*/
@@ -64,6 +85,10 @@ public class LevelManager {
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public static int getCurrentLevel() { //No setter, because level should be managed by LevelManager
         return CURRENT_LEVEL;
+    }
+    /** Used for restarting game so user starts again with lvl 1.*/
+    public static void resetGame() {
+        CURRENT_LEVEL = 0;
     }
 
     public ArrayList<Level> getLevelList() {
