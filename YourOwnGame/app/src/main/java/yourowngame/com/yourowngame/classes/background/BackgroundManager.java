@@ -45,7 +45,6 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
 public class BackgroundManager {
 
     private static final String TAG = "BackgroundManager";
-    private ArrayList<Background> backgroundLayers = new ArrayList<>();
     private GameView gameView;
     private LevelManager levelManager;
 
@@ -61,30 +60,8 @@ public class BackgroundManager {
     private BackgroundManager(@NonNull GameView gameView) {
         this.setGameView(gameView);
         this.setLevelManager(LevelManager.getInstance(this));
-
-        //Not really necessary now, because we have the levelManager as member which contains all levels (inkl. backgroundLayers)
-        this.setBackgroundLayers(LevelManager.getInstance(this).getCurrentLevelObj().getAllBackgroundLayers());
     }
 
-    public void updateAllBackgroundLayers() {
-        for (Background backgroundLayer : this.getBackgroundLayers()) {
-            backgroundLayer.updateBackground();
-        }
-    }
-
-    public void drawAllBackgroundLayers(@NonNull Canvas canvas) {
-        for (Background backgroundLayer : this.getBackgroundLayers()) {
-            backgroundLayer.drawBackground(canvas);
-        }
-    }
-
-    public ArrayList<Background> getBackgroundLayers() {
-        return backgroundLayers;
-    }
-
-    public void setBackgroundLayers(ArrayList<Background> backgroundLayers) {
-        this.backgroundLayers = backgroundLayers;
-    }
 
     /**
      * backgrounds (all levels)

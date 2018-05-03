@@ -19,8 +19,10 @@ import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEn
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
+import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
+import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.manager.DialogMgr;
 import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
@@ -126,24 +128,26 @@ public class GameView extends SurfaceView {
             canvas.drawColor(0, PorterDuff.Mode.CLEAR); //remove previous bitmaps etc. (it does not work to set here only bg color!, because of mode)
 
             try {
-                //TODO: Überarbeiten. Alles vom LevelObj rausholen!
+                Level currLevel = LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj();
 
                 // (1.) draw background
-                drawDynamicBackground(canvas);
+                for (Background background : currLevel.getAllBackgroundLayers()) {
+                    background.drawBackground(canvas);
+                }
 
                 // (2.) draw player
-                LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().draw(this.getActivityContext(), canvas, loopCount);
+                currLevel.getPlayer().draw(this.getActivityContext(), canvas, loopCount);
 
                 // (3.) draw Projectiles
-                LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().drawProjectiles(this.getActivityContext(), canvas, loopCount);
+                currLevel.getPlayer().drawProjectiles(this.getActivityContext(), canvas, loopCount);
 
                 // (4.) draw enemies
-                HappenEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
-                RocketFishEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
-                BobaEnemy.drawAll(this.getActivityContext(), canvas, loopCount);
+                for (Enemy enemy : currLevel.getAllEnemies()) {
+                    enemy.draw(this.getActivityContext(), canvas, loopCount);
+                }
 
                 // (5.) draw fruits, need to implement a timer, to push a fruit
-                LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllFruits().get(0).draw(this.getActivityContext(), canvas, loopCount);
+                currLevel.getAllFruits().get(0).draw(this.getActivityContext(), canvas, loopCount);
 
             } catch (Exception e) {
                 //Log.e(TAG, "redraw: Could not draw images.");
@@ -155,44 +159,63 @@ public class GameView extends SurfaceView {
         }
     }
 
-    /** Gets all Layers & draws them! */
-    public void drawDynamicBackground(@NonNull Canvas canvas) {
-        BackgroundManager.getInstance(this).drawAllBackgroundLayers(canvas);
-    }
-
 
     /*****************************
      * 2. Update GameObjects here *
      *****************************/
     public void updateGameObjects() {
+        Level currLevel = LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj();
+
+        //Update player
+        currLevel.getPlayer().update(null,
+                LevelManager.getBackgroundManager().getGameView().getMultiTouchHandler().isMultiTouched() || LevelManager.getBackgroundManager().getGameView().getMultiTouchHandler().isMoving(),
+                false);
+
+        //Update all enemies
+        for (Enemy enemy : currLevel.getAllEnemies()) {
+            enemy.update(currLevel.getPlayer(), null, null);
+        }
+
+        //Update all fruits
+        for (Fruit fruit : currLevel.getAllFruits()) {
+            fruit.update(null,null,null);
+        }
+
+        //Update bglayers
+        for (Background background : currLevel.getAllBackgroundLayers()) {
+            background.updateBackground();
+        }
+
+        //Update bullets
+        currLevel.getPlayer().updateProjectiles();
 
         /** Check Shooting */
         if(getMultiTouchHandler().isShooting()){
-            LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().addProjectiles(getActivityContext());
+            currLevel.getPlayer().addProjectiles(getActivityContext());
             getMultiTouchHandler().stopShooting();
         }
 
         /** check Collision with Border */
-        if (LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().hitsTheGround(this)) {
+        if (currLevel.getPlayer().hitsTheGround(this)) {
             startExitGameProcedure();
         }
 
         /** check Player-to-Enemy collision */
-        for (Enemy e : LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllEnemies()){
-            if(CollisionManager.checkCollision(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(), e)){
+        for (Enemy e : currLevel.getAllEnemies()){
+            if(CollisionManager.checkCollision(currLevel.getPlayer(), e)){
                 CollisionManager.playPlayerEnemyCollisionSound(this.getActivityContext());
                 startExitGameProcedure();
             }
         }
 
         /** check Projectile-to-Enemy collision */
-        for (Enemy e : LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllEnemies()){
-            for (int i = 0; i < LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().getProjectiles().size(); i++){
-                if(CollisionManager.checkCollision(e, LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().getProjectileAtPosition(i))){
+        for (Enemy e : currLevel.getAllEnemies()){
+            for (int i = 0; i < currLevel.getPlayer().getProjectiles().size(); i++){
+                if(CollisionManager.checkCollision(e, currLevel.getPlayer().getProjectileAtPosition(i))){
                     //enemy dies, spawns on the other side
                     e.resetWidthAndHeightOfEnemy();
                     //projectile needs to be deleted
-                    LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().getProjectiles().remove(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer().getProjectileAtPosition(i));
+                    currLevel.getPlayer().getProjectiles().remove(currLevel.getPlayer().getProjectileAtPosition(i));
                     //play sound when enemy dies
                     CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
                     //increment the players highScore

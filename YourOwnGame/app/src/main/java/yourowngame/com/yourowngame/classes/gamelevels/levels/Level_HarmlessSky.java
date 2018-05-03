@@ -1,10 +1,10 @@
 package yourowngame.com.yourowngame.classes.gamelevels.levels;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.EnemyMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
@@ -13,14 +13,12 @@ import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
-import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.interfaces.IBackground;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_staticBgImg;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
-import yourowngame.com.yourowngame.gameEngine.GameView;
 
 
 /**
@@ -28,7 +26,7 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
  */
 
 
-public class Level_HarmlessSky extends Level implements IBackground {
+public class Level_HarmlessSky extends Level {
     private static final String TAG = "Lvl_HarmlessSky";
 
     @Override
@@ -41,8 +39,8 @@ public class Level_HarmlessSky extends Level implements IBackground {
     protected void determineBackgroundLayers() {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
         * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
-        this.getAllBackgroundLayers().add(new BackgroundLayer_staticBgImg(LevelManager.getBackgroundManager(), R.color.colorSkyBlue, "Sky", DEFAULT_BG_SPEED));
-        this.getAllBackgroundLayers().add(new BackgroundLayer_Clouds(LevelManager.getBackgroundManager(), new int[]{R.drawable.bglayer_1_cloud_1,R.drawable.bglayer_1_cloud_2,R.drawable.bglayer_1_cloud_3}, "Heaven", DEFAULT_BG_SPEED));
+        this.getAllBackgroundLayers().add(new BackgroundLayer_staticBgImg(LevelManager.getBackgroundManager(), R.color.colorSkyBlue, "Sky", IBackground.DEFAULT_BG_SPEED));
+        this.getAllBackgroundLayers().add(new BackgroundLayer_Clouds(LevelManager.getBackgroundManager(), new int[]{R.drawable.bglayer_1_cloud_1,R.drawable.bglayer_1_cloud_2,R.drawable.bglayer_1_cloud_3}, "Heaven", IBackground.DEFAULT_BG_SPEED));
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)
@@ -52,22 +50,14 @@ public class Level_HarmlessSky extends Level implements IBackground {
     protected void determineAllEnemies() { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
         //Set allEnemies Arraylist
         /** Initializing Bomber-Enemy */
-
-        //TODO: Use EnemyMgr in future
-        HappenEnemy happenEnemyManager = new HappenEnemy();
-        happenEnemyManager.createRandomEnemies(1); //todo: should be static
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(HappenEnemy.class,1));
 
         /**Initializing Rocket-Enemy */
-        RocketFishEnemy rocketEnemyManager = new RocketFishEnemy();
-        rocketEnemyManager.createRandomEnemies(1);
+       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(RocketFishEnemy.class, 1));
 
         /** Initializing Spawn-Enemies */
-        BobaEnemy bobaManager = new BobaEnemy();
-        bobaManager.createRandomEnemies(1);
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(BobaEnemy.class, 1));
 
-        this.getAllEnemies().addAll(HappenEnemy.getEnemyList());
-        this.getAllEnemies().addAll(RocketFishEnemy.getEnemyList());
-        this.getAllEnemies().addAll(BobaEnemy.getEnemyList());
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
 
@@ -77,7 +67,7 @@ public class Level_HarmlessSky extends Level implements IBackground {
          *  FRUIT INITIALIZING AREA *
          ****************************/
 
-        this.getAllFruits().add(FruitMgr.createMeloon());
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(Meloon.class,1));
     }
 
     @Override
@@ -95,40 +85,12 @@ public class Level_HarmlessSky extends Level implements IBackground {
             background.cleanup();
         }
 
-        Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
-    }
-
-    @Override
-    @Enhance (message = "Change update-method to update() without params so iterating over all possible. Make" +
-            "interface Updatable, Drawable etc.")
-    public void updateLevelProperties() {
-        //Update player
-        this.getPlayer().update(null,
-                LevelManager.getBackgroundManager().getGameView().getMultiTouchHandler().isMultiTouched() || LevelManager.getBackgroundManager().getGameView().getMultiTouchHandler().isMoving(),
-                false);
-
-        //Update all enemies
-        for (Enemy enemy : this.getAllEnemies()) {
-            enemy.update(this.getPlayer(), null, null);
-        }
-
-        //Update all fruits
+        //CleanUp all fruits
         for (Fruit fruit : this.getAllFruits()) {
-            fruit.update(null,null,null);
+            fruit.cleanup();
         }
 
-        //Update bglayers
-        for (Background background : this.getAllBackgroundLayers()) {
-            background.updateBackground();
-        }
-
-        //Update bullets
-        this.getPlayer().updateProjectiles();
-    }
-
-    @Override
-    public void drawLevelProperties() {
-
+        Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
     }
 
     @Override

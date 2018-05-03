@@ -13,6 +13,7 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
@@ -21,16 +22,26 @@ import yourowngame.com.yourowngame.classes.manager.RandomMgr;
  * Created  on 12.03.2018.
  */
 
-public class BobaEnemy extends Enemy {
+public class BobaEnemy extends Enemy implements IEnemy.BOBA_ENEMY_PROPERTIES {
     private static final String TAG = "BobaEnemy";
     private static Bitmap[] images;
-    private static ArrayList<BobaEnemy> enemyList = new ArrayList<>();
 
     public BobaEnemy(double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
+    /** Generates random enemy*/
     public BobaEnemy() {
+        super(); //also call super constr! (initializing)
+
+        this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
+        this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
+        this.setSpeedX(RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX));
+        this.setSpeedY(RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX));
+        this.setRotationDegree(DEFAULT_ROTATION);
+        this.setName("Spawn");
+
+        this.setCurrentBitmap(getImages()[0]);
     }
 
 
@@ -43,24 +54,7 @@ public class BobaEnemy extends Enemy {
 
     }
 
-    public static void updateAll(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-        for (int i = 0; i < getEnemyList().size(); i++) {
-            getEnemyList().get(i).update(obj, goUp, goForward);
-        }
-    }
 
-    @Override
-    public void createRandomEnemies(int count) {
-        for (int i = 0; i < count; i++) {
-            getEnemyList().add(new BobaEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH),
-                    RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT),
-                    RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
-                    RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
-                    new int[]{R.drawable.enemy_boba}, DEFAULT_ROTATION, "Spawn"));
-
-            getEnemyList().get(i).setCurrentBitmap(getImages()[0]);
-        }
-    }
     /**
      * Single enemy should not draw all of them (not object-oriented)
      */
@@ -71,13 +65,6 @@ public class BobaEnemy extends Enemy {
         }
     }
 
-    public static void drawAll(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (BobaEnemy e : getEnemyList()) {
-            Log.d(TAG, "Enemy X | Y : " + e.getPosX() + "|" + e.getPosY());
-
-            e.draw(activity, canvas, loopCount);
-        }
-    }
 
     @Override
     @SafeVarargs
@@ -86,6 +73,7 @@ public class BobaEnemy extends Enemy {
             "Additionally we should consider putting the initialize() method of all enemies into the abstract base class because they will all look the same!"})
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
         //we really need to change the initialize, Object params, instanceOf..
+        this.setImg(IMAGE_FRAMES); //current design (bad!)
 
         try {
             if (allObjs != null && !isInitialized) {
@@ -122,14 +110,6 @@ public class BobaEnemy extends Enemy {
      * GETTER / SETTER
      */
 
-    public static ArrayList<BobaEnemy> getEnemyList() {
-        return enemyList;
-    }
-
-    public static void setEnemyList(ArrayList<BobaEnemy> enemyList) {
-        BobaEnemy.enemyList = enemyList;
-    }
-
     public static Bitmap[] getImages() {
         return images;
     }
@@ -139,9 +119,11 @@ public class BobaEnemy extends Enemy {
     }
 
 
-    /** Get reward method for highscore */
+    /**
+     * Get reward method for highscore
+     */
     @Override
     public int getReward() {
-        return REWARDS.BOBA_ENEMY;
+        return IEnemy.BOBA_ENEMY_PROPERTIES.HIGHSCORE_REWARD;
     }
 }

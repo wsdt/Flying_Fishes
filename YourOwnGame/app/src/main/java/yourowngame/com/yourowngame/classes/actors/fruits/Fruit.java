@@ -13,7 +13,7 @@ import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 
 @Enhance(message = {"Maybe replace isCollected/isOutOfBound etc. with Zustandsmuster",
     "Bitmap/Drawable int array consistency!"})
-public abstract class Fruit extends GameObject implements IHighscore_RewardableObj, IFruit {
+public abstract class Fruit extends GameObject implements IHighscore_RewardableObj, IFruit.DEFAULT_FRUIT_PROPERTIES {
     private boolean isCollected  = false;
     private boolean isOutOfBound = false;
     private int spawnTime = 0;
@@ -21,6 +21,11 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
     public Fruit(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree,name);
 
+        this.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
+    }
+
+    /**Creates random fruit*/
+    public Fruit() {
         this.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
     }
 

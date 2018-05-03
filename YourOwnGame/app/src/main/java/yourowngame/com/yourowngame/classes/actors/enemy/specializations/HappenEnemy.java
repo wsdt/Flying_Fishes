@@ -13,6 +13,7 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
@@ -22,16 +23,27 @@ import yourowngame.com.yourowngame.classes.manager.RandomMgr;
  *
  */
 
-public class HappenEnemy extends Enemy {
+public class HappenEnemy extends Enemy implements IEnemy.HAPPEN_ENEMY_PROPERTIES {
     private static final String TAG = "RoboEnemy";
     private static Bitmap[] images;
-    private static ArrayList<HappenEnemy> enemyList = new ArrayList<>();
 
     public HappenEnemy(double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
-    public HappenEnemy(){}
+    /** Creates random enemy */
+    public HappenEnemy(){
+        super(); //also call super constr! (initializing)
+
+        this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
+        this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT + ADDITIONAL_GAME_WIDTH));
+        this.setSpeedX(RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX));
+        this.setSpeedY(RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX));
+        this.setRotationDegree(DEFAULT_ROTATION);
+        this.setName("Robotic");
+
+        this.setCurrentBitmap(getImages()[0]);
+    }
 
     //This is the standard AI, other enemys will have their own way of trying to kill the player :>
 
@@ -59,26 +71,6 @@ public class HappenEnemy extends Enemy {
 
     }
 
-    public static void updateAll(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-        for (int i = 0; i < getEnemyList().size(); i++){
-            getEnemyList().get(i).update(obj,goUp,goForward);
-        }
-    }
-
-    @Override
-    public void createRandomEnemies(int numberOfHappens){
-        for (int i = 0; i < numberOfHappens; i++){
-            getEnemyList().add(new HappenEnemy(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH),
-                    RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT + 100),
-                    RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX),
-                    RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX),
-                    new int[] {R.drawable.enemy_happen_1, R.drawable.enemy_happen_2,
-                            R.drawable.enemy_happen_3,R.drawable.enemy_happen_2}, DEFAULT_ROTATION, "Robotic"));
-
-            getEnemyList().get(i).setCurrentBitmap(getImages()[0]);
-        }
-    }
-
     //in my opinion, a simple bitmap array would match the animation the best!
     //but we surely should do something to slow it down
     @Override
@@ -88,16 +80,10 @@ public class HappenEnemy extends Enemy {
         }
     }
 
-    public static void drawAll(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (HappenEnemy e : getEnemyList()) {
-            Log.d(TAG, "Enemy X | Y : " + e.getPosX() + "|" + e.getPosY());
-
-            e.draw(activity,canvas,loopCount);
-        }
-    }
-
     @Override
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+        this.setImg(IMAGE_FRAMES); //current design (bad!)
+
         try {
             if (allObjs != null && !isInitialized) {
                 if (allObjs[0] instanceof Activity) {
@@ -127,14 +113,6 @@ public class HappenEnemy extends Enemy {
     }
 
     /** GETTER / SETTER */
-    public static ArrayList<HappenEnemy> getEnemyList() {
-        return enemyList;
-    }
-
-    public static void setEnemyList(ArrayList<HappenEnemy> enemyList) {
-        HappenEnemy.enemyList = enemyList;
-    }
-
     public static Bitmap[] getImages() {
         return images;
     }
@@ -146,6 +124,6 @@ public class HappenEnemy extends Enemy {
     /** Get reward method for highscore */
     @Override
     public int getReward() {
-        return REWARDS.HAPPEN_ENEMY;
+        return IEnemy.HAPPEN_ENEMY_PROPERTIES.HIGHSCORE_REWARD;
     }
 }

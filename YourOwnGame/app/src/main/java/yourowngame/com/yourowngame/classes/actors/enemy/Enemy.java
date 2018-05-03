@@ -3,10 +3,13 @@ package yourowngame.com.yourowngame.classes.actors.enemy;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
+
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
@@ -14,12 +17,15 @@ import yourowngame.com.yourowngame.classes.manager.RandomMgr;
  *
  */
 
-public abstract class Enemy extends GameObject implements IEnemy, IHighscore_RewardableObj {
+public abstract class Enemy extends GameObject implements IEnemy.DEFAULT_ENEMY_PROPERTIES, IHighscore_RewardableObj {
     private static final String TAG = "Enemy";
-    //Specific Levels contain an Arraylist with all enemies this class implements arraylist here (so they have the same name)
 
-    public Enemy(){}
+    /**Creates random enemy*/
+    public Enemy(){
+        this.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
+    }
 
+    //If you change this change it too in EnemyMgr (also when you add params in subclasses!)
     public Enemy(double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
         super(posX, posY, speedX, speedY, img, rotationDegree, name);
 
@@ -42,7 +48,4 @@ public abstract class Enemy extends GameObject implements IEnemy, IHighscore_Rew
         setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
         setPosY(RandomMgr.getRandomFloat(0, GameViewActivity.GAME_HEIGHT));
     }
-
-    /** Would be very nice if this would be static, but Android (at least our min sdk) does not allow this to be abstract neither in an interface :( */
-    public abstract void createRandomEnemies(int numberOfEnemies);
 }
