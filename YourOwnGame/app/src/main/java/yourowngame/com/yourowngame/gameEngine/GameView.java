@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -14,9 +13,6 @@ import android.widget.FrameLayout;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
@@ -24,7 +20,6 @@ import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
-import yourowngame.com.yourowngame.classes.gamelevels.interfaces.ILevelManager;
 import yourowngame.com.yourowngame.classes.manager.DialogMgr;
 import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
@@ -158,7 +153,10 @@ public class GameView extends SurfaceView {
                 }
 
                 // (5.) draw fruits, need to implement a timer, to push a fruit
-                currLevel.getAllFruits().get(0).draw(this.getActivityContext(), canvas, loopCount);
+                for (Fruit fruit : currLevel.getAllFruits()) {
+                    fruit.draw(this.getActivityContext(), canvas, loopCount);
+                }
+
 
             } catch (Exception e) {
                 //Log.e(TAG, "redraw: Could not draw images.");
