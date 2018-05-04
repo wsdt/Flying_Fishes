@@ -102,7 +102,6 @@ public class Level_HarmlessSky extends Level {
         if (LevelManager.getBackgroundManager().getGameView().getHighscore().getValue() > 1000) {
             return true;
         }
-
         return false;
     }
 
