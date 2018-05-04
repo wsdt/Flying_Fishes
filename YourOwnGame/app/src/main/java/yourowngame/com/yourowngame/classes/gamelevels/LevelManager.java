@@ -90,6 +90,7 @@ public class LevelManager {
     }
     /** Used for restarting game so user starts again with lvl 1.*/
     public void resetGame() {
+        getCurrentLevelObj().cleanUpLevelProperties();
         CURRENT_LEVEL = 0;
     }
 

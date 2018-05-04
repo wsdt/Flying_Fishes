@@ -68,7 +68,6 @@ public class Highscore {
         return counter;
     }
 
-
     // OBSERVER PATTERN ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     /** Allow registering */
     public void addListener(@NonNull IHighscore_Observer iHighscore_observer) {
@@ -77,6 +76,12 @@ public class Highscore {
 
     public void removeListener(@NonNull IHighscore_Observer iHighscore_observer) {
         registeredListeners.remove(iHighscore_observer);
+    }
+
+    public void removeAllListeners() {
+        for (IHighscore_Observer iHighscore_observer : registeredListeners) {
+            removeListener(iHighscore_observer);
+        }
     }
 
     /** Notify all registered objects */
