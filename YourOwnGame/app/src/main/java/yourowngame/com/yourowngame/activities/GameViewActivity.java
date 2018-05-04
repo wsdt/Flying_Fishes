@@ -1,7 +1,6 @@
 package yourowngame.com.yourowngame.activities;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,7 +12,6 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.GameView;
-import yourowngame.com.yourowngame.gameEngine.Highscore;
 
 /**
  * The GameViewActivity does only add the GameView!
@@ -41,7 +39,7 @@ public class GameViewActivity extends AppCompatActivity {
         getGameDimens();
 
         /* Set highscore val textview */
-        this.setHighscoreVal((TextView) findViewById(R.id.gameViewActivity_highscoreVal));
+        this.setHighscoreVal_textView((TextView) findViewById(R.id.gameViewActivity_highscoreVal));
 
 
         Log.d(TAG, "onCreate: Trying to load game.");
@@ -71,11 +69,11 @@ public class GameViewActivity extends AppCompatActivity {
     }
 
     /** This method should only be called by Observer-Pattern! (better performance)*/
-    public void setNewHighscoreOnUI(@NonNull final Highscore highscore, @NonNull final Highscore coins) {
+    public void setNewHighscoreOnUI() {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getHighscoreVal().setText(String.valueOf(highscore.getValue())); //pure integers are not allowed by setText() so we transform it to a string
+                getHighscoreVal_textView().setText(String.valueOf(getGameView().getHighscore().getValue())); //pure integers are not allowed by setText() so we transform it to a string
 
             }
         });
@@ -110,13 +108,13 @@ public class GameViewActivity extends AppCompatActivity {
         this.gameView = gameView;
     }
 
-    public TextView getHighscoreVal() {
+    public TextView getHighscoreVal_textView() {
         return highscoreVal;
     }
 
     public TextView getCoinsVal() { return coinsVal; }
 
-    public void setHighscoreVal(TextView highscoreVal) {
+    public void setHighscoreVal_textView(TextView highscoreVal) {
         this.highscoreVal = highscoreVal;
     }
 

@@ -14,11 +14,13 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
+import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.DialogMgr;
 import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
@@ -38,10 +40,6 @@ public class GameView extends SurfaceView {
     
     private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
     private FrameLayout layout;
-
-    @Enhance (message = "Please make an own class for the coins (maybe extend from Highscore), I think this" +
-            "could cause confusion in future. ")
-    private Highscore coins = new Highscore(); //todo: might work, but yeah could cause confusion in future, you're totally right! should get its own class.
 
     // ENEMIES are level-dependent, so specific level obj should own a list with all enemies. (LevelMgr.CURRENT_LEVEL)
 
@@ -100,26 +98,28 @@ public class GameView extends SurfaceView {
     }
 
     //initialize components that match GameObject()
+    @Bug (problem = "Highscore on UI works for first level, but in second level it just get's incremented" +
+            "hiddenly (you will see it when game is over), but the highscore value in Textview is not refreshed." +
+            "Additionally it works also in second level if we go during the game to the mainActivity and then back, " +
+            "which causes this method called again(!) and then it WORKS.",
+    possibleSolution = "So I think we should find a way to register this listener in the levelObj itself!",
+    priority = Bug.Priority.HIGH, byDeveloper = Constants.Developers.WSDT)
     private void initGameObjects() {
         /** Prepare Highscore */
         this.getHighscore().addListener(new IHighscore_Observer() {
             @Override
             public void onHighscoreChanged() {
-                getActivityContext().setNewHighscoreOnUI(getHighscore(), getCoinsHighscore());
-            }
-        });
+                Log.d(TAG, "initGameObjects:onHighscoreChanged: Highscore has changed!");
 
-        //maybe change level if highscore above certain value
-        this.getHighscore().addListener(new IHighscore_Observer() {
-            @Override
-            public void onHighscoreChanged() {
+                /*Refresh Highscore lbl*/
+                GameView.this.getActivityContext().setNewHighscoreOnUI();
+
+                /*Evaluate whether user achieved level or not.*/
                 if (LevelManager.getInstance(GameView.this.getActivityContext()).getCurrentLevelObj().areLevelAssignmentsAchieved()) {
                     LevelManager.getInstance(GameView.this.getActivityContext()).initiateLevelChangeProcess();
                 }
             }
         });
-
-        //LevelManager.getInstance(BackgroundManager.getInstance(this)).createDefaultLevelList(); //for recrafting level objs (unfortunately necessary)
     }
 
     /********************************
@@ -227,7 +227,6 @@ public class GameView extends SurfaceView {
                     CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
                     //increment the players highScore
                     getHighscore().increment(e);
-                    //if the highscore is over/equal 5_000, add 1 Coin (later on 10_000 be better)
 
                     Log.d(TAG, "Highscore = " + getHighscore().getValue());
                 }
@@ -319,9 +318,9 @@ public class GameView extends SurfaceView {
 
         //save highscore before cleaning
         new SharedPrefStorageMgr(getActivityContext()).saveNewHighscoreEntry(getHighscore().getValue());
+        getHighscore().removeAllListeners();
 
         //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
-        LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().cleanUpLevelProperties();
         LevelManager.getInstance(this.getActivityContext()).resetGame(); //reset gameLevelState so user starts from level 0 again.
 
         getActivityContext().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
@@ -330,10 +329,6 @@ public class GameView extends SurfaceView {
    /*********************************************************
      * 4. Getters & Setters and all of that annoying methods *
      *********************************************************/
-
-    public double randomY() {
-        return Math.random() * getRootView().getHeight();
-    }
 
     public FrameLayout getLayout() {
         return layout;
@@ -351,10 +346,6 @@ public class GameView extends SurfaceView {
         return LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getLevelHighscore();
     }
 
-    public Highscore getCoinsHighscore() { return coins; }
-
-
-    public void setCoinsHighscore(Highscore coins) {this.coins = coins; }
 
     public OnMultiTouchHandler getMultiTouchHandler() {
         return multiTouchHandler;
