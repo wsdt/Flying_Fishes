@@ -29,6 +29,7 @@
         android:layout_height="197dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp"
         android:gravity="center_vertical|center"
         android:orientation="vertical">
 
@@ -51,11 +52,11 @@
         <!-- hide until we have settings to set (when we have, then just remove visibility attribute) -->
         <Button
             android:id="@+id/mainActivity_btnSettings"
-            android:visibility="gone"
             style="@style/menu_btn_white"
             android:layout_width="500dp"
             android:layout_marginTop="15dp"
-            android:text="@string/mainActivity_button_settings" />
+            android:text="@string/mainActivity_button_settings"
+            android:visibility="gone" />
     </LinearLayout>
 
 </android.widget.RelativeLayout>

@@ -32,7 +32,8 @@ android {
             applicationIdSuffix ".free"
             versionNameSuffix "-f"
             dimension "dim"
-            buildConfigField "boolean", "PAID_VERSION", "false" /* create java vars, so we can react at runtime */
+            buildConfigField "boolean", "PAID_VERSION", "false"
+            /* create java vars, so we can react at runtime */
         }
         paid {
             applicationIdSuffix ".paid"

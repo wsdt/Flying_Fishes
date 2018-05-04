@@ -12,6 +12,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD,ElementType.CONSTRUCTOR,
         ElementType.FIELD,ElementType.PARAMETER,
         ElementType.LOCAL_VARIABLE,ElementType.TYPE,ElementType.ANNOTATION_TYPE,ElementType.PACKAGE})
+
 @Retention(RetentionPolicy.CLASS)
 public @interface Bug {
     enum Priority {
