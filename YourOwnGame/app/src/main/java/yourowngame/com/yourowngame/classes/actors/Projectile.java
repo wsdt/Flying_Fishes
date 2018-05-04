@@ -1,6 +1,8 @@
 package yourowngame.com.yourowngame.classes.actors;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
@@ -8,19 +10,18 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 
 /**
  * Created by Solution on 27.02.2018.
- *
- *  Projectiles which the player can shoot to kill enemys!
- *  Later on, projectiles will be available to buy in the shop (f.e)
- *
- *  Projectiles will be used as Singletone
- *
- *  Everytime the player hits a button or something else, projectiles will be shown
- *
- *  So shall we create a Singletone with a List of Projectiles?
+ * <p>
+ * Projectiles which the player can shoot to kill enemys!
+ * Later on, projectiles will be available to buy in the shop (f.e)
+ * <p>
+ * Projectiles will be used as Singletone
+ * <p>
+ * Everytime the player hits a button or something else, projectiles will be shown
+ * <p>
+ * So shall we create a Singletone with a List of Projectiles?
  */
 
 public class Projectile extends GameObject {
@@ -33,10 +34,10 @@ public class Projectile extends GameObject {
     private static Bitmap sharedBitmap;
 
 
-    public Projectile(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Projectile(@NonNull Context context, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+        super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
         Log.d(TAG, "New Projectile ready to fire!");
-        initialize(activity);
+        initialize();
     }
 
 
@@ -50,31 +51,32 @@ public class Projectile extends GameObject {
         canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
-    /** OBJ[0]: Activity */
-    @Override @SafeVarargs
+    /**
+     * OBJ[0]: Activity
+     */
+    @Override
+    @SafeVarargs
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
         try {
-            if (allObjs != null) {
-                if (allObjs[0] instanceof Activity) {
-                    if (getSharedBitmap() == null) { //only do it if null (performance enhancement)
-                        setSharedBitmap(this.getCraftedDynamicBitmap((Activity) allObjs[0],this.getImg().length-1 /*just use first img (works as long as no animation)*/,null,null,null));
-                        Log.d(TAG, "initialize: Shared Bitmap->"+getSharedBitmap());
-                    }
-                    //Always set bullet
-                    this.setCurrentBitmap(getSharedBitmap()); //todo: bad design (but here to avoid further error when calculating collisions with projectiles etc.)
+            if (!isInitialized) {
+                if (getSharedBitmap() == null) { //only do it if null (performance enhancement)
+                    setSharedBitmap(this.getCraftedDynamicBitmap(this.getImg().length - 1 /*just use first img (works as long as no animation)*/, null, null, null));
                 }
+                //Always set bullet
+                this.setCurrentBitmap(getSharedBitmap()); //todo: bad design (but here to avoid further error when calculating collisions with projectiles etc.)
+                isInitialized = true;
             }
         } catch (ClassCastException | NullPointerException | NoDrawableInArrayFound_Exception e) {
             Log.e(TAG, "initialize: Could not initialize Projectiles!");
             e.printStackTrace();
         }
-       return true;
+        return isInitialized;
     }
 
 
     @Override
     public boolean cleanup() {
-        this.setPosY(LevelManager.getBackgroundManager().getGameView().getRootView().getWidth()+15); //outside of display to prevent projectiles hitting new enemies altough projectiles were fired in previous game
+        this.setPosY(Resources.getSystem().getDisplayMetrics().widthPixels + 15); //outside of display to prevent projectiles hitting new enemies altough projectiles were fired in previous game
         return true;
     }
 

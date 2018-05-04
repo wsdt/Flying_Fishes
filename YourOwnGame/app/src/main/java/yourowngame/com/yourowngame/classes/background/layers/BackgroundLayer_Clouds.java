@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.classes.background.layers;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.background.Background;
-import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.background.layers.interfaces.IBackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
@@ -32,13 +32,12 @@ public class BackgroundLayer_Clouds extends Background implements IBackgroundLay
     /**
      * image from the int array which is visible
      *
-     * @param backgroundManager
      * @param img
      * @param name
      * @param backgroundSpeed
      */
-    public BackgroundLayer_Clouds(@NonNull BackgroundManager backgroundManager, int[] img, String name, float backgroundSpeed) {
-        super(backgroundManager, img, name, backgroundSpeed);
+    public BackgroundLayer_Clouds(@NonNull Context context, int[] img, String name, float backgroundSpeed) {
+        super(context, img, name, backgroundSpeed);
         this.initialize(); //now at least one
     }
 
@@ -113,11 +112,11 @@ public class BackgroundLayer_Clouds extends Background implements IBackgroundLay
      * @param imgs           image(s) of the clouds
      * @param numberOfClouds figure of clouds
      */
-    public void craftClouds(int[] imgs, int numberOfClouds) {
+    private void craftClouds(int[] imgs, int numberOfClouds) {
         Log.d(TAG, "craftClouds: Trying to craft clouds.");
         for (int i = 0; i < numberOfClouds; i++) {
             //position of X & Y now set in the Constructor (for easier reading)
-            this.getCraftedClouds().add(new Cloud(BitmapFactory.decodeResource(this.getGameView().getResources(), imgs[RandomMgr.getRandomInt(0, imgs.length - 1)])));
+            this.getCraftedClouds().add(new Cloud(BitmapFactory.decodeResource(this.getContext().getResources(), imgs[RandomMgr.getRandomInt(0, imgs.length - 1)])));
             Log.d(TAG, "craftClouds: Added cloud no. "+i);
         }
     }
@@ -126,6 +125,7 @@ public class BackgroundLayer_Clouds extends Background implements IBackgroundLay
     @Override
     @SafeVarargs
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+        //TODO: Maybe make amount clouds configurable by constr or similar?
         this.craftClouds(this.getImg(), AMOUNT_CLOUDS); //also sets simultaneously
         return true;
     }

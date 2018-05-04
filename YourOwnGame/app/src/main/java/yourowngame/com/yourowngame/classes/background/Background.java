@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.background;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -15,25 +16,22 @@ import yourowngame.com.yourowngame.gameEngine.interfaces.Initializer;
  *
  * Class for creating Backgrounds, only data!
  *
- *
- * TODO exception handling
  */
 
 public abstract class Background implements Initializer, IBackground {
     private static final String TAG = "Background";
+
+    private Context context;
     private int[] img;
     private String name;
     private float backgroundSpeedX = 0;
-    private BackgroundManager backgroundManager; //contains also GameView!!
-    private Random random;
 
-    public Background(@NonNull BackgroundManager backgroundManager, int[] img, String name, float backgroundSpeed) {
+    public Background(@NonNull Context context, int[] img, String name, float backgroundSpeed) {
         Log.d(TAG, "getBackgroundInstance: Created new instance.");
+        this.setContext(context);
         this.setImg(img);
         this.setName(name);
         this.setBackgroundSpeed(backgroundSpeed);
-        this.setBackgroundManager(backgroundManager);
-        this.setRandom(new Random()); //for random height/y of clouds etc.
     }
 
 
@@ -49,10 +47,6 @@ public abstract class Background implements Initializer, IBackground {
 
     public float getBackgroundSpeedX() {
         return backgroundSpeedX;
-    }
-
-    public int getDisplay(int pos){
-        return getImg()[pos];
     }
 
     public int[] getImg() {
@@ -71,26 +65,11 @@ public abstract class Background implements Initializer, IBackground {
         this.name = name;
     }
 
-    /**Dummy method */
-    public GameView getGameView() {
-        return this.getBackgroundManager().getGameView();
+    public Context getContext() {
+        return context;
     }
 
-    /** image from the int array which is visible*/
-    public BackgroundManager getBackgroundManager() {
-        return backgroundManager;
-    }
-
-    public void setBackgroundManager(BackgroundManager backgroundManager) {
-        this.backgroundManager = backgroundManager;
-    }
-
-
-    public Random getRandom() {
-        return random;
-    }
-
-    public void setRandom(Random random){
-        this.random = random;
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

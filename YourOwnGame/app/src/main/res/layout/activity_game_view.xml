@@ -9,7 +9,7 @@
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
     android:layout_centerVertical="true"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorShadow">
 
 
     <yourowngame.com.yourowngame.gameEngine.GameView
@@ -26,8 +26,10 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginEnd="131dp"
+            android:layout_marginRight="131dp"
             app:srcCompat="@drawable/points" />
 
         <TextView
@@ -35,9 +37,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="top|end"
             android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
             android:layout_marginTop="18dp"
             android:text="@string/gameActivity_highscore_val"
             android:textSize="20sp" />

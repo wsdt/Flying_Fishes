@@ -9,7 +9,7 @@
     <string name="helperClass_getAppVersion_error">x.x.x</string><!-- maybe very short error phrase? -->
 
     <!-- MainActivity -->
-    <string name="mainActivity_button_startGame">Start</string>
+    <string name="mainActivity_button_mode_adventure">Adventure - Mode</string>
     <string name="mainActivity_button_highscores">Highscores</string>
     <string name="mainActivity_button_settings">Settings</string>
 

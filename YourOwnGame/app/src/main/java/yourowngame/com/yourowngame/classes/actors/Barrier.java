@@ -1,16 +1,14 @@
 package yourowngame.com.yourowngame.classes.actors;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.View;
 
 public class Barrier extends GameObject {
-    public Barrier(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Barrier(@NonNull Context context, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+        super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
     @Override

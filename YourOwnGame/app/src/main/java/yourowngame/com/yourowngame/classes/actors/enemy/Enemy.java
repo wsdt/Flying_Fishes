@@ -1,16 +1,13 @@
 package yourowngame.com.yourowngame.classes.actors.enemy;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
-import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 /**
@@ -21,15 +18,11 @@ public abstract class Enemy extends GameObject implements IEnemy.DEFAULT_ENEMY_P
     private static final String TAG = "Enemy";
 
     /**Creates random enemy*/
-    public Enemy(){
-        this.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
-    }
+    public Enemy(@NonNull Context context){super(context);}
 
     //If you change this change it too in EnemyMgr (also when you add params in subclasses!)
-    public Enemy(double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
-        super(posX, posY, speedX, speedY, img, rotationDegree, name);
-
-        this.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
+    public Enemy(@NonNull Context context, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
+        super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
     /** we also need to make sure that those enemies who pass the player and the screen rejoin at the end of the scene! */

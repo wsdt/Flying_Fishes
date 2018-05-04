@@ -39,7 +39,7 @@
             android:layout_width="500dp"
             android:layout_marginTop="15dp"
             android:onClick="startGame"
-            android:text="@string/mainActivity_button_startGame" />
+            android:text="@string/mainActivity_button_mode_adventure" />
 
         <Button
             android:id="@+id/mainActivity_btnHighscore"
@@ -48,6 +48,7 @@
             android:layout_marginTop="15dp"
             android:onClick="showHighscore"
             android:text="@string/mainActivity_button_highscores" />
+
 
         <!-- hide until we have settings to set (when we have, then just remove visibility attribute) -->
         <Button

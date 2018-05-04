@@ -1,6 +1,8 @@
 package yourowngame.com.yourowngame.classes.gamelevels;
 
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -12,19 +14,25 @@ import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.gamelevels.interfaces.IDrawAble;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
+import yourowngame.com.yourowngame.gameEngine.Highscore;
 
 public abstract class Level { //which level an object is (1, 5, etc.) should be decided by LevelManager [so more flexible to changes]
     private static final String TAG = "Level";
+    private Context context;
+
     protected static SoundMgr soundMgr = new SoundMgr(); //static because always only one soundMgr instance
     private String levelName; //Level name (maybe to show to user [e.g. Die dunkle Gruft, usw.]
     private Player player;
     private ArrayList<Background> allBackgroundLayers = new ArrayList<>(); //Background layers for each level (as Arraylist to avoid NullpointerExceptions, so we just do not allow gaps)
     private ArrayList<Enemy> allEnemies = new ArrayList<>(); //MUST NOT BE STATIC (different levels, different enemies), All enemies on screen (will be spawned again if isGone) for specific level
     private ArrayList<Fruit> allFruits = new ArrayList<>();
+    private Highscore levelHighscore = new Highscore(); //add Level-dependent Highscore
     //TODO: other level-dependent members/values
 
-    public Level() {
+    public Level(@NonNull Context context) {
         Log.d(TAG, "Level: ###################### STARTING LOADING LEVEL ###############################");
+        this.setContext(context);
+
         determinePlayer();
         determineBackgroundLayers();
         determineAllEnemies();
@@ -49,7 +57,32 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     protected abstract void determineAllEnemies();
     protected abstract void determineAllFruits();
     protected abstract void playBackgroundMusic();
-    public abstract void cleanUpLevelProperties();
+
+    /** Cleaning up here now, because it might be the same for all levels :) */
+    public void cleanUpLevelProperties() {
+        //CleanUp Player
+        this.getPlayer().cleanup();
+
+        //CleanUp Enemies
+        for (Enemy enemy : this.getAllEnemies()) {
+            enemy.cleanup();
+        }
+
+        //CleanUp Bglayers
+        for (Background background : this.getAllBackgroundLayers()) {
+            background.cleanup();
+        }
+
+        //CleanUp all fruits
+        for (Fruit fruit : this.getAllFruits()) {
+            fruit.cleanup();
+        }
+
+        //Because level-dependent, also reset when level has changed
+        getLevelHighscore().resetCounter();
+
+        Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
+    }
 
     /** Place in this method all to validating params like highscore etc. and return true if
      * conditions are met. So GameView knows it can increase the level.
@@ -101,5 +134,21 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
 
     public void setAllFruits(ArrayList<Fruit> allFruits) {
         this.allFruits = allFruits;
+    }
+
+    public Highscore getLevelHighscore() {
+        return levelHighscore;
+    }
+
+    public void setLevelHighscore(Highscore levelHighscore) {
+        this.levelHighscore = levelHighscore;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.classes.actors.fruits.specializations;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
@@ -13,13 +14,13 @@ import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
     private Bitmap[] images;
 
-    public Avoci(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Avoci(@NonNull Context context, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+        super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
     /**Create random fruit*/
-    public Avoci() {
-        super(); //also call super constr! (initializing)
+    public Avoci(@NonNull Context context) {
+        super(context); //also call super constr! (initializing)
         //TODO: see Meloon
     }
 
