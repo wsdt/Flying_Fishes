@@ -1,42 +1,42 @@
 package yourowngame.com.yourowngame.classes.gamelevels;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import yourowngame.com.yourowngame.classes.background.BackgroundManager;
+import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_HarmlessSky;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_NightRider;
 
 /**
  * Pattern: SINGLETON
- * Why using SparseArray over Hashmap or ArrayList?
- * Sparsearray needs less memory than Hashmap and also has the ability to set elements into the list with gaps (arraylist can't do that).
- * Only drawback of sparseArray: The get() method is mostly slower, because of the searching algorithm behind it and as well it isn't
- * mapped like the Hashmap. But if we search for a level with .get(1) [NEVER USE GET, ALWAYS USE .valueAt() = FASTER] and save it to a temp. Level-Obj this drawback is not that dramatic.
- * --> BUT be careful when iterating over SparseArray, if we assign from 1 upwards or have gaps, then we could get a null object, because there is NO foreach.
- */
+ *
+ * DO NOT MAKE ANY METHODS HERE STATIC (we have a Singleton, so no problem)! ALL PARAMS (IF POSSIBLE) SHOULD BE STATIC.
+ * */
 public class LevelManager {
+    private Context context;
+
     private static int CURRENT_LEVEL = 0; //Global level variable so everybody knows which level now is (should be only adapted by LevelManager, so NO SETTER)
     private static final String TAG = "LevelManager";
     private static LevelManager INSTANCE;
     private static ArrayList<Level> levelList; //By changing this, we can have flexible level orders and also are able to iterate over levels (after this level the next one comes etc.)
-    private static BackgroundManager backgroundManager; //levels might need the BackgroundManager or/and it's gameView
 
-    private LevelManager(@NonNull BackgroundManager backgroundManager) {
+    private LevelManager(@NonNull Context context) {
         Log.d(TAG, "LevelMgr: Creating new instance of LevelMgr.");
-        LevelManager.setBackgroundManager(backgroundManager);
+        this.setContext(context);
+
         createDefaultLevelList(); //for now, just use the default level order, which is chosen by us
         INSTANCE = this;
     }
 
-    public static LevelManager getInstance(@NonNull BackgroundManager backgroundManager) {
-        return (INSTANCE != null) ? INSTANCE : new LevelManager(backgroundManager);
+    public static LevelManager getInstance(@NonNull Context context) {
+        return (INSTANCE != null) ? INSTANCE : new LevelManager(context);
     }
 
-    //Heart of levelMgr: static so more comfortable to call [do not forget the drawback of SparseArrays when calling this method! (although I used valueAt())]
+    //Heart of levelMgr
     public Level getCurrentLevelObj() {
         if (getLevelList().size() > getCurrentLevel()) {
             return getLevelList().get(getCurrentLevel());
@@ -58,11 +58,13 @@ public class LevelManager {
             return CURRENT_LEVEL;
         } else {
             //TODO: show dialoge/toast with strings.xml that level was achieved.
-            Toast.makeText(getBackgroundManager().getGameView().getActivityContext(), "Level "+CURRENT_LEVEL+" achieved. Entrying level "+(CURRENT_LEVEL+1), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), "Level "+CURRENT_LEVEL+" achieved. Entrying level "+(CURRENT_LEVEL+1), Toast.LENGTH_SHORT).show();
             return ++CURRENT_LEVEL; //pre-inkrement to return new current level
         }
     }
 
+    @Bug (problem = "First play works, but if we restart the game, the user achieves the level immediately on next validation whether" +
+            "level assignments are achieved. So e.g. level 2 after restart also for only 50 points possible!")
     public int initiateLevelChangeProcess() {
         Log.d(TAG, "initiateLevelChangeProcess: Trying to change level.");
 
@@ -72,10 +74,10 @@ public class LevelManager {
         return levelAchieved();
     }
 
-    public void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray
+    private void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray
         setLevelList(new ArrayList<Level>()); //for restarting to avoid nullpointer and resetting levellist (here so we force this method to be called)
-        getLevelList().add(new Level_HarmlessSky());
-        getLevelList().add(new Level_NightRider());
+        getLevelList().add(new Level_HarmlessSky(this.getContext()));
+        getLevelList().add(new Level_NightRider(this.getContext()));
         /*getLevelList().put(new Level_HauntedForest());
         getLevelList().put(new Level_UnknownLand());
         getLevelList().put(new Level_DarkDescent());*/
@@ -83,11 +85,11 @@ public class LevelManager {
     }
 
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public static int getCurrentLevel() { //No setter, because level should be managed by LevelManager
+    public int getCurrentLevel() { //No setter, because level should be managed by LevelManager
         return CURRENT_LEVEL;
     }
     /** Used for restarting game so user starts again with lvl 1.*/
-    public static void resetGame() {
+    public void resetGame() {
         CURRENT_LEVEL = 0;
     }
 
@@ -98,19 +100,15 @@ public class LevelManager {
         return levelList;
     }
 
-    /**
-     * @param levelList: SparseArray makes it possible to set levels at the desired index, also when there might be gaps
-     *                   (similar to Hashmaps, but here are SparseArrays more efficient)
-     */
-    public static void setLevelList(ArrayList<Level> levelList) {
+    public void setLevelList(ArrayList<Level> levelList) {
         LevelManager.levelList = levelList;
     }
 
-    public static BackgroundManager getBackgroundManager() {
-        return backgroundManager;
+    public Context getContext() {
+        return context;
     }
 
-    public static void setBackgroundManager(BackgroundManager backgroundManager) {
-        LevelManager.backgroundManager = backgroundManager;
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

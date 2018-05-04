@@ -16,7 +16,6 @@ import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
-import yourowngame.com.yourowngame.classes.background.BackgroundManager;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
@@ -39,7 +38,6 @@ public class GameView extends SurfaceView {
     
     private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
     private FrameLayout layout;
-    private Highscore highscore = new Highscore();
 
     @Enhance (message = "Please make an own class for the coins (maybe extend from Highscore), I think this" +
             "could cause confusion in future. ")
@@ -115,8 +113,8 @@ public class GameView extends SurfaceView {
         this.getHighscore().addListener(new IHighscore_Observer() {
             @Override
             public void onHighscoreChanged() {
-                if (LevelManager.getInstance(BackgroundManager.getInstance(GameView.this)).getCurrentLevelObj().areLevelAssignmentsAchieved()) {
-                    LevelManager.getInstance(BackgroundManager.getInstance(GameView.this)).initiateLevelChangeProcess();
+                if (LevelManager.getInstance(GameView.this.getActivityContext()).getCurrentLevelObj().areLevelAssignmentsAchieved()) {
+                    LevelManager.getInstance(GameView.this.getActivityContext()).initiateLevelChangeProcess();
                 }
             }
         });
@@ -134,7 +132,7 @@ public class GameView extends SurfaceView {
             canvas.drawColor(0, PorterDuff.Mode.CLEAR); //remove previous bitmaps etc. (it does not work to set here only bg color!, because of mode)
 
             try {
-                Level currLevel = LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj();
+                Level currLevel = LevelManager.getInstance(GameView.this.getActivityContext()).getCurrentLevelObj();
 
                 // (1.) draw background
                 for (Background background : currLevel.getAllBackgroundLayers()) {
@@ -173,11 +171,11 @@ public class GameView extends SurfaceView {
      * 2. Update GameObjects here *
      *****************************/
     public void updateGameObjects() {
-        Level currLevel = LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj();
+        Level currLevel = LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj();
 
         //Update player
         currLevel.getPlayer().update(null,
-                LevelManager.getBackgroundManager().getGameView().getMultiTouchHandler().isMultiTouched() || LevelManager.getBackgroundManager().getGameView().getMultiTouchHandler().isMoving(),
+                GameView.this.getMultiTouchHandler().isMultiTouched() || GameView.this.getMultiTouchHandler().isMoving(),
                 false);
 
         //Update all enemies
@@ -240,9 +238,9 @@ public class GameView extends SurfaceView {
          *
          * i know, we could just check which subclass it is, but again, bad smell
          * */
-        for (Fruit fruit : LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllFruits()) {
-            if (CollisionManager.checkCollision(LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getPlayer(),
-                    LevelManager.getInstance(BackgroundManager.getInstance(this)).getCurrentLevelObj().getAllFruits().get(0))) {
+        for (Fruit fruit : LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getAllFruits()) {
+            if (CollisionManager.checkCollision(LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getPlayer(),
+                    LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getAllFruits().get(0))) {
                 fruit.collected();
                 getHighscore().increment(fruit);
 
@@ -323,8 +321,8 @@ public class GameView extends SurfaceView {
         new SharedPrefStorageMgr(getActivityContext()).saveNewHighscoreEntry(getHighscore().getValue());
 
         //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
-        LevelManager.getInstance(BackgroundManager.getInstance(GameView.this)).getCurrentLevelObj().cleanUpLevelProperties();
-        LevelManager.resetGame(); //reset gameLevelState so user starts from level 0 again.
+        LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().cleanUpLevelProperties();
+        LevelManager.getInstance(this.getActivityContext()).resetGame(); //reset gameLevelState so user starts from level 0 again.
 
         getActivityContext().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
     }
@@ -349,15 +347,12 @@ public class GameView extends SurfaceView {
         this.activityContext = activityContext;
     }
 
-    public Highscore getHighscore() {
-        return highscore;
+    public Highscore getHighscore() { //Dummy method for making the code more legible
+        return LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getLevelHighscore();
     }
 
     public Highscore getCoinsHighscore() { return coins; }
 
-    public void setHighscore(Highscore highscore) {
-        this.highscore = highscore;
-    }
 
     public void setCoinsHighscore(Highscore coins) {this.coins = coins; }
 

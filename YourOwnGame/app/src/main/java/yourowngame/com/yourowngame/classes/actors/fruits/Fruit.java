@@ -1,7 +1,7 @@
 package yourowngame.com.yourowngame.classes.actors.fruits;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
+import android.content.Context;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +10,6 @@ import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 
 @Enhance(message = {"Maybe replace isCollected/isOutOfBound etc. with Zustandsmuster",
@@ -22,15 +21,13 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
     private boolean isOutOfBound = false;
     private int spawnTime = 0;
 
-    public Fruit(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(posX, posY, speedX, speedY, img, rotationDegree,name);
-
-        this.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
+    public Fruit(@NonNull Context context, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+        super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
     /**Creates random fruit*/
-    public Fruit() {
-        this.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
+    public Fruit(@NonNull Context context) {
+        super(context);
     }
 
 

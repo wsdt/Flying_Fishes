@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.classes.actors.fruits.specializations;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
@@ -21,13 +22,13 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
 
     private static Bitmap[] images;
 
-    public Meloon(double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Meloon(@NonNull Context context, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+        super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
     /**Creates random fruit*/
-    public Meloon() {
-        super(); //also call super constr! (initializing)
+    public Meloon(@NonNull Context context) {
+        super(context); //also call super constr! (initializing)
 
         this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
@@ -57,17 +58,12 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
         this.setImg(IMAGE_FRAMES);
 
         try {
-            if (allObjs != null && !isInitialized) {
-                if (allObjs[0] instanceof Activity) {
-                    Activity activity = (Activity) allObjs[0];
+            if (!isInitialized) {
                     setImages(new Bitmap[this.getImg().length]);
 
                     for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
-                        getImages()[imgFrame] = this.getCraftedDynamicBitmap(activity, imgFrame, (int) DEFAULT_ROTATION, null, null);
+                        getImages()[imgFrame] = this.getCraftedDynamicBitmap(imgFrame, (int) DEFAULT_ROTATION, null, null);
                     }
-                } else {
-                    Log.d(TAG, "Meloon-Fruit: Initialize Failure!");
-                }
                 Log.d(TAG, "Meloon-Fruit: Successfully initialized!");
                 isInitialized = true;
             }

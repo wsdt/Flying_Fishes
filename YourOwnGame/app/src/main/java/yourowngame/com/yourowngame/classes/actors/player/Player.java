@@ -1,6 +1,8 @@
 package yourowngame.com.yourowngame.classes.actors.player;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
@@ -16,11 +18,9 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.Projectile;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
-import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.GameView;
-import yourowngame.com.yourowngame.gameEngine.interfaces.Initializer;
 
 
 public class Player extends GameObject implements IPlayer {
@@ -33,13 +33,11 @@ public class Player extends GameObject implements IPlayer {
 
     /*-- Preloaded --*/
     private int intrinsicHeightOfPlayer;
-    private HashMap<String,Bitmap> loadedBitmaps; //must not be static
+    private HashMap<String, Bitmap> loadedBitmaps; //must not be static
 
 
-    public Player(double posX, double posY, double speedX, double speedY, int img[], int rotationDegree, @Nullable String name) {
-        super(posX, posY, speedX, speedY, img, rotationDegree, name);
-
-        this.initialize(LevelManager.getBackgroundManager().getGameView().getActivityContext());
+    public Player(@NonNull Context context, double posX, double posY, double speedX, double speedY, int img[], int rotationDegree, @Nullable String name) {
+        super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
     /**
@@ -89,8 +87,8 @@ public class Player extends GameObject implements IPlayer {
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
         //SET current Bitmap, LOAD current Bitmap, DRAW current Bitmap
-        this.setCurrentBitmap(loadedBitmaps.get(this.getRotationDegree()+"_"+((int) loopCount%this.getImg().length))); //reference for collision detection etc.
-        Log.d(TAG, "draw: Tried to draw bitmap index: "+this.getRotationDegree()+"_"+((int) loopCount%this.getImg().length)+"/Bitmap->"+this.getCurrentBitmap());
+        this.setCurrentBitmap(loadedBitmaps.get(this.getRotationDegree() + "_" + ((int) loopCount % this.getImg().length))); //reference for collision detection etc.
+        Log.d(TAG, "draw: Tried to draw bitmap index: " + this.getRotationDegree() + "_" + ((int) loopCount % this.getImg().length) + "/Bitmap->" + this.getCurrentBitmap());
 
         canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
@@ -98,54 +96,51 @@ public class Player extends GameObject implements IPlayer {
 
     //PRELOADING -----------------------------------
 
-    /** OBJ[0]: Activity */
-    @Override @SafeVarargs
+    /**
+     * OBJ[0]: Activity
+     */
+    @Override
+    @SafeVarargs
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
         try {
-            if (allObjs != null && !isInitialized) {
-                if (allObjs[0] instanceof Activity) {
-                    Activity activity = (Activity) allObjs[0];
-                    this.setIntrinsicHeightOfPlayer(activity.getResources().getDrawable(this.getImg()[0]).getIntrinsicHeight());
+            if (!isInitialized) {
+                this.setIntrinsicHeightOfPlayer(this.getContext().getResources().getDrawable(this.getImg()[0]).getIntrinsicHeight());
 
-                    /*Load all bitmaps [load all rotations and all images from array] -------------------
-                    * String of hashmap has following pattern: */
-                    HashMap<String, Bitmap> loadedBitmaps = new HashMap<>();
-                    Log.d(TAG, "initialize: Player img length: "+ getImg().length);
-                    for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
-                        loadedBitmaps.put(ROTATION_UP + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, ROTATION_UP, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
-                        loadedBitmaps.put(ROTATION_DOWN + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, ROTATION_DOWN, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
-                        loadedBitmaps.put(DEFAULT_ROTATION + "_" + imgFrame, this.getCraftedDynamicBitmap(activity, imgFrame, DEFAULT_ROTATION, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
-                        Log.d(TAG, "initialize: Loaded following bitmaps->"+
-                                ROTATION_UP + "_" + imgFrame+"//"+
-                                ROTATION_DOWN + "_" + imgFrame+"//"+
-                                DEFAULT_ROTATION + "_" +imgFrame
-                        );
-                    }
-                    this.setLoadedBitmaps(loadedBitmaps);
-                    this.setHeightOfBitmap(loadedBitmaps.get(ROTATION_UP + "_" + 0).getHeight());
-                    this.setWidthOfBitmap(loadedBitmaps.get(ROTATION_UP + "_" + 0).getWidth());
-                    Log.d(TAG, "HEIGHT of Bitmap = " + getHeightOfBitmap());
+                /*Load all bitmaps [load all rotations and all images from array] -------------------
+                 * String of hashmap has following pattern: */
+                HashMap<String, Bitmap> loadedBitmaps = new HashMap<>();
+                Log.d(TAG, "initialize: Player img length: " + getImg().length);
+                for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
+                    loadedBitmaps.put(ROTATION_UP + "_" + imgFrame, this.getCraftedDynamicBitmap(imgFrame, ROTATION_UP, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
+                    loadedBitmaps.put(ROTATION_DOWN + "_" + imgFrame, this.getCraftedDynamicBitmap(imgFrame, ROTATION_DOWN, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
+                    loadedBitmaps.put(DEFAULT_ROTATION + "_" + imgFrame, this.getCraftedDynamicBitmap(imgFrame, DEFAULT_ROTATION, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
+                    Log.d(TAG, "initialize: Loaded following bitmaps->" +
+                            ROTATION_UP + "_" + imgFrame + "//" +
+                            ROTATION_DOWN + "_" + imgFrame + "//" +
+                            DEFAULT_ROTATION + "_" + imgFrame
+                    );
                 }
-            } else {
-                return isInitialized;
+                this.setLoadedBitmaps(loadedBitmaps);
+                this.setHeightOfBitmap(loadedBitmaps.get(ROTATION_UP + "_" + 0).getHeight());
+                this.setWidthOfBitmap(loadedBitmaps.get(ROTATION_UP + "_" + 0).getWidth());
+
+                isInitialized = true;
+                Log.d(TAG, "HEIGHT of Bitmap = " + getHeightOfBitmap());
             }
         } catch (ClassCastException | NullPointerException | NoDrawableInArrayFound_Exception e) {
             //This should never be thrown! Just check in try block if null and if instance of to prevent issues!
             Log.e(TAG, "initialize: Initializing of Player object FAILED! See error below.");
             e.printStackTrace();
-            return isInitialized;
         }
         Log.d(TAG, "initialize: Initializing Player class successful!");
-        isInitialized = true;
         return isInitialized;
     }
 
 
-
     @Override
     public boolean cleanup() {
-        this.setPosY(LevelManager.getBackgroundManager().getGameView().getRootView().getHeight() / 4); //reset y when hitting ground
-        for (Projectile projectile : projectileList){
+        this.setPosY(Resources.getSystem().getDisplayMetrics().heightPixels / 4); //reset y when hitting ground
+        for (Projectile projectile : projectileList) {
             projectile.cleanup();
         }
         return true;
@@ -155,23 +150,23 @@ public class Player extends GameObject implements IPlayer {
      *             PROJECTILES AREA                *
      ***********************************************/
 
-    public void addProjectiles(@NonNull Activity activity){
-        projectileList.add(new Projectile(activity,this.getPosX() + this.getWidthOfBitmap()/2, this.getPosY() + this.getHeightOfBitmap()/2, 10, 0, new int[]{R.drawable.color_player_bullet}, 0, "bullet"));
+    public void addProjectiles(@NonNull Activity activity) {
+        projectileList.add(new Projectile(activity, this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0, new int[]{R.drawable.color_player_bullet}, 0, "bullet"));
     }
 
-    public void drawProjectiles(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount){
+    public void drawProjectiles(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {
         for (Projectile e : this.projectileList)
             e.draw(activity, canvas, loopCount);
     }
 
     //Here we need to access the array backwards, otherwise we will remove an index, that will be progressed, but isn't there anymore!
-    public void updateProjectiles(){
+    public void updateProjectiles() {
         Log.d(TAG2, "Projectile Size = " + this.projectileList.size());
-        if(!this.projectileList.isEmpty()){
-            for (int i = this.projectileList.size() - 1; i > -1; i--){
+        if (!this.projectileList.isEmpty()) {
+            for (int i = this.projectileList.size() - 1; i > -1; i--) {
                 this.projectileList.get(i).update(null, null, null);
 
-                if (this.projectileList.get(i).getPosX() > GameViewActivity.GAME_WIDTH-50){
+                if (this.projectileList.get(i).getPosX() > GameViewActivity.GAME_WIDTH - 50) {
                     Log.e(TAG2, "Bullet removed!");
                     this.projectileList.remove(this.projectileList.get(i));
                 }
@@ -183,11 +178,11 @@ public class Player extends GameObject implements IPlayer {
      *  GETTER & SETTER      *
      *************************/
 
-    public List getProjectiles(){
+    public List getProjectiles() {
         return projectileList;
     }
 
-    public Projectile getProjectileAtPosition(int pos){
+    public Projectile getProjectileAtPosition(int pos) {
         return projectileList.get(pos);
     }
 
@@ -207,23 +202,23 @@ public class Player extends GameObject implements IPlayer {
         this.loadedBitmaps = loadedBitmaps;
     }
 
-    public float getWidthOfPlayer(){
+    public float getWidthOfPlayer() {
         return (float) this.getPosY() + (this.getIntrinsicHeightOfPlayer() * Constants.GameLogic.GameView.widthInPercentage);
     }
 
-    public void incrementFireRate(){
+    public void incrementFireRate() {
         fireRate += 0.1;
-        if(fireRate > IPlayer.fireRateMax)
+        if (fireRate > IPlayer.fireRateMax)
             fireRate = IPlayer.fireRateMax; //max
     }
 
-    public void decrementFireRate(){
+    public void decrementFireRate() {
         fireRate -= 0.1;
-        if(fireRate < IPlayer.fireRateMin)
+        if (fireRate < IPlayer.fireRateMin)
             fireRate = IPlayer.fireRateMin; //min
     }
 
-    public float getFireRate(){
+    public float getFireRate() {
         return fireRate;
     }
 

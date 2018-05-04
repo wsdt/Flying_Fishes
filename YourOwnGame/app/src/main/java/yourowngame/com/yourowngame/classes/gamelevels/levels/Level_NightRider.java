@@ -1,5 +1,8 @@
 package yourowngame.com.yourowngame.classes.gamelevels.levels;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
@@ -29,9 +32,13 @@ import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 public class Level_NightRider extends Level {
     private static final String TAG = "Lvl_HarmlessSky";
 
+    public Level_NightRider (@NonNull Context context) {
+        super(context);
+    }
+
     @Override
     protected void determinePlayer() {
-        this.setPlayer(new Player(100, LevelManager.getBackgroundManager().getGameView().getRootView().getHeight() / 4, 5, 2, new int[]{
+        this.setPlayer(new Player(this.getContext(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2, new int[]{
                 R.drawable.player_hugo}, IPlayer.DEFAULT_ROTATION, "Hugo"));
     }
 
@@ -39,8 +46,8 @@ public class Level_NightRider extends Level {
     protected void determineBackgroundLayers() {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
         * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
-        this.getAllBackgroundLayers().add(new BackgroundLayer_staticBgImg(LevelManager.getBackgroundManager(), R.color.colorPrimaryDark, "DarkSky", IBackground.DEFAULT_BG_SPEED));
-        this.getAllBackgroundLayers().add(new BackgroundLayer_Clouds(LevelManager.getBackgroundManager(), new int[]{R.drawable.bglayer_1_cloud_2}, "Gewitter", IBackground.DEFAULT_BG_SPEED));
+        this.getAllBackgroundLayers().add(new BackgroundLayer_staticBgImg(this.getContext(), R.color.colorPrimaryDark, "DarkSky", IBackground.DEFAULT_BG_SPEED));
+        this.getAllBackgroundLayers().add(new BackgroundLayer_Clouds(this.getContext(), new int[]{R.drawable.bglayer_1_cloud_2}, "Gewitter", IBackground.DEFAULT_BG_SPEED));
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)
@@ -50,13 +57,13 @@ public class Level_NightRider extends Level {
     protected void determineAllEnemies() { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
         //Set allEnemies Arraylist
         /** Initializing Bomber-Enemy */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(HappenEnemy.class,1));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), HappenEnemy.class,1));
 
         /**Initializing Rocket-Enemy */
-       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(RocketFishEnemy.class, 12)); //damit die Leute derweil wirklich was zum Spielen haben haha
+       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), RocketFishEnemy.class, 12)); //damit die Leute derweil wirklich was zum Spielen haben haha
 
         /** Initializing Spawn-Enemies */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(BobaEnemy.class, 1));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), BobaEnemy.class, 1));
 
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
@@ -67,32 +74,9 @@ public class Level_NightRider extends Level {
          *  FRUIT INITIALIZING AREA *
          ****************************/
 
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(Meloon.class,2));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Meloon.class,2));
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
-    }
-
-    @Override
-    public void cleanUpLevelProperties() {
-        //CleanUp Player
-        this.getPlayer().cleanup();
-
-        //CleanUp Enemies
-        for (Enemy enemy : this.getAllEnemies()) {
-            enemy.cleanup();
-        }
-
-        //CleanUp Bglayers
-        for (Background background : this.getAllBackgroundLayers()) {
-            background.cleanup();
-        }
-
-        //CleanUp all fruits
-        for (Fruit fruit : this.getAllFruits()) {
-            fruit.cleanup();
-        }
-
-        Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
     }
 
     @Override
