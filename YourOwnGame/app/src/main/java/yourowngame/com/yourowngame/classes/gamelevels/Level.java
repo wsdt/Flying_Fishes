@@ -21,7 +21,7 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     private Context context;
 
     protected static SoundMgr soundMgr = new SoundMgr(); //static because always only one soundMgr instance
-    private String levelName; //Level name (maybe to show to user [e.g. Die dunkle Gruft, usw.]
+    private int levelNameResId; //Level name (maybe to show to user [e.g. Die dunkle Gruft, usw.] als Strings.xml res id for multilinguality!
     private Player player;
     private ArrayList<Background> allBackgroundLayers = new ArrayList<>(); //Background layers for each level (as Arraylist to avoid NullpointerExceptions, so we just do not allow gaps)
     private ArrayList<Enemy> allEnemies = new ArrayList<>(); //MUST NOT BE STATIC (different levels, different enemies), All enemies on screen (will be spawned again if isGone) for specific level
@@ -32,7 +32,7 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     public Level(@NonNull Context context) {
         Log.d(TAG, "Level: ###################### STARTING LOADING LEVEL ###############################");
         this.setContext(context);
-
+        determineMetaData();
         determinePlayer();
         determineBackgroundLayers();
         determineAllEnemies();
@@ -46,17 +46,14 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
         cleanUpLevelProperties();
     }
 
-    /** Level realizations should have a fallback/default background
-     * This method should calculate or simply just create the allBackgroundLayers-SparseArray
-     * and call setAllBackgroundLayers() with it.
-     *
-     * TODO: Ok good idea! I think the easiest fallback-procedure would be just adding fallback layers/enemies etc.
-     * TODO: into default level object/members (e.g. instead of new ArrayList<>() --> new ArrayList<>({all Objs})*/
     protected abstract void determinePlayer();
     protected abstract void determineBackgroundLayers();
     protected abstract void determineAllEnemies();
     protected abstract void determineAllFruits();
     protected abstract void playBackgroundMusic();
+    /** Defines default data (normally this method does not contain any logic
+     * operations). E.g. setting the levelName by getting it from the strings.xml*/
+    protected abstract void determineMetaData();
 
     /** Cleaning up here now, because it might be the same for all levels :) */
     public void cleanUpLevelProperties() {
@@ -104,13 +101,11 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
         this.allBackgroundLayers = allBackgroundLayers;
     }
 
-    public String getLevelName() {
-        return levelName;
+    public int getLevelNameResId() {
+        return levelNameResId;
     }
 
-    public void setLevelName(String levelName) {
-        this.levelName = levelName;
-    }
+    public void setLevelNameResId(int levelNameResId) {this.levelNameResId = levelNameResId;}
 
     public ArrayList<Enemy> getAllEnemies() {
         return allEnemies;

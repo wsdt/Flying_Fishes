@@ -42,7 +42,7 @@ public class LevelHierarchyActivity extends AppCompatActivity {
         RelativeLayout inflatedLevelView = (RelativeLayout) getLayoutInflater().inflate(R.layout.levelhierarchyactivity_level_info, parentView, false); //give parentView so layoutparams are set (attachToRoot so simultaneously added)
 
         /*Put level specific params into inflated view*/
-        ((TextView) inflatedLevelView.findViewById(R.id.lvlName)).setText(level.getLevelName());
+        ((TextView) inflatedLevelView.findViewById(R.id.lvlName)).setText(getResources().getString(level.getLevelNameResId()));
 
         parentView.addView(inflatedLevelView);
     }

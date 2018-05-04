@@ -39,6 +39,11 @@ public class Level_HarmlessSky extends Level {
     }
 
     @Override
+    protected void determineMetaData() {
+        this.setLevelNameResId(R.string.level_levelName_harmlessSky);
+    }
+
+    @Override
     protected void determinePlayer() {
         this.setPlayer(new Player(this.getContext(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2, new int[]{
                 R.drawable.player_hugo}, IPlayer.DEFAULT_ROTATION, "Hugo"));
