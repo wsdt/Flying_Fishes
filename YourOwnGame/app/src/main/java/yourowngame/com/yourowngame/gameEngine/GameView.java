@@ -124,7 +124,7 @@ public class GameView extends SurfaceView {
     }
 
     /********************************
-     * 1. D R A W I N G   - A R E A *
+     * 1. Draw Objects here         *
      ********************************/
     public void redraw(Canvas canvas, long loopCount) { //Create separate method, so we could add some things here
         Log.d(TAG, "redraw: Trying to invalidate/redraw GameView.");
@@ -166,7 +166,6 @@ public class GameView extends SurfaceView {
             startExitGameProcedure();
         }
     }
-
 
     /*****************************
      * 2. Update GameObjects here *
@@ -234,7 +233,8 @@ public class GameView extends SurfaceView {
             }
         }
 
-        /** Check player to Fruit Collision */
+        /** Check player to Fruit Collision
+        Works fine, but somehow collisionDetection of Avoci isnt 100% perfect");*/
         for (Fruit fruit : LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getAllFruits()) {
             if (CollisionManager.checkCollision(LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getPlayer(), fruit)) {
                 //increment highscore

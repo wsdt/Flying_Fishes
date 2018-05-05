@@ -28,7 +28,7 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
     public Meloon(@NonNull Context context) {
         super(context); //also call super constr! (initializing)
 
-        this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + (int) IFruit.MELOON_FRUIT_PROPERTIES.OFF_TIME));
+        this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + (int) OFF_TIME));
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
         this.setSpeedX(SPEED_X);
         this.setSpeedY(SPEED_Y);
@@ -39,6 +39,7 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
     }
 
 
+    /*************************************** UPDATE / DRAW *************************************************/
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
         this.setPosX(this.getPosX() - this.getSpeedX());
@@ -47,8 +48,9 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {
         canvas.drawBitmap(images[0], (int) getPosX(), (int) getPosY(), null);
-        Log.d(TAG,"POS X MELOON  ==  " + this.getPosX());
     }
+    /*************************************** UPDATE / DRAW *************************************************/
+
 
     @Override
     public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
@@ -72,12 +74,14 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
     }
 
 
+    /** reset positions, return true*/
     @Override
     public boolean cleanup() {
         resetPositions();
         return true;
     }
 
+    /** Fruits need to differ in here */
     @Override
     public void resetPositions() {
         this.setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + IFruit.MELOON_FRUIT_PROPERTIES.OFF_TIME));
