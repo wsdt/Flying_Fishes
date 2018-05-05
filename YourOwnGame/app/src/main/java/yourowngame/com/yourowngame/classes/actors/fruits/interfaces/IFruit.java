@@ -11,8 +11,8 @@ public interface IFruit {
      *      0.1 indicates all 10 seconds, 1 would be all 100 seconds
      */
     interface DEFAULT_FRUIT_PROPERTIES {
-        float SPEED_X = 7f;
-        float SPEED_Y = 7f;
+        float SPEED_X = 10f;
+        float SPEED_Y = 10f;
 
         int DEFAULT_ROTATION = 0;
         int Y_UPLIFT = 75; //so fruits will not be half out of screen
@@ -22,6 +22,8 @@ public interface IFruit {
     interface AVOCI_FRUIT_PROPERTIES {
         int HIGHSCORE_REWARD = 50;
         float OFF_TIME = 500f;
+
+        int[] IMAGE_FRAMES = new int[] {R.drawable.avoci};
     }
     interface MELOON_FRUIT_PROPERTIES {
         int HIGHSCORE_REWARD = 100;
@@ -32,5 +34,7 @@ public interface IFruit {
     interface PINAPOS_FRUIT_PROPERTIES {
         int HIGHSCORE_REWARD = 200;
         float OFF_TIME = 500;
+
+        int[] IMAGE_FRAMES = new int[] {R.drawable.pinapos};
     }
 }

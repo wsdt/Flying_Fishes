@@ -11,7 +11,9 @@ import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnem
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Avoci;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Pinapo;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.interfaces.IBackground;
@@ -25,10 +27,10 @@ import yourowngame.com.yourowngame.classes.gamelevels.Level;
  */
 
 
-public class Level_01 extends Level {
+public class Level_SummerSky extends Level {
     private static final String TAG = "Lvl_HarmlessSky";
 
-    public Level_01(@NonNull Context context) {
+    public Level_SummerSky(@NonNull Context context) {
         super(context);
     }
 
@@ -58,13 +60,13 @@ public class Level_01 extends Level {
     protected void determineAllEnemies() { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
         //Set allEnemies Arraylist
         /** Initializing Bomber-Enemy */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), HappenEnemy.class,3));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), HappenEnemy.class,2));
 
         /**Initializing Rocket-Enemy */
-       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), RocketFishEnemy.class, 3));
+       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), RocketFishEnemy.class, 2));
 
         /** Initializing Spawn-Enemies */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), BobaEnemy.class, 3));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), BobaEnemy.class, 2));
 
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
@@ -72,6 +74,8 @@ public class Level_01 extends Level {
     @Override
     protected void determineAllFruits() {
         this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Meloon.class,1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Avoci.class, 1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Pinapo.class, 1));
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
     }
@@ -86,6 +90,6 @@ public class Level_01 extends Level {
 
     @Override
     protected void playBackgroundMusic() {
-        //TODO: play bg sound [search resource] --> Level_01.soundMgr.play(LevelManager.getBackgroundManager().getGameView().getActivityContext(),R.raw.bgMusicLvl1,true);
+        //TODO: play bg sound [search resource] --> Level_SummerSky.soundMgr.play(LevelManager.getBackgroundManager().getGameView().getActivityContext(),R.raw.bgMusicLvl1,true);
     }
 }

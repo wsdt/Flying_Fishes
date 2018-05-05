@@ -8,8 +8,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.classes.annotations.Bug;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_01;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_02;
+import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_SummerSky;
+import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_NightRider;
 
 /**
  * Pattern: SINGLETON
@@ -76,8 +76,8 @@ public class LevelManager {
 
     private void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray
         setLevelList(new ArrayList<Level>()); //for restarting to avoid nullpointer and resetting levellist (here so we force this method to be called)
-        getLevelList().add(new Level_01(this.getContext()));
-        getLevelList().add(new Level_02(this.getContext()));
+        getLevelList().add(new Level_SummerSky(this.getContext()));
+        getLevelList().add(new Level_NightRider(this.getContext()));
         /*getLevelList().put(new Level_HauntedForest());
         getLevelList().put(new Level_UnknownLand());
         getLevelList().put(new Level_DarkDescent());*/
