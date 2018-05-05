@@ -23,16 +23,16 @@ public interface IFruit {
 
     interface AVOCI_FRUIT_PROPERTIES {
         int HIGHSCORE_REWARD = 50;
-        float OFF_TIME = 3000f;
+        float OFF_TIME = 500f;
     }
     interface MELOON_FRUIT_PROPERTIES {
         int HIGHSCORE_REWARD = 100;
-        float OFF_TIME = 2000f;
+        float OFF_TIME = 250f;
 
         int[] IMAGE_FRAMES = new int[] {R.drawable.meloon};
     }
     interface PINAPOS_FRUIT_PROPERTIES {
         int HIGHSCORE_REWARD = 200;
-        float OFF_TIME = 5000f;
+        float OFF_TIME = 100f;
     }
 }

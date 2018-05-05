@@ -24,6 +24,7 @@ public class BobaEnemy extends Enemy implements IEnemy.BOBA_ENEMY_PROPERTIES {
     private static final String TAG = "BobaEnemy";
     private static Bitmap[] images;
 
+    /**READ -> if you use this constructor, the current img will not be set as the currentBitmap! */
     public BobaEnemy(@NonNull Context context, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
         super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
     }
@@ -54,10 +55,6 @@ public class BobaEnemy extends Enemy implements IEnemy.BOBA_ENEMY_PROPERTIES {
 
     }
 
-
-    /**
-     * Single enemy should not draw all of them (not object-oriented)
-     */
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
         for (int i = 0; i < getImages().length; i++) {

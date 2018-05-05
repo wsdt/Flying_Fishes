@@ -238,8 +238,7 @@ public class GameView extends SurfaceView {
          * i know, we could just check which subclass it is, but again, bad smell
          * */
         for (Fruit fruit : LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getAllFruits()) {
-            if (CollisionManager.checkCollision(LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getPlayer(),
-                    LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getAllFruits().get(0))) {
+            if (CollisionManager.checkCollision(LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getPlayer(), fruit)) {
                 fruit.collected();
                 getHighscore().increment(fruit);
 

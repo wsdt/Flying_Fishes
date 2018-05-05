@@ -82,10 +82,10 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
 
     @Override
     public void isGone() {
-        if(getPosX() < 0 || isCollected()) {
+        if(this.getPosX() < 0 || this.isCollected()) {
             this.setPosX(GameViewActivity.GAME_WIDTH + IFruit.DEFAULT_FRUIT_PROPERTIES.OFF_TIME);
             this.setPosY(RandomMgr.getRandomFloat(100, GameViewActivity.GAME_HEIGHT-100));
-            setCollected(false);
+            this.setCollected(false);
         }
     }
 
@@ -102,16 +102,10 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
         return IFruit.MELOON_FRUIT_PROPERTIES.HIGHSCORE_REWARD;
     }
 
-    /*******************
-     * Getter & Setter *
-     *                 *
-     *******************/
-
-
+    /******************Getter & Setter ******************/
     public static Bitmap[] getImages() {
         return images;
     }
-
     public static void setImages(Bitmap[] images) {
         Meloon.images = images;
     }

@@ -11,6 +11,7 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
+import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 /** Used for generating or/and managing fruits.*/
@@ -26,6 +27,7 @@ public class FruitMgr {
         ArrayList<F> craftedFruits = new ArrayList<>();
         try {
             for (int i = 0; i < numberOfFruits; i++) {
+
                 craftedFruits.add(fruitClass.getConstructor(Context.class).newInstance(context)); //use default constructor
             }
             return craftedFruits;
