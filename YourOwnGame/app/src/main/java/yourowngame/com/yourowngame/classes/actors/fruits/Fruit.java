@@ -14,8 +14,7 @@ import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 
 @Enhance(message = {"Maybe replace isCollected/isOutOfBound etc. with Zustandsmuster",
     "Bitmap/Drawable int array consistency!"})
-@Bug (priority = Bug.Priority.MEDIUM,byDeveloper = Constants.Developers.WSDT,
-    problem = "When showing more than one fruit (see level 2 - meloons) and eating one of them BOTH disappear.")
+
 public abstract class Fruit extends GameObject implements IHighscore_RewardableObj, IFruit.DEFAULT_FRUIT_PROPERTIES {
     private boolean isCollected  = false;
     private boolean isOutOfBound = false;
