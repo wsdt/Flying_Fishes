@@ -23,6 +23,7 @@ import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 public class BobaEnemy extends Enemy implements IEnemy.BOBA_ENEMY_PROPERTIES {
     private static final String TAG = "BobaEnemy";
     private static Bitmap[] images;
+    private double startPointY = 0;
 
     /**READ -> if you use this constructor, the current img will not be set as the currentBitmap! */
     public BobaEnemy(@NonNull Context context, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
@@ -42,6 +43,7 @@ public class BobaEnemy extends Enemy implements IEnemy.BOBA_ENEMY_PROPERTIES {
         this.setRotationDegree(DEFAULT_ROTATION);
         this.setName("Spawn");
 
+        this.startPointY = this.getPosY();  //original position needed for updating
         this.setCurrentBitmap(getImages()[0]);
     }
 
@@ -50,7 +52,6 @@ public class BobaEnemy extends Enemy implements IEnemy.BOBA_ENEMY_PROPERTIES {
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
         resetIfOutOfBounds();
 
-        //add a smooth movement here
         this.setPosX(this.getPosX() - this.getSpeedX());
 
     }

@@ -7,18 +7,16 @@ import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import yourowngame.com.yourowngame.R;
+
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
-import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
     private final String TAG = "Meloon";
-    private Meloon meloon = null;
 
     private static Bitmap[] images;
 
@@ -30,7 +28,7 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
     public Meloon(@NonNull Context context) {
         super(context); //also call super constr! (initializing)
 
-        this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
+        this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + (int) IFruit.MELOON_FRUIT_PROPERTIES.OFF_TIME));
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
         this.setSpeedX(SPEED_X);
         this.setSpeedY(SPEED_Y);
@@ -43,7 +41,6 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-        isGone(); //check if isGone, or collected
         this.setPosX(this.getPosX() - this.getSpeedX());
     }
 
@@ -74,26 +71,17 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
         return isInitialized;
     }
 
+
     @Override
     public boolean cleanup() {
-        isGone(); //currently just do like the meloon is away
+        resetPositions();
         return true;
     }
 
     @Override
-    public void isGone() {
-        if(this.getPosX() < 0 || this.isCollected()) {
-            this.setPosX(GameViewActivity.GAME_WIDTH + IFruit.DEFAULT_FRUIT_PROPERTIES.OFF_TIME);
-            this.setPosY(RandomMgr.getRandomFloat(100, GameViewActivity.GAME_HEIGHT-100));
-            this.setCollected(false);
-        }
-    }
-
-    /** Fruit has been collected */
-    @Override
-    public void collected() {
-        //just for now, we need some good advice here
-        this.setCollected(true);
+    public void resetPositions() {
+        this.setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + IFruit.MELOON_FRUIT_PROPERTIES.OFF_TIME));
+        this.setPosY(RandomMgr.getRandomFloat(IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT, GameViewActivity.GAME_HEIGHT-IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT));
     }
 
     /** Get reward method for highscore */

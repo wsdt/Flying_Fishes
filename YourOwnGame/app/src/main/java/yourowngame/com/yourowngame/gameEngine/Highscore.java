@@ -49,6 +49,7 @@ public class Highscore {
     }
 
     @Delete(description = "I think we should not decrease the user's highscore (instead just make it harder to get points)")
+    //definitely!
     @Deprecated
     public void decrement(Enemy e) {
         counter -= 1; //e.getNegativePoints();
