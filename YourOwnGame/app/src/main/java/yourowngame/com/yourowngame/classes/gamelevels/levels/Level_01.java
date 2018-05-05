@@ -5,25 +5,19 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import java.lang.reflect.Field;
-
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.EnemyMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
-import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
-import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.interfaces.IBackground;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_staticBgImg;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 
 
 /**
@@ -77,10 +71,6 @@ public class Level_01 extends Level {
 
     @Override
     protected void determineAllFruits() {
-        /****************************
-         *  FRUIT INITIALIZING AREA *
-         ****************************/
-
         this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Meloon.class,1));
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
@@ -88,7 +78,7 @@ public class Level_01 extends Level {
 
     @Override
     public boolean areLevelAssignmentsAchieved() {
-        if (getLevelHighscore().getValue() > 1000) {
+        if (getCurrentLevelHighscore().getValue() > 1000) {
             return true;
         }
         return false;

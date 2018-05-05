@@ -15,7 +15,6 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
-import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
@@ -104,6 +103,8 @@ public class GameView extends SurfaceView {
             "which causes this method called again(!) and then it WORKS.",
     possibleSolution = "So I think we should find a way to register this listener in the levelObj itself!",
     priority = Bug.Priority.HIGH, byDeveloper = Constants.Developers.WSDT)
+    //TODO nevermind, user will achieve a level and than opens another one, which will set the properties back to start. i Guess!
+
     private void initGameObjects() {
         /** Prepare Highscore */
         this.getHighscore().addListener(new IHighscore_Observer() {
@@ -249,10 +250,6 @@ public class GameView extends SurfaceView {
 
             Log.d(TAG, "Fruit " + fruit + " = " + fruit.getPosX());
         }
-
-
-
-
     }
 
     /*********************************************************
@@ -348,8 +345,9 @@ public class GameView extends SurfaceView {
         this.activityContext = activityContext;
     }
 
-    public Highscore getHighscore() { //Dummy method for making the code more legible
-        return LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getLevelHighscore();
+    /** this returns the current Highscore */
+    public Highscore getHighscore() {
+        return LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getCurrentLevelHighscore();
     }
 
 

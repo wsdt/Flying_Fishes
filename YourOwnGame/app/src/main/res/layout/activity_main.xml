@@ -8,35 +8,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:addStatesFromChildren="true"
-    android:background="@color/thegame_grey">
+    android:background="@drawable/background_1920_1080">
 
     <!-- AppVersion will be determined by onCreate() -->
     <TextView
         android:id="@+id/mainActivity_appVersion"
         style="@style/defaultText"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp" />
 
     <LinearLayout
         android:id="@+id/mainActivity_btnList"
-        android:layout_width="545dp"
-        android:layout_height="197dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="28dp"
+        android:layout_width="389dp"
+        android:layout_height="114dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mainActivity_appVersion"
         android:gravity="center_vertical|center"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/mainActivity_btnStartGame"
             style="@style/menu_btn_white"
-            android:layout_width="500dp"
+            android:layout_width="208dp"
             android:layout_marginTop="15dp"
             android:onClick="startGame"
             android:text="@string/mainActivity_button_mode_adventure" />
@@ -44,7 +43,7 @@
         <Button
             android:id="@+id/mainActivity_btnHighscore"
             style="@style/menu_btn_white"
-            android:layout_width="500dp"
+            android:layout_width="162dp"
             android:layout_marginTop="15dp"
             android:onClick="showHighscore"
             android:text="@string/mainActivity_button_highscores" />
@@ -54,7 +53,7 @@
         <Button
             android:id="@+id/mainActivity_btnSettings"
             style="@style/menu_btn_white"
-            android:layout_width="500dp"
+            android:layout_width="180dp"
             android:layout_marginTop="15dp"
             android:text="@string/mainActivity_button_settings"
             android:visibility="gone" />

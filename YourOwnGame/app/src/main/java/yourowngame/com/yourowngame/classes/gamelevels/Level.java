@@ -6,13 +6,11 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
-import yourowngame.com.yourowngame.classes.gamelevels.interfaces.IDrawAble;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.Highscore;
 
@@ -59,24 +57,15 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     public void cleanUpLevelProperties() {
         //CleanUp Player
         this.getPlayer().cleanup();
-
         //CleanUp Enemies
-        for (Enemy enemy : this.getAllEnemies()) {
-            enemy.cleanup();
-        }
-
+        for (Enemy enemy : this.getAllEnemies()) {enemy.cleanup();}
         //CleanUp Bglayers
-        for (Background background : this.getAllBackgroundLayers()) {
-            background.cleanup();
-        }
-
+        for (Background background : this.getAllBackgroundLayers()) {background.cleanup();}
         //CleanUp all fruits
-        for (Fruit fruit : this.getAllFruits()) {
-            fruit.cleanup();
-        }
+        for (Fruit fruit : this.getAllFruits()) {fruit.cleanup();}
 
         //Because level-dependent, also reset when level has changed
-        getLevelHighscore().resetCounter();
+        getCurrentLevelHighscore().resetCounter();
 
         Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
     }
@@ -131,7 +120,7 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
         this.allFruits = allFruits;
     }
 
-    public Highscore getLevelHighscore() {
+    public Highscore getCurrentLevelHighscore() {
         return levelHighscore;
     }
 
