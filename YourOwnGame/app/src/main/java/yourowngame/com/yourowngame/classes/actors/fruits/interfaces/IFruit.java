@@ -11,14 +11,12 @@ public interface IFruit {
      *      0.1 indicates all 10 seconds, 1 would be all 100 seconds
      */
     interface DEFAULT_FRUIT_PROPERTIES {
-        int ADDITIONAL_GAME_WIDTH = 100;  //So Fruits start GameWidt + 100, so they all dont spawn at the same point!
-        float OFF_TIME = 10000f;
-
         float SPEED_X = 7f;
-        float SPEED_Y = 7f; //could be also level dependent :) this will surely be level dependent
+        float SPEED_Y = 7f;
 
         int DEFAULT_ROTATION = 0;
-        int HIGHSCORE_REWARD = 15;
+        int Y_UPLIFT = 75; //so fruits will not be half out of screen
+
     }
 
     interface AVOCI_FRUIT_PROPERTIES {
@@ -27,12 +25,12 @@ public interface IFruit {
     }
     interface MELOON_FRUIT_PROPERTIES {
         int HIGHSCORE_REWARD = 100;
-        float OFF_TIME = 250f;
+        float OFF_TIME = 1000;
 
         int[] IMAGE_FRAMES = new int[] {R.drawable.meloon};
     }
     interface PINAPOS_FRUIT_PROPERTIES {
         int HIGHSCORE_REWARD = 200;
-        float OFF_TIME = 100f;
+        float OFF_TIME = 500;
     }
 }

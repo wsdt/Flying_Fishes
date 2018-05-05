@@ -10,7 +10,10 @@ import android.support.annotation.Nullable;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 
+
+@Enhance(message = "do not change this, until the meloon-class works perfectly")
 public class Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTIES {
     private Bitmap[] images;
 
@@ -45,14 +48,10 @@ public class Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTIES {
     }
 
     @Override
-    public void isGone() {
+    public void resetPositions() {
 
     }
 
-    @Override
-    public void collected() {
-
-    }
 
     /** Get reward method for highscore */
     @Override

@@ -233,19 +233,26 @@ public class GameView extends SurfaceView {
             }
         }
 
-        /** Check player to Fruit Collision
-         *
-         * i know, we could just check which subclass it is, but again, bad smell
-         * */
+        /** Check player to Fruit Collision */
         for (Fruit fruit : LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getAllFruits()) {
             if (CollisionManager.checkCollision(LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getPlayer(), fruit)) {
-                fruit.collected();
+                //increment highscore
                 getHighscore().increment(fruit);
-
-                //Eats fruit, collects it, fruit vanishes
-                Log.d(TAG, "Player collected a fruit.");
+                //reset fruit
+                fruit.resetPositions();
+                Log.e(TAG, "Player collected a fruit.");
             }
+            //fruits has left the screen, will rejoin
+            if(fruit.hasLeftScreen()){
+                fruit.resetPositions();
+            }
+
+            Log.d(TAG, "Fruit " + fruit + " = " + fruit.getPosX());
         }
+
+
+
+
     }
 
     /*********************************************************

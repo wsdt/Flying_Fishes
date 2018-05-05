@@ -12,12 +12,14 @@ import android.widget.Toast;
  *
  */
 
+
 public class OnTouchHandler implements View.OnTouchListener {
     private static final String TAG = "OnTouchHandler";
     private boolean isTouched = false;
 
 
     @Override
+    @Deprecated
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
 
@@ -30,6 +32,7 @@ public class OnTouchHandler implements View.OnTouchListener {
         return isTouched();
     }
 
+    @Deprecated
     public boolean isTouched() {
         return this.isTouched;
     }

@@ -15,9 +15,8 @@ import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 @Enhance(message = {"Maybe replace isCollected/isOutOfBound etc. with Zustandsmuster",
     "Bitmap/Drawable int array consistency!"})
 
+
 public abstract class Fruit extends GameObject implements IHighscore_RewardableObj, IFruit.DEFAULT_FRUIT_PROPERTIES {
-    private boolean isCollected  = false;
-    private boolean isOutOfBound = false;
     private int spawnTime = 0;
 
     public Fruit(@NonNull Context context, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
@@ -39,28 +38,14 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
     @Override
     public abstract boolean cleanup();
 
-    //FRUIT specific methods
-    public abstract void isGone();
-    public abstract void collected();
+    public abstract void resetPositions();
 
+
+    public boolean hasLeftScreen(){
+        return this.getPosX() < 0;
+    }
 
     //GETTER/SETTERS
-    public boolean isCollected() {
-        return isCollected;
-    }
-
-    public void setCollected(boolean collected) {
-        isCollected = collected;
-    }
-
-    public boolean isOutOfBound() {
-        return isOutOfBound;
-    }
-
-    public void setOutOfBound(boolean outOfBound) {
-        isOutOfBound = outOfBound;
-    }
-
     public int getSpawnTime() {
         return spawnTime;
     }
