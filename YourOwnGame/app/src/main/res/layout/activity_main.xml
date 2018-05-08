@@ -50,7 +50,7 @@
             style="@style/menu_btn_white"
             android:layout_width="208dp"
             android:layout_marginTop="15dp"
-            android:onClick="startGame"
+            android:onClick="startAdventureMode"
             android:text="@string/mainActivity_button_mode_adventure" />
 
         <Button
