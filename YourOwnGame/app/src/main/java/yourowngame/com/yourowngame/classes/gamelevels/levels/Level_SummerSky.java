@@ -83,7 +83,7 @@ public class Level_SummerSky extends Level {
     @Override
     public boolean areLevelAssignmentsAchieved() {
         //So first level is based on the highScore pts
-        if (getCurrentLevelHighscore().getValue() >= 2500) {
+        if (getCurrentLevelHighscore().getValue() >= 500) {
             return true;
         }
         return false;

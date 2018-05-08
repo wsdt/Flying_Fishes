@@ -89,7 +89,6 @@ public class GameSuccessDialog extends Dialog implements View.OnClickListener {
         /** Amount of Avocis-Field */
         TextView amountAvocis = (TextView) findViewById(R.id.amountAvocisTxtView);
             amountAvocis.setText(getContext().getResources().getString(R.string.equals, FruitCounter.getInstance().getLevelAmountPinapos()));
-
     }
 
 
@@ -99,19 +98,23 @@ public class GameSuccessDialog extends Dialog implements View.OnClickListener {
             case R.id.dialogNextLevelBtn:
                 Log.d(TAG, "User wants to play the nextLevel");
                 Intent toLevelActy = new Intent(getContext(), LevelHierarchyActivity.class);
+                dismiss();
                 getContext().startActivity(toLevelActy);
                 break;
             case R.id.dialogHighscoreBtn:
                 Log.d(TAG, "User wants to view the scores");
                 Intent toHighscoreActy = new Intent(getContext(), HighscoreActivity.class);
+                dismiss();
                 getContext().startActivity(toHighscoreActy);
                 break;
             case R.id.dialogRepeatLevelBtn:
                 // and here, the level will just start again...
                 break;
             default:
+                dismiss();
                 Intent toLevelAct = new Intent(getContext(), LevelHierarchyActivity.class);
                 getContext().startActivity(toLevelAct);
+
         }
     }
 }

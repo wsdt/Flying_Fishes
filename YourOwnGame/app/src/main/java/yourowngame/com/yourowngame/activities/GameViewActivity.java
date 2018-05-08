@@ -79,6 +79,12 @@ public class GameViewActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
     //GETTER/SETTER (Base class)
     public FrameLayout getGameLayout() {
         return gameLayout;

@@ -55,7 +55,7 @@
     <string name="success">Success! You Achieved level x</string>
 
     <!-- Success-Dialog descriptions -->
-    <string name="level_achieve_txt">Success! You achieved level: %1$d</string>
+    <string name="level_achieve_txt">Success! You completed level: %1$d</string>
     <string name="equals"> = %1$d </string>
     <string name="yourScore"> Your Score = %1$d</string>
 
