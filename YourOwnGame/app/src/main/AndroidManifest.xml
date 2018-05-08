@@ -28,6 +28,7 @@
         <activity
             android:name=".activities.GameViewActivity"
             android:configChanges="keyboardHidden|orientation"
+            android:noHistory="true"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/SplashTheme" />
 

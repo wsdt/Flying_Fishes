@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.manager;
+package yourowngame.com.yourowngame.classes.manager.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -48,10 +48,11 @@ import static android.support.constraint.Constraints.TAG;
 
 
 public class GameSuccessDialog extends Dialog implements View.OnClickListener {
-
     public final String TAG = "GameDialog";
 
-    public GameSuccessDialog(@NonNull Context context, LevelManager manager) {
+    /** Only package private (= NO zugriffsmodifier (neq protected)) constructor so it is
+     * only called from dialogMgr. */
+    GameSuccessDialog(@NonNull Context context) {
         super(context);
     }
 
@@ -97,23 +98,20 @@ public class GameSuccessDialog extends Dialog implements View.OnClickListener {
         switch(v.getId()){
             case R.id.dialogNextLevelBtn:
                 Log.d(TAG, "User wants to play the nextLevel");
-                Intent toLevelActy = new Intent(getContext(), LevelHierarchyActivity.class);
                 dismiss();
-                getContext().startActivity(toLevelActy);
+                getContext().startActivity(new Intent(getContext(), LevelHierarchyActivity.class));
                 break;
             case R.id.dialogHighscoreBtn:
                 Log.d(TAG, "User wants to view the scores");
-                Intent toHighscoreActy = new Intent(getContext(), HighscoreActivity.class);
                 dismiss();
-                getContext().startActivity(toHighscoreActy);
+                getContext().startActivity(new Intent(getContext(), HighscoreActivity.class));
                 break;
             case R.id.dialogRepeatLevelBtn:
                 // and here, the level will just start again...
                 break;
             default:
                 dismiss();
-                Intent toLevelAct = new Intent(getContext(), LevelHierarchyActivity.class);
-                getContext().startActivity(toLevelAct);
+                getContext().startActivity(new Intent(getContext(), LevelHierarchyActivity.class));
 
         }
     }
