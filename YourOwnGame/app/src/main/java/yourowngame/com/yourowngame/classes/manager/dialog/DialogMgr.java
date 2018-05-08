@@ -11,8 +11,11 @@ import android.util.Log;
 import android.widget.RelativeLayout;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 
+@Enhance (message = "Maybe make this to a dialog base class which overwrites show() etc. and " +
+        "prevents many errors. Good cohesion etc. So easily many types of dialogues manageable.")
 public class DialogMgr {
     private Activity context;
     private static final String TAG = "DialogMgr";
@@ -24,6 +27,8 @@ public class DialogMgr {
 
     /** Use this method to prevent badtoken exceptions! */
     public void showDialog(@NonNull Dialog dialog) {
+        dialog.setCancelable(false); //normally we want to force our user to see the dialog (prevent outside and back touch/click) [especially for levelachieved dialog]
+
         if (!getContext().isFinishing()) {
             dialog.show();
         }
