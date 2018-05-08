@@ -46,18 +46,6 @@ public class LevelManager {
         return null;
     }
 
-    private int levelAchieved() {
-        Log.d(TAG, "levelAchieved: User achieved current level. Waiting for response...");
-
-        //Check if level++ exists,
-        if ((CURRENT_LEVEL+1) >= getLevelList().size()) { //is next lvl indexoutofbonds?
-            Log.w(TAG, "levelAchieved: Can't go into next level, because this is the LAST one!");
-            return CURRENT_LEVEL;
-        } else {
-            return ++CURRENT_LEVEL; //pre-inkrement to return new current level
-        }
-    }
-
     @Bug (problem = "First play works, but if we restart the game, the user achieves the level immediately on next validation whether" +
             "level assignments are achieved. So e.g. level 2 after restart also for only 50 points possible!")
     public void initiateLevelAchievedProcess(@NonNull DialogMgr dialogMgr) {
@@ -90,6 +78,20 @@ public class LevelManager {
     public int getCurrentLevel() { //No setter, because level should be managed by LevelManager
         return CURRENT_LEVEL;
     }
+
+    public int setCurrentLevel(int newLevel) {
+        Log.d(TAG, "setCurrentLevel: Setting level");
+
+        //Check if level++ exists,
+        if ((newLevel) >= getLevelList().size()) { //is lvl indexoutofbonds?
+            Log.w(TAG, "setCurrentLevel: Can't go into level. Returning already set level.");
+            return CURRENT_LEVEL;
+        } else {
+            CURRENT_LEVEL = newLevel;
+            return newLevel; //pre-inkrement to return new current level
+        }
+    }
+
     /** Used for restarting game so user starts again with lvl 1.*/
     public void resetGame() {
         getCurrentLevelObj().cleanUpLevelProperties();
