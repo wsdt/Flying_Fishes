@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.gameEngine;
+package yourowngame.com.yourowngame.classes.counters;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
-import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
 import yourowngame.com.yourowngame.classes.annotations.Delete;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;

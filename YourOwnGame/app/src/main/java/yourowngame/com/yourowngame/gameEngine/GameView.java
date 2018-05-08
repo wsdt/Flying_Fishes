@@ -17,12 +17,14 @@ import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
+import yourowngame.com.yourowngame.classes.counters.FruitCounter;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
-import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.DialogMgr;
+import yourowngame.com.yourowngame.classes.manager.GameSuccessDialog;
 import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
+import yourowngame.com.yourowngame.classes.counters.Highscore;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
 
 /**
@@ -97,16 +99,13 @@ public class GameView extends SurfaceView {
     }
 
     //initialize components that match GameObject()
-    @Bug (problem = "Highscore on UI works for first level, but in second level it just get's incremented" +
-            "hiddenly (you will see it when game is over), but the highscore value in Textview is not refreshed." +
-            "Additionally it works also in second level if we go during the game to the mainActivity and then back, " +
-            "which causes this method called again(!) and then it WORKS.",
-    possibleSolution = "So I think we should find a way to register this listener in the levelObj itself!",
-    priority = Bug.Priority.HIGH, byDeveloper = Constants.Developers.WSDT)
-    //TODO nevermind, user will achieve a level and than opens another one, which will set the properties back to start. i Guess!
+
+    @Bug(byDeveloper = "Solution",
+    problem = "navigation works, but if we navigate from game ending to f.e the highscore, or next level (which would mean directly to the levelhierarchy," +
+              " AND THEN back to the last activity, the game crashes",
+    possibleSolution = "i guess because we are destroying the stack-system, i guess android wants to go back to the last activity, but that one has been vanished...")
 
     private void initGameObjects() {
-        /** Prepare Highscore */
         this.getHighscore().addListener(new IHighscore_Observer() {
             @Override
             public void onHighscoreChanged() {
@@ -115,9 +114,15 @@ public class GameView extends SurfaceView {
                 /*Refresh Highscore lbl*/
                 GameView.this.getActivityContext().setNewHighscoreOnUI();
 
-                /*Evaluate whether user achieved level or not.*/
+                /*Evaluate whether user achieved level or not. */
                 if (LevelManager.getInstance(GameView.this.getActivityContext()).getCurrentLevelObj().areLevelAssignmentsAchieved()) {
-                    LevelManager.getInstance(GameView.this.getActivityContext()).initiateLevelChangeProcess();
+                    thread.setRunning(false);
+                    getActivityContext().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new GameSuccessDialog(getActivityContext(), LevelManager.getInstance(GameView.this.getActivityContext())).show();
+                        }
+                    });
                 }
             }
         });
@@ -173,27 +178,27 @@ public class GameView extends SurfaceView {
     public void updateGameObjects() {
         Level currLevel = LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj();
 
-        //Update player
+        /** Uppdate player */
         currLevel.getPlayer().update(null,
                 GameView.this.getMultiTouchHandler().isMultiTouched() || GameView.this.getMultiTouchHandler().isMoving(),
                 false);
 
-        //Update all enemies
+        /** Update all enemies */
         for (Enemy enemy : currLevel.getAllEnemies()) {
             enemy.update(currLevel.getPlayer(), null, null);
         }
 
-        //Update all fruits
+        /** Update all fruits */
         for (Fruit fruit : currLevel.getAllFruits()) {
             fruit.update(null,null,null);
         }
 
-        //Update bglayers
+        /** Update bglayers */
         for (Background background : currLevel.getAllBackgroundLayers()) {
             background.updateBackground();
         }
 
-        //Update bullets
+        /** Update bullets */
         currLevel.getPlayer().updateProjectiles();
 
         /** Check Shooting */
@@ -233,12 +238,13 @@ public class GameView extends SurfaceView {
             }
         }
 
-        /** Check player to Fruit Collision
-        Works fine, but somehow collisionDetection of Avoci isnt 100% perfect");*/
+        /** Check player to Fruit Collision - Works fine, but somehow collisionDetection of Avoci isnt 100% perfect");*/
         for (Fruit fruit : LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getAllFruits()) {
             if (CollisionManager.checkCollision(LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getPlayer(), fruit)) {
                 //increment highscore
                 getHighscore().increment(fruit);
+                //add collected Fruit
+                FruitCounter.getInstance().fruitCollected(fruit);
                 //reset fruit
                 fruit.resetPositions();
                 Log.e(TAG, "Player collected a fruit.");
@@ -249,6 +255,13 @@ public class GameView extends SurfaceView {
             }
 
             Log.d(TAG, "Fruit " + fruit + " = " + fruit.getPosX());
+        }
+
+        /** Check if levelAssignment is true */
+        if(LevelManager.getInstance(GameView.this.getActivityContext()).getCurrentLevelObj().areLevelAssignmentsAchieved()){
+            // LevelManager.startDialog()... -> that dialog will be the one from levelAchieved()
+            // and the LevelManager will then lead to further action
+
         }
     }
 
