@@ -44,6 +44,7 @@ public abstract class Level {
         cleanUpLevelProperties();
     }
 
+
     protected abstract void determinePlayer();
     protected abstract void determineBackgroundLayers();
     protected abstract void determineAllEnemies();

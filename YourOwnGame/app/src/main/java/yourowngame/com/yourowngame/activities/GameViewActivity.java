@@ -11,6 +11,7 @@ import android.widget.TextView;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
+import yourowngame.com.yourowngame.gameEngine.GameLoopThread;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
 /**
@@ -79,6 +80,7 @@ public class GameViewActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
         //TODO: pause thread and show pause dialog!
     }
 
