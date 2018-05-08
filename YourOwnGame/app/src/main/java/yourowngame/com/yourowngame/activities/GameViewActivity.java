@@ -23,10 +23,9 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
 
 public class GameViewActivity extends AppCompatActivity {
     private static final String TAG = "GameViewActivity";
-    private FrameLayout gameLayout;
     private GameView gameView;
     private static SoundMgr soundMgr = new SoundMgr();
-    private TextView highscoreVal, coinsVal; //first one for the points, second for the coins
+    private TextView highscoreVal; //for the points
     public static int GAME_HEIGHT;
     public static int GAME_WIDTH;
 
@@ -43,7 +42,6 @@ public class GameViewActivity extends AppCompatActivity {
 
 
         Log.d(TAG, "onCreate: Trying to load game.");
-        setGameLayout((FrameLayout) findViewById(R.id.gameViewLayout));
 
         /** Master-call, create GameView*/
         setGameView(((GameView) findViewById(R.id.gameViewActivity_gameView)));
@@ -59,15 +57,6 @@ public class GameViewActivity extends AppCompatActivity {
         Log.d(TAG, "HEIGHT = " + GAME_HEIGHT + "WIDTH = " + GAME_WIDTH);
     }
 
-    /**
-     * Custom OnClickListeners (recommendation: add them directly in xml)
-     * --> Foreach action a own method (Principle: The only reason to change code should be an error) so switch case violates that
-     */
-    public void onShootBtn(View v) {
-        //TODO: Add shoot sound res --> GameViewActivity.soundMgr.play(this,R.raw.shootSound,false);
-        LevelManager.getInstance(this).getCurrentLevelObj().getPlayer().addProjectiles(this);
-    }
-
     /** This method should only be called by Observer-Pattern! (better performance)*/
     public void setNewHighscoreOnUI() {
         this.runOnUiThread(new Runnable() {
@@ -79,33 +68,21 @@ public class GameViewActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        /*TODO: Call the same method as in onPause(), so we pause the game thread and let the user
+        todo: continue when he comes back. */
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
-
+        //TODO: pause thread and show pause dialog!
     }
 
     //GETTER/SETTER (Base class)
-    public FrameLayout getGameLayout() {
-        return gameLayout;
-    }
-
-    public void setGameLayout(FrameLayout gameLayout) {
-        this.gameLayout = gameLayout;
-    }
-
-    public FrameLayout getView() {
-        return gameLayout;
-    }
-
-    public int getWidth() {
-        return gameLayout.getWidth();
-    }
-
-    public int getHeight() {
-        return gameLayout.getHeight();
-    }
-
     public GameView getGameView() {
         return gameView;
     }
@@ -118,13 +95,9 @@ public class GameViewActivity extends AppCompatActivity {
         return highscoreVal;
     }
 
-    public TextView getCoinsVal() { return coinsVal; }
-
     public void setHighscoreVal_textView(TextView highscoreVal) {
         this.highscoreVal = highscoreVal;
     }
-
-    public void setCoinsVal(TextView coinsVal) {this.coinsVal = coinsVal;}
 }
 
 

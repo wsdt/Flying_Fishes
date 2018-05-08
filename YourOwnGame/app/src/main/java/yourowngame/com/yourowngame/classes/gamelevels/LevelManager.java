@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_SummerSky;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_NightRider;
+import yourowngame.com.yourowngame.classes.manager.dialog.DialogMgr;
 
 /**
  * Pattern: SINGLETON
@@ -45,13 +46,6 @@ public class LevelManager {
         return null;
     }
 
-    /** HERE we need to implement the dialog, that leads the USER either to the next level, to the highScore or to repeat the current level
-     *  The value the dialog returns, 0, 1 or 2 indicates which action he wants,
-     *  f.e 0 = repeat
-     *      1 = highscore
-     *      2 = start next level.
-     *
-     *  So level is achieved, user needs to decide, user decides, action happens    */
     private int levelAchieved() {
         Log.d(TAG, "levelAchieved: User achieved current level. Waiting for response...");
 
@@ -60,20 +54,25 @@ public class LevelManager {
             Log.w(TAG, "levelAchieved: Can't go into next level, because this is the LAST one!");
             return CURRENT_LEVEL;
         } else {
-            Toast.makeText(this.getContext(), "Level "+CURRENT_LEVEL+" achieved. Entrying level "+(CURRENT_LEVEL+1), Toast.LENGTH_SHORT).show();
             return ++CURRENT_LEVEL; //pre-inkrement to return new current level
         }
     }
 
     @Bug (problem = "First play works, but if we restart the game, the user achieves the level immediately on next validation whether" +
             "level assignments are achieved. So e.g. level 2 after restart also for only 50 points possible!")
-    public int initiateLevelChangeProcess() {
-        Log.d(TAG, "initiateLevelChangeProcess: Trying to change level.");
+    public void initiateLevelAchievedProcess(@NonNull DialogMgr dialogMgr) {
+        Log.d(TAG, "initiateLevelAchievedProcess: Trying to change level.");
 
-        this.getCurrentLevelObj().cleanUpLevelProperties(); //remove everything from display
+        //use old levelobj possible here (last chance) --> show dialog
+        dialogMgr.showDialog(dialogMgr.createDialog_LevelAchieved());
+
+
+        /** According to our current philosophy we do not make fluent level changes so following lines
+         * are not necessary. Just show dialog and do the things we want to. */
+        /*this.getCurrentLevelObj().cleanUpLevelProperties(); //remove everything from display
 
         //After this call the levelObj reference has been changed! So clean up the game field before (remove all enemies etc.)
-        return levelAchieved();
+        return levelAchieved();*/
     }
 
     private void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray

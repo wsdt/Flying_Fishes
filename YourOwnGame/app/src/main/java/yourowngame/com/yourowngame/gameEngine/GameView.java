@@ -15,13 +15,14 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
+import yourowngame.com.yourowngame.classes.annotations.Test;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
-import yourowngame.com.yourowngame.classes.manager.DialogMgr;
-import yourowngame.com.yourowngame.classes.manager.GameSuccessDialog;
+import yourowngame.com.yourowngame.classes.global_configuration.Constants;
+import yourowngame.com.yourowngame.classes.manager.dialog.DialogMgr;
 import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 import yourowngame.com.yourowngame.classes.counters.Highscore;
@@ -38,6 +39,7 @@ public class GameView extends SurfaceView {
     private GameViewActivity activityContext;
     private SurfaceHolder holder;
     private GameLoopThread thread;
+    private DialogMgr dialogMgr;
     
     private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
     private FrameLayout layout;
@@ -60,9 +62,10 @@ public class GameView extends SurfaceView {
      * activity:onCreate() is done.*/
     public void startGame(GameViewActivity context) {
         this.setActivityContext(context);
+        this.setDialogMgr(new DialogMgr(context));
 
         /** Initialize View Components */
-        layout = context.getView();
+        layout = (FrameLayout) context.findViewById(R.id.gameViewLayout);
 
         /** Initialize GameObjects & eq here! After initializing, the GameLoop will start!*/
         initGameObjects();
@@ -104,12 +107,12 @@ public class GameView extends SurfaceView {
     }
 
     //initialize components that match GameObject()
-
-    @Bug(byDeveloper = "Solution",
+    @Bug(byDeveloper = Constants.Developers.SOLUTION,
     problem = "navigation works, but if we navigate from game ending to f.e the highscore, or next level (which would mean directly to the levelhierarchy," +
               " AND THEN back to the last activity, the game crashes",
     possibleSolution = "we need to remove the GameViewActivity from Stack, after navigation! but how? if he wants to go back, the gameplay goes on..")
-
+    @Test(byDeveloper = Constants.Developers.WSDT,priority = Test.Priority.MEDIUM,
+            message = "Bug should be solved by adding noHistory=true in android manifest. Please test this and if bug is solved remove both annotations.")
     private void initGameObjects() {
         this.getHighscore().addListener(new IHighscore_Observer() {
             @Override
@@ -125,7 +128,7 @@ public class GameView extends SurfaceView {
                     getActivityContext().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            new GameSuccessDialog(getActivityContext(), LevelManager.getInstance(GameView.this.getActivityContext())).show();
+                            LevelManager.getInstance(getActivityContext()).initiateLevelAchievedProcess(getDialogMgr());
                         }
                     });
                 }
@@ -284,9 +287,9 @@ public class GameView extends SurfaceView {
                     @Override
                     public void run() {
                         Resources res = getActivityContext().getResources();
+                        DialogMgr dialogMgr = new DialogMgr(getActivityContext());
 
-
-                        (new DialogMgr(getActivityContext())).showDialog_Generic(
+                        dialogMgr.showDialog(dialogMgr.createDialog_Generic(
                                 res.getString(R.string.dialog_generic_gameOver_title),
                                 String.format(res.getString(R.string.dialog_generic_gameOver_msg), getHighscore().getValue()),
                                 res.getString(R.string.dialog_generic_button_positive_gameOverAccept),
@@ -316,7 +319,7 @@ public class GameView extends SurfaceView {
                                         );
                                     }
                                 }
-                        );
+                        ));
                     }
                 });
                 retry = false;
@@ -375,5 +378,13 @@ public class GameView extends SurfaceView {
 
     public void setMultiTouchHandler(OnMultiTouchHandler multiTouchHandler) {
         this.multiTouchHandler = multiTouchHandler;
+    }
+
+    public DialogMgr getDialogMgr() {
+        return dialogMgr;
+    }
+
+    public void setDialogMgr(DialogMgr dialogMgr) {
+        this.dialogMgr = dialogMgr;
     }
 }
