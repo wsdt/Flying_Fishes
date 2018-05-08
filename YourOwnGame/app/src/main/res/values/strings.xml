@@ -52,5 +52,12 @@
     <!-- LEVELs -->
     <string name="level_levelName_harmlessSky">Harmless Sky</string>
     <string name="level_levelName_nightRider">Night Rider</string>
+    <string name="success">Success! You Achieved level x</string>
+
+    <!-- Success-Dialog descriptions -->
+    <string name="level_achieve_txt">Success! You achieved level: %1$d</string>
+    <string name="equals"> = %1$d </string>
+    <string name="yourScore"> Your Score = %1$d</string>
+
 
 </resources>

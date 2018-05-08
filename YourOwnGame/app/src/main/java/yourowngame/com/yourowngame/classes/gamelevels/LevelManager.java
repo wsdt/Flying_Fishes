@@ -45,19 +45,21 @@ public class LevelManager {
         return null;
     }
 
-    /**
-     * This method is called when user achieved a level and is allowed to play the next one.
-     * The new level will be returned.
-     */
+    /** HERE we need to implement the dialog, that leads the USER either to the next level, to the highScore or to repeat the current level
+     *  The value the dialog returns, 0, 1 or 2 indicates which action he wants,
+     *  f.e 0 = repeat
+     *      1 = highscore
+     *      2 = start next level.
+     *
+     *  So level is achieved, user needs to decide, user decides, action happens    */
     private int levelAchieved() {
-        Log.d(TAG, "levelAchieved: User achieved current level. Entered next level. Ensure that level exists (sparseArray) and change components (enemies, bg etc.)");
+        Log.d(TAG, "levelAchieved: User achieved current level. Waiting for response...");
 
+        //Check if level++ exists,
         if ((CURRENT_LEVEL+1) >= getLevelList().size()) { //is next lvl indexoutofbonds?
             Log.w(TAG, "levelAchieved: Can't go into next level, because this is the LAST one!");
-            //TODO: Maybe make Game won dialoge/toast etc. (but has no stress) with strings.xml
             return CURRENT_LEVEL;
         } else {
-            //TODO: show dialoge/toast with strings.xml that level was achieved.
             Toast.makeText(this.getContext(), "Level "+CURRENT_LEVEL+" achieved. Entrying level "+(CURRENT_LEVEL+1), Toast.LENGTH_SHORT).show();
             return ++CURRENT_LEVEL; //pre-inkrement to return new current level
         }

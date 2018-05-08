@@ -12,9 +12,9 @@ import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
-import yourowngame.com.yourowngame.gameEngine.Highscore;
+import yourowngame.com.yourowngame.classes.counters.Highscore;
 
-public abstract class Level { //which level an object is (1, 5, etc.) should be decided by LevelManager [so more flexible to changes]
+public abstract class Level {
     private static final String TAG = "Level";
     private Context context;
 
@@ -49,8 +49,7 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     protected abstract void determineAllEnemies();
     protected abstract void determineAllFruits();
     protected abstract void playBackgroundMusic();
-    /** Defines default data (normally this method does not contain any logic
-     * operations). E.g. setting the levelName by getting it from the strings.xml*/
+    /** Defines default data (normally this method does not contain any logic* operations). E.g. setting the levelName by getting it from the strings.xml*/
     protected abstract void determineMetaData();
 
     /** Cleaning up here now, because it might be the same for all levels :) */
@@ -70,15 +69,7 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
         Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
     }
 
-    /** Place in this method all to validating params like highscore etc. and return true if
-     * conditions are met. So GameView knows it can increase the level.
-     *
-     * This method can e.g. validate whether user has enough highscore-points, gathered enough
-     * fruits or was fast enough killing enough RocketEnemies etc. (we can be creative here in
-     * future).
-     *
-     * Only thing is we have to make sure that this method is called everytime relevant values change.
-     * Currently it is only called when the highscore changes! */
+    /** Check whether the assignments are achieved, or not. Every Level implements their assignments itself! */
     public abstract boolean areLevelAssignmentsAchieved();
 
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -89,49 +80,39 @@ public abstract class Level { //which level an object is (1, 5, etc.) should be 
     public void setAllBackgroundLayers(ArrayList<Background> allBackgroundLayers) {
         this.allBackgroundLayers = allBackgroundLayers;
     }
-
     public int getLevelNameResId() {
         return levelNameResId;
     }
-
-    public void setLevelNameResId(int levelNameResId) {this.levelNameResId = levelNameResId;}
-
+    public void setLevelNameResId(int levelNameResId) {
+        this.levelNameResId = levelNameResId;
+    }
     public ArrayList<Enemy> getAllEnemies() {
         return allEnemies;
     }
-
     public void setAllEnemies(ArrayList<Enemy> allEnemies) {
         this.allEnemies = allEnemies;
     }
-
     public Player getPlayer() {
         return player;
     }
-
     public void setPlayer(Player player) {
         this.player = player;
     }
-
     public ArrayList<Fruit> getAllFruits() {
         return allFruits;
     }
-
     public void setAllFruits(ArrayList<Fruit> allFruits) {
         this.allFruits = allFruits;
     }
-
     public Highscore getCurrentLevelHighscore() {
         return levelHighscore;
     }
-
     public void setLevelHighscore(Highscore levelHighscore) {
         this.levelHighscore = levelHighscore;
     }
-
     public Context getContext() {
         return context;
     }
-
     public void setContext(Context context) {
         this.context = context;
     }
