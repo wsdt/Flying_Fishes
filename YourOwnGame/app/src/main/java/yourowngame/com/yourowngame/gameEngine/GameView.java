@@ -88,12 +88,17 @@ public class GameView extends SurfaceView {
 
             //No need
             @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height){
+
             }
 
+            @Bug(byDeveloper = "Solution",
+            message = "Ok, if the player succeed in a level and jumps to another activity, due to the gamSuccessDialog," +
+                      "the DialogMgr is causing an error, but im not really having an overview here.., the startExitGameProcedure" +
+                      "shouldnt be performed if player succeeds in a level OR needs to be modified. ")
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                startExitGameProcedure();
+                //startExitGameProcedure();
             }
         });
     }
@@ -103,7 +108,7 @@ public class GameView extends SurfaceView {
     @Bug(byDeveloper = "Solution",
     problem = "navigation works, but if we navigate from game ending to f.e the highscore, or next level (which would mean directly to the levelhierarchy," +
               " AND THEN back to the last activity, the game crashes",
-    possibleSolution = "i guess because we are destroying the stack-system, i guess android wants to go back to the last activity, but that one has been vanished...")
+    possibleSolution = "we need to remove the GameViewActivity from Stack, after navigation! but how? if he wants to go back, the gameplay goes on..")
 
     private void initGameObjects() {
         this.getHighscore().addListener(new IHighscore_Observer() {

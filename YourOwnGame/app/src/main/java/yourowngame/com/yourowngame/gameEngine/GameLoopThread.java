@@ -41,8 +41,10 @@ public class GameLoopThread extends Thread implements IGameLoopThread {
         int sleepTime = 0; //ms to sleep (<0 when we are behind)
         int framesSkipped; //number of frames being skipped
         long countRenderedCycles = 0;
-        Looper.prepare(); //necessary for handlers etc.
 
+        if(Looper.myLooper() == null) {
+            Looper.prepare(); //necessary for handlers etc.
+        }
         /** start initializing here, if finished, start gameLoop! */
         /** view.initialize(); <-- this call should initialize all needed objects for the level*/
 
