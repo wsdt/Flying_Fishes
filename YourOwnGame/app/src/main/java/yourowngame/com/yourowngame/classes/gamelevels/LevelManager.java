@@ -63,7 +63,8 @@ public class LevelManager {
     public void initiateLevelAchievedProcess(@NonNull DialogMgr dialogMgr) {
         Log.d(TAG, "initiateLevelAchievedProcess: Trying to change level.");
 
-        //use old levelobj possible here (last chance) --> show dialog
+
+        //show dialog
         dialogMgr.showDialog(dialogMgr.createDialog_LevelAchieved());
 
 

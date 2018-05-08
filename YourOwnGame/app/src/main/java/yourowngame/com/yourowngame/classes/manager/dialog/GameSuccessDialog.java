@@ -56,6 +56,7 @@ public class GameSuccessDialog extends Dialog implements View.OnClickListener {
         super(context);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,20 +100,33 @@ public class GameSuccessDialog extends Dialog implements View.OnClickListener {
             case R.id.dialogNextLevelBtn:
                 Log.d(TAG, "User wants to play the nextLevel");
                 dismiss();
+
+                //remove old level
+                LevelManager.getInstance(this.getContext()).getCurrentLevelObj().cleanUpLevelProperties();
+
+                //TODO: Maybe just start directly new level (before redirecting back to levelhierarchy [usability])
                 getContext().startActivity(new Intent(getContext(), LevelHierarchyActivity.class));
                 break;
             case R.id.dialogHighscoreBtn:
                 Log.d(TAG, "User wants to view the scores");
                 dismiss();
+
+                //remove old level
+                LevelManager.getInstance(this.getContext()).getCurrentLevelObj().cleanUpLevelProperties();
+
                 getContext().startActivity(new Intent(getContext(), HighscoreActivity.class));
                 break;
             case R.id.dialogRepeatLevelBtn:
                 // and here, the level will just start again...
+
+                //remove old level
+                LevelManager.getInstance(this.getContext()).getCurrentLevelObj().cleanUpLevelProperties();
+
                 break;
+            //TODO: maybe also add a revive btn (watching an ad, or paying some fruits or similar) [here we would skip the cleanUpLevelProperties()]
             default:
                 dismiss();
                 getContext().startActivity(new Intent(getContext(), LevelHierarchyActivity.class));
-
         }
     }
 }
