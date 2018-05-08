@@ -83,6 +83,7 @@ public class Highscore {
         Iterator<IHighscore_Observer> iterator = registeredListeners.iterator();
 
         while (iterator.hasNext()) {
+            iterator.next(); //go to next
             iterator.remove(); //removeListener can be called normally (just for iterating use the iterator to avoid exception)
         }
     }
