@@ -12,6 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:orientation="horizontal"
-        app:columnCount="4"/>
+        app:columnCount="1"/>
 
 </ScrollView>

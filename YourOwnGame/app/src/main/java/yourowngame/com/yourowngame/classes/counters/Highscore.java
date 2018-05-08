@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
@@ -79,8 +80,10 @@ public class Highscore {
     }
 
     public void removeAllListeners() {
-        for (IHighscore_Observer iHighscore_observer : registeredListeners) {
-            removeListener(iHighscore_observer);
+        Iterator<IHighscore_Observer> iterator = registeredListeners.iterator();
+
+        while (iterator.hasNext()) {
+            iterator.remove(); //removeListener can be called normally (just for iterating use the iterator to avoid exception)
         }
     }
 
