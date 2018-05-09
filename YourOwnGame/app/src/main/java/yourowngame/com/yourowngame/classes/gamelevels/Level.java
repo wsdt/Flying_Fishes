@@ -50,7 +50,8 @@ public abstract class Level {
         cleanUpLevelProperties();
     }
 
-
+    @Enhance (message = "If we want to change player in future (shop etc.) we SHOULD NOT make the player " +
+            "level-dependent! So this method will be obsolete in future!")
     protected abstract void determinePlayer();
     protected abstract void determineBackgroundLayers();
     protected abstract void determineAllEnemies();

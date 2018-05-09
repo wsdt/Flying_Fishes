@@ -8,6 +8,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.classes.annotations.Bug;
+import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_EndlessDawn;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_SummerSky;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_NightRider;
 import yourowngame.com.yourowngame.classes.manager.dialog.DialogMgr;
@@ -68,9 +69,7 @@ public class LevelManager {
         setLevelList(new ArrayList<Level>()); //for restarting to avoid nullpointer and resetting levellist (here so we force this method to be called)
         getLevelList().add(new Level_SummerSky(this.getContext()));
         getLevelList().add(new Level_NightRider(this.getContext()));
-        /*getLevelList().put(new Level_HauntedForest());
-        getLevelList().put(new Level_UnknownLand());
-        getLevelList().put(new Level_DarkDescent());*/
+        getLevelList().add(new Level_EndlessDawn(this.getContext()));
         Log.d(TAG, "createDefaultLevelList: Have set the default level list.");
     }
 

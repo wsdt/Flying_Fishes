@@ -16,11 +16,9 @@ import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Pinapo;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
-import yourowngame.com.yourowngame.classes.background.interfaces.IBackground;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
-import yourowngame.com.yourowngame.classes.gamelevels.levelassignments.LA_AchievePoints;
 
 
 /**
@@ -28,16 +26,16 @@ import yourowngame.com.yourowngame.classes.gamelevels.levelassignments.LA_Achiev
  */
 
 
-public class Level_NightRider extends Level {
-    private static final String TAG = "Lvl_Nightrider";
+public class Level_EndlessDawn extends Level {
+    private static final String TAG = "Lvl_EndlessDawn";
 
-    public Level_NightRider(@NonNull Context context) {
+    public Level_EndlessDawn(@NonNull Context context) {
         super(context);
     }
 
     @Override
     protected void determineMetaData() {
-        this.setLevelNameResId(R.string.level_levelName_nightRider);
+        this.setLevelNameResId(R.string.level_levelName_endlessDawn);
     }
 
     @Override
@@ -50,8 +48,8 @@ public class Level_NightRider extends Level {
     protected void determineBackgroundLayers() {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
         * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
-        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getContext(), R.color.colorPrimaryDark, "DarkSky"));
-        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getContext(), "Gewitter", new int[]{R.drawable.bglayer_1_cloud_2},8));
+        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getContext(), R.color.colorDarkRed, "Hell"));
+        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getContext(), "Gewitter", new int[]{R.drawable.bglayer_1_cloud_2},15));
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)
@@ -61,13 +59,10 @@ public class Level_NightRider extends Level {
     protected void determineAllEnemies() { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
         //Set allEnemies Arraylist
         /** Initializing Bomber-Enemy */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), HappenEnemy.class,1));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), HappenEnemy.class,6));
 
         /**Initializing Rocket-Enemy */
-       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), RocketFishEnemy.class, 12)); //damit die Leute derweil wirklich was zum Spielen haben haha, haha so geil
-
-        /** Initializing Spawn-Enemies */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), BobaEnemy.class, 1));
+       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), RocketFishEnemy.class, 3)); //damit die Leute derweil wirklich was zum Spielen haben haha, haha so geil
 
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
@@ -79,16 +74,12 @@ public class Level_NightRider extends Level {
          ****************************/
 
         this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Meloon.class,1));
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Avoci.class,1));
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Pinapo.class,1));
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
     }
 
     @Override
-    protected void determineLevelAssigments() {
-        this.getAllLevelAssignments().add(new LA_AchievePoints(3000,this.getCurrentLevelHighscore()));
-    }
+    protected void determineLevelAssigments() {/*this level has no assignments yet, so user keeps playing forever*/}
 
     @Override
     protected void playBackgroundMusic() {
