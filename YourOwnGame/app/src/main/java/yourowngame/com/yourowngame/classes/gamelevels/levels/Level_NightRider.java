@@ -6,24 +6,20 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.EnemyMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
-import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Avoci;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Pinapo;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
-import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.interfaces.IBackground;
-import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
-import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_staticBgImg;
+import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
+import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 
 
 /**
@@ -53,8 +49,8 @@ public class Level_NightRider extends Level {
     protected void determineBackgroundLayers() {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
         * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
-        this.getAllBackgroundLayers().add(new BackgroundLayer_staticBgImg(this.getContext(), R.color.colorPrimaryDark, "DarkSky", IBackground.DEFAULT_BG_SPEED));
-        this.getAllBackgroundLayers().add(new BackgroundLayer_Clouds(this.getContext(), new int[]{R.drawable.bglayer_1_cloud_2}, "Gewitter", IBackground.DEFAULT_BG_SPEED));
+        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getContext(), R.color.colorPrimaryDark, "DarkSky"));
+        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getContext(), "Gewitter", new int[]{R.drawable.bglayer_1_cloud_2},8));
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)

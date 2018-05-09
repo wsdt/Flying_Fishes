@@ -22,16 +22,12 @@ public abstract class Background implements Initializer, IBackground {
     private static final String TAG = "Background";
 
     private Context context;
-    private int[] img;
     private String name;
-    private float backgroundSpeedX = 0;
 
-    public Background(@NonNull Context context, int[] img, String name, float backgroundSpeed) {
+    public Background(@NonNull Context context, String name) {
         Log.d(TAG, "getBackgroundInstance: Created new instance.");
         this.setContext(context);
-        this.setImg(img);
         this.setName(name);
-        this.setBackgroundSpeed(backgroundSpeed);
     }
 
 
@@ -41,22 +37,8 @@ public abstract class Background implements Initializer, IBackground {
     /** abstract method for drawing the Background (Layers should provide a method to draw themselves!*/
     public abstract void drawBackground(Canvas canvas);
 
-    public void setBackgroundSpeed(float backgroundSpeedX){
-        this.backgroundSpeedX = backgroundSpeedX;
-    }
 
-    public float getBackgroundSpeedX() {
-        return backgroundSpeedX;
-    }
-
-    public int[] getImg() {
-        return img;
-    }
-
-    public void setImg(int[] img) {
-        this.img = img;
-    }
-
+    //GETTER/SETTER ------------------------------------------------------------------------------
     public String getName() {
         return name;
     }
