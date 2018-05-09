@@ -89,10 +89,7 @@ public class Level_NightRider extends Level {
     }
 
     @Override
-    public boolean areLevelAssignmentsAchieved() {
-        //just let it endless until we have a third lvl etc. (so last level should always return false)
-        return false;
-    }
+    protected void determineLevelAssigments() {/*this level has no assignments yet, so user keeps playing forever*/}
 
     @Override
     protected void playBackgroundMusic() {

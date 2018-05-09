@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Load Banner Ad (declared as a member of class, so we could easily display more)
-        //new AdManager(this).loadBannerAd((RelativeLayout) findViewById(R.id.mainActivity_RL));
+        new AdManager(this).loadBannerAd((RelativeLayout) findViewById(R.id.mainActivity_RL));
 
 
         //Hide actionbar if it is not already hidden

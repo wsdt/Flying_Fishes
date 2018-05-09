@@ -35,6 +35,9 @@
     <!-- GameActivity -->
     <string name="gameActivity_highscore_val">0</string> <!-- Default highScore -->
 
+    <!-- LevelAssigments -->
+    <string name="levelAssignments_achievePoints_whatToDo">Achieve %1$d points.</string>
+
     <!-- TODO: PLEASE ORDER ALL STRINGS AS SEEN ABOVE OR WITH ANOTHER STRUCTURE, OTHERWISE THIS FILE WILL BE HORRIBLE SOON :( -->
     <string name="gameViewActivity">GameView</string>
     <!-- UI Descriptions -->

@@ -20,6 +20,8 @@ import yourowngame.com.yourowngame.classes.background.interfaces.IBackground;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_staticBgImg;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
+import yourowngame.com.yourowngame.classes.gamelevels.LevelAssignment;
+import yourowngame.com.yourowngame.classes.gamelevels.levelassignments.LA_AchievePoints;
 
 
 /**
@@ -81,13 +83,10 @@ public class Level_SummerSky extends Level {
     }
 
     @Override
-    public boolean areLevelAssignmentsAchieved() {
-        //So first level is based on the highScore pts
-        if (getCurrentLevelHighscore().getValue() >= 500) {
-            return true;
-        }
-        return false;
+    protected void determineLevelAssigments() {
+        this.getAllLevelAssignments().add(new LA_AchievePoints(1500,this.getCurrentLevelHighscore()));
     }
+
 
     @Override
     protected void playBackgroundMusic() {

@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 
@@ -23,6 +24,9 @@ public class LevelHierarchyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_hierarchy);
         getGameDimens();
+
+        //Load Banner Ad (declared as a member of class, so we could easily display more)
+        new AdManager(this).loadBannerAd((RelativeLayout) findViewById(R.id.levelHierarchyActivity_RL));
 
         /*List all levels, to show user sth. on this activity.*/
         listAllLevels();

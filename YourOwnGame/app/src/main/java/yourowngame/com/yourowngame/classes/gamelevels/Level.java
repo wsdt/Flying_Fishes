@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 import yourowngame.com.yourowngame.classes.counters.Highscore;
@@ -24,6 +25,10 @@ public abstract class Level {
     private ArrayList<Background> allBackgroundLayers = new ArrayList<>(); //Background layers for each level (as Arraylist to avoid NullpointerExceptions, so we just do not allow gaps)
     private ArrayList<Enemy> allEnemies = new ArrayList<>(); //MUST NOT BE STATIC (different levels, different enemies), All enemies on screen (will be spawned again if isGone) for specific level
     private ArrayList<Fruit> allFruits = new ArrayList<>();
+    private ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
+
+    @Enhance (message = "maybe it's better to put it back into gameview or gameviewActivity and all levels access it. " +
+            "So we just have to reset the highscore on levelchange (what we have to do anyway).")
     private Highscore levelHighscore = new Highscore(); //add Level-dependent Highscore
     //TODO: other level-dependent members/values
 
@@ -35,6 +40,7 @@ public abstract class Level {
         determineBackgroundLayers();
         determineAllEnemies();
         determineAllFruits();
+        determineLevelAssigments();
         Log.d(TAG, "Level: ###################### ENDED LOADING LEVEL ##################################");
     }
 
@@ -50,8 +56,25 @@ public abstract class Level {
     protected abstract void determineAllEnemies();
     protected abstract void determineAllFruits();
     protected abstract void playBackgroundMusic();
+    /** Put all wanted LevelAssigment Objs in there. These will be accessed and evaluated in areLevelAssigmentsAchieved().*/
+    protected abstract void determineLevelAssigments();
     /** Defines default data (normally this method does not contain any logic* operations). E.g. setting the levelName by getting it from the strings.xml*/
     protected abstract void determineMetaData();
+
+    /** Check whether the assignments are achieved, or not. Every Level implements their assignments itself! */
+    public boolean areLevelAssignmentsAchieved() {
+        boolean isLevelAchieved = false;
+        for (LevelAssignment levelAssignment : this.getAllLevelAssignments()) {
+            if (!levelAssignment.isLevelAssignmentAchieved()) {
+                return false;
+            } else {
+                /*if assignment not false put it to true, as long as no false one is found the method will return true
+                 So method also returns false, if no levelAssigments were specified.*/
+                isLevelAchieved = true;
+            }
+        }
+        return isLevelAchieved;
+    }
 
     /** Cleaning up here now, because it might be the same for all levels :) */
     public void cleanUpLevelProperties() {
@@ -64,14 +87,13 @@ public abstract class Level {
         //CleanUp all fruits
         for (Fruit fruit : this.getAllFruits()) {fruit.cleanup();}
 
+        //no reason to cleanup levelAssignments, because they calculate their result out from extern values (highscore e.g.) which are resetted.
+
         //Because level-dependent, also reset when level has changed
         getCurrentLevelHighscore().resetCounter();
 
         Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
     }
-
-    /** Check whether the assignments are achieved, or not. Every Level implements their assignments itself! */
-    public abstract boolean areLevelAssignmentsAchieved();
 
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public ArrayList<Background> getAllBackgroundLayers() {
@@ -116,5 +138,13 @@ public abstract class Level {
     }
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public ArrayList<LevelAssignment> getAllLevelAssignments() {
+        return allLevelAssignments;
+    }
+
+    public void setAllLevelAssignments(ArrayList<LevelAssignment> allLevelAssignments) {
+        this.allLevelAssignments = allLevelAssignments;
     }
 }
