@@ -12,6 +12,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.layers.interfaces.IBackgroundLayer_Clouds;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
@@ -53,6 +54,7 @@ public class BackgroundLayer_Clouds extends Background implements IBackgroundLay
         public Cloud(Bitmap cloudImg) {
             this.posX = RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 1500);
             this.posY = RandomMgr.getRandomFloat(0, (int) (GameViewActivity.GAME_HEIGHT * CLOUD_RANDOM_Y_PLACEMENT_IN_PERCENTAGE));
+            Log.d(TAG, "Width and Height of GVA " +GameViewActivity.GAME_HEIGHT + " " + GameViewActivity.GAME_WIDTH);
 
             this.cloudImg = cloudImg;
             this.randomSpeed = RandomMgr.getRandomFloat(CLOUD_RANDOM_SPEED_MIN, CLOUD_RANDOM_SPEED_MAX);
@@ -63,6 +65,7 @@ public class BackgroundLayer_Clouds extends Background implements IBackgroundLay
             this.posX -= (speed);
             if (this.posX < -100) //-100 is on every screen outside of visible area
                 posX = GameViewActivity.GAME_WIDTH + 100;
+            Log.d(TAG, "Position of Cloud = " + this.posY);
         }
     }
 
@@ -112,11 +115,15 @@ public class BackgroundLayer_Clouds extends Background implements IBackgroundLay
      * @param imgs           image(s) of the clouds
      * @param numberOfClouds figure of clouds
      */
+    @Bug(byDeveloper = "SOLUTION",
+    message = "Metrics of Display are vanished!",
+    possibleSolution = "Game Metrics are not working anymore, they need to be set at every level!")
     private void craftClouds(int[] imgs, int numberOfClouds) {
         Log.d(TAG, "craftClouds: Trying to craft clouds.");
         for (int i = 0; i < numberOfClouds; i++) {
-            //position of X & Y now set in the Constructor (for easier reading)
+
             this.getCraftedClouds().add(new Cloud(BitmapFactory.decodeResource(this.getContext().getResources(), imgs[RandomMgr.getRandomInt(0, imgs.length - 1)])));
+            Log.d(TAG, "GameView Height = ");
             Log.d(TAG, "craftClouds: Added cloud no. "+i);
         }
     }

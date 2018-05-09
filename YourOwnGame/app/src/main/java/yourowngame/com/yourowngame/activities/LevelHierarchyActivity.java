@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -21,9 +22,18 @@ public class LevelHierarchyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_hierarchy);
+        getGameDimens();
 
         /*List all levels, to show user sth. on this activity.*/
         listAllLevels();
+    }
+
+    public void getGameDimens() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        GameViewActivity.GAME_WIDTH = displayMetrics.widthPixels;
+        GameViewActivity.GAME_HEIGHT = displayMetrics.heightPixels;
+        Log.d(TAG, "HEIGHT = " + GameViewActivity.GAME_HEIGHT + "WIDTH = " + GameViewActivity.GAME_WIDTH);
     }
 
     private void listAllLevels() {

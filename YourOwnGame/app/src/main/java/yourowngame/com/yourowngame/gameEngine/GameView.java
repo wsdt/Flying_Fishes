@@ -15,6 +15,7 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.annotations.Test;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
@@ -64,6 +65,9 @@ public class GameView extends SurfaceView {
         this.setActivityContext(context);
         this.setDialogMgr(new DialogMgr(context));
 
+        /** At every Gamestart, get the metrics from screen, otherwise hole Game will crash in future!,
+         *  because we used the metric nearly everywhere!! */
+
         /** Initialize View Components */
         layout = (FrameLayout) context.findViewById(R.id.gameViewLayout);
 
@@ -102,9 +106,15 @@ public class GameView extends SurfaceView {
         });
     }
 
+    @Enhance(byDeveloper = "Solution",
+    message = "We shouldnt clean Objs AFTER Game exit, we should maybe just clean it before? would make much more sense",
+    priority = Enhance.Priority.MEDIUM)
+
     private void initGameObjects() {
-        //just clean once before start
+        //clean level properties
         LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().cleanUpLevelProperties();
+        //clean the fruitCounter
+        FruitCounter.getInstance().cleanUpFruitCounter();
 
         this.getHighscore().addListener(new IHighscore_Observer() {
             @Override
