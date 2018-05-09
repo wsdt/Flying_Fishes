@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.GameLoopThread;
@@ -35,8 +36,9 @@ public class GameViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_view);
         getGameDimens();
+        setContentView(R.layout.activity_game_view);
+
 
         /* Set highscore val textview */
         this.setHighscoreVal_textView((TextView) findViewById(R.id.gameViewActivity_highscoreVal));
@@ -49,8 +51,12 @@ public class GameViewActivity extends AppCompatActivity {
         getGameView().startGame(this);
     }
 
-    //Gets the current dimens, and saves it into STATIC Values, so we dont need to f* pass the activity onto the darkest point of our prog
-    private void getGameDimens() {
+    @Deprecated
+    @Enhance(byDeveloper = "Solution",
+    message = "I wanna keep it that way, the GameViewActivity should provide the metrics," +
+              "so the levelHierarchy will deliver it! See @LevelHierarchyActivity.java",
+    priority = Enhance.Priority.LOW)
+    public void getGameDimens() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         GAME_WIDTH = displayMetrics.widthPixels;

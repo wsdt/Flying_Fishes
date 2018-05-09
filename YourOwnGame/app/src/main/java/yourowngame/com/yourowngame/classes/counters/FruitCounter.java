@@ -54,34 +54,37 @@ public class FruitCounter {
         totalAmountOfPinapos += levelAmountPinapos;
     }
 
+    /** reset fruits after end */
+    public void cleanUpFruitCounter(){
+        levelAmountAvocis = levelAmountMeloons = levelAmountPinapos = 0;
+    }
+
+
+
+    /** INSTANCE *******/
     public static FruitCounter getINSTANCE() {
         return INSTANCE;
     }
 
-    public static void setINSTANCE(FruitCounter INSTANCE) {
-        FruitCounter.INSTANCE = INSTANCE;
-    }
 
+
+
+    /** SETTERS AND GETTERS */
     public int getLevelAmountMeloons() {
         return levelAmountMeloons;
     }
-
     public int getLevelAmountPinapos() {
         return levelAmountPinapos;
     }
-
     public int getLevelAmountAvocis() {
         return levelAmountAvocis;
     }
-
     public int getTotalAmountOfMeloons() {
         return totalAmountOfMeloons;
     }
-
     public int getTotalAmountOfPinapos() {
         return totalAmountOfPinapos;
     }
-
     public int getTotalAmountOfAvocis() {
         return totalAmountOfAvocis;
     }
