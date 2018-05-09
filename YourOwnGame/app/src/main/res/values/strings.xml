@@ -55,6 +55,7 @@
     <!-- LEVELs -->
     <string name="level_levelName_harmlessSky">Harmless Sky</string>
     <string name="level_levelName_nightRider">Night Rider</string>
+    <string name="level_levelName_endlessDawn">Endless Dawn</string>
     <string name="success">Success! You Achieved level x</string>
 
     <!-- Success-Dialog descriptions -->
