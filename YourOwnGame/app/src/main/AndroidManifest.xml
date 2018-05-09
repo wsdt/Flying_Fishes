@@ -34,11 +34,6 @@
 
         <!-- screenOrientation and configChanges so only landscape mode -->
         <activity
-            android:name=".activities.CreditActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/SplashTheme" />
-        <activity
             android:name=".activities.HighscoreActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="sensorLandscape"

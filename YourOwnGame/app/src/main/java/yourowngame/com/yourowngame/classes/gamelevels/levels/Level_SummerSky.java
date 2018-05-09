@@ -27,7 +27,6 @@ import yourowngame.com.yourowngame.classes.gamelevels.levelassignments.LA_Achiev
  * LEVEL ONE
  */
 
-
 public class Level_SummerSky extends Level {
     private static final String TAG = "Lvl_HarmlessSky";
 
