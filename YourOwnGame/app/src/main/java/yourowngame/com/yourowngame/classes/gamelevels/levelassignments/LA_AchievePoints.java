@@ -6,6 +6,8 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.counters.Highscore;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelAssignment;
 
+/** To achieve this levelAssignment the user has to reach a specific
+ * amount of points (determined in "amount"-var).*/
 public class LA_AchievePoints extends LevelAssignment {
     private Highscore highscore;
 

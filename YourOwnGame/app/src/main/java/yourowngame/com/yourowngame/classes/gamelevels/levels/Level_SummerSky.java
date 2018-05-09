@@ -17,10 +17,9 @@ import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Pinapo;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.interfaces.IBackground;
-import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_Clouds;
-import yourowngame.com.yourowngame.classes.background.layers.BackgroundLayer_staticBgImg;
+import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
+import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelAssignment;
 import yourowngame.com.yourowngame.classes.gamelevels.levelassignments.LA_AchievePoints;
 
 
@@ -51,8 +50,8 @@ public class Level_SummerSky extends Level {
     protected void determineBackgroundLayers() {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
         * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
-        this.getAllBackgroundLayers().add(new BackgroundLayer_staticBgImg(this.getContext(), R.color.colorSkyBlue, "Sky", IBackground.DEFAULT_BG_SPEED));
-        this.getAllBackgroundLayers().add(new BackgroundLayer_Clouds(this.getContext(), new int[]{R.drawable.bglayer_1_cloud_1,R.drawable.bglayer_1_cloud_2,R.drawable.bglayer_1_cloud_3}, "Heaven", IBackground.DEFAULT_BG_SPEED));
+        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getContext(), R.color.colorSkyBlue, "Sky"));
+        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getContext(), "Heaven", new int[]{R.drawable.bglayer_1_cloud_1,R.drawable.bglayer_1_cloud_2,R.drawable.bglayer_1_cloud_3}, 10));
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)
