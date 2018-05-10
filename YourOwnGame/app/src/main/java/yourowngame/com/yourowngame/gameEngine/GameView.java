@@ -111,10 +111,15 @@ public class GameView extends SurfaceView {
     priority = Enhance.Priority.MEDIUM)
 
     private void initGameObjects() {
+        /**current starting level */
+        Level currLevel = LevelManager.getInstance(GameView.this.getActivityContext()).getCurrentLevelObj();
         //clean level properties
         LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().cleanUpLevelProperties();
         //clean the fruitCounter
         FruitCounter.getInstance().cleanUpFruitCounter();
+        //clean bglayers
+
+
 
         this.getHighscore().addListener(new IHighscore_Observer() {
             @Override

@@ -2,7 +2,7 @@
 <resources>
     <color name="colorWhite">#eeeeee</color>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="black_overlay">#66000000</color>
@@ -11,7 +11,7 @@
     <color name="colorSkyBlue">#0088ff</color>
 
     <!-- Special colors (e.g. for Bgs) -->
-    <color name="colorShadow">#A8A8A8</color>
+    <color name="colorShadow">#a8a8a8</color>
     <color name="colorDarkRed">#880000</color>
     <color name="colorBlack">#111111</color>
     <color name="thegame_grey">#5b5b5b</color>

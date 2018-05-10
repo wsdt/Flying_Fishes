@@ -76,7 +76,6 @@ public abstract class Level {
         }
         return isLevelAchieved;
     }
-
     /** Cleaning up here now, because it might be the same for all levels :) */
     public void cleanUpLevelProperties() {
         //CleanUp Player
