@@ -8,6 +8,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.classes.annotations.Bug;
+import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_DarkDescent;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_EndlessDawn;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_SummerSky;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_NightRider;
@@ -70,6 +71,7 @@ public class LevelManager {
         getLevelList().add(new Level_SummerSky(this.getContext()));
         getLevelList().add(new Level_NightRider(this.getContext()));
         getLevelList().add(new Level_EndlessDawn(this.getContext()));
+        getLevelList().add(new Level_DarkDescent(this.getContext()));
         Log.d(TAG, "createDefaultLevelList: Have set the default level list.");
     }
 
