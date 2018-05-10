@@ -60,6 +60,9 @@
     <!-- LevelAssigments -->
     <string name="levelAssignments_achievePoints_whatToDo">Achieve %1$d points.</string>
 
+    <!-- LevelHierarchy View -->
+    <string name="targetPoints">Target: $1$d Points</string>
+
     <!-- Success-Dialog descriptions -->
     <string name="level_achieve_txt">Success! You completed level: %1$d</string>
     <string name="equals"> = %1$d </string>

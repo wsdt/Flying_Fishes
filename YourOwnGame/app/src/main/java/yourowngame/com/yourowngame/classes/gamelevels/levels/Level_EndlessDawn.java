@@ -19,6 +19,7 @@ import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
+import yourowngame.com.yourowngame.classes.gamelevels.levelassignments.LA_AchievePoints;
 
 
 /**
@@ -79,7 +80,9 @@ public class Level_EndlessDawn extends Level {
     }
 
     @Override
-    protected void determineLevelAssigments() {/*this level has no assignments yet, so user keeps playing forever*/}
+    protected void determineLevelAssigments() {
+        getAllLevelAssignments().add(new LA_AchievePoints(10_000, getCurrentLevelHighscore()));
+    }
 
     @Override
     protected void playBackgroundMusic() {
