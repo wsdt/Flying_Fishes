@@ -35,11 +35,9 @@
     <!-- GameActivity -->
     <string name="gameActivity_highscore_val">0</string> <!-- Default highScore -->
 
-    <!-- LevelAssigments -->
-    <string name="levelAssignments_achievePoints_whatToDo">Achieve %1$d points.</string>
-
     <!-- TODO: PLEASE ORDER ALL STRINGS AS SEEN ABOVE OR WITH ANOTHER STRUCTURE, OTHERWISE THIS FILE WILL BE HORRIBLE SOON :( -->
     <string name="gameViewActivity">GameView</string>
+
     <!-- UI Descriptions -->
     <string name="shoot">Shoot!</string>
     <string name="munition">Ammunition: 500/500</string>
@@ -56,7 +54,11 @@
     <string name="level_levelName_harmlessSky">Harmless Sky</string>
     <string name="level_levelName_nightRider">Night Rider</string>
     <string name="level_levelName_endlessDawn">Endless Dawn</string>
+    <string name="level_levelName_darkDescent">Dark Descent</string>
     <string name="success">Success! You Achieved level x</string>
+
+    <!-- LevelAssigments -->
+    <string name="levelAssignments_achievePoints_whatToDo">Achieve %1$d points.</string>
 
     <!-- Success-Dialog descriptions -->
     <string name="level_achieve_txt">Success! You completed level: %1$d</string>
