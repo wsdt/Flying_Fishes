@@ -28,8 +28,10 @@
         style="@style/menu_btn_white"
         android:layout_width="170dp"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="7dp"
+        android:layout_marginLeft="12dp"
         android:layout_marginStart="12dp"
         android:text="@string/mainActivity_button_settings"
         android:visibility="gone" />
@@ -50,6 +52,8 @@
             style="@style/menu_btn_white"
             android:layout_width="208dp"
             android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:onClick="startAdventureMode"
             android:text="@string/mainActivity_button_mode_adventure" />
 
