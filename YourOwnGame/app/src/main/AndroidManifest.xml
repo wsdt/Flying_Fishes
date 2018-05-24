@@ -6,13 +6,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        tools:replace="android:label"
         android:allowBackup="true"
         android:icon="@drawable/app_icon_gameboy"
         android:label="@string/appName"
         android:roundIcon="@drawable/app_icon_gameboy"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
         <activity
             android:name=".activities.MainActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -43,8 +43,8 @@
             android:configChanges="keyboardHidden|orientation"
             android:noHistory="true"
             android:screenOrientation="sensorLandscape"
-            android:theme="@style/SplashTheme">
-        </activity>
+            android:theme="@style/SplashTheme"></activity>
+        <activity android:name=".activities.SwipeFruitsActivity"></activity>
     </application>
 
 </manifest>

@@ -68,5 +68,12 @@
     <string name="equals"> = %1$d </string>
     <string name="yourScore"> Your Score = %1$d</string>
 
+    <!-- Swap-Fruit-Swipe-View -->
+    <string name="sliderViewMeloons"> Meloons </string>
+    <string name="sliderViewAvocis"> Avocis </string>
+    <string name="sliderViewPinapos"> Pinapos </string>
+    <string name="sliderViewAmountCollected"> Collected: $1%d</string>
+    <string name="sliderViewMeloonDescription"> The Meloons are quite often to see. The will give you X and you gain 100 Points per Meloon.</string>
+
 
 </resources>
