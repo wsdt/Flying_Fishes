@@ -36,12 +36,11 @@
 
     <LinearLayout
         android:id="@+id/mainActivity_btnList"
-        android:layout_width="389dp"
+        android:layout_width="wrap_content"
         android:layout_height="70dp"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="45dp"
         android:gravity="center_vertical|center"
         android:orientation="horizontal">
 
@@ -61,5 +60,15 @@
             android:onClick="showHighscore"
             android:text="@string/mainActivity_button_highscores" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="146dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="196dp"
+        android:onClick="startFruitSlider"
+        android:text="Fruit Slide Test" />
 
 </android.widget.RelativeLayout>

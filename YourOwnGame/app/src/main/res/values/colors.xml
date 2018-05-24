@@ -15,4 +15,12 @@
     <color name="colorDarkRed">#880000</color>
     <color name="colorBlack">#111111</color>
     <color name="thegame_grey">#5b5b5b</color>
+
+    <!-- Colors for new Sliding-Fruit-View -->
+    <color name="colorOne"> #262938</color>
+    <color name="colorTwo"> #181A24</color>
+    <color name="colorEx"> #FF4881</color>
+    <color name="colorWhite2"> #FFFFFF</color>
+    <color name="colorTransparentWhite"> #cccccc</color>
+
 </resources>

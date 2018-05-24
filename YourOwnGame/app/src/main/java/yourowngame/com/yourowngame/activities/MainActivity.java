@@ -46,7 +46,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, LevelHierarchyActivity.class));
     }
 
+    public void startFruitSlider(View v){
+        startActivity(new Intent(this, SwipeFruitsActivity.class));
+    }
+
     public void showHighscore(View view) {
         startActivity(new Intent(this, HighscoreActivity.class));
     }
+
+
 }
