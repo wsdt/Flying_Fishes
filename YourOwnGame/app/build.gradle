@@ -1,21 +1,31 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        flying_fishes {
+            keyAlias 'flying_fishes'
+            keyPassword 'hÜ5#SandyBridge'
+            storeFile file('C:/Users/kevin/Desktop/Android_PUBLICPRIVATE_KEYS/flying_fishes.jks')
+            storePassword 'Kaby$479Lake'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "solution_wsdt.com.yourowngame"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 2
-        versionName "0.0.2" /* Auch mehrstellig: {major changes}.{minor changes}.{bug fixes} */
+        versionCode 4
+        versionName "0.0.4" /* Auch mehrstellig: {major changes}.{minor changes}.{bug fixes} */
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
+            //TODO: Currently not minifying bc. of error (have not found it yet)
+
             /* Making the app smaller, but could be also the source of errors!! */
-            shrinkResources true /* shrinks unused res (drawables, etc.)*/
-            minifyEnabled true /* same as shrinkResources but for code itself*/
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            /*shrinkResources true /* shrinks unused res (drawables, etc.)*
+            minifyEnabled true /* same as shrinkResources but for code itself*
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'*/
         }
     }
     //this creates resource string while compiling with current versionName! (e.g. Loading screen)
@@ -24,7 +34,6 @@ android {
             variant.resValue "string", "versionName", variant.versionName
     }
     buildToolsVersion '27.0.3'
-
     /* Product Flavours (building paid/free versions) */
     flavorDimensions "dim"
     productFlavors {

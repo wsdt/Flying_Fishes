@@ -7,15 +7,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayout;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
+import yourowngame.com.yourowngame.classes.annotations.Idea;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
+import yourowngame.com.yourowngame.classes.gamelevels.LevelAssignment;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 
+@Enhance (message = "All methods here are terrible, I just implemented them like that so we have a simple" +
+        "levelHierarchy that works.")
 public class LevelHierarchyActivity extends AppCompatActivity {
     private static final String TAG = "LevelHierarchyActivity";
 
@@ -66,11 +72,29 @@ public class LevelHierarchyActivity extends AppCompatActivity {
             }
         });
 
+
         /*Put level specific params into inflated view*/
         ((TextView) inflatedLevelView.findViewById(R.id.lvlName)).setText(getResources().getString(level.getLevelNameResId()));
         ((TextView) inflatedLevelView.findViewById(R.id.lvlId)).setText(String.valueOf(lvlId));
 
+        //Also print levelAssignments
+        listLevelAssignments(inflatedLevelView, level);
+
         parentView.addView(inflatedLevelView);
         Log.d(TAG, "listLevel: Tried to add level to levelhierarchy.");
+    }
+
+    @Idea (priority = Idea.Priority.LOW,
+            idea = "What if levelAssignments can be obligatory OR free-to-do (to earn additional fruits etc.)")
+    private void listLevelAssignments(@NonNull RelativeLayout inflatedLevelView, @NonNull Level level) {
+        //Currently only settting text of a textview (in future make layoutInflater and custom element for assignments)
+        //maybe also mark them as optional or obligatory
+
+        StringBuilder sb = new StringBuilder();
+        for (LevelAssignment levelAssignment : level.getAllLevelAssignments()) {
+            sb.append(levelAssignment.getFormattedAssignment(this));
+        }
+
+        ((TextView) inflatedLevelView.findViewById(R.id.lvlAssignments)).setText(sb);
     }
 }

@@ -1,5 +1,8 @@
 package yourowngame.com.yourowngame.classes.gamelevels;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 /** Extend from this class to create levelAssigments for levels.
  *
  * To set all values please use a simple constructor (if possible). Also avoid Context as class
@@ -58,6 +61,10 @@ public abstract class LevelAssignment {
     public abstract boolean isLevelAssignmentAchieved();
 
 
+    /** Returns the specified amount nested in the specified resource String. */
+    public String getFormattedAssignment(@NonNull Context context) {
+        return String.format(context.getResources().getString(this.getResString_whatToDo()),this.getAmount());
+    }
 
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public int getResDrawable_smallIcon() {
