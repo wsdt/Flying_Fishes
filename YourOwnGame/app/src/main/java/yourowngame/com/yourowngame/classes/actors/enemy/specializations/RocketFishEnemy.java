@@ -96,7 +96,7 @@ public class RocketFishEnemy extends Enemy implements IEnemy.ROCKETFISH_ENEMY_PR
 
     @Override
     public boolean cleanup() {
-        resetWidthAndHeightOfEnemy(); //just reset y/x
+        resetPosOfEnemy(); //just reset y/x
         return true;
     }
 

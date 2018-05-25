@@ -28,7 +28,7 @@ public abstract class Enemy extends GameObject implements IEnemy.DEFAULT_ENEMY_P
     /** we also need to make sure that those enemies who pass the player and the screen rejoin at the end of the scene! */
     public void resetIfOutOfBounds(){
         if(getPosX() <= 0){
-            resetWidthAndHeightOfEnemy();
+            resetPosOfEnemy();
         }
     }
 
@@ -37,7 +37,7 @@ public abstract class Enemy extends GameObject implements IEnemy.DEFAULT_ENEMY_P
     //             for Y [     0     |    GAME_HEIGHT  ]
     // so we can easily control this behavior by just editing it here!
     //Now also used in cleanup()
-    public void resetWidthAndHeightOfEnemy(){
+    public void resetPosOfEnemy(){
         setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
         setPosY(RandomMgr.getRandomFloat(0, GameViewActivity.GAME_HEIGHT));
     }

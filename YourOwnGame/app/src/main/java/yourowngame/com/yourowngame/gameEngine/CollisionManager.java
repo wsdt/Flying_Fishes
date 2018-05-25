@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
-import yourowngame.com.yourowngame.classes.actors.Projectile;
+import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 
 /**

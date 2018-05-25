@@ -1,21 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        flying_fishes {
-            keyAlias 'flying_fishes'
-            keyPassword 'hÜ5#SandyBridge'
-            storeFile file('C:/Users/kevin/Desktop/Android_PUBLICPRIVATE_KEYS/flying_fishes.jks')
-            storePassword 'Kaby$479Lake'
-        }
-    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "solution_wsdt.com.yourowngame"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 4
-        versionName "0.0.4" /* Auch mehrstellig: {major changes}.{minor changes}.{bug fixes} */
+        versionCode 5
+        versionName "0.0.5" /* Auch mehrstellig: {major changes}.{minor changes}.{bug fixes} */
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -61,10 +53,13 @@ greendao {
 }*/
 
 dependencies {
+    /* FIREBASE */
+    implementation 'com.google.firebase:firebase-core:15.0.2'
+
     /*Android ORM*/
     //implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'com.android.support:design:27.1.1'
-    implementation 'com.google.android.gms:play-services-ads:15.0.0'
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
@@ -74,3 +69,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.android.support:gridlayout-v7:27.1.1'
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -94,7 +94,7 @@ public class BobaEnemy extends Enemy implements IEnemy.BOBA_ENEMY_PROPERTIES {
 
     @Override
     public boolean cleanup() {
-        resetWidthAndHeightOfEnemy(); //just reset y/x
+        resetPosOfEnemy(); //just reset y/x
         return true;
     }
 

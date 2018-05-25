@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.actors;
+package yourowngame.com.yourowngame.classes.actors.projectiles;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 
 /**
@@ -24,10 +25,8 @@ import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exc
  * So shall we create a Singletone with a List of Projectiles?
  */
 
-public class Projectile extends GameObject {
+public abstract class Projectile extends GameObject {
     private final String TAG = "Projectile";
-    private static int fireRate = 0;
-    //Static so we can avoid bitmap creation when firing
 
     //TODO: Bad design, because we have made currentBitmap() a non-static member, so we have to do this! :( [maybe we can change that in future]
     //TODO: absolutely, we currently have bitmap-arrays as images[], the currentBitmap which only holds the latest bitmap for collission and this sharedBitmap here...
