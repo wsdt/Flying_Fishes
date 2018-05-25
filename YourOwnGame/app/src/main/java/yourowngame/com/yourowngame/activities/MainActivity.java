@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.annotations.Test;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.manager.HelperClass;
 
@@ -46,8 +47,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, LevelHierarchyActivity.class));
     }
 
+    @Test
     public void startFruitSlider(View v){
         startActivity(new Intent(this, SwipeFruitsActivity.class));
+    }
+
+    @Test
+    public void openShop(View v) {
+
+        //startActivity(new Intent(this, ShopActivity.class));
     }
 
     public void showHighscore(View view) {
