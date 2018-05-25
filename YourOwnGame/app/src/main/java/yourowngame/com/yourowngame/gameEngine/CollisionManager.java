@@ -27,7 +27,7 @@ public class CollisionManager {
     private static final String TAG = "Collision";
 
     /** private Access, no instantiation!*/
-    private CollisionManager(){};
+    private CollisionManager(){}
 
     /**
      * @param player     -> first Bitmap
@@ -71,17 +71,17 @@ public class CollisionManager {
     }
 
     public static boolean checkCollision(@NonNull Enemy enemy, @NonNull Projectile projectile) {
-        Bitmap playerBitmap = enemy.getCurrentBitmap();
+        Bitmap enemyBitmap = enemy.getCurrentBitmap();
         Bitmap projectileBitmap = projectile.getCurrentBitmap();
 
-        if (playerBitmap != null && projectileBitmap != null) {
+        if (enemyBitmap != null && projectileBitmap != null) {
 
             int enemyPosX = (int) enemy.getPosX();
             int enemyPosY = (int) enemy.getPosY();
             int projectilePosX = (int) projectile.getPosX();
             int projectilePosY = (int) projectile.getPosY();
 
-            Rect bounds1 = new Rect(enemyPosX, enemyPosY, enemyPosX + playerBitmap.getWidth(), enemyPosY + playerBitmap.getHeight());
+            Rect bounds1 = new Rect(enemyPosX, enemyPosY, enemyPosX + enemyBitmap.getWidth(), enemyPosY + enemyBitmap.getHeight());
             Rect bounds2 = new Rect(projectilePosX, projectilePosY, projectilePosX + projectileBitmap.getWidth(), projectilePosY + projectileBitmap.getHeight());
 
             if (Rect.intersects(bounds1, bounds2)) {
@@ -90,7 +90,7 @@ public class CollisionManager {
                 try {
                     for (int i = collisionArea.left; i < collisionArea.right; i++) {
                         for (int j = collisionArea.top; j < collisionArea.bottom; j++) {
-                            int bitmap1Pixel = playerBitmap.getPixel(i - enemyPosX, j - enemyPosY);
+                            int bitmap1Pixel = enemyBitmap.getPixel(i - enemyPosX, j - enemyPosY);
                             int bitmap2Pixel = projectileBitmap.getPixel(i - projectilePosX, j - projectilePosY);
                             if (hasNoTransparentBackground(bitmap1Pixel) && hasNoTransparentBackground(bitmap2Pixel))
                                 return true;

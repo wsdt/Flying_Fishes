@@ -20,7 +20,7 @@ import yourowngame.com.yourowngame.classes.manager.RandomMgr;
  * Created on 12.03.2018.
  */
 
-public class RocketFishEnemy extends Enemy implements IEnemy.ROCKETFISH_ENEMY_PROPERTIES {
+public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFISH {
     private static Bitmap[] images;
     private static final String TAG = "RocketFish";
 
@@ -45,8 +45,8 @@ public class RocketFishEnemy extends Enemy implements IEnemy.ROCKETFISH_ENEMY_PR
 
         this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
-        this.setSpeedX(RandomMgr.getRandomFloat(IEnemy.ROCKETFISH_ENEMY_PROPERTIES.SPEED_X_MIN, IEnemy.ROCKETFISH_ENEMY_PROPERTIES.SPEED_X_MAX));
-        this.setSpeedY(RandomMgr.getRandomFloat(IEnemy.ROCKETFISH_ENEMY_PROPERTIES.SPEED_Y_MIN, IEnemy.ROCKETFISH_ENEMY_PROPERTIES.SPEED_Y_MAX));
+        this.setSpeedX(RandomMgr.getRandomFloat(IEnemy.PROPERTIES.ROCKETFISH.SPEED_X_MIN, IEnemy.PROPERTIES.ROCKETFISH.SPEED_X_MAX));
+        this.setSpeedY(RandomMgr.getRandomFloat(IEnemy.PROPERTIES.ROCKETFISH.SPEED_Y_MIN, IEnemy.PROPERTIES.ROCKETFISH.SPEED_Y_MAX));
         this.setRotationDegree(DEFAULT_ROTATION);
         this.setName("Bomber");
 
@@ -55,16 +55,19 @@ public class RocketFishEnemy extends Enemy implements IEnemy.ROCKETFISH_ENEMY_PR
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-        this.setPosX(this.getPosX() - this.getSpeedX());
-        resetIfOutOfBounds();
+        if (getPosX() <= 0) {
+            // Reset if out of screen
+            this.resetPos();
+        } else {
+            this.setPosX(this.getPosX() - this.getSpeedX());
+        }
     }
 
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (int i = 0; i < getImages().length; i++) {
-            canvas.drawBitmap(getImages()[i], (int) this.getPosX(), (int) this.getPosY(), null);
-        }
+        this.setCurrentBitmap(getImages()[((int) loopCount % this.getImg().length)]);
+        canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
 
@@ -94,18 +97,13 @@ public class RocketFishEnemy extends Enemy implements IEnemy.ROCKETFISH_ENEMY_PR
         return isInitialized;
     }
 
-    @Override
-    public boolean cleanup() {
-        resetPosOfEnemy(); //just reset y/x
-        return true;
-    }
 
     /**
      * Get reward method for highscore
      */
     @Override
     public int getReward() {
-        return IEnemy.ROCKETFISH_ENEMY_PROPERTIES.HIGHSCORE_REWARD;
+        return IEnemy.PROPERTIES.ROCKETFISH.HIGHSCORE_REWARD;
     }
 
     //GETTER/SETTER ---------------------------

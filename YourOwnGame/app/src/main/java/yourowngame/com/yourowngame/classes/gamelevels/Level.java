@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
+import yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;

@@ -14,7 +14,6 @@ public interface IFruit {
         float SPEED_X = 10f;
         float SPEED_Y = 10f;
 
-        int DEFAULT_ROTATION = 0;
         int Y_UPLIFT = 75; //so fruits will not be half out of screen
 
     }

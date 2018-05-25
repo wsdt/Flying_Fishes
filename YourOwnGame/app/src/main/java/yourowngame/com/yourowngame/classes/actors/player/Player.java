@@ -18,6 +18,7 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
+import yourowngame.com.yourowngame.classes.actors.projectiles.specializations.IronProjectile;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.GameView;
@@ -25,15 +26,14 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
 
 public class Player extends GameObject implements IPlayer {
     private static final String TAG = "Player";
-    private static final String TAG2 = "Projectile";
 
     //Projectiles
     private List<Projectile> projectileList = new ArrayList<>();
-    private float fireRate = 0.5f; //fire rate from 1 to 0
 
     /*-- Preloaded --*/
     private int intrinsicHeightOfPlayer;
     private HashMap<String, Bitmap> loadedBitmaps; //must not be static
+    private Bitmap currentBitmap;
 
 
     public Player(@NonNull Context context, double posX, double posY, double speedX, double speedY, int img[], int rotationDegree, @Nullable String name) {
@@ -139,11 +139,16 @@ public class Player extends GameObject implements IPlayer {
 
     @Override
     public boolean cleanup() {
-        this.setPosY(Resources.getSystem().getDisplayMetrics().heightPixels / 4); //reset y when hitting ground
-        for (Projectile projectile : projectileList) {
+        resetPos();
+        for (Projectile projectile : this.getProjectiles()) {
             projectile.cleanup();
         }
         return true;
+    }
+
+    @Override
+    public void resetPos() {
+        this.setPosY(Resources.getSystem().getDisplayMetrics().heightPixels / 4); //reset y when hitting ground
     }
 
     /***********************************************
@@ -151,23 +156,28 @@ public class Player extends GameObject implements IPlayer {
      ***********************************************/
 
     public void addProjectiles(@NonNull Activity activity) {
-        projectileList.add(new Projectile(activity, this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0, new int[]{R.drawable.color_player_bullet}, 0, "bullet"));
+        projectileList.add(new IronProjectile(activity, this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0, new int[]{R.drawable.color_player_bullet}, 0, "bullet"));
     }
 
     public void drawProjectiles(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {
-        for (Projectile e : this.projectileList)
-            e.draw(activity, canvas, loopCount);
+        try {
+            for (Projectile e : this.projectileList) {
+                e.draw(activity, canvas, loopCount);
+            }
+        } catch (NoDrawableInArrayFound_Exception e) {
+            Log.e(TAG, "drawProjectiles: Could not draw projectile, bc. saved integer is not a resource id.");
+        }
     }
 
     //Here we need to access the array backwards, otherwise we will remove an index, that will be progressed, but isn't there anymore!
     public void updateProjectiles() {
-        Log.d(TAG2, "Projectile Size = " + this.projectileList.size());
+        Log.d(TAG, "updateProjectiles: Projectile Size = " + this.projectileList.size());
         if (!this.projectileList.isEmpty()) {
             for (int i = this.projectileList.size() - 1; i > -1; i--) {
                 this.projectileList.get(i).update(null, null, null);
 
                 if (this.projectileList.get(i).getPosX() > GameViewActivity.GAME_WIDTH - 50) {
-                    Log.e(TAG2, "Bullet removed!");
+                    Log.e(TAG, "updateProjectiles: Bullet removed!");
                     this.projectileList.remove(this.projectileList.get(i));
                 }
             }
@@ -178,7 +188,7 @@ public class Player extends GameObject implements IPlayer {
      *  GETTER & SETTER      *
      *************************/
 
-    public List getProjectiles() {
+    public List<Projectile> getProjectiles() {
         return projectileList;
     }
 
@@ -206,22 +216,12 @@ public class Player extends GameObject implements IPlayer {
         return (float) this.getPosY() + (this.getIntrinsicHeightOfPlayer() * Constants.GameLogic.GameView.widthInPercentage);
     }
 
-    public void incrementFireRate() {
-        fireRate += 0.1;
-        if (fireRate > IPlayer.fireRateMax)
-            fireRate = IPlayer.fireRateMax; //max
+    public Bitmap getCurrentBitmap() {
+        return currentBitmap;
     }
 
-    public void decrementFireRate() {
-        fireRate -= 0.1;
-        if (fireRate < IPlayer.fireRateMin)
-            fireRate = IPlayer.fireRateMin; //min
+    public void setCurrentBitmap(Bitmap currentBitmap) {
+        this.currentBitmap = currentBitmap;
     }
-
-    public float getFireRate() {
-        return fireRate;
-    }
-
-
 }
 

@@ -15,6 +15,8 @@ import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 
+import static yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject.PROPERTIES.DEFAULT.DEFAULT_ROTATION;
+
 public class Level_DarkDescent extends Level {
     public Level_DarkDescent(@NonNull Context context) {
         super(context);
@@ -23,7 +25,7 @@ public class Level_DarkDescent extends Level {
     @Override
     protected void determinePlayer() {
         this.setPlayer(new Player(this.getContext(), 100, Resources.getSystem().getDisplayMetrics().heightPixels/4, 5, 2,
-                new int[]{R.drawable.player_albert}, IPlayer.DEFAULT_ROTATION, "Albert"));
+                new int[]{R.drawable.player_albert}, DEFAULT_ROTATION, "Albert"));
     }
 
     @Override
