@@ -45,19 +45,14 @@ android {
     }
 }
 
-/*apply plugin: 'org.greenrobot.greendao'
-
-// Database Schema version (increment if structure changed)
-greendao {
-    schemaVersion 1
-}*/
 
 dependencies {
     /* FIREBASE */
     implementation 'com.google.firebase:firebase-core:15.0.2'
 
-    /*Android ORM*/
-    //implementation 'org.greenrobot:greendao:3.2.2'
+    /* Pager Sliding (TabbedActivity) */
+    //implementation 'com.jpardogo.materialtabstrip:library:1.1.1'
+
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')

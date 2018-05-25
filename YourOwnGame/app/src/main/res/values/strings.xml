@@ -74,6 +74,7 @@
     <string name="sliderViewPinapos"> Pinapos </string>
     <string name="sliderViewAmountCollected"> Collected: $1%d</string>
     <string name="sliderViewMeloonDescription"> The Meloons are quite often to see. The will give you X and you gain 100 Points per Meloon.</string>
+    <string name="title_activity_shop">ShopActivity</string>
 
 
 </resources>
