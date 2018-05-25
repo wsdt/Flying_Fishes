@@ -10,7 +10,7 @@ import java.util.List;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
-import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
+import yourowngame.com.yourowngame.classes.manager.storage.SharedPrefStorageMgr;
 
 //TODO: This class might/should be connected/reviewed by Google-Play-Services in future or similar!
 

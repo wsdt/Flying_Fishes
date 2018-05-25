@@ -21,14 +21,10 @@ public class GameServiceManager {
         this.setFirebaseAnalytics(FirebaseAnalytics.getInstance(context));
     }
 
-    //TODO: We need to implement  listeners or similar (something constent to evaluate when an achievement is achieved)
-    @Deprecated
-    @Enhance(message = "This is seemingly only logging online. Real achievements seem to be unlocked by REST Api." +
-            "https://developers.google.com/games/services/web/api/achievements/unlock")
     public void unlockAchievement(@NonNull String achievementId) {
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ACHIEVEMENT_ID,achievementId);
-        this.getFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.UNLOCK_ACHIEVEMENT,bundle);
+        //TODO: OAuth: https://developers.google.com/identity/protocols/OAuth2
+        //TODO: RestApi: https://developers.google.com/games/services/web/api/achievements/unlock#try-it
+
         Log.d(TAG, "unlockAchievement: Achievement unlocked with id->"+achievementId);
     }
 

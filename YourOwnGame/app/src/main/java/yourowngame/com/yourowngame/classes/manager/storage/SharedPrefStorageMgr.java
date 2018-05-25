@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.storagemgr;
+package yourowngame.com.yourowngame.classes.manager.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;

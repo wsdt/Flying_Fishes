@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.gameEngine;
+package yourowngame.com.yourowngame.classes.manager;
 
 import android.content.Context;
 import android.graphics.Bitmap;
