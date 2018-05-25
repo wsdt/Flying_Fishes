@@ -29,15 +29,6 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
     }
 
 
-    @Override
-    public abstract void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward);
-
-    @Override
-    public abstract void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount);
-
-    @Override
-    public abstract boolean cleanup();
-
     @Deprecated
     @Enhance (message = "Maybe we should use cleanup() for resetting positions, as we do it" +
             "so in other actor classes (consistency). :) ", byDeveloper = Constants.Developers.WSDT,

@@ -14,15 +14,12 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
-import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.annotations.Test;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
-import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.dialog.DialogMgr;
 import yourowngame.com.yourowngame.classes.storagemgr.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
@@ -112,9 +109,10 @@ public class GameView extends SurfaceView {
 
     private void initGameObjects() {
         /**current starting level */
-        Level currLevel = LevelManager.getInstance(GameView.this.getActivityContext()).getCurrentLevelObj();
+        final Level currLevel = LevelManager.getInstance(GameView.this.getActivityContext()).getCurrentLevelObj();
+
         //clean level properties
-        LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().cleanUpLevelProperties();
+        currLevel.cleanUpLevelProperties();
         //clean the fruitCounter
         FruitCounter.getInstance().cleanUpFruitCounter();
         //clean bglayers
@@ -130,7 +128,7 @@ public class GameView extends SurfaceView {
                 GameView.this.getActivityContext().setNewHighscoreOnUI();
 
                 /*Evaluate whether user achieved level or not. */
-                if (LevelManager.getInstance(GameView.this.getActivityContext()).getCurrentLevelObj().areLevelAssignmentsAchieved()) {
+                if (currLevel.areLevelAssignmentsAchieved()) {
                     thread.setRunning(false);
                     getActivityContext().runOnUiThread(new Runnable() {
                         @Override
@@ -240,7 +238,7 @@ public class GameView extends SurfaceView {
             for (int i = 0; i < currLevel.getPlayer().getProjectiles().size(); i++){
                 if(CollisionManager.checkCollision(e, currLevel.getPlayer().getProjectileAtPosition(i))){
                     //enemy dies, spawns on the other side
-                    e.resetWidthAndHeightOfEnemy();
+                    e.resetPosOfEnemy();
                     //projectile needs to be deleted
                     currLevel.getPlayer().getProjectiles().remove(currLevel.getPlayer().getProjectileAtPosition(i));
                     //play sound when enemy dies
