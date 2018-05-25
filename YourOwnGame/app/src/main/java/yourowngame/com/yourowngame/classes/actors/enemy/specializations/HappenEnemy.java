@@ -21,7 +21,7 @@ import yourowngame.com.yourowngame.classes.manager.RandomMgr;
  *
  */
 
-public class HappenEnemy extends Enemy implements IEnemy.HAPPEN_ENEMY_PROPERTIES {
+public class HappenEnemy extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
     private static final String TAG = "RoboEnemy";
     private static Bitmap[] images;
 
@@ -43,29 +43,23 @@ public class HappenEnemy extends Enemy implements IEnemy.HAPPEN_ENEMY_PROPERTIES
         this.setCurrentBitmap(getImages()[0]);
     }
 
-    //This is the standard AI, other enemys will have their own way of trying to kill the player :>
-
+    /** @param victim: In most cases a player obj. So the happen enemy follows the movements of the victimObj. */
     @Override
-    public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-        resetIfOutOfBounds();
-
-        Player player = (Player) obj;
-
-            if (player.getPosX() < this.getPosX())
-                this.setPosX(this.getPosX() - this.getSpeedX()); //why not use saved/declared X speed? so enemies can have different speed (same as you suggested in cloud class)
-            else if (player.getPosX() > this.getPosX())
+    public void update(GameObject victim, @Nullable Boolean goUp, @Nullable Boolean goForward) {
+        if(getPosX() <= 0){
+            // Reset if out of screen
+            this.resetPos();
+        } else {
+            if (victim.getPosX() < this.getPosX())
+                this.setPosX(this.getPosX() - this.getSpeedX());
+            else if (victim.getPosX() > this.getPosX())
                 this.setPosX(this.getPosX() + this.getSpeedX());
 
-            if (player.getPosY() < this.getPosY())
+            if (victim.getPosY() < this.getPosY())
                 this.setPosY(this.getPosY() - this.getSpeedY());
-            else if (player.getPosY() > this.getPosY())
+            else if (victim.getPosY() > this.getPosY())
                 this.setPosY(this.getPosY() + this.getSpeedY());
-
-
-            //@TODO it somehow doesnt look smooth, i dont know, not good if they're overlapping and bouncing all the time
-            //@TODO maybe for other enemys?
-
-        //this.setPosX(this.getPosX() - getSpeedX()); for normal mode, just de-comment
+        }
 
     }
 
@@ -73,9 +67,8 @@ public class HappenEnemy extends Enemy implements IEnemy.HAPPEN_ENEMY_PROPERTIES
     //but we surely should do something to slow it down
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (int i = 0; i < getImages().length; i++) {
-            canvas.drawBitmap(getImages()[i], (int) this.getPosX(), (int) this.getPosY(), null);
-        }
+        this.setCurrentBitmap(getImages()[((int) loopCount % this.getImg().length)]);
+        canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
     @Override
@@ -99,12 +92,6 @@ public class HappenEnemy extends Enemy implements IEnemy.HAPPEN_ENEMY_PROPERTIES
         return isInitialized;
     }
 
-    @Override
-    public boolean cleanup() {
-        resetPosOfEnemy(); //just reset y/x
-        return true;
-    }
-
     /** GETTER / SETTER */
     public static Bitmap[] getImages() {
         return images;
@@ -117,6 +104,6 @@ public class HappenEnemy extends Enemy implements IEnemy.HAPPEN_ENEMY_PROPERTIES
     /** Get reward method for highscore */
     @Override
     public int getReward() {
-        return IEnemy.HAPPEN_ENEMY_PROPERTIES.HIGHSCORE_REWARD;
+        return IEnemy.PROPERTIES.HAPPEN.HIGHSCORE_REWARD;
     }
 }

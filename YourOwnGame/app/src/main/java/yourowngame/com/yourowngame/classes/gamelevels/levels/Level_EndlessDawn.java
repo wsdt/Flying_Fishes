@@ -21,6 +21,8 @@ import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.levelassignments.LA_AchievePoints;
 
+import static yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject.PROPERTIES.DEFAULT.DEFAULT_ROTATION;
+
 
 /**
  * LEVEL TWO
@@ -42,7 +44,7 @@ public class Level_EndlessDawn extends Level {
     @Override
     protected void determinePlayer() {
         this.setPlayer(new Player(this.getContext(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2, new int[]{
-                R.drawable.player_albert}, IPlayer.DEFAULT_ROTATION, "Hugo"));
+                R.drawable.player_albert}, DEFAULT_ROTATION, "Hugo"));
     }
 
     @Override

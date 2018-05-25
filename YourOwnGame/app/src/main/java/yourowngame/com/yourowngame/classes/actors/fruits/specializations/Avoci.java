@@ -37,8 +37,8 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
         this.setName("Meloon");
 
         this.setCurrentBitmap(Meloon.getImages()[0]);
-
     }
+
 
     /*************************************** UPDATE / DRAW *************************************************/
     @Override
@@ -48,7 +48,8 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {
-        canvas.drawBitmap(images[0], (int) this.getPosX(), (int) this.getPosY(), null);
+        this.setCurrentBitmap(getImages()[((int) loopCount % this.getImg().length)]);
+        canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
     /*************************************** UPDATE / DRAW *************************************************/
 
@@ -75,16 +76,15 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
 
     @Override
     public boolean cleanup() {
-        resetPositions();
+        resetPos();
         return true;
     }
 
     @Override
-    public void resetPositions() {
+    public void resetPos() {
         this.setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + IFruit.AVOCI_FRUIT_PROPERTIES.OFF_TIME));
         this.setPosY(RandomMgr.getRandomFloat(IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT, GameViewActivity.GAME_HEIGHT-IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT));
     }
-
 
     /** Get reward method for highscore */
     @Override

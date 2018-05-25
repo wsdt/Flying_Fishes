@@ -49,7 +49,8 @@ public class Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTIES {
 
         @Override
         public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {
-            canvas.drawBitmap(images[0], (int) getPosX(), (int) getPosY(), null);
+            this.setCurrentBitmap(getImages()[((int) loopCount % this.getImg().length)]);
+            canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
         }
         /*************************************** UPDATE / DRAW *************************************************/
 
@@ -79,13 +80,13 @@ public class Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTIES {
         /** reset positions, return true*/
         @Override
         public boolean cleanup() {
-            resetPositions();
+            resetPos();
             return true;
         }
 
         /** Fruits need to differ in here */
         @Override
-        public void resetPositions() {
+        public void resetPos() {
             this.setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + OFF_TIME));
             this.setPosY(RandomMgr.getRandomFloat(IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT, GameViewActivity.GAME_HEIGHT - Y_UPLIFT));
         }

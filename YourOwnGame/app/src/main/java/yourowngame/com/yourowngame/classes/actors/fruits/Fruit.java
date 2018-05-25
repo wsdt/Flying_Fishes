@@ -28,14 +28,6 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
         super(context);
     }
 
-
-    @Deprecated
-    @Enhance (message = "Maybe we should use cleanup() for resetting positions, as we do it" +
-            "so in other actor classes (consistency). :) ", byDeveloper = Constants.Developers.WSDT,
-            priority = Enhance.Priority.LOW)
-    public abstract void resetPositions();
-
-
     public boolean hasLeftScreen(){
         return this.getPosX() < 0;
     }

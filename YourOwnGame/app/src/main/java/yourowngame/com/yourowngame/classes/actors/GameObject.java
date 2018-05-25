@@ -8,20 +8,24 @@ import android.graphics.Matrix;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.gamelevels.interfaces.IDrawAble;
 import yourowngame.com.yourowngame.classes.gamelevels.interfaces.IUpdateAble;
+import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 import yourowngame.com.yourowngame.gameEngine.interfaces.Initializer;
 
 
-public abstract class GameObject implements Initializer, IUpdateAble, IDrawAble {
+public abstract class GameObject implements Initializer, IUpdateAble, IDrawAble, IGameObject.PROPERTIES.DEFAULT {
     private static final String TAG = "GameObject";
     private Context context;
     private double posX, posY, speedX, speedY;
     private int rotationDegree; //rotation for simulating flying down/up
     private String name;
     private int[] img; //must not be static (overwriding)
-    private Bitmap currentBitmap; //just a reference for other classes, so they know which bitmap is active (for collision calculation etc.)
+    private Bitmap currentBitmap; //must not be static, is the current index for img-array
     private int heightOfBitmap, widthOfBitmap;
 
     protected boolean isInitialized = false; //should be only set to true in initialize() --> no getter setter because only class itself should have access
@@ -46,6 +50,9 @@ public abstract class GameObject implements Initializer, IUpdateAble, IDrawAble 
         this.setContext(context);
         this.initialize();
     }
+
+    /** Resets position of gameObj to the start position. Used e.g. in cleanUp(); */
+    public abstract void resetPos();
 
 
     /**
@@ -157,19 +164,19 @@ public abstract class GameObject implements Initializer, IUpdateAble, IDrawAble 
         this.img = img;
     }
 
-    public Bitmap getCurrentBitmap() {
-        return currentBitmap;
-    }
-
-    public void setCurrentBitmap(Bitmap currentBitmap) {
-        this.currentBitmap = currentBitmap;
-    }
-
     public Context getContext() {
         return context;
     }
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public Bitmap getCurrentBitmap() {
+        return currentBitmap;
+    }
+
+    public void setCurrentBitmap(Bitmap currentBitmap) {
+        this.currentBitmap = currentBitmap;
     }
 }

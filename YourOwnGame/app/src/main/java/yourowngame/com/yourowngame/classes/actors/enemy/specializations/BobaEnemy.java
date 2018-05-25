@@ -16,14 +16,15 @@ import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
+import static yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy.PROPERTIES.BOBA.HIGHSCORE_REWARD;
+
 /**
  * Created  on 12.03.2018.
  */
 
-public class BobaEnemy extends Enemy implements IEnemy.BOBA_ENEMY_PROPERTIES {
+public class BobaEnemy extends Enemy implements IEnemy.PROPERTIES.BOBA {
     private static final String TAG = "BobaEnemy";
     private static Bitmap[] images;
-    private double startPointY = 0;
 
     /**READ -> if you use this constructor, the current img will not be set as the currentBitmap! */
     public BobaEnemy(@NonNull Context context, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
@@ -43,24 +44,24 @@ public class BobaEnemy extends Enemy implements IEnemy.BOBA_ENEMY_PROPERTIES {
         this.setRotationDegree(DEFAULT_ROTATION);
         this.setName("Spawn");
 
-        this.startPointY = this.getPosY();  //original position needed for updating
         this.setCurrentBitmap(getImages()[0]);
     }
 
 
     @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-        resetIfOutOfBounds();
-
-        this.setPosX(this.getPosX() - this.getSpeedX());
-
+        if(getPosX() <= 0){
+            // Reset if out of screen
+            this.resetPos();
+        } else {
+            this.setPosX(this.getPosX() - this.getSpeedX());
+        }
     }
 
     @Override
     public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        for (int i = 0; i < getImages().length; i++) {
-            canvas.drawBitmap(getImages()[i], (int) this.getPosX(), (int) this.getPosY(), null);
-        }
+        this.setCurrentBitmap(getImages()[((int) loopCount % this.getImg().length)]);
+        canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
 
@@ -92,12 +93,6 @@ public class BobaEnemy extends Enemy implements IEnemy.BOBA_ENEMY_PROPERTIES {
     }
 
 
-    @Override
-    public boolean cleanup() {
-        resetPosOfEnemy(); //just reset y/x
-        return true;
-    }
-
     /**
      * GETTER / SETTER
      */
@@ -116,6 +111,6 @@ public class BobaEnemy extends Enemy implements IEnemy.BOBA_ENEMY_PROPERTIES {
      */
     @Override
     public int getReward() {
-        return IEnemy.BOBA_ENEMY_PROPERTIES.HIGHSCORE_REWARD;
+        return IEnemy.PROPERTIES.BOBA.HIGHSCORE_REWARD;
     }
 }

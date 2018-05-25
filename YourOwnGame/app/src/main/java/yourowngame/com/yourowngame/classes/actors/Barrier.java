@@ -12,6 +12,11 @@ public class Barrier extends GameObject {
     }
 
     @Override
+    public void resetPos() {
+
+    }
+
+    @Override
     public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
 
     }

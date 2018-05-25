@@ -238,7 +238,7 @@ public class GameView extends SurfaceView {
             for (int i = 0; i < currLevel.getPlayer().getProjectiles().size(); i++){
                 if(CollisionManager.checkCollision(e, currLevel.getPlayer().getProjectileAtPosition(i))){
                     //enemy dies, spawns on the other side
-                    e.resetPosOfEnemy();
+                    e.resetPos();
                     //projectile needs to be deleted
                     currLevel.getPlayer().getProjectiles().remove(currLevel.getPlayer().getProjectileAtPosition(i));
                     //play sound when enemy dies
@@ -259,12 +259,12 @@ public class GameView extends SurfaceView {
                 //add collected Fruit
                 FruitCounter.getInstance().fruitCollected(fruit);
                 //reset fruit
-                fruit.resetPositions();
+                fruit.resetPos();
                 Log.e(TAG, "Player collected a fruit.");
             }
             //fruits has left the screen, will rejoin
             if(fruit.hasLeftScreen()){
-                fruit.resetPositions();
+                fruit.resetPos();
             }
 
             Log.d(TAG, "Fruit " + fruit + " = " + fruit.getPosX());

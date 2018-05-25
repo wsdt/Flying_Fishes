@@ -10,9 +10,6 @@ public interface IPlayer {
     /**Jump Speed multiplied by MOVE_UP_MULTIPLIER*/
     int MOVE_UP_MULTIPLIER = 2;
 
-    /** Default rotation of bitmap, if e.g. not flying up/down. */
-    int DEFAULT_ROTATION = 0;
-
     /** Rotation of player flying up (simulating by tilting image) */
     int ROTATION_UP = 5;
 
