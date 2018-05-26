@@ -8,7 +8,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/app_icon_gameboy"/>
+            android:src="@drawable/raw_app_icon_big"/>
     </item>
 
 </layer-list>
