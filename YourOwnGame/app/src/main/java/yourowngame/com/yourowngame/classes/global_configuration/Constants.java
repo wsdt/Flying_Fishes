@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.global_configuration;
 
+import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.annotations.Delete;
 
 /**
@@ -19,6 +20,9 @@ import yourowngame.com.yourowngame.classes.annotations.Delete;
  */
 
 public interface Constants {
+    /** Change app icon here and in Android Manifest */
+    int APP_ICON = R.drawable.raw_app_icon_big;
+
     interface Developers {
         String WSDT = "Kevin Riedl (WSDT)";
         String SOLUTION = "Christof Jori (SOLUTION)";
