@@ -32,12 +32,6 @@ public class MainActivity extends AppCompatActivity {
         new AdManager(this).loadBannerAd((RelativeLayout) findViewById(R.id.mainActivity_RL));
 
 
-        //Hide actionbar if it is not already hidden
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-
         //Show current app version to user
         ((TextView) findViewById(R.id.mainActivity_appVersion)).setText(HelperClass.getAppVersion(this,true));
     }
@@ -47,16 +41,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, LevelHierarchyActivity.class));
     }
 
-    @Test
-    public void startFruitSlider(View v){
-        startActivity(new Intent(this, SwipeFruitsActivity.class));
-    }
-
-    @Test
-    public void openShop(View v) {
-
-        //startActivity(new Intent(this, ShopActivity.class));
-    }
 
     public void showHighscore(View view) {
         startActivity(new Intent(this, HighscoreActivity.class));

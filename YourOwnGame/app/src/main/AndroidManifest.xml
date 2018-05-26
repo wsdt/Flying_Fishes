@@ -45,10 +45,6 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/SplashTheme" />
         <activity android:name=".activities.SwipeFruitsActivity" />
-        <activity
-            android:name=".activities.ShopActivity"
-            android:label="@string/title_activity_shop"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
