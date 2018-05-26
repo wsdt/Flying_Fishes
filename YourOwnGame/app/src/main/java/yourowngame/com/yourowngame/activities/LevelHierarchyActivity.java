@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.activities;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -74,8 +75,14 @@ public class LevelHierarchyActivity extends AppCompatActivity {
 
 
         /*Put level specific params into inflated view*/
-        ((TextView) inflatedLevelView.findViewById(R.id.lvlName)).setText(getResources().getString(level.getLevelNameResId()));
-        ((TextView) inflatedLevelView.findViewById(R.id.lvlId)).setText(String.valueOf(lvlId));
+        Resources res = getResources();
+        TextView tvLvlName = ((TextView) inflatedLevelView.findViewById(R.id.lvlName));
+        tvLvlName.setText(getResources().getString(level.getLevelNameResId()));
+        tvLvlName.setTextColor(res.getColor(R.color.colorBlack));
+
+        TextView tvLvlId = ((TextView) inflatedLevelView.findViewById(R.id.lvlId));
+        tvLvlId.setText(String.valueOf(lvlId));
+        tvLvlId.setTextColor(res.getColor(R.color.colorBlack));
 
         //Also print levelAssignments
         listLevelAssignments(inflatedLevelView, level);
@@ -95,6 +102,8 @@ public class LevelHierarchyActivity extends AppCompatActivity {
             sb.append(levelAssignment.getFormattedAssignment(this));
         }
 
-        ((TextView) inflatedLevelView.findViewById(R.id.lvlAssignments)).setText(sb);
+        TextView tvLevelAssignments = ((TextView) inflatedLevelView.findViewById(R.id.lvlAssignments));
+        tvLevelAssignments.setText(sb);
+        tvLevelAssignments.setTextColor(getResources().getColor(R.color.colorBlack));
     }
 }
