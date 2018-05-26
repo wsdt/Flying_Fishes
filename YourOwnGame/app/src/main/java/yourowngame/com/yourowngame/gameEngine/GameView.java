@@ -20,6 +20,7 @@ import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.CollisionManager;
 import yourowngame.com.yourowngame.classes.manager.dialog.DialogMgr;
 import yourowngame.com.yourowngame.classes.manager.storage.SharedPrefStorageMgr;
@@ -300,7 +301,7 @@ public class GameView extends SurfaceView {
                                 String.format(res.getString(R.string.dialog_generic_gameOver_msg), getHighscore().getValue()),
                                 res.getString(R.string.dialog_generic_button_positive_gameOverAccept),
                                 res.getString(R.string.dialog_generic_button_negative_gameOverRevive),
-                                R.drawable.app_icon_gameboy, new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
+                                Constants.APP_ICON, new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
                                     @Override
                                     public void success_is_true() {
                                         exitGameNow();

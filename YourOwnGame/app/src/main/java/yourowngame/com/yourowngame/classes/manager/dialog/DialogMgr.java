@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
+import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 
 @Enhance (message = "Maybe make this to a dialog base class which overwrites show() etc. and " +
@@ -48,7 +49,7 @@ public class DialogMgr {
 
         builder.setTitle((title == null) ? this.getContext().getResources().getString(R.string.dialog_generic_error_title) : title)
                 .setMessage((msg == null) ? this.getContext().getResources().getString(R.string.dialog_generic_error_msg) : msg)
-                .setIcon((icon < 0) ? R.drawable.app_icon_gameboy : icon) //ids have to be positive
+                .setIcon((icon < 0) ? Constants.APP_ICON : icon) //ids have to be positive
                 .setPositiveButton((lblPositiveBtn == null) ? this.getContext().getResources().getString(R.string.dialog_generic_button_positive) : lblPositiveBtn, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
