@@ -1,10 +1,8 @@
 package yourowngame.com.yourowngame.classes.actors.player;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -16,8 +14,8 @@ import java.util.List;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
-import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
+import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.actors.projectiles.specializations.IronProjectile;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
@@ -26,6 +24,11 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
 
 public class Player extends GameObject implements IPlayer {
     private static final String TAG = "Player";
+    /**
+     * Use wrapperClasses to determine whether they are set or not.
+     */
+    private boolean goUp = false;
+    private boolean goForward = false;
 
     //Projectiles
     private List<Projectile> projectileList = new ArrayList<>();
@@ -36,46 +39,36 @@ public class Player extends GameObject implements IPlayer {
     private Bitmap currentBitmap;
 
 
-    public Player(@NonNull Context context, double posX, double posY, double speedX, double speedY, int img[], int rotationDegree, @Nullable String name) {
-        super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Player(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int img[], int rotationDegree, @Nullable String name) {
+        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
     /**
-     * @param obj       currently not used!
-     * @param goUp      check if go up
-     * @param goForward check if go forward
+     * Block here creating simplified playerInstances, bc. we don't need random players.
      */
-    @Override
-    public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
-
-        if (goForward == null && goUp == null) {
-            Log.i(TAG, "update: Called update-method without a valid Boolean param!");
-        } else {
-            if (goUp != null) {
-                if (goUp) {
-                    this.setPosY(this.getPosY() - this.getSpeedY() * MOVE_UP_MULTIPLIER);
-                    this.setRotationDegree(ROTATION_UP);
-                } else {
-                    this.setPosY(this.getPosY() + this.getSpeedY());
-                    this.setRotationDegree(ROTATION_DOWN);
-                } //if false go down
-            } else {
-                Log.i(TAG, "updateY: Ignoring goUp. Because parameter null.");
-            }
-
-            //Update X
-            if (goForward != null) {
-                if (goForward) {
-                    this.setPosX(this.getPosX() + this.getSpeedX()); //if true go forward
-                } else {
-                    // should not go back, only if bonus of getting forward is no longer active
-                    //  this.setPosX(this.getPosX() - this.getSpeedX());
-                } //if false go back
-            } else {
-                Log.i(TAG, "updateX: Ignoring goForward. Because parameter null.");
-            }
-        }
+    private Player(@NonNull Activity activity) {
+        super(activity);
     }
+
+    @Override
+    public void update() {
+        if (this.isGoUp()) {
+            this.setPosY(this.getPosY() - this.getSpeedY() * MOVE_UP_MULTIPLIER);
+            this.setRotationDegree(ROTATION_UP);
+        } else {
+            this.setPosY(this.getPosY() + this.getSpeedY());
+            this.setRotationDegree(ROTATION_DOWN);
+        } //if false go down
+
+        //Update X
+        if (this.isGoForward()) {
+            this.setPosX(this.getPosX() + this.getSpeedX()); //if true go forward
+        } else {
+            // should not go back, only if bonus of getting forward is no longer active
+            //  this.setPosX(this.getPosX() - this.getSpeedX());
+        } //if false go back
+    }
+
 
     public boolean hitsTheGround(@NonNull GameView currentView) {
         float playerPosYWithoutImage = (float) this.getPosY();
@@ -85,26 +78,21 @@ public class Player extends GameObject implements IPlayer {
     }
 
     @Override
-    public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
+    public void draw() {
         //SET current Bitmap, LOAD current Bitmap, DRAW current Bitmap
-        this.setCurrentBitmap(loadedBitmaps.get(this.getRotationDegree() + "_" + ((int) loopCount % this.getImg().length))); //reference for collision detection etc.
-        Log.d(TAG, "draw: Tried to draw bitmap index: " + this.getRotationDegree() + "_" + ((int) loopCount % this.getImg().length) + "/Bitmap->" + this.getCurrentBitmap());
+        this.setCurrentBitmap(loadedBitmaps.get(this.getRotationDegree() + "_" + ((int) this.getLoopCount() % this.getImg().length))); //reference for collision detection etc.
+        Log.d(TAG, "draw: Tried to draw bitmap index: " + this.getRotationDegree() + "_" + ((int) this.getLoopCount() % this.getImg().length) + "/Bitmap->" + this.getCurrentBitmap());
 
-        canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
+        this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
 
     //PRELOADING -----------------------------------
-
-    /**
-     * OBJ[0]: Activity
-     */
     @Override
-    @SafeVarargs
-    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+    public void initialize() {
         try {
-            if (!isInitialized) {
-                this.setIntrinsicHeightOfPlayer(this.getContext().getResources().getDrawable(this.getImg()[0]).getIntrinsicHeight());
+            if (!this.isInitialized()) {
+                this.setIntrinsicHeightOfPlayer(this.getActivity().getResources().getDrawable(this.getImg()[0]).getIntrinsicHeight());
 
                 /*Load all bitmaps [load all rotations and all images from array] -------------------
                  * String of hashmap has following pattern: */
@@ -124,7 +112,7 @@ public class Player extends GameObject implements IPlayer {
                 this.setHeightOfBitmap(loadedBitmaps.get(ROTATION_UP + "_" + 0).getHeight());
                 this.setWidthOfBitmap(loadedBitmaps.get(ROTATION_UP + "_" + 0).getWidth());
 
-                isInitialized = true;
+                this.setInitialized(true);
                 Log.d(TAG, "HEIGHT of Bitmap = " + getHeightOfBitmap());
             }
         } catch (ClassCastException | NullPointerException | NoDrawableInArrayFound_Exception e) {
@@ -133,7 +121,6 @@ public class Player extends GameObject implements IPlayer {
             e.printStackTrace();
         }
         Log.d(TAG, "initialize: Initializing Player class successful!");
-        return isInitialized;
     }
 
 
@@ -155,17 +142,15 @@ public class Player extends GameObject implements IPlayer {
      *             PROJECTILES AREA                *
      ***********************************************/
 
-    public void addProjectiles(@NonNull Activity activity) {
-        projectileList.add(new IronProjectile(activity, this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0, new int[]{R.drawable.color_player_bullet}, 0, "bullet"));
+    public void addProjectiles() {
+        Projectile projectile = new IronProjectile(this.getActivity(), this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0, new int[]{R.drawable.color_player_bullet}, 0, "bullet");
+        projectile.initialize();
+        projectileList.add(projectile);
     }
 
-    public void drawProjectiles(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {
-        try {
-            for (Projectile e : this.projectileList) {
-                e.draw(activity, canvas, loopCount);
-            }
-        } catch (NoDrawableInArrayFound_Exception e) {
-            Log.e(TAG, "drawProjectiles: Could not draw projectile, bc. saved integer is not a resource id.");
+    public void drawProjectiles() {
+        for (Projectile e : this.projectileList) {
+            e.draw();
         }
     }
 
@@ -174,7 +159,7 @@ public class Player extends GameObject implements IPlayer {
         Log.d(TAG, "updateProjectiles: Projectile Size = " + this.projectileList.size());
         if (!this.projectileList.isEmpty()) {
             for (int i = this.projectileList.size() - 1; i > -1; i--) {
-                this.projectileList.get(i).update(null, null, null);
+                this.projectileList.get(i).update();
 
                 if (this.projectileList.get(i).getPosX() > GameViewActivity.GAME_WIDTH - 50) {
                     Log.e(TAG, "updateProjectiles: Bullet removed!");
@@ -222,6 +207,27 @@ public class Player extends GameObject implements IPlayer {
 
     public void setCurrentBitmap(Bitmap currentBitmap) {
         this.currentBitmap = currentBitmap;
+    }
+
+    /**
+     * Here to determine whether obj should goUp/Down or Forward/or standing still [no backwards
+     * movement allowed] on next drawCycle. Here and not in DrawableObj bc. Background cannot move
+     * as a whole. Additionally only in Player class, bc. enemies and fruits need no commands to move.
+     */
+    public boolean isGoUp() {
+        return goUp;
+    }
+
+    public void setGoUp(boolean goUp) {
+        this.goUp = goUp;
+    }
+
+    public boolean isGoForward() {
+        return goForward;
+    }
+
+    public void setGoForward(boolean goForward) {
+        this.goForward = goForward;
     }
 }
 

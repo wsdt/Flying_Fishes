@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.manager.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -52,8 +53,8 @@ public class GameSuccessDialog extends Dialog implements View.OnClickListener {
 
     /** Only package private (= NO zugriffsmodifier (neq protected)) constructor so it is
      * only called from dialogMgr. */
-    GameSuccessDialog(@NonNull Context context) {
-        super(context);
+    GameSuccessDialog(@NonNull Activity activity) {
+        super(activity);
     }
 
 
@@ -76,11 +77,11 @@ public class GameSuccessDialog extends Dialog implements View.OnClickListener {
 
         /** title */
         TextView titleText = (TextView) findViewById(R.id.dialogSuccessTitle);
-            titleText.setText(getContext().getResources().getString(R.string.level_achieve_txt, LevelManager.getInstance(getContext()).getCurrentLevel()));
+            titleText.setText(getContext().getResources().getString(R.string.level_achieve_txt, LevelManager.getInstance((Activity) getContext()).getCurrentLevel()));
 
         /** highscore*/
         TextView yourScore = (TextView) findViewById(R.id.yourScoreTxtView);
-            yourScore.setText(getContext().getResources().getString(R.string.yourScore, LevelManager.getInstance(getContext()).getCurrentLevelObj().getCurrentLevelHighscore().getValue()));
+            yourScore.setText(getContext().getResources().getString(R.string.yourScore, LevelManager.getInstance((Activity) getContext()).getCurrentLevelObj().getCurrentLevelHighscore().getValue()));
 
         /** Amount of Meloons-Field */
         TextView amountMeloon = (TextView) findViewById(R.id.amountMeloonsTxtView);
@@ -102,7 +103,7 @@ public class GameSuccessDialog extends Dialog implements View.OnClickListener {
                 dismiss();
 
                 //remove old level
-                LevelManager.getInstance(this.getContext()).getCurrentLevelObj().cleanUpLevelProperties();
+                LevelManager.getInstance((Activity) this.getContext()).getCurrentLevelObj().cleanUpLevelProperties();
 
                 //TODO: Maybe just start directly new level (before redirecting back to levelhierarchy [usability])
                 getContext().startActivity(new Intent(getContext(), LevelHierarchyActivity.class));
@@ -112,7 +113,7 @@ public class GameSuccessDialog extends Dialog implements View.OnClickListener {
                 dismiss();
 
                 //remove old level
-                LevelManager.getInstance(this.getContext()).getCurrentLevelObj().cleanUpLevelProperties();
+                LevelManager.getInstance((Activity) this.getContext()).getCurrentLevelObj().cleanUpLevelProperties();
 
                 getContext().startActivity(new Intent(getContext(), HighscoreActivity.class));
                 break;
@@ -120,7 +121,7 @@ public class GameSuccessDialog extends Dialog implements View.OnClickListener {
                 // and here, the level will just start again...
 
                 //remove old level
-                LevelManager.getInstance(this.getContext()).getCurrentLevelObj().cleanUpLevelProperties();
+                LevelManager.getInstance((Activity) this.getContext()).getCurrentLevelObj().cleanUpLevelProperties();
 
                 break;
             //TODO: maybe also add a revive btn (watching an ad, or paying some fruits or similar) [here we would skip the cleanUpLevelProperties()]

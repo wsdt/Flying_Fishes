@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.background.layers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
@@ -17,36 +18,30 @@ public class BL_SingleColor extends Background {
     /**
      * @param bgColor: By only allowing one integer getValue we ensure that at least one color has to be given and not more than one color is provided (because we would ignore it)
      */
-    public BL_SingleColor(@NonNull Context context, int bgColor, String name) {
-        super(context, name);
+    public BL_SingleColor(@NonNull Activity activity, int bgColor, String name) {
+        super(activity, name);
         this.setUnparsedBgColor(bgColor);
-
-        //After all, preparse color resource, so we do not have to do it in drawBg()
-        this.initialize(); //now at least one
     }
 
     @Override
-    public void updateBackground() {
+    public void update() {
     } //not necessary for this layer (lowest layer)
 
     @Override
-    public void drawBackground(Canvas canvas) {
-        canvas.drawColor(this.getPreParsedBgColor());
+    public void draw() {
+        this.getCanvas().drawColor(this.getPreParsedBgColor());
     }
 
 
     /** No param to provide. */
     @Override
-    @SafeVarargs
-    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+    public void initialize() {
         try {
             this.setPreParsedBgColor(this.getUnparsedBgColor()); //only here in initialize() because we parse the color (not really signifikant, but ok let's be consistent)
         } catch (NullPointerException e) {
             Log.e(TAG, "initialize: Could not initialize Static background!");
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     @Override
@@ -72,6 +67,6 @@ public class BL_SingleColor extends Background {
      * @param unparsedColor: Normal res-drawable integer (get's implicitly casted to color integer
      */
     public void setPreParsedBgColor(int unparsedColor) {
-        this.preParsedBgColor = this.getContext().getResources().getColor(unparsedColor);
+        this.preParsedBgColor = this.getActivity().getResources().getColor(unparsedColor);
     }
 }

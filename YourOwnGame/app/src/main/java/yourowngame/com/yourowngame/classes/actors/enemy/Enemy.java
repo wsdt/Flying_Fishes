@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.actors.enemy;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,11 +19,11 @@ public abstract class Enemy extends GameObject implements IEnemy.PROPERTIES.DEFA
     private static final String TAG = "Enemy";
 
     /**Creates random enemy*/
-    public Enemy(@NonNull Context context){super(context);}
+    public Enemy(@NonNull Activity activity){super(activity);}
 
     //If you change this change it too in EnemyMgr (also when you add params in subclasses!)
-    public Enemy(@NonNull Context context, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
-        super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Enemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
+        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
 

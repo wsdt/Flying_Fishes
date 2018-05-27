@@ -1,7 +1,6 @@
 package yourowngame.com.yourowngame.classes.actors;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -9,18 +8,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.DrawableObj;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
-import yourowngame.com.yourowngame.classes.gamelevels.interfaces.IDrawAble;
-import yourowngame.com.yourowngame.classes.gamelevels.interfaces.IUpdateAble;
-import yourowngame.com.yourowngame.classes.manager.RandomMgr;
-import yourowngame.com.yourowngame.gameEngine.interfaces.Initializer;
 
 
-public abstract class GameObject implements Initializer, IUpdateAble, IDrawAble, IGameObject.PROPERTIES.DEFAULT {
+public abstract class GameObject extends DrawableObj implements IGameObject.PROPERTIES.DEFAULT {
     private static final String TAG = "GameObject";
-    private Context context;
+    /**
+     * All gameObjects (also Player with default X) have these params (but not Backgrounds e.g. so
+     * it wouldn't be suitable for the DrawableObj.
+     */
     private double posX, posY, speedX, speedY;
     private int rotationDegree; //rotation for simulating flying down/up
     private String name;
@@ -28,11 +26,8 @@ public abstract class GameObject implements Initializer, IUpdateAble, IDrawAble,
     private Bitmap currentBitmap; //must not be static, is the current index for img-array
     private int heightOfBitmap, widthOfBitmap;
 
-    protected boolean isInitialized = false; //should be only set to true in initialize() --> no getter setter because only class itself should have access
-
-
-    public GameObject(@NonNull Context context, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
-        this.setContext(context);
+    public GameObject(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
+        super(activity);
 
         this.setPosX(posX);
         this.setPosY(posY);
@@ -41,38 +36,43 @@ public abstract class GameObject implements Initializer, IUpdateAble, IDrawAble,
         this.setRotationDegree(rotationDegree);
         this.setName(name);
         this.setImg(img);
-
-        this.initialize();
     }
 
-    /** Mostly used for creating random enemies/fruits etc. (they have to call super();) to initialize them!*/
-    public GameObject(@NonNull Context context){
-        this.setContext(context);
-        this.initialize();
+    /**
+     * Mostly used for creating random enemies/fruits etc. (they have to call super();) to initialize them!
+     */
+    public GameObject(@NonNull Activity activity) {
+        super(activity);
     }
 
-    /** Resets position of gameObj to the start position. Used e.g. in cleanUp(); */
+    /**
+     * Resets position of gameObj to the start position. Used e.g. in cleanUp();
+     * Here and not in DrawableObj, bc. Backgrounds cannot move as a whole.
+     */
     public abstract void resetPos();
 
 
     /**
      * getCraftedDynamicBitmap:
-     *
+     * <p>
      * Creates a dynamic bitmap from a drawable res
      *
-     * @param imgFrame: index of int-array (set/getImg())
+     * @param imgFrame:        index of int-array (set/getImg())
      * @param rotationDegrees: how much should be image tilted or rotated? (in degrees) / if null then image won't be rotated
-     * @param widthInPercent: reduce/enlarge width / if this param OR scaleHeight is null, both values get ignored! Use . as comma ;) --> Values MUST be higher than 0 and should not be higher than 1! (quality)
-     * @param heightInPercent: same as scaleWidth. */
+     * @param widthInPercent:  reduce/enlarge width / if this param OR scaleHeight is null, both values get ignored! Use . as comma ;) --> Values MUST be higher than 0 and should not be higher than 1! (quality)
+     * @param heightInPercent: same as scaleWidth.
+     */
     public Bitmap getCraftedDynamicBitmap(int imgFrame, @Nullable Integer rotationDegrees, @Nullable Float widthInPercent, @Nullable Float heightInPercent) throws NoDrawableInArrayFound_Exception {
 
         Log.d(TAG, "getCraftedBitmaps: Trying to craft bitmaps.");
         if (this.getImg().length <= imgFrame && this.getImg().length >= 1) {
-               Log.e(TAG, "getCraftedDynamicBitmap: IndexOutOfBounds, could not determine correct drawable for animation. Returning drawable at index 0! Provided imgFrame: "+imgFrame);
-               imgFrame = 0;
-        } else if (this.getImg().length <= 0) { throw new NoDrawableInArrayFound_Exception("getCraftedDynamicBitmap: FATAL EXCEPTION->Integer array (getImg()) has no content! Could not return bitmap."); }
+            Log.e(TAG, "getCraftedDynamicBitmap: IndexOutOfBounds, could not determine correct drawable for animation. Returning drawable at index 0! Provided imgFrame: " + imgFrame);
+            imgFrame = 0;
+        } else if (this.getImg().length <= 0) {
+            throw new NoDrawableInArrayFound_Exception("getCraftedDynamicBitmap: FATAL EXCEPTION->Integer array (getImg()) has no content! Could not return bitmap.");
+        }
         //not else (because despite normal if method should continue)
-        Bitmap targetImg = BitmapFactory.decodeResource(this.getContext().getResources(), this.getImg()[imgFrame]);
+        Bitmap targetImg = BitmapFactory.decodeResource(this.getActivity().getResources(), this.getImg()[imgFrame]);
         if ((widthInPercent != null && heightInPercent != null)) { //must be before rotationDegrees-If
             if ((widthInPercent != 1 && heightInPercent != 1)) { //so we also don't scale if factor is 1
                 targetImg = Bitmap.createScaledBitmap(targetImg, (int) (targetImg.getWidth() * widthInPercent), (int) (targetImg.getHeight() * heightInPercent), true);
@@ -97,8 +97,9 @@ public abstract class GameObject implements Initializer, IUpdateAble, IDrawAble,
     }
 
 
-
-    /**GETTER/SETTER SHIT ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  * */
+    /**
+     * GETTER/SETTER SHIT ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  *
+     */
 
     public int getHeightOfBitmap() {
         return heightOfBitmap;
@@ -162,14 +163,6 @@ public abstract class GameObject implements Initializer, IUpdateAble, IDrawAble,
 
     public void setImg(int[] img) {
         this.img = img;
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
     }
 
     public Bitmap getCurrentBitmap() {
