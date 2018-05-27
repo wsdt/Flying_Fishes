@@ -33,8 +33,8 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
      * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!
      */
 
-    public RocketFishEnemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img) {
-        super(activity, posX, posY, speedX, speedY, img);
+    public RocketFishEnemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
+        super(activity, posX, posY, speedX, speedY);
     }
 
     /**
@@ -47,10 +47,6 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
         this.setSpeedX(RandomMgr.getRandomFloat(IEnemy.PROPERTIES.ROCKETFISH.SPEED_X_MIN, IEnemy.PROPERTIES.ROCKETFISH.SPEED_X_MAX));
         this.setSpeedY(RandomMgr.getRandomFloat(IEnemy.PROPERTIES.ROCKETFISH.SPEED_Y_MIN, IEnemy.PROPERTIES.ROCKETFISH.SPEED_Y_MAX));
-
-        /* Set default Image references (not needed in complex constr., bc. there we provide it
-        dynamically) */
-        this.setImg(IMAGE_FRAMES);
     }
 
     @Override
@@ -66,7 +62,7 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
 
     @Override
     public void draw() {
-        this.setCurrentBitmap(getImages()[((int) this.getLoopCount() % this.getImg().length)]);
+        this.setCurrentBitmap(getImages()[((int) this.getLoopCount() % IMAGE_FRAMES.length)]);
         this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
@@ -75,10 +71,10 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
     public void initialize() {
         try {
             if (!isInitialized()) {
-                setImages(new Bitmap[this.getImg().length]);
+                setImages(new Bitmap[IMAGE_FRAMES.length]);
 
-                for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
-                    getImages()[imgFrame] = this.getCraftedDynamicBitmap(imgFrame, DEFAULT_ROTATION, null, null);
+                for (int imgFrame = 0; imgFrame < IMAGE_FRAMES.length; imgFrame++) {
+                    getImages()[imgFrame] = this.getCraftedDynamicBitmap(IMAGE_FRAMES, imgFrame, DEFAULT_ROTATION, null, null);
                 }
                 this.setCurrentBitmap(getImages()[0]);
 

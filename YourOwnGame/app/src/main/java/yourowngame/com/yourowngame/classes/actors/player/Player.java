@@ -22,7 +22,7 @@ import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.GameView;
 
 
-public class Player extends GameObject implements IPlayer {
+public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DEFAULT {
     private static final String TAG = "Player";
     /**
      * Use wrapperClasses to determine whether they are set or not.
@@ -35,12 +35,11 @@ public class Player extends GameObject implements IPlayer {
 
     /*-- Preloaded --*/
     private int intrinsicHeightOfPlayer;
-    private HashMap<String, Bitmap> loadedBitmaps; //must not be static
     private Bitmap currentBitmap;
 
 
-    public Player(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int img[]) {
-        super(activity, posX, posY, speedX, speedY, img);
+    public Player(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
+        super(activity, posX, posY, speedX, speedY);
     }
 
     /**
@@ -50,24 +49,6 @@ public class Player extends GameObject implements IPlayer {
         super(activity);
     }
 
-    @Override
-    public void update() {
-        if (this.isGoUp()) {
-            this.setPosY(this.getPosY() - this.getSpeedY() * MOVE_UP_MULTIPLIER);
-            this.setRotationDegree(ROTATION_UP);
-        } else {
-            this.setPosY(this.getPosY() + this.getSpeedY());
-            this.setRotationDegree(ROTATION_DOWN);
-        } //if false go down
-
-        //Update X
-        if (this.isGoForward()) {
-            this.setPosX(this.getPosX() + this.getSpeedX()); //if true go forward
-        } else {
-            // should not go back, only if bonus of getting forward is no longer active
-            //  this.setPosX(this.getPosX() - this.getSpeedX());
-        } //if false go back
-    }
 
 
     public boolean hitsTheGround(@NonNull GameView currentView) {
@@ -77,53 +58,8 @@ public class Player extends GameObject implements IPlayer {
         return (getWidthOfPlayer() > currentView.getLayout().getHeight() || playerPosYWithoutImage < 0);
     }
 
-    @Override
-    public void draw() {
-        //SET current Bitmap, LOAD current Bitmap, DRAW current Bitmap
-        this.setCurrentBitmap(loadedBitmaps.get(this.getRotationDegree() + "_" + ((int) this.getLoopCount() % this.getImg().length))); //reference for collision detection etc.
-        Log.d(TAG, "draw: Tried to draw bitmap index: " + this.getRotationDegree() + "_" + ((int) this.getLoopCount() % this.getImg().length) + "/Bitmap->" + this.getCurrentBitmap());
 
-        this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
-    }
-
-
-    //PRELOADING -----------------------------------
-    @Override
-    public void initialize() {
-        try {
-            if (!this.isInitialized()) {
-                this.setIntrinsicHeightOfPlayer(this.getActivity().getResources().getDrawable(this.getImg()[0]).getIntrinsicHeight());
-
-                /*Load all bitmaps [load all rotations and all images from array] -------------------
-                 * String of hashmap has following pattern: */
-                HashMap<String, Bitmap> loadedBitmaps = new HashMap<>();
-                Log.d(TAG, "initialize: Player img length: " + getImg().length);
-                for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
-                    loadedBitmaps.put(ROTATION_UP + "_" + imgFrame, this.getCraftedDynamicBitmap(imgFrame, ROTATION_UP, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
-                    loadedBitmaps.put(ROTATION_DOWN + "_" + imgFrame, this.getCraftedDynamicBitmap(imgFrame, ROTATION_DOWN, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
-                    loadedBitmaps.put(DEFAULT_ROTATION + "_" + imgFrame, this.getCraftedDynamicBitmap(imgFrame, DEFAULT_ROTATION, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
-                    Log.d(TAG, "initialize: Loaded following bitmaps->" +
-                            ROTATION_UP + "_" + imgFrame + "//" +
-                            ROTATION_DOWN + "_" + imgFrame + "//" +
-                            DEFAULT_ROTATION + "_" + imgFrame
-                    );
-                }
-                this.setLoadedBitmaps(loadedBitmaps);
-                this.setHeightOfBitmap(loadedBitmaps.get(ROTATION_UP + "_" + 0).getHeight());
-                this.setWidthOfBitmap(loadedBitmaps.get(ROTATION_UP + "_" + 0).getWidth());
-
-                this.setInitialized(true);
-                Log.d(TAG, "HEIGHT of Bitmap = " + getHeightOfBitmap());
-            }
-        } catch (ClassCastException | NullPointerException | NoDrawableInArrayFound_Exception e) {
-            //This should never be thrown! Just check in try block if null and if instance of to prevent issues!
-            Log.e(TAG, "initialize: Initializing of Player object FAILED! See error below.");
-            e.printStackTrace();
-        }
-        Log.d(TAG, "initialize: Initializing Player class successful!");
-    }
-
-
+    /** Here as long as all players are cleaned up the same way. */
     @Override
     public boolean cleanup() {
         resetPos();
@@ -143,7 +79,7 @@ public class Player extends GameObject implements IPlayer {
      ***********************************************/
 
     public void addProjectiles() {
-        Projectile projectile = new IronProjectile(this.getActivity(), this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0, new int[]{R.drawable.color_player_bullet});
+        Projectile projectile = new IronProjectile(this.getActivity(), this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0);
         projectile.initialize();
         projectileList.add(projectile);
     }
@@ -177,24 +113,12 @@ public class Player extends GameObject implements IPlayer {
         return projectileList;
     }
 
-    public Projectile getProjectileAtPosition(int pos) {
-        return projectileList.get(pos);
-    }
-
     public int getIntrinsicHeightOfPlayer() {
         return intrinsicHeightOfPlayer;
     }
 
     public void setIntrinsicHeightOfPlayer(int intrinsicHeightOfPlayer) {
         this.intrinsicHeightOfPlayer = intrinsicHeightOfPlayer;
-    }
-
-    public HashMap<String, Bitmap> getLoadedBitmaps() {
-        return loadedBitmaps;
-    }
-
-    public void setLoadedBitmaps(HashMap<String, Bitmap> loadedBitmaps) {
-        this.loadedBitmaps = loadedBitmaps;
     }
 
     public float getWidthOfPlayer() {

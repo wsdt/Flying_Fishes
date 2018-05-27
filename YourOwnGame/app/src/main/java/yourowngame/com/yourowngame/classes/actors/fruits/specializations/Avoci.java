@@ -16,8 +16,8 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
     public static final String TAG = "Avoci";
     private static Bitmap[] images;
 
-    public Avoci(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img) {
-        super(activity, posX, posY, speedX, speedY, img);
+    public Avoci(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
+        super(activity, posX, posY, speedX, speedY);
     }
 
     /**
@@ -30,10 +30,6 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
         this.setSpeedX(SPEED_X);
         this.setSpeedY(SPEED_Y);
-
-        /* Set default Image references (not needed in complex constr., bc. there we provide it
-        dynamically) */
-        this.setImg(IMAGE_FRAMES);
     }
 
 
@@ -45,7 +41,7 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
 
     @Override
     public void draw() {
-        this.setCurrentBitmap(getImages()[((int) this.getLoopCount() % this.getImg().length)]);
+        this.setCurrentBitmap(getImages()[((int) this.getLoopCount() % IMAGE_FRAMES.length)]);
         this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
@@ -55,10 +51,10 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
     public void initialize() {
         try {
             if (!isInitialized()) {
-                setImages(new Bitmap[this.getImg().length]);
+                setImages(new Bitmap[IMAGE_FRAMES.length]);
 
-                for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
-                    getImages()[imgFrame] = this.getCraftedDynamicBitmap(imgFrame, (int) DEFAULT_ROTATION, null, null);
+                for (int imgFrame = 0; imgFrame < IMAGE_FRAMES.length; imgFrame++) {
+                    getImages()[imgFrame] = this.getCraftedDynamicBitmap(IMAGE_FRAMES, imgFrame, (int) DEFAULT_ROTATION, null, null);
                 }
                 this.setCurrentBitmap(getImages()[0]);
 
