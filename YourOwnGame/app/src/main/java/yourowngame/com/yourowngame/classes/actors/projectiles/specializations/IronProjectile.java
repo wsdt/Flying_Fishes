@@ -17,44 +17,42 @@ public class IronProjectile extends Projectile implements IProjectile.PROPERTIES
     private static final String TAG = "IronProjectile";
     private static Bitmap[] images;
 
-    public IronProjectile(@NonNull Context context, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
-        this.setCurrentBitmap(images[0]);
+    public IronProjectile(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
     @Override
-    public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
+    public void update() {
         this.setPosX(getPosX() + getSpeedX());
     }
 
     @Override
-    public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {
-        this.setCurrentBitmap(getImages()[((int) loopCount % this.getImg().length)]);
-        canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
+    public void draw() {
+        this.setCurrentBitmap(getImages()[((int) this.getLoopCount() % this.getImg().length)]);
+        this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
     @Override
-    @SafeVarargs
-    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+    public void initialize() {
         //we really need to change the initialize, Object params, instanceOf..
         this.setImg(IMAGE_FRAMES); //current design (bad!)
 
         try {
-            if (!isInitialized) {
+            if (!this.isInitialized()) {
                 setImages(new Bitmap[this.getImg().length]);
 
                 for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
                     getImages()[imgFrame] = this.getCraftedDynamicBitmap(imgFrame, DEFAULT_ROTATION, null, null);
                 }
+                this.setCurrentBitmap(getImages()[0]);
 
                 Log.d(TAG, "Initialize: Successfully initialized!");
-                isInitialized = true;
+                this.setInitialized(true);
             }
         } catch (NoDrawableInArrayFound_Exception | NullPointerException e) {
             Log.d(TAG, "Initialize: Initialize Failure!");
             e.printStackTrace();
         }
-        return isInitialized;
     }
 
     //GETTER/SETTER ----------------------------------------

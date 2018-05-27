@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.gamelevels.levels;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
@@ -18,30 +19,30 @@ import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import static yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject.PROPERTIES.DEFAULT.DEFAULT_ROTATION;
 
 public class Level_DarkDescent extends Level {
-    public Level_DarkDescent(@NonNull Context context) {
-        super(context);
+    public Level_DarkDescent(@NonNull Activity activity) {
+        super(activity);
     }
 
     @Override
     protected void determinePlayer() {
-        this.setPlayer(new Player(this.getContext(), 100, Resources.getSystem().getDisplayMetrics().heightPixels/4, 5, 2,
+        this.setPlayer(new Player(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels/4, 5, 2,
                 new int[]{R.drawable.player_albert}, DEFAULT_ROTATION, "Albert"));
     }
 
     @Override
     protected void determineBackgroundLayers() {
-        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getContext(), R.color.colorBlack, "Darkness"));
-        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getContext(), "Wolken", new int[]{R.drawable.bglayer_1_cloud_3},10));
+        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getActivity(), R.color.colorBlack, "Darkness"));
+        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getActivity(), "Wolken", new int[]{R.drawable.bglayer_1_cloud_3},10));
     }
 
     @Override
     protected void determineAllEnemies() {
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(getContext(), RocketFishEnemy.class, 15));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(getActivity(), RocketFishEnemy.class, 15));
     }
 
     @Override
     protected void determineAllFruits() {
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Meloon.class,4));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Meloon.class,4));
     }
 
     @Override

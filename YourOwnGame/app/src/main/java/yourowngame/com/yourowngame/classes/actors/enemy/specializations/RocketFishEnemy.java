@@ -33,15 +33,15 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
      * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!
      */
 
-    public RocketFishEnemy(@NonNull Context context, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
-        super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public RocketFishEnemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
+        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
     /**
      * Creates random enemy
      */
-    public RocketFishEnemy(@NonNull Context context) {
-        super(context); //also call super constr! (initializing)
+    public RocketFishEnemy(@NonNull Activity activity) {
+        super(activity); //also call super constr! (initializing)
 
         this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
@@ -49,12 +49,10 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
         this.setSpeedY(RandomMgr.getRandomFloat(IEnemy.PROPERTIES.ROCKETFISH.SPEED_Y_MIN, IEnemy.PROPERTIES.ROCKETFISH.SPEED_Y_MAX));
         this.setRotationDegree(DEFAULT_ROTATION);
         this.setName("Bomber");
-
-        this.setCurrentBitmap(getImages()[0]);
     }
 
     @Override
-    public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
+    public void update() {
         if (getPosX() <= 0) {
             // Reset if out of screen
             this.resetPos();
@@ -65,36 +63,33 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
 
 
     @Override
-    public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
-        this.setCurrentBitmap(getImages()[((int) loopCount % this.getImg().length)]);
-        canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
+    public void draw() {
+        this.setCurrentBitmap(getImages()[((int) this.getLoopCount() % this.getImg().length)]);
+        this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
 
     @Override
-    @SafeVarargs
-    @Enhance(message = {"I get crazy, we have a really bad design here/everywhere with thousands of different Image getters/setters etc. " +
-            "Additionally we are not consistent because player has another directive.",
-            "Additionally we should consider putting the initialize() method of all enemies into the abstract base class because they will all look the same!"})
-    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
-        //we really need to change the initialize, Object params, instanceOf..
-        this.setImg(IMAGE_FRAMES); //current design (bad!)
+    public void initialize() {
+        /* Set Image references */
+        this.setImg(IMAGE_FRAMES);
 
         try {
-            if (!isInitialized) {
+            if (!isInitialized()) {
                 setImages(new Bitmap[this.getImg().length]);
 
                 for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
                     getImages()[imgFrame] = this.getCraftedDynamicBitmap(imgFrame, DEFAULT_ROTATION, null, null);
                 }
+                this.setCurrentBitmap(getImages()[0]);
+
                 Log.d(TAG, "Robo-Enemy: Successfully initialized!");
-                isInitialized = true;
+                setInitialized(true);
             }
         } catch (NoDrawableInArrayFound_Exception | ClassCastException | NullPointerException e) {
             Log.d(TAG, "Robo-Enemy: Initialize Failure!");
             e.printStackTrace();
         }
-        return isInitialized;
     }
 
 
