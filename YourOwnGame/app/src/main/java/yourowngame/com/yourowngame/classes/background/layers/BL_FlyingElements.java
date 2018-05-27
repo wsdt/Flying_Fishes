@@ -29,8 +29,8 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
 
     /** @param resDrawables: Provide int-array with all possible drawable resource ints.
      * @param amountOfFlyingElements: How many of those drawables should be drawn on display?*/
-    public BL_FlyingElements(@NonNull Activity activity, String name, int[] resDrawables, int amountOfFlyingElements) {
-        super(activity, name);
+    public BL_FlyingElements(@NonNull Activity activity, int[] resDrawables, int amountOfFlyingElements) {
+        super(activity);
         this.setResDrawables(resDrawables);
         this.setAmountOfFlyingElements(amountOfFlyingElements);
     }

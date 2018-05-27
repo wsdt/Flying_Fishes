@@ -31,8 +31,8 @@ import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 public abstract class Projectile extends GameObject implements IProjectile.PROPERTIES.DEFAULT {
     private final String TAG = "Projectile";
 
-    public Projectile(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Projectile(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img) {
+        super(activity, posX, posY, speedX, speedY, img);
     }
 
     /** Block simplified constructor call, bc. we don't want random Projectiles. */

@@ -33,8 +33,8 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
      * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!
      */
 
-    public RocketFishEnemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
-        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public RocketFishEnemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img) {
+        super(activity, posX, posY, speedX, speedY, img);
     }
 
     /**
@@ -47,8 +47,10 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
         this.setSpeedX(RandomMgr.getRandomFloat(IEnemy.PROPERTIES.ROCKETFISH.SPEED_X_MIN, IEnemy.PROPERTIES.ROCKETFISH.SPEED_X_MAX));
         this.setSpeedY(RandomMgr.getRandomFloat(IEnemy.PROPERTIES.ROCKETFISH.SPEED_Y_MIN, IEnemy.PROPERTIES.ROCKETFISH.SPEED_Y_MAX));
-        this.setRotationDegree(DEFAULT_ROTATION);
-        this.setName("Bomber");
+
+        /* Set default Image references (not needed in complex constr., bc. there we provide it
+        dynamically) */
+        this.setImg(IMAGE_FRAMES);
     }
 
     @Override
@@ -71,9 +73,6 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
 
     @Override
     public void initialize() {
-        /* Set Image references */
-        this.setImg(IMAGE_FRAMES);
-
         try {
             if (!isInitialized()) {
                 setImages(new Bitmap[this.getImg().length]);

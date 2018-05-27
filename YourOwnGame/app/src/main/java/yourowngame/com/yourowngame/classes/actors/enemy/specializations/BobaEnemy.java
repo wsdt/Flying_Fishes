@@ -27,8 +27,8 @@ public class BobaEnemy extends Enemy implements IEnemy.PROPERTIES.BOBA {
     private static Bitmap[] images;
 
     /**READ -> if you use this constructor, the current img will not be set as the currentBitmap! */
-    public BobaEnemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
-        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public BobaEnemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img) {
+        super(activity, posX, posY, speedX, speedY, img);
     }
 
     /**
@@ -41,8 +41,10 @@ public class BobaEnemy extends Enemy implements IEnemy.PROPERTIES.BOBA {
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
         this.setSpeedX(RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX));
         this.setSpeedY(RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX));
-        this.setRotationDegree(DEFAULT_ROTATION);
-        this.setName("Spawn");
+
+        /* Set default Image references (not needed in complex constr., bc. there we provide it
+        dynamically) */
+        this.setImg(IMAGE_FRAMES);
     }
 
 
@@ -65,9 +67,6 @@ public class BobaEnemy extends Enemy implements IEnemy.PROPERTIES.BOBA {
 
     @Override
     public void initialize() {
-        /* Set Image references */
-        this.setImg(IMAGE_FRAMES);
-
         try {
             if (!isInitialized()) {
                 setImages(new Bitmap[this.getImg().length]);

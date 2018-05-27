@@ -20,6 +20,9 @@ public abstract class DrawableObj {
     private long loopCount;
     private GameObject targetGameObj;
     private boolean isInitialized = false; //should be only set to true in initialize() --> no getter setter because only class itself should have access
+    /** String resource id (multilingual) for setting a to user visible name of the drawable obj.
+     * Can be not set, so name is not obligatory. */
+    private int strResName;
 
     public DrawableObj(@NonNull Activity activity) {
         this.setActivity(activity);
@@ -110,5 +113,13 @@ public abstract class DrawableObj {
 
     public void setInitialized(boolean initialized) {
         isInitialized = initialized;
+    }
+
+    public int getStrResName() {
+        return strResName;
+    }
+
+    public void setStrResName(int strResName) {
+        this.strResName = strResName;
     }
 }

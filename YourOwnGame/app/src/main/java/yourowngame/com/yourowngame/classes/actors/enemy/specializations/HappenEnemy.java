@@ -20,8 +20,8 @@ public class HappenEnemy extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
     private static final String TAG = "RoboEnemy";
     private static Bitmap[] images;
 
-    public HappenEnemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
-        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public HappenEnemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img) {
+        super(activity, posX, posY, speedX, speedY, img);
     }
 
     /**
@@ -34,8 +34,10 @@ public class HappenEnemy extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT + ADDITIONAL_GAME_WIDTH));
         this.setSpeedX(RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX));
         this.setSpeedY(RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX));
-        this.setRotationDegree(DEFAULT_ROTATION);
-        this.setName("Robotic");
+
+        /* Set default Image references (not needed in complex constr., bc. there we provide it
+        dynamically) */
+        this.setImg(IMAGE_FRAMES);
     }
 
     /**
@@ -70,9 +72,6 @@ public class HappenEnemy extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
 
     @Override
     public void initialize() {
-        /* Set Image references */
-        this.setImg(IMAGE_FRAMES);
-
         try {
             if (!isInitialized()) {
                 setImages(new Bitmap[this.getImg().length]);
