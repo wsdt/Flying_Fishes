@@ -11,13 +11,18 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debugMini {
+            initWith debug
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            matchingFallbacks = ['debug']
+        }
         release {
-            //TODO: Currently not minifying bc. of error (have not found it yet)
-
             /* Making the app smaller, but could be also the source of errors!! */
-            /*shrinkResources true /* shrinks unused res (drawables, etc.)*
-            minifyEnabled true /* same as shrinkResources but for code itself*
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'*/
+            shrinkResources true /* shrinks unused res (drawables, etc.)*/
+            minifyEnabled true /* same as shrinkResources but for code itself*/
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     //this creates resource string while compiling with current versionName! (e.g. Loading screen)
@@ -49,10 +54,8 @@ android {
 dependencies {
     /* FIREBASE */
     implementation 'com.google.firebase:firebase-core:15.0.2'
-
     /* Pager Sliding (TabbedActivity) */
     //implementation 'com.jpardogo.materialtabstrip:library:1.1.1'
-
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
