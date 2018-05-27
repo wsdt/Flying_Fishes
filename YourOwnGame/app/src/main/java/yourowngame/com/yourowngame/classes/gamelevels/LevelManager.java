@@ -1,19 +1,16 @@
 package yourowngame.com.yourowngame.classes.gamelevels;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_DarkDescent;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_EndlessDawn;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_SummerSky;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_NightRider;
-import yourowngame.com.yourowngame.classes.manager.dialog.DialogMgr;
+import yourowngame.com.yourowngame.classes.manager.dialog.LevelAchievedDialog;
 
 /**
  * Pattern: SINGLETON
@@ -21,23 +18,21 @@ import yourowngame.com.yourowngame.classes.manager.dialog.DialogMgr;
  * DO NOT MAKE ANY METHODS HERE STATIC (we have a Singleton, so no problem)! ALL PARAMS (IF POSSIBLE) SHOULD BE STATIC.
  * */
 public class LevelManager {
-    private Activity activity;
-
-    private static int CURRENT_LEVEL = 0; //Global level variable so everybody knows which level now is (should be only adapted by LevelManager, so NO SETTER)
     private static final String TAG = "LevelManager";
-    private static LevelManager INSTANCE;
+
+    private Activity activity;
+    private static int CURRENT_LEVEL = 0; //Global level variable so everybody knows which level now is (should be only adapted by LevelManager, so NO SETTER)
     private static ArrayList<Level> levelList; //By changing this, we can have flexible level orders and also are able to iterate over levels (after this level the next one comes etc.)
 
-    private LevelManager(@NonNull Activity activity) {
+    /** Don't make this as Singleton or similar, bc. old activities get saved into instance
+     * which is then obsolete. Additionally, this class nests an Activity-Obj., which should
+     * never be static (instabil).*/
+    public LevelManager(@NonNull Activity activity) {
         Log.d(TAG, "LevelMgr: Creating new instance of LevelMgr.");
         this.setActivity(activity);
 
-        createDefaultLevelList(); //for now, just use the default level order, which is chosen by us
-        INSTANCE = this;
-    }
-
-    public static LevelManager getInstance(@NonNull Activity activity) {
-        return (INSTANCE != null) ? INSTANCE : new LevelManager(activity);
+        /* Do not create default levelList here (more performant to do it for each instance, when we
+        need it explicitely */
     }
 
     //Heart of levelMgr
@@ -49,22 +44,11 @@ public class LevelManager {
         return null;
     }
 
-    @Bug (problem = "First play works, but if we restart the game, the user achieves the level immediately on next validation whether" +
-            "level assignments are achieved. So e.g. level 2 after restart also for only 50 points possible!")
-    public void initiateLevelAchievedProcess(@NonNull DialogMgr dialogMgr) {
+    public void initiateLevelAchievedProcess() {
         Log.d(TAG, "initiateLevelAchievedProcess: Trying to change level.");
 
-
         //show dialog
-        dialogMgr.showDialog(dialogMgr.createDialog_LevelAchieved());
-
-
-        /** According to our current philosophy we do not make fluent level changes so following lines
-         * are not necessary. Just show dialog and do the things we want to. */
-        /*this.getCurrentLevelObj().cleanUpLevelProperties(); //remove everything from display
-
-        //After this call the levelObj reference has been changed! So clean up the game field before (remove all enemies etc.)
-        return levelAchieved();*/
+        LevelAchievedDialog.show(this.getActivity());
     }
 
     private void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray
@@ -81,16 +65,14 @@ public class LevelManager {
         return CURRENT_LEVEL;
     }
 
-    public int setCurrentLevel(int newLevel) {
+    public void setCurrentLevel(int newLevel) {
         Log.d(TAG, "setCurrentLevel: Setting level");
 
         //Check if level++ exists,
         if ((newLevel) >= getLevelList().size()) { //is lvl indexoutofbonds?
             Log.w(TAG, "setCurrentLevel: Can't go into level. Returning already set level.");
-            return CURRENT_LEVEL;
         } else {
             CURRENT_LEVEL = newLevel;
-            return newLevel; //pre-inkrement to return new current level
         }
     }
 
