@@ -17,8 +17,8 @@ public class IronProjectile extends Projectile implements IProjectile.PROPERTIES
     private static final String TAG = "IronProjectile";
     private static Bitmap[] images;
 
-    public IronProjectile(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public IronProjectile(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img) {
+        super(activity, posX, posY, speedX, speedY, img);
     }
 
     @Override

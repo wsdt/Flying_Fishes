@@ -45,15 +45,15 @@ public class Level_SummerSky extends Level {
     @Override
     protected void determinePlayer() {
         this.setPlayer(new Player(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2, new int[]{
-                R.drawable.player_hugo}, DEFAULT_ROTATION, "Hugo"));
+                R.drawable.player_hugo}));
     }
 
     @Override
     protected void determineBackgroundLayers() {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
         * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
-        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getActivity(), R.color.colorSkyBlue, "Sky"));
-        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getActivity(), "Heaven", new int[]{R.drawable.bglayer_1_cloud_1,R.drawable.bglayer_1_cloud_2,R.drawable.bglayer_1_cloud_3}, 10));
+        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getActivity(), R.color.colorSkyBlue));
+        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bglayer_1_cloud_1,R.drawable.bglayer_1_cloud_2,R.drawable.bglayer_1_cloud_3}, 10));
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)

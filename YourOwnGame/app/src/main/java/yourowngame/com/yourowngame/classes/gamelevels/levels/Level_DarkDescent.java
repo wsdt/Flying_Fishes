@@ -26,13 +26,13 @@ public class Level_DarkDescent extends Level {
     @Override
     protected void determinePlayer() {
         this.setPlayer(new Player(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels/4, 5, 2,
-                new int[]{R.drawable.player_albert}, DEFAULT_ROTATION, "Albert"));
+                new int[]{R.drawable.player_albert}));
     }
 
     @Override
     protected void determineBackgroundLayers() {
-        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getActivity(), R.color.colorBlack, "Darkness"));
-        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getActivity(), "Wolken", new int[]{R.drawable.bglayer_1_cloud_3},10));
+        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getActivity(), R.color.colorBlack));
+        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bglayer_1_cloud_3},10));
     }
 
     @Override
