@@ -18,8 +18,8 @@ public class BL_SingleColor extends Background {
     /**
      * @param bgColor: By only allowing one integer getValue we ensure that at least one color has to be given and not more than one color is provided (because we would ignore it)
      */
-    public BL_SingleColor(@NonNull Activity activity, int bgColor, String name) {
-        super(activity, name);
+    public BL_SingleColor(@NonNull Activity activity, int bgColor) {
+        super(activity);
         this.setUnparsedBgColor(bgColor);
     }
 

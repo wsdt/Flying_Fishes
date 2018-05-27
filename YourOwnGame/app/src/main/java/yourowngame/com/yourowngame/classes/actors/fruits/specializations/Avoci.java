@@ -21,8 +21,8 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
     public static final String TAG = "Avoci";
     private static Bitmap[] images;
 
-    public Avoci(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Avoci(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img) {
+        super(activity, posX, posY, speedX, speedY, img);
     }
 
     /**Create random fruit*/
@@ -34,7 +34,6 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
         this.setSpeedX(SPEED_X);
         this.setSpeedY(SPEED_Y);
         this.setRotationDegree(DEFAULT_ROTATION);
-        this.setName("Meloon");
     }
 
 

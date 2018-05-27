@@ -22,8 +22,8 @@ public abstract class Enemy extends GameObject implements IEnemy.PROPERTIES.DEFA
     public Enemy(@NonNull Activity activity){super(activity);}
 
     //If you change this change it too in EnemyMgr (also when you add params in subclasses!)
-    public Enemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
-        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Enemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img) {
+        super(activity, posX, posY, speedX, speedY, img);
     }
 
 

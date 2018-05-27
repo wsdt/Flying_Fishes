@@ -46,15 +46,15 @@ public class Level_NightRider extends Level {
     @Override
     protected void determinePlayer() {
         this.setPlayer(new Player(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2, new int[]{
-                R.drawable.player_albert}, DEFAULT_ROTATION, "Hugo"));
+                R.drawable.player_albert}));
     }
 
     @Override
     protected void determineBackgroundLayers() {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
         * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
-        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getActivity(), R.color.colorPrimaryDark, "DarkSky"));
-        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getActivity(), "Gewitter", new int[]{R.drawable.bglayer_1_cloud_2},8));
+        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getActivity(), R.color.colorPrimaryDark));
+        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bglayer_1_cloud_2},8));
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)
