@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import yourowngame.com.yourowngame.R;
@@ -21,9 +22,8 @@ import yourowngame.com.yourowngame.classes.commercial.AdManager;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
-import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.CollisionManager;
-import yourowngame.com.yourowngame.classes.manager.dialog.DialogMgr;
+import yourowngame.com.yourowngame.classes.manager.dialog.GameOverDialog;
 import yourowngame.com.yourowngame.classes.manager.storage.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 import yourowngame.com.yourowngame.classes.counters.Highscore;
@@ -38,9 +38,9 @@ import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
 public class GameView extends SurfaceView {
     private static final String TAG = "GameView";
     private GameViewActivity activityContext;
+    private LevelManager levelManager;
     private SurfaceHolder holder;
     private GameLoopThread thread;
-    private DialogMgr dialogMgr;
     
     private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
     private FrameLayout layout;
@@ -63,7 +63,9 @@ public class GameView extends SurfaceView {
      * activity:onCreate() is done.*/
     public void startGame(GameViewActivity context) {
         this.setActivityContext(context);
-        this.setDialogMgr(new DialogMgr(context));
+
+        //Set LvlMgr
+        this.setLevelManager(new LevelManager(this.getActivityContext()));
 
         /** At every Gamestart, get the metrics from screen, otherwise hole Game will crash in future!,
          *  because we used the metric nearly everywhere!! */
@@ -112,7 +114,7 @@ public class GameView extends SurfaceView {
 
     private void initGameObjects() {
         /**current starting level */
-        final Level currLevel = LevelManager.getInstance(GameView.this.getActivityContext()).getCurrentLevelObj();
+        final Level currLevel = this.getLevelManager().getCurrentLevelObj();
 
         //clean level properties
         currLevel.cleanUpLevelProperties();
@@ -136,7 +138,7 @@ public class GameView extends SurfaceView {
                     getActivityContext().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            LevelManager.getInstance(getActivityContext()).initiateLevelAchievedProcess(getDialogMgr());
+                            getLevelManager().initiateLevelAchievedProcess();
                         }
                     });
                 }
@@ -154,7 +156,7 @@ public class GameView extends SurfaceView {
             canvas.drawColor(0, PorterDuff.Mode.CLEAR); //remove previous bitmaps etc. (it does not work to set here only bg color!, because of mode)
 
             try {
-                Level currLevel = LevelManager.getInstance(GameView.this.getActivityContext()).getCurrentLevelObj();
+                Level currLevel = getLevelManager().getCurrentLevelObj();
 
                 // (1.) draw background
                 for (Background background : currLevel.getAllBackgroundLayers()) {
@@ -203,7 +205,7 @@ public class GameView extends SurfaceView {
      * 2. Update GameObjects here *
      *****************************/
     public void updateGameObjects() {
-        Level currLevel = LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj();
+        Level currLevel = getLevelManager().getCurrentLevelObj();
 
         /** Uppdate player */
         currLevel.getPlayer().setGoUp(GameView.this.getMultiTouchHandler().isMultiTouched() || GameView.this.getMultiTouchHandler().isMoving());
@@ -266,8 +268,8 @@ public class GameView extends SurfaceView {
         }
 
         /** Check player to Fruit Collision - Works fine, but somehow collisionDetection of Avoci isnt 100% perfect");*/
-        for (Fruit fruit : LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getAllFruits()) {
-            if (CollisionManager.checkCollision(LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getPlayer(), fruit)) {
+        for (Fruit fruit : getLevelManager().getCurrentLevelObj().getAllFruits()) {
+            if (CollisionManager.checkCollision(getLevelManager().getCurrentLevelObj().getPlayer(), fruit)) {
                 //increment highscore
                 getHighscore().increment(fruit);
                 //add collected Fruit
@@ -285,7 +287,7 @@ public class GameView extends SurfaceView {
         }
 
         /** Check if levelAssignment is true */
-        if(LevelManager.getInstance(GameView.this.getActivityContext()).getCurrentLevelObj().areLevelAssignmentsAchieved()){
+        if(getLevelManager().getCurrentLevelObj().areLevelAssignmentsAchieved()){
             // LevelManager.startDialog()... -> that dialog will be the one from levelAchieved()
             // and the LevelManager will then lead to further action
 
@@ -306,39 +308,30 @@ public class GameView extends SurfaceView {
                     @Override
                     public void run() {
                         Resources res = getActivityContext().getResources();
-                        DialogMgr dialogMgr = new DialogMgr(getActivityContext());
+                        GameOverDialog.show(getActivityContext(), /* On Revive Btn -> */ new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                new AdManager(GameView.this.getActivityContext()).loadRewardedVideoInRewardActivity(
+                                        GameView.this.getActivityContext(), new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
+                                            @Override
+                                            public void success_is_true() {
+                                                //TODO: put here revive method/procedure (e.g. put all positions a few seconds back!)
+                                            }
 
-                        dialogMgr.showDialog(dialogMgr.createDialog_Generic(
-                                res.getString(R.string.dialog_generic_gameOver_title),
-                                String.format(res.getString(R.string.dialog_generic_gameOver_msg), getHighscore().getValue()),
-                                res.getString(R.string.dialog_generic_button_positive_gameOverAccept),
-                                res.getString(R.string.dialog_generic_button_negative_gameOverRevive),
-                                Constants.APP_ICON, new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
-                                    @Override
-                                    public void success_is_true() {
-                                        exitGameNow();
-                                    }
-
-                                    @Override
-                                    public void failure_is_false() {
-                                        //E.g. revive button clicked
-                                        new AdManager(GameView.this.getActivityContext()).loadRewardedVideoInRewardActivity(
-                                                GameView.this.getActivityContext(), new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
-                                                    @Override
-                                                    public void success_is_true() {
-                                                        //TODO: put here revive method/procedure (e.g. put all positions a few seconds back!)
-                                                    }
-
-                                                    @Override
-                                                    public void failure_is_false() {
-                                                        //don't revive so just do nothing, because rewarded ad does this for us (but to restart game do success from outer interface)
-                                                        exitGameNow(); //sozusagen doch kein revive
-                                                    }
-                                                }, null //don't change activity, because user want to be revived!
-                                        );
-                                    }
-                                }
-                        ));
+                                            @Override
+                                            public void failure_is_false() {
+                                                //don't revive so just do nothing, because rewarded ad does this for us (but to restart game do success from outer interface)
+                                                exitGameNow(); //sozusagen doch kein revive
+                                            }
+                                        }, null //don't change activity, because user want to be revived!
+                                );
+                            }
+                        }, /* On Exit Btn -> */ new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                exitGameNow();
+                            }
+                        });
                     }
                 });
                 retry = false;
@@ -364,7 +357,7 @@ public class GameView extends SurfaceView {
         getHighscore().removeAllListeners();
 
         //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
-        LevelManager.getInstance(this.getActivityContext()).resetGame(); //reset gameLevelState so user starts from level 0 again.
+        getLevelManager().resetGame(); //reset gameLevelState so user starts from level 0 again.
 
         getActivityContext().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
     }
@@ -387,7 +380,7 @@ public class GameView extends SurfaceView {
 
     /** this returns the current Highscore */
     public Highscore getHighscore() {
-        return LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj().getCurrentLevelHighscore();
+        return getLevelManager().getCurrentLevelObj().getCurrentLevelHighscore();
     }
 
 
@@ -399,11 +392,11 @@ public class GameView extends SurfaceView {
         this.multiTouchHandler = multiTouchHandler;
     }
 
-    public DialogMgr getDialogMgr() {
-        return dialogMgr;
+    public LevelManager getLevelManager() {
+        return levelManager;
     }
 
-    public void setDialogMgr(DialogMgr dialogMgr) {
-        this.dialogMgr = dialogMgr;
+    public void setLevelManager(LevelManager levelManager) {
+        this.levelManager = levelManager;
     }
 }
