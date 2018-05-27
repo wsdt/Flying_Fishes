@@ -14,11 +14,17 @@
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-renamesourcefileattribute SourceFile
 
--keep class solution_wsdt.com.yourowngame.**
--keep class yourowngame.com.yourowngame.**
+######## Keep public methods of enemy/fruit suclasses explicitely, bc. curr. we call them only by reflection (and proguard does not detect that)
+-keep class yourowngame.com.yourowngame.classes.actors.enemy.specializations.** {
+    public <methods>;
+}
+-keep class yourowngame.com.yourowngame.classes.actors.fruits.specializations.** {
+    public <methods>;
+}
+
