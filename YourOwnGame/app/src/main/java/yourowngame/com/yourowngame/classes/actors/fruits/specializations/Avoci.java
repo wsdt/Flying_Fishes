@@ -21,13 +21,13 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
     public static final String TAG = "Avoci";
     private static Bitmap[] images;
 
-    public Avoci(@NonNull Context context, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(context, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Avoci(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
+        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
     }
 
     /**Create random fruit*/
-    public Avoci(@NonNull Context context) {
-        super(context);
+    public Avoci(@NonNull Activity activity) {
+        super(activity);
 
         this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + (int) OFF_TIME));
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
@@ -35,43 +35,43 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
         this.setSpeedY(SPEED_Y);
         this.setRotationDegree(DEFAULT_ROTATION);
         this.setName("Meloon");
-
-        this.setCurrentBitmap(Meloon.getImages()[0]);
     }
 
 
     /*************************************** UPDATE / DRAW *************************************************/
     @Override
-    public void update(GameObject obj, @Nullable Boolean goUp, @Nullable Boolean goForward) {
+    public void update() {
         this.setPosX(this.getPosX() - this.getSpeedX()); //just move them from right to left
     }
 
     @Override
-    public void draw(@NonNull Activity activity, @NonNull Canvas canvas, long loopCount) {
-        this.setCurrentBitmap(getImages()[((int) loopCount % this.getImg().length)]);
-        canvas.drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
+    public void draw() {
+        this.setCurrentBitmap(getImages()[((int) this.getLoopCount() % this.getImg().length)]);
+        this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
     /*************************************** UPDATE / DRAW *************************************************/
 
     @Override
-    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+    public void initialize() {
+        /* Set Image references */
         this.setImg(IMAGE_FRAMES);
 
         try {
-            if (!isInitialized) {
+            if (!isInitialized()) {
                 setImages(new Bitmap[this.getImg().length]);
 
                 for (int imgFrame = 0; imgFrame < this.getImg().length; imgFrame++) {
                     getImages()[imgFrame] = this.getCraftedDynamicBitmap(imgFrame, (int) DEFAULT_ROTATION, null, null);
                 }
+                this.setCurrentBitmap(getImages()[0]);
+
                 Log.d(TAG, "Meloon-Fruit: Successfully initialized!");
-                isInitialized = true;
+                setInitialized(true);
             }
         } catch (NoDrawableInArrayFound_Exception | ClassCastException | NullPointerException e) {
             Log.d(TAG, "Meloon-Fruit: Initialize Failure!");
             e.printStackTrace();
         }
-        return isInitialized;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.gamelevels;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -20,23 +21,23 @@ import yourowngame.com.yourowngame.classes.manager.dialog.DialogMgr;
  * DO NOT MAKE ANY METHODS HERE STATIC (we have a Singleton, so no problem)! ALL PARAMS (IF POSSIBLE) SHOULD BE STATIC.
  * */
 public class LevelManager {
-    private Context context;
+    private Activity activity;
 
     private static int CURRENT_LEVEL = 0; //Global level variable so everybody knows which level now is (should be only adapted by LevelManager, so NO SETTER)
     private static final String TAG = "LevelManager";
     private static LevelManager INSTANCE;
     private static ArrayList<Level> levelList; //By changing this, we can have flexible level orders and also are able to iterate over levels (after this level the next one comes etc.)
 
-    private LevelManager(@NonNull Context context) {
+    private LevelManager(@NonNull Activity activity) {
         Log.d(TAG, "LevelMgr: Creating new instance of LevelMgr.");
-        this.setContext(context);
+        this.setActivity(activity);
 
         createDefaultLevelList(); //for now, just use the default level order, which is chosen by us
         INSTANCE = this;
     }
 
-    public static LevelManager getInstance(@NonNull Context context) {
-        return (INSTANCE != null) ? INSTANCE : new LevelManager(context);
+    public static LevelManager getInstance(@NonNull Activity activity) {
+        return (INSTANCE != null) ? INSTANCE : new LevelManager(activity);
     }
 
     //Heart of levelMgr
@@ -68,10 +69,10 @@ public class LevelManager {
 
     private void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray
         setLevelList(new ArrayList<Level>()); //for restarting to avoid nullpointer and resetting levellist (here so we force this method to be called)
-        getLevelList().add(new Level_SummerSky(this.getContext()));
-        getLevelList().add(new Level_NightRider(this.getContext()));
-        getLevelList().add(new Level_EndlessDawn(this.getContext()));
-        getLevelList().add(new Level_DarkDescent(this.getContext()));
+        getLevelList().add(new Level_SummerSky(this.getActivity()));
+        getLevelList().add(new Level_NightRider(this.getActivity()));
+        getLevelList().add(new Level_EndlessDawn(this.getActivity()));
+        getLevelList().add(new Level_DarkDescent(this.getActivity()));
         Log.d(TAG, "createDefaultLevelList: Have set the default level list.");
     }
 
@@ -110,11 +111,11 @@ public class LevelManager {
         LevelManager.levelList = levelList;
     }
 
-    public Context getContext() {
-        return context;
+    public Activity getActivity() {
+        return activity;
     }
 
-    public void setContext(Context context) {
-        this.context = context;
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 }
