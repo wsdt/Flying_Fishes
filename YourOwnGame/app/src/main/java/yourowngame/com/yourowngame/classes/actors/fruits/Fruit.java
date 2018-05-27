@@ -19,8 +19,8 @@ import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 public abstract class Fruit extends GameObject implements IHighscore_RewardableObj, IFruit.DEFAULT_FRUIT_PROPERTIES {
     private int spawnTime = 0;
 
-    public Fruit(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Fruit(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img) {
+        super(activity, posX, posY, speedX, speedY, img);
     }
 
     /**Creates random fruit*/

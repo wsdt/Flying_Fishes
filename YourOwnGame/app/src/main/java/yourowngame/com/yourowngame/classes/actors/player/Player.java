@@ -39,8 +39,8 @@ public class Player extends GameObject implements IPlayer {
     private Bitmap currentBitmap;
 
 
-    public Player(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int img[], int rotationDegree, @Nullable String name) {
-        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Player(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int img[]) {
+        super(activity, posX, posY, speedX, speedY, img);
     }
 
     /**
@@ -143,7 +143,7 @@ public class Player extends GameObject implements IPlayer {
      ***********************************************/
 
     public void addProjectiles() {
-        Projectile projectile = new IronProjectile(this.getActivity(), this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0, new int[]{R.drawable.color_player_bullet}, 0, "bullet");
+        Projectile projectile = new IronProjectile(this.getActivity(), this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0, new int[]{R.drawable.color_player_bullet});
         projectile.initialize();
         projectileList.add(projectile);
     }

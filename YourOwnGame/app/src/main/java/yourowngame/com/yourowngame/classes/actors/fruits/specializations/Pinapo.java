@@ -18,8 +18,8 @@ public class Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTIES {
 
     private static Bitmap[] images;
 
-    public Pinapo(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Pinapo(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img) {
+        super(activity, posX, posY, speedX, speedY, img);
     }
 
     /**
@@ -33,7 +33,6 @@ public class Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTIES {
         this.setSpeedX(SPEED_X);
         this.setSpeedY(SPEED_Y);
         this.setRotationDegree(DEFAULT_ROTATION);
-        this.setName("Meloon");
     }
 
 

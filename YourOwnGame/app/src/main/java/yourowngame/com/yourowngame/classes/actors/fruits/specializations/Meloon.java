@@ -17,8 +17,8 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
 
     private static Bitmap[] images;
 
-    public Meloon(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img, int rotationDegree, @Nullable String name) {
-        super(activity, posX, posY, speedX, speedY, img, rotationDegree, name);
+    public Meloon(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, int[] img) {
+        super(activity, posX, posY, speedX, speedY, img);
     }
 
     /**
@@ -32,7 +32,6 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
         this.setSpeedX(SPEED_X);
         this.setSpeedY(SPEED_Y);
         this.setRotationDegree(DEFAULT_ROTATION);
-        this.setName("Meloon");
     }
 
 

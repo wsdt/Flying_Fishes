@@ -20,21 +20,18 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
      * it wouldn't be suitable for the DrawableObj.
      */
     private double posX, posY, speedX, speedY;
-    private int rotationDegree; //rotation for simulating flying down/up
-    private String name;
+    private int rotationDegree = DEFAULT_ROTATION; //rotation for simulating flying down/up [can be changed at runtime]
     private int[] img; //must not be static (overwriding)
     private Bitmap currentBitmap; //must not be static, is the current index for img-array
     private int heightOfBitmap, widthOfBitmap;
 
-    public GameObject(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img, int rotationDegree, @Nullable String name) {
+    public GameObject(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img) {
         super(activity);
 
         this.setPosX(posX);
         this.setPosY(posY);
         this.setSpeedX(speedX);
         this.setSpeedY(speedY);
-        this.setRotationDegree(rotationDegree);
-        this.setName(name);
         this.setImg(img);
     }
 
@@ -147,14 +144,6 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
 
     public void setSpeedY(double speedY) {
         this.speedY = speedY;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int[] getImg() {
