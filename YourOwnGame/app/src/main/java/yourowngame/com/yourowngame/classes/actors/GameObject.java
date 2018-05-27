@@ -10,6 +10,7 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.DrawableObj;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 
 
@@ -21,18 +22,16 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
      */
     private double posX, posY, speedX, speedY;
     private int rotationDegree = DEFAULT_ROTATION; //rotation for simulating flying down/up [can be changed at runtime]
-    private int[] img; //must not be static (overwriding)
     private Bitmap currentBitmap; //must not be static, is the current index for img-array
     private int heightOfBitmap, widthOfBitmap;
 
-    public GameObject(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, @NonNull int[] img) {
+    public GameObject(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity);
 
         this.setPosX(posX);
         this.setPosY(posY);
         this.setSpeedX(speedX);
         this.setSpeedY(speedY);
-        this.setImg(img);
     }
 
     /**
@@ -59,17 +58,18 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
      * @param widthInPercent:  reduce/enlarge width / if this param OR scaleHeight is null, both values get ignored! Use . as comma ;) --> Values MUST be higher than 0 and should not be higher than 1! (quality)
      * @param heightInPercent: same as scaleWidth.
      */
-    public Bitmap getCraftedDynamicBitmap(int imgFrame, @Nullable Integer rotationDegrees, @Nullable Float widthInPercent, @Nullable Float heightInPercent) throws NoDrawableInArrayFound_Exception {
+    @Enhance
+    public Bitmap getCraftedDynamicBitmap(@NonNull int[] allImgFrames, int imgFrame, @Nullable Integer rotationDegrees, @Nullable Float widthInPercent, @Nullable Float heightInPercent) throws NoDrawableInArrayFound_Exception {
 
         Log.d(TAG, "getCraftedBitmaps: Trying to craft bitmaps.");
-        if (this.getImg().length <= imgFrame && this.getImg().length >= 1) {
+        if (allImgFrames.length <= imgFrame && allImgFrames.length >= 1) {
             Log.e(TAG, "getCraftedDynamicBitmap: IndexOutOfBounds, could not determine correct drawable for animation. Returning drawable at index 0! Provided imgFrame: " + imgFrame);
             imgFrame = 0;
-        } else if (this.getImg().length <= 0) {
+        } else if (allImgFrames.length <= 0) {
             throw new NoDrawableInArrayFound_Exception("getCraftedDynamicBitmap: FATAL EXCEPTION->Integer array (getImg()) has no content! Could not return bitmap.");
         }
         //not else (because despite normal if method should continue)
-        Bitmap targetImg = BitmapFactory.decodeResource(this.getActivity().getResources(), this.getImg()[imgFrame]);
+        Bitmap targetImg = BitmapFactory.decodeResource(this.getActivity().getResources(), allImgFrames[imgFrame]);
         if ((widthInPercent != null && heightInPercent != null)) { //must be before rotationDegrees-If
             if ((widthInPercent != 1 && heightInPercent != 1)) { //so we also don't scale if factor is 1
                 targetImg = Bitmap.createScaledBitmap(targetImg, (int) (targetImg.getWidth() * widthInPercent), (int) (targetImg.getHeight() * heightInPercent), true);
@@ -144,14 +144,6 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
 
     public void setSpeedY(double speedY) {
         this.speedY = speedY;
-    }
-
-    public int[] getImg() {
-        return img;
-    }
-
-    public void setImg(int[] img) {
-        this.img = img;
     }
 
     public Bitmap getCurrentBitmap() {
