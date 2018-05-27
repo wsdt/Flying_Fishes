@@ -12,6 +12,7 @@ import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
+import yourowngame.com.yourowngame.classes.actors.player.specializations.Hugo;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
@@ -25,8 +26,7 @@ public class Level_DarkDescent extends Level {
 
     @Override
     protected void determinePlayer() {
-        this.setPlayer(new Player(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels/4, 5, 2,
-                new int[]{R.drawable.player_albert}));
+        this.setPlayer(new Hugo(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels/4, 5, 2));
     }
 
     @Override

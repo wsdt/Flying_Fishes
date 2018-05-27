@@ -250,11 +250,11 @@ public class GameView extends SurfaceView {
         /** check Projectile-to-Enemy collision */
         for (Enemy e : currLevel.getAllEnemies()){
             for (int i = 0; i < currLevel.getPlayer().getProjectiles().size(); i++){
-                if(CollisionManager.checkCollision(e, currLevel.getPlayer().getProjectileAtPosition(i))){
+                if(CollisionManager.checkCollision(e, currLevel.getPlayer().getProjectiles().get(i))){
                     //enemy dies, spawns on the other side
                     e.resetPos();
                     //projectile needs to be deleted
-                    currLevel.getPlayer().getProjectiles().remove(currLevel.getPlayer().getProjectileAtPosition(i));
+                    currLevel.getPlayer().getProjectiles().remove(currLevel.getPlayer().getProjectiles().get(i));
                     //play sound when enemy dies
                     CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
                     //increment the players highScore
