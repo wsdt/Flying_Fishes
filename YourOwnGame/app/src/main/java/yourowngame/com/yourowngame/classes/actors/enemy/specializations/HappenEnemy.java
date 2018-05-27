@@ -34,7 +34,10 @@ public class HappenEnemy extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT + ADDITIONAL_GAME_WIDTH));
         this.setSpeedX(RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX));
         this.setSpeedY(RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX));
-        this.setRotationDegree(DEFAULT_ROTATION);
+
+        /* Set default Image references (not needed in complex constr., bc. there we provide it
+        dynamically) */
+        this.setImg(IMAGE_FRAMES);
     }
 
     /**
@@ -69,9 +72,6 @@ public class HappenEnemy extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
 
     @Override
     public void initialize() {
-        /* Set Image references */
-        this.setImg(IMAGE_FRAMES);
-
         try {
             if (!isInitialized()) {
                 setImages(new Bitmap[this.getImg().length]);

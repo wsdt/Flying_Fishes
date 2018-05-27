@@ -1,18 +1,13 @@
 package yourowngame.com.yourowngame.classes.actors.fruits.specializations;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
-import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
@@ -25,7 +20,9 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
         super(activity, posX, posY, speedX, speedY, img);
     }
 
-    /**Create random fruit*/
+    /**
+     * Create random fruit
+     */
     public Avoci(@NonNull Activity activity) {
         super(activity);
 
@@ -33,7 +30,10 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
         this.setSpeedX(SPEED_X);
         this.setSpeedY(SPEED_Y);
-        this.setRotationDegree(DEFAULT_ROTATION);
+
+        /* Set default Image references (not needed in complex constr., bc. there we provide it
+        dynamically) */
+        this.setImg(IMAGE_FRAMES);
     }
 
 
@@ -48,13 +48,11 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
         this.setCurrentBitmap(getImages()[((int) this.getLoopCount() % this.getImg().length)]);
         this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
+
     /*************************************** UPDATE / DRAW *************************************************/
 
     @Override
     public void initialize() {
-        /* Set Image references */
-        this.setImg(IMAGE_FRAMES);
-
         try {
             if (!isInitialized()) {
                 setImages(new Bitmap[this.getImg().length]);
@@ -82,10 +80,12 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
     @Override
     public void resetPos() {
         this.setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + IFruit.AVOCI_FRUIT_PROPERTIES.OFF_TIME));
-        this.setPosY(RandomMgr.getRandomFloat(IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT, GameViewActivity.GAME_HEIGHT-IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT));
+        this.setPosY(RandomMgr.getRandomFloat(IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT, GameViewActivity.GAME_HEIGHT - IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT));
     }
 
-    /** Get reward method for highscore */
+    /**
+     * Get reward method for highscore
+     */
     @Override
     public int getReward() {
         return IFruit.AVOCI_FRUIT_PROPERTIES.HIGHSCORE_REWARD;
@@ -95,6 +95,8 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
     public static Bitmap[] getImages() {
         return images;
     }
-    public static void setImages(Bitmap[] images) {Avoci.images = images;
+
+    public static void setImages(Bitmap[] images) {
+        Avoci.images = images;
     }
 }

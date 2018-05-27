@@ -47,7 +47,10 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
         this.setSpeedX(RandomMgr.getRandomFloat(IEnemy.PROPERTIES.ROCKETFISH.SPEED_X_MIN, IEnemy.PROPERTIES.ROCKETFISH.SPEED_X_MAX));
         this.setSpeedY(RandomMgr.getRandomFloat(IEnemy.PROPERTIES.ROCKETFISH.SPEED_Y_MIN, IEnemy.PROPERTIES.ROCKETFISH.SPEED_Y_MAX));
-        this.setRotationDegree(DEFAULT_ROTATION);
+
+        /* Set default Image references (not needed in complex constr., bc. there we provide it
+        dynamically) */
+        this.setImg(IMAGE_FRAMES);
     }
 
     @Override
@@ -70,9 +73,6 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
 
     @Override
     public void initialize() {
-        /* Set Image references */
-        this.setImg(IMAGE_FRAMES);
-
         try {
             if (!isInitialized()) {
                 setImages(new Bitmap[this.getImg().length]);

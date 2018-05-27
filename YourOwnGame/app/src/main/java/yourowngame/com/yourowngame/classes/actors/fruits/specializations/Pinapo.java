@@ -3,7 +3,6 @@ package yourowngame.com.yourowngame.classes.actors.fruits.specializations;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
@@ -32,7 +31,11 @@ public class Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTIES {
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
         this.setSpeedX(SPEED_X);
         this.setSpeedY(SPEED_Y);
-        this.setRotationDegree(DEFAULT_ROTATION);
+
+        /* Set default Image references (not needed in complex constr., bc. there we provide it
+        dynamically) */
+        this.setImg(IMAGE_FRAMES);
+
     }
 
 
@@ -53,9 +56,6 @@ public class Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTIES {
 
     @Override
     public void initialize() {
-        /* Set Image references */
-        this.setImg(IMAGE_FRAMES);
-
         try {
             if (!isInitialized()) {
                 setImages(new Bitmap[this.getImg().length]);
