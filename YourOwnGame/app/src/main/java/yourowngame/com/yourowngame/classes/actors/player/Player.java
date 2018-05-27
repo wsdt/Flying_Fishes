@@ -81,7 +81,7 @@ public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DE
     public void addProjectiles() {
         Projectile projectile = new IronProjectile(this.getActivity(), this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0);
         projectile.initialize();
-        projectileList.add(projectile);
+        this.getProjectiles().add(projectile);
     }
 
     public void drawProjectiles() {
@@ -92,14 +92,14 @@ public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DE
 
     //Here we need to access the array backwards, otherwise we will remove an index, that will be progressed, but isn't there anymore!
     public void updateProjectiles() {
-        Log.d(TAG, "updateProjectiles: Projectile Size = " + this.projectileList.size());
-        if (!this.projectileList.isEmpty()) {
-            for (int i = this.projectileList.size() - 1; i > -1; i--) {
-                this.projectileList.get(i).update();
+        Log.d(TAG, "updateProjectiles: Projectile Size = " + this.getProjectiles().size());
+        if (!this.getProjectiles().isEmpty()) {
+            for (int i = this.getProjectiles().size() - 1; i > -1; i--) {
+                this.getProjectiles().get(i).update();
 
-                if (this.projectileList.get(i).getPosX() > GameViewActivity.GAME_WIDTH - 50) {
+                if (this.getProjectiles().get(i).getPosX() > GameViewActivity.GAME_WIDTH - 50) {
                     Log.e(TAG, "updateProjectiles: Bullet removed!");
-                    this.projectileList.remove(this.projectileList.get(i));
+                    this.getProjectiles().remove(this.getProjectiles().get(i));
                 }
             }
         }

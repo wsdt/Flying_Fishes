@@ -25,12 +25,16 @@ import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
         "levelHierarchy that works.")
 public class LevelHierarchyActivity extends AppCompatActivity {
     private static final String TAG = "LevelHierarchyActivity";
+    private LevelManager levelManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_hierarchy);
         getGameDimens();
+
+        //Set LvlMgr
+        this.setLevelManager(new LevelManager(this));
 
         //Load Banner Ad (declared as a member of class, so we could easily display more)
         new AdManager(this).loadBannerAd((RelativeLayout) findViewById(R.id.levelHierarchyActivity_RL));
@@ -52,7 +56,7 @@ public class LevelHierarchyActivity extends AppCompatActivity {
             GridLayout gridLayout = (GridLayout) findViewById(R.id.glLevelHierarchy);
 
             int lvlId = 0; //TODO: should be only temporary (maybe we just skip this after we have introduced our multiple world semantics)
-            for (Level level : LevelManager.getInstance(this).getLevelList()) {
+            for (Level level : getLevelManager().getLevelList()) {
                 listLevel(gridLayout, level,lvlId++);
             }
         } catch (ClassCastException e) {
@@ -67,8 +71,7 @@ public class LevelHierarchyActivity extends AppCompatActivity {
         inflatedLevelView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Bad practice
-                LevelManager.getInstance(LevelHierarchyActivity.this).setCurrentLevel(lvlId);
+                getLevelManager().setCurrentLevel(lvlId);
                 startActivity(new Intent(LevelHierarchyActivity.this,GameViewActivity.class));
             }
         });
@@ -105,5 +108,13 @@ public class LevelHierarchyActivity extends AppCompatActivity {
         TextView tvLevelAssignments = ((TextView) inflatedLevelView.findViewById(R.id.lvlAssignments));
         tvLevelAssignments.setText(sb);
         tvLevelAssignments.setTextColor(getResources().getColor(R.color.colorBlack));
+    }
+
+    public LevelManager getLevelManager() {
+        return levelManager;
+    }
+
+    public void setLevelManager(LevelManager levelManager) {
+        this.levelManager = levelManager;
     }
 }
