@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.gamelevels.levels;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
@@ -33,8 +34,8 @@ import static yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject.
 public class Level_NightRider extends Level {
     private static final String TAG = "Lvl_Nightrider";
 
-    public Level_NightRider(@NonNull Context context) {
-        super(context);
+    public Level_NightRider(@NonNull Activity activity) {
+        super(activity);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class Level_NightRider extends Level {
 
     @Override
     protected void determinePlayer() {
-        this.setPlayer(new Player(this.getContext(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2, new int[]{
+        this.setPlayer(new Player(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2, new int[]{
                 R.drawable.player_albert}, DEFAULT_ROTATION, "Hugo"));
     }
 
@@ -52,8 +53,8 @@ public class Level_NightRider extends Level {
     protected void determineBackgroundLayers() {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
         * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
-        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getContext(), R.color.colorPrimaryDark, "DarkSky"));
-        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getContext(), "Gewitter", new int[]{R.drawable.bglayer_1_cloud_2},8));
+        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getActivity(), R.color.colorPrimaryDark, "DarkSky"));
+        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getActivity(), "Gewitter", new int[]{R.drawable.bglayer_1_cloud_2},8));
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)
@@ -63,13 +64,13 @@ public class Level_NightRider extends Level {
     protected void determineAllEnemies() { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
         //Set allEnemies Arraylist
         /** Initializing Bomber-Enemy */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), HappenEnemy.class,1));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), HappenEnemy.class,1));
 
         /**Initializing Rocket-Enemy */
-       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), RocketFishEnemy.class, 12)); //damit die Leute derweil wirklich was zum Spielen haben haha, haha so geil
+       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), RocketFishEnemy.class, 12)); //damit die Leute derweil wirklich was zum Spielen haben haha, haha so geil
 
         /** Initializing Spawn-Enemies */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), BobaEnemy.class, 1));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), BobaEnemy.class, 1));
 
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
@@ -80,9 +81,9 @@ public class Level_NightRider extends Level {
          *  FRUIT INITIALIZING AREA *
          ****************************/
 
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Meloon.class,1));
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Avoci.class,1));
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Pinapo.class,1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Meloon.class,1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Avoci.class,1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Pinapo.class,1));
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
     }

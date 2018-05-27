@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.actors.enemy;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -20,11 +21,11 @@ public class EnemyMgr {
     /**
      * Creates universally random enemies."
      */
-    public static <E extends Enemy> ArrayList<E> createRandomEnemies(@NonNull Context context, @NonNull Class<E> enemyClass, int numberOfEnemies) {
+    public static <E extends Enemy> ArrayList<E> createRandomEnemies(@NonNull Activity activity, @NonNull Class<E> enemyClass, int numberOfEnemies) {
         ArrayList<E> craftedEnemies = new ArrayList<>();
         try {
             for (int i = 0; i < numberOfEnemies; i++) {
-                craftedEnemies.add(enemyClass.getConstructor(Context.class).newInstance(context)); //use default constructor
+                craftedEnemies.add(enemyClass.getConstructor(Activity.class).newInstance(activity)); //use default constructor
             }
             return craftedEnemies;
         } catch (InstantiationException e) {

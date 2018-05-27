@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.gamelevels.levels;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
@@ -32,8 +33,8 @@ import static yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject.
 public class Level_SummerSky extends Level {
     private static final String TAG = "Lvl_HarmlessSky";
 
-    public Level_SummerSky(@NonNull Context context) {
-        super(context);
+    public Level_SummerSky(@NonNull Activity activity) {
+        super(activity);
     }
 
     @Override
@@ -43,7 +44,7 @@ public class Level_SummerSky extends Level {
 
     @Override
     protected void determinePlayer() {
-        this.setPlayer(new Player(this.getContext(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2, new int[]{
+        this.setPlayer(new Player(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2, new int[]{
                 R.drawable.player_hugo}, DEFAULT_ROTATION, "Hugo"));
     }
 
@@ -51,8 +52,8 @@ public class Level_SummerSky extends Level {
     protected void determineBackgroundLayers() {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
         * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
-        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getContext(), R.color.colorSkyBlue, "Sky"));
-        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getContext(), "Heaven", new int[]{R.drawable.bglayer_1_cloud_1,R.drawable.bglayer_1_cloud_2,R.drawable.bglayer_1_cloud_3}, 10));
+        this.getAllBackgroundLayers().add(new BL_SingleColor(this.getActivity(), R.color.colorSkyBlue, "Sky"));
+        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getActivity(), "Heaven", new int[]{R.drawable.bglayer_1_cloud_1,R.drawable.bglayer_1_cloud_2,R.drawable.bglayer_1_cloud_3}, 10));
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)
@@ -62,22 +63,22 @@ public class Level_SummerSky extends Level {
     protected void determineAllEnemies() { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
         //Set allEnemies Arraylist
         /** Initializing Bomber-Enemy */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), HappenEnemy.class,2));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), HappenEnemy.class,2));
 
         /**Initializing Rocket-Enemy */
-       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), RocketFishEnemy.class, 2));
+       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), RocketFishEnemy.class, 2));
 
         /** Initializing Spawn-Enemies */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getContext(), BobaEnemy.class, 2));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), BobaEnemy.class, 2));
 
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
 
     @Override
     protected void determineAllFruits() {
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Meloon.class,1));
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Avoci.class, 1));
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getContext(), Pinapo.class, 1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Meloon.class,1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Avoci.class, 1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Pinapo.class, 1));
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
     }

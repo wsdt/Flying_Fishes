@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.classes.gamelevels;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -18,7 +19,7 @@ import yourowngame.com.yourowngame.classes.counters.Highscore;
 
 public abstract class Level {
     private static final String TAG = "Level";
-    private Context context;
+    private Activity activity;
 
     protected static SoundMgr soundMgr = new SoundMgr(); //static because always only one soundMgr instance
     private int levelNameResId; //Level name (maybe to show to user [e.g. Die dunkle Gruft, usw.] als Strings.xml res id for multilinguality!
@@ -33,15 +34,18 @@ public abstract class Level {
     private Highscore levelHighscore = new Highscore(); //add Level-dependent Highscore
     //TODO: other level-dependent members/values
 
-    public Level(@NonNull Context context) {
+    public Level(@NonNull Activity activity) {
         Log.d(TAG, "Level: ###################### STARTING LOADING LEVEL ###############################");
-        this.setContext(context);
+        this.setActivity(activity);
         determineMetaData();
         determinePlayer();
         determineBackgroundLayers();
         determineAllEnemies();
         determineAllFruits();
         determineLevelAssigments();
+
+        /* Initialize all objs, bc. this is not done anymore in constructors. */
+        initializeLevelProperties();
         Log.d(TAG, "Level: ###################### ENDED LOADING LEVEL ##################################");
     }
 
@@ -96,6 +100,20 @@ public abstract class Level {
         Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
     }
 
+    /** Initialize here now, because it might be the same for all levels :) */
+    public void initializeLevelProperties() {
+        //CleanUp Player
+        this.getPlayer().initialize();
+        //CleanUp Enemies
+        for (Enemy enemy : this.getAllEnemies()) {enemy.initialize();}
+        //CleanUp Bglayers
+        for (Background background : this.getAllBackgroundLayers()) {background.initialize();}
+        //CleanUp all fruits
+        for (Fruit fruit : this.getAllFruits()) {fruit.initialize();}
+
+        Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
+    }
+
     //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public ArrayList<Background> getAllBackgroundLayers() {
         return allBackgroundLayers;
@@ -134,12 +152,6 @@ public abstract class Level {
     public void setLevelHighscore(Highscore levelHighscore) {
         this.levelHighscore = levelHighscore;
     }
-    public Context getContext() {
-        return context;
-    }
-    public void setContext(Context context) {
-        this.context = context;
-    }
 
     public ArrayList<LevelAssignment> getAllLevelAssignments() {
         return allLevelAssignments;
@@ -147,5 +159,13 @@ public abstract class Level {
 
     public void setAllLevelAssignments(ArrayList<LevelAssignment> allLevelAssignments) {
         this.allLevelAssignments = allLevelAssignments;
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 }

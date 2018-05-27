@@ -14,6 +14,7 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
+import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
@@ -157,23 +158,34 @@ public class GameView extends SurfaceView {
 
                 // (1.) draw background
                 for (Background background : currLevel.getAllBackgroundLayers()) {
-                    background.drawBackground(canvas);
+                    background.setCanvas(canvas);
+                    background.draw();
                 }
 
                 // (2.) draw player
-                currLevel.getPlayer().draw(this.getActivityContext(), canvas, loopCount);
+                currLevel.getPlayer().setCanvas(canvas);
+                currLevel.getPlayer().setLoopCount(loopCount);
+                currLevel.getPlayer().draw();
 
                 // (3.) draw Projectiles
-                currLevel.getPlayer().drawProjectiles(this.getActivityContext(), canvas, loopCount);
+                for (Projectile projectile : currLevel.getPlayer().getProjectiles()) {
+                    projectile.setLoopCount(loopCount);
+                    projectile.setCanvas(canvas);
+                }
+                currLevel.getPlayer().drawProjectiles();
 
                 // (4.) draw enemies
                 for (Enemy enemy : currLevel.getAllEnemies()) {
-                    enemy.draw(this.getActivityContext(), canvas, loopCount);
+                    enemy.setCanvas(canvas);
+                    enemy.setLoopCount(loopCount);
+                    enemy.draw();
                 }
 
                 // (5.) draw fruits, need to implement a timer, to push a fruit
                 for (Fruit fruit : currLevel.getAllFruits()) {
-                    fruit.draw(this.getActivityContext(), canvas, loopCount);
+                    fruit.setCanvas(canvas);
+                    fruit.setLoopCount(loopCount);
+                    fruit.draw();
                 }
 
 
@@ -194,23 +206,23 @@ public class GameView extends SurfaceView {
         Level currLevel = LevelManager.getInstance(this.getActivityContext()).getCurrentLevelObj();
 
         /** Uppdate player */
-        currLevel.getPlayer().update(null,
-                GameView.this.getMultiTouchHandler().isMultiTouched() || GameView.this.getMultiTouchHandler().isMoving(),
-                false);
+        currLevel.getPlayer().setGoUp(GameView.this.getMultiTouchHandler().isMultiTouched() || GameView.this.getMultiTouchHandler().isMoving());
+        currLevel.getPlayer().update();
 
         /** Update all enemies */
         for (Enemy enemy : currLevel.getAllEnemies()) {
-            enemy.update(currLevel.getPlayer(), null, null);
+            enemy.setTargetGameObj(currLevel.getPlayer()); //also not all enemies need this
+            enemy.update();
         }
 
         /** Update all fruits */
         for (Fruit fruit : currLevel.getAllFruits()) {
-            fruit.update(null,null,null);
+            fruit.update();
         }
 
         /** Update bglayers */
         for (Background background : currLevel.getAllBackgroundLayers()) {
-            background.updateBackground();
+            background.update();
         }
 
         /** Update bullets */
@@ -218,7 +230,7 @@ public class GameView extends SurfaceView {
 
         /** Check Shooting */
         if(getMultiTouchHandler().isShooting()){
-            currLevel.getPlayer().addProjectiles(getActivityContext());
+            currLevel.getPlayer().addProjectiles();
             getMultiTouchHandler().stopShooting();
         }
 

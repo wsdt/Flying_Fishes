@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.classes.background.layers;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,12 +29,10 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
 
     /** @param resDrawables: Provide int-array with all possible drawable resource ints.
      * @param amountOfFlyingElements: How many of those drawables should be drawn on display?*/
-    public BL_FlyingElements(@NonNull Context context, String name, int[] resDrawables, int amountOfFlyingElements) {
-        super(context, name);
+    public BL_FlyingElements(@NonNull Activity activity, String name, int[] resDrawables, int amountOfFlyingElements) {
+        super(activity, name);
         this.setResDrawables(resDrawables);
         this.setAmountOfFlyingElements(amountOfFlyingElements);
-
-        this.initialize(); //now at least one
     }
 
     /**
@@ -72,7 +71,7 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
      * XXX -> drawBackground() should only draw it
      */
     @Override
-    public void updateBackground() {
+    public void update() {
         for (FlyingElement flyingElement : this.getCraftedFlyingElements()) {
             flyingElement.updateFlyingElement(flyingElement.randomSpeed); //Where is the speed defined? couldnt find it!
         }
@@ -82,9 +81,9 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
      * draws the clouds
      */
     @Override
-    public void drawBackground(Canvas canvas) {
+    public void draw() {
         for (FlyingElement flyingElement : this.getCraftedFlyingElements()) {
-            canvas.drawBitmap(flyingElement.flyingElementBitmap, flyingElement.posX, flyingElement.posY, null);
+            this.getCanvas().drawBitmap(flyingElement.flyingElementBitmap, flyingElement.posX, flyingElement.posY, null);
         }
     }
 
@@ -98,7 +97,7 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
         Log.d(TAG, "craftClouds: Trying to craft clouds.");
         for (int i = 0; i < this.getAmountOfFlyingElements(); i++) {
 
-            this.getCraftedFlyingElements().add(new FlyingElement(BitmapFactory.decodeResource(this.getContext().getResources(), getResDrawables()[RandomMgr.getRandomInt(0, getResDrawables().length - 1)])));
+            this.getCraftedFlyingElements().add(new FlyingElement(BitmapFactory.decodeResource(this.getActivity().getResources(), getResDrawables()[RandomMgr.getRandomInt(0, getResDrawables().length - 1)])));
             Log.d(TAG, "GameView Height = ");
             Log.d(TAG, "craftClouds: Added cloud no. "+i);
         }
@@ -106,11 +105,9 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
 
     /** allObjs == NULL/no param to provide */
     @Override
-    @SafeVarargs
-    public final <OBJ> boolean initialize(@Nullable OBJ... allObjs) {
+    public void initialize() {
         //TODO: Maybe make amount clouds configurable by constr or similar?
         this.craftClouds(); //also sets simultaneously
-        return true;
     }
 
     @Override
