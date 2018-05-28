@@ -7,7 +7,7 @@
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="15dp"
     android:layout_marginTop="15dp"
-    android:background="@color/colorWhite">
+    android:background="@android:color/background_light">
 
     <!-- TODO: Use styles in future and make this more beautiful -->
 
@@ -15,10 +15,10 @@
         android:id="@+id/lvlId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:textSize="18sp" />
 
     <TextView
@@ -33,13 +33,13 @@
         android:id="@+id/lvlAssignments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_below="@id/lvlId"
-        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:textSize="12sp"/>
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/lvlId"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:textSize="12sp" />
 
     <!-- TODO: Also show how many points achieved etc. OR/AND maybe which fruits to find -->
 

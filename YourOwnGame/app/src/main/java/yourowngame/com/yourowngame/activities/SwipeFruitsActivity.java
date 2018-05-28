@@ -9,8 +9,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.viewAdapter.SliderAdapter;
 
+@Deprecated
+@Enhance(byDeveloper = "Solution", message = "the idea is good, but needs also a good implementation," +
+                                             "but lets keep that for later")
 public class SwipeFruitsActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
