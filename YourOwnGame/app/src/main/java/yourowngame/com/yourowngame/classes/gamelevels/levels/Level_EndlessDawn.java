@@ -34,10 +34,10 @@ import static yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject.
 
 public class Level_EndlessDawn extends Level {
     private static final String TAG = "Lvl_EndlessDawn";
+    private static double levelDifficulty = ILevel.ENDLESS_DAWN.LEVEL_DIFFICULTY;
 
     public Level_EndlessDawn(@NonNull Activity activity) {
         super(activity);
-        this.setLevelDifficulty(ILevel.ENDLESS_DAWN.LEVEL_DIFFICULTY);
     }
 
     @Override
@@ -92,5 +92,14 @@ public class Level_EndlessDawn extends Level {
     @Override
     protected void playBackgroundMusic() {
         //TODO: play bg sound [search resource] --> Level_SummerSky.soundMgr.play(LevelManager.getBackgroundManager().getGameView().getActivityContext(),R.raw.bgMusicLvl1,true);
+    }
+
+    //GETTER/SETTER ----------------------------
+    public static double getLevelDifficulty() {
+        return levelDifficulty;
+    }
+
+    public static void setLevelDifficulty(double levelDifficulty) {
+        Level_EndlessDawn.levelDifficulty = levelDifficulty;
     }
 }
