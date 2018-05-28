@@ -30,7 +30,7 @@ public abstract class DrawableObj {
     /**
      * Method is called to draw elem to canvas.
      */
-    public abstract void draw() throws NoDrawableInArrayFound_Exception;
+    public abstract void draw();
 
     /**
      * Method is called to mutate position, etc. of object.
