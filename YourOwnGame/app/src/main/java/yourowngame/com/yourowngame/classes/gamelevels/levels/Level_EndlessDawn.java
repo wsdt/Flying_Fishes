@@ -21,6 +21,7 @@ import yourowngame.com.yourowngame.classes.actors.player.specializations.Hugo;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
+import yourowngame.com.yourowngame.classes.gamelevels.interfaces.ILevel;
 import yourowngame.com.yourowngame.classes.gamelevels.levelassignments.LA_AchievePoints;
 
 import static yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject.PROPERTIES.DEFAULT.DEFAULT_ROTATION;
@@ -36,6 +37,7 @@ public class Level_EndlessDawn extends Level {
 
     public Level_EndlessDawn(@NonNull Activity activity) {
         super(activity);
+        this.setLevelDifficulty(ILevel.ENDLESS_DAWN.LEVEL_DIFFICULTY);
     }
 
     @Override
