@@ -16,8 +16,8 @@ public interface IEnemy {
 
             float SPEED_X_MIN = 5f;
             float SPEED_X_MAX = 10f; //TODO: could be also level dependent :) this will surely be level dependent :)
-            float SPEED_Y_MIN = 5f; //TODO: Just use these here and add a lvlConstant (e.g. a difficulty e.g. *1.1 etc.
-            float SPEED_Y_MAX = 10f;
+            float SPEED_Y_MIN = 2f; //TODO: Just use these here and add a lvlConstant (e.g. a difficulty e.g. *1.1 etc.
+            float SPEED_Y_MAX = 5f;
         }
 
         /** Following interfaces can overwrite params of DEFAULT interface. */
