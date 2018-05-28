@@ -1,6 +1,6 @@
 <resources>
     <!-- GLOBAL -->
-    <string name="appName">Create your own Game</string>
+    <string name="appName">Flying Fishes - Save the Fruits</string>
 
     <!-- Content Descriptions of images etc. -->
     <string name="mainActivity_welcomeImg">The Game</string>
