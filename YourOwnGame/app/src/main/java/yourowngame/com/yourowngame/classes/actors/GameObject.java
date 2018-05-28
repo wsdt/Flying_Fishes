@@ -58,7 +58,6 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
      * @param widthInPercent:  reduce/enlarge width / if this param OR scaleHeight is null, both values get ignored! Use . as comma ;) --> Values MUST be higher than 0 and should not be higher than 1! (quality)
      * @param heightInPercent: same as scaleWidth.
      */
-    @Enhance
     public Bitmap getCraftedDynamicBitmap(@NonNull int[] allImgFrames, int imgFrame, @Nullable Integer rotationDegrees, @Nullable Float widthInPercent, @Nullable Float heightInPercent) throws NoDrawableInArrayFound_Exception {
 
         Log.d(TAG, "getCraftedBitmaps: Trying to craft bitmaps.");
