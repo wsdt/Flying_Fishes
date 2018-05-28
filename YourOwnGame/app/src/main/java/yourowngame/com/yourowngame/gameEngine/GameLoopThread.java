@@ -1,38 +1,53 @@
 package yourowngame.com.yourowngame.gameEngine;
 
 import android.graphics.Canvas;
-import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import yourowngame.com.yourowngame.classes.manager.dialog.PauseGameDialog;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IGameLoopThread;
 
 /**
  * Created by Solution on 16.02.2018.
- *
+ * <p>
  * Thread to handle the GameView operations
- *
  */
 
 public class GameLoopThread extends Thread implements IGameLoopThread {
-    /** @link GameLoopThread#isRunning: {true}->Gameloop will be executed || {false}->Gameloop stopped/paused
-      * */
+    /**
+     * @link GameLoopThread#isRunning: {true}->Gameloop will be executed || {false}->Gameloop stopped/paused
+     */
     //refers to the view
     private GameView view;
 
     private boolean isRunning;
     private static final String TAG = "Thread";
 
-    public GameLoopThread(GameView view){
+    public GameLoopThread(@NonNull GameView view) {
         this.view = view;
     }
 
-    public void setRunning(boolean run){
+    public void setRunning(boolean run) {
         isRunning = run;
     }
 
+    public void pauseGame() {
+        isRunning = false;
+        PauseGameDialog.show(GameLoopThread.this.view);
+
+        Log.d(TAG, "pauseGame: Tried to pause game.");
+    }
+
+    public void resumeGame() {
+        isRunning = true;
+        /* use run() to start updating/drawing again to use this thread and not a new thread.
+        Start() would create a new one.*/
+        run();
+    }
+
     @Override
-    public void run(){
+    public void run() {
         Canvas c;
         long beginTime; // begin time of cycle
         long timeDiff; //time it took for cycle to
@@ -40,15 +55,15 @@ public class GameLoopThread extends Thread implements IGameLoopThread {
         int framesSkipped; //number of frames being skipped
         long countRenderedCycles = 0;
 
-        if(Looper.myLooper() == null) {
+        if (Looper.myLooper() == null) {
             Looper.prepare(); //necessary for handlers etc.
         }
 
-        while(isRunning){
+        while (isRunning) {
             Log.d(TAG, "run: Game loop got started.");
             c = null;
 
-            try{
+            try {
                 if (!view.getHolder().getSurface().isValid()) {
                     continue;
                 }
@@ -66,7 +81,9 @@ public class GameLoopThread extends Thread implements IGameLoopThread {
                         //if bigger > 0 then everything good
                         try {
                             Thread.sleep(sleepTime); //battery saving
-                        } catch (InterruptedException e) {Log.i(TAG, "run: Gameloop stopped/interrupted.");}
+                        } catch (InterruptedException e) {
+                            Log.i(TAG, "run: Gameloop stopped/interrupted.");
+                        }
                     }
 
                     while (sleepTime < 0 && framesSkipped < MAX_FRAMES_SKIPPABLE) { //= Max frames skipped
@@ -76,7 +93,7 @@ public class GameLoopThread extends Thread implements IGameLoopThread {
                         sleepTime += (1000 / MAX_FPS); //FRAMEPERIOD = 1000 / 50 [50 = MAX_FPS]
                         framesSkipped++;
                     }
-                    Log.d(TAG, "run: Started cycle at "+beginTime+"\nTime-Difference (to ending): "+timeDiff);
+                    Log.d(TAG, "run: Started cycle at " + beginTime + "\nTime-Difference (to ending): " + timeDiff);
                 }
             } finally {
                 if (c != null) {

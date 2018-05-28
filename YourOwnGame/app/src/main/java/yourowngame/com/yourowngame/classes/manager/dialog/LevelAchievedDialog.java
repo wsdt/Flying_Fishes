@@ -15,11 +15,14 @@ import yourowngame.com.yourowngame.activities.LevelHierarchyActivity;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
+import yourowngame.com.yourowngame.gameEngine.GameView;
 
 public class LevelAchievedDialog {
     private static final String TAG = "LevelAchievedDialog";
 
-    public static void show(@NonNull final Activity activity) {
+    public static void show(@NonNull final GameView gameView) {
+        final Activity activity = gameView.getActivityContext();
+
         //To prevent badTokenExceptions
         if (!activity.isFinishing()) {
             final LevelManager lm = new LevelManager(activity);
@@ -36,7 +39,7 @@ public class LevelAchievedDialog {
                                 lm.setCurrentLevel(lm.getCurrentLevel() + 1);
                             } else {
                                 //user achieved last level
-                                Toast.makeText(activity, "", Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, "show: This should not happen. User got to last level and was able to click on nextLevel.");
                             }
                         }
                     })
