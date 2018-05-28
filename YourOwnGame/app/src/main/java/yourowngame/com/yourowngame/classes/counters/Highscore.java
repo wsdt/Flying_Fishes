@@ -17,7 +17,6 @@ import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
  * <p>
  * a Highscore.class that provides a simple counter, to count the highscore
  *
- * @increment: add points to the highscore
  */
 
 public class Highscore {
@@ -37,26 +36,6 @@ public class Highscore {
     /** increment method for reward (e.g. enemies or fruits are extending form that interface) */
     public <R extends IHighscore_RewardableObj> void increment(R rewardableObj){
         counter += rewardableObj.getReward();
-        notifyAllListeners();
-    }
-
-    /** increment just once */
-    @Delete(description = "Delete method after coins Highscore has it's own class.")
-    @Deprecated
-    public void increment(){
-        counter++;
-        notifyAllListeners();
-    }
-
-    @Delete(description = "I think we should not decrease the user's highscore (instead just make it harder to get points)")
-    //definitely!
-    @Deprecated
-    public void decrement(Enemy e) {
-        counter -= 1; //e.getNegativePoints();
-        //Set to 0, to avoid negative values
-        if (counter < 0) {
-            counter = 0;
-        }
         notifyAllListeners();
     }
 

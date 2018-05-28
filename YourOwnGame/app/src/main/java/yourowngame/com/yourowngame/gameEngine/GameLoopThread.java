@@ -19,14 +19,12 @@ public class GameLoopThread extends Thread implements IGameLoopThread {
       * */
     //refers to the view
     private GameView view;
-    private Handler uiHandler; //necessary for redrawing view
 
     private boolean isRunning;
-    private final String TAG = "Thread";
+    private static final String TAG = "Thread";
 
     public GameLoopThread(GameView view){
         this.view = view;
-        this.uiHandler = new Handler(view.getContext().getMainLooper());
     }
 
     public void setRunning(boolean run){
@@ -45,8 +43,6 @@ public class GameLoopThread extends Thread implements IGameLoopThread {
         if(Looper.myLooper() == null) {
             Looper.prepare(); //necessary for handlers etc.
         }
-        /** start initializing here, if finished, start gameLoop! */
-        /** view.initialize(); <-- this call should initialize all needed objects for the level*/
 
         while(isRunning){
             Log.d(TAG, "run: Game loop got started.");
@@ -70,8 +66,7 @@ public class GameLoopThread extends Thread implements IGameLoopThread {
                         //if bigger > 0 then everything good
                         try {
                             Thread.sleep(sleepTime); //battery saving
-                        } catch (InterruptedException e) {
-                        }
+                        } catch (InterruptedException e) {Log.i(TAG, "run: Gameloop stopped/interrupted.");}
                     }
 
                     while (sleepTime < 0 && framesSkipped < MAX_FRAMES_SKIPPABLE) { //= Max frames skipped
