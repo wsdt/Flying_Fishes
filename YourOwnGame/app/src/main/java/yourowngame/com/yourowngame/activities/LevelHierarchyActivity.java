@@ -22,7 +22,8 @@ import yourowngame.com.yourowngame.classes.gamelevels.LevelAssignment;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 
 @Enhance (message = "All methods here are terrible, I just implemented them like that so we have a simple" +
-        "levelHierarchy that works.")
+        "levelHierarchy that works." +
+        "Totally, but ive got an idea. what if we use a swipe-view here, for the different biotops of levels we provide?")
 public class LevelHierarchyActivity extends AppCompatActivity {
     private static final String TAG = "LevelHierarchyActivity";
     private LevelManager levelManager;
