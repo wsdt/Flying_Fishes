@@ -20,7 +20,7 @@ import android.support.annotation.NonNull;
 public abstract class LevelAssignment {
     /** See below. But e.g.:
      * - 1500 (e.g. for 1500 points to achieve)
-     * - 2 (e.g. for 2 meloons)*/
+     * - 2 (e.g. for 2 meloon)*/
     private long amount;
 
     /** Following int should contain a string resource id. Which refers to a string which points
