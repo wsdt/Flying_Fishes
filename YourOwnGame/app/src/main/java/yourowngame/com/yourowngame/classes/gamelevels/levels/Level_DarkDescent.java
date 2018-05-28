@@ -16,12 +16,15 @@ import yourowngame.com.yourowngame.classes.actors.player.specializations.Hugo;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
+import yourowngame.com.yourowngame.classes.gamelevels.interfaces.ILevel;
 
 import static yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject.PROPERTIES.DEFAULT.DEFAULT_ROTATION;
 
 public class Level_DarkDescent extends Level {
+
     public Level_DarkDescent(@NonNull Activity activity) {
         super(activity);
+        this.setLevelDifficulty(ILevel.DARK_DESCENT.LEVEL_DIFFICULTY);
     }
 
     @Override

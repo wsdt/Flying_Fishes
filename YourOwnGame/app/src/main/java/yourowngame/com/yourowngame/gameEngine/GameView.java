@@ -326,6 +326,7 @@ public class GameView extends SurfaceView {
         }
 
         //save highscore before cleaning
+        //TODO: Remove in future (bc. this method is also called when exiting game by dialogs although game was not over)
         new SharedPrefStorageMgr(getActivityContext()).saveNewHighscoreEntry(getHighscore().getValue());
         getHighscore().removeAllListeners();
 
