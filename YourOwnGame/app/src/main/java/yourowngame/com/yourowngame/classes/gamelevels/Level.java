@@ -20,6 +20,21 @@ import yourowngame.com.yourowngame.classes.counters.Highscore;
 public abstract class Level {
     private static final String TAG = "Level";
     private Activity activity;
+    /** TODO: CURRENTLY NOT USED, BUT HAS DEFINITELY POTENTIAL (maybe some ideas to improve?)
+     *
+     * Used by enemies, etc. to make their actions dependent (e.g. faster movement)
+     * Theoretically we could also change this value within the same value, so fruits could have
+     * influence onto everything! :)
+     *
+     * 1 = No changes to default behaviour of enemies, bg, player, fruits etc. (=DEFAULT)
+     * ]0-1[ = (Zero to one, but NOT 0) --> Making level easier bc. level-dependent values get changed
+     * ]1-n] = Bigger than 1 to n for making the level harder (also comma-numbers allowed [e.g. 2.23])
+     *
+     * NOT ALLOWED VALUES = {[-n...0]}
+     *
+     * ATTENTION: When adding new levels be SURE when you don't want to use the default param
+     * to set the constant value in constructor (see other levelObjs for examples) */
+    private double levelDifficulty = 1;
 
     protected static SoundMgr soundMgr = new SoundMgr(); //static because always only one soundMgr instance
     private int levelNameResId; //Level name (maybe to show to user [e.g. Die dunkle Gruft, usw.] als Strings.xml res id for multilinguality!
@@ -34,6 +49,7 @@ public abstract class Level {
     private Highscore levelHighscore = new Highscore(); //add Level-dependent Highscore
     //TODO: other level-dependent members/values
 
+    //Do not make more constructors
     public Level(@NonNull Activity activity) {
         Log.d(TAG, "Level: ###################### STARTING LOADING LEVEL ###############################");
         this.setActivity(activity);
@@ -167,5 +183,13 @@ public abstract class Level {
 
     public void setActivity(Activity activity) {
         this.activity = activity;
+    }
+
+    public double getLevelDifficulty() {
+        return levelDifficulty;
+    }
+
+    public void setLevelDifficulty(double levelDifficulty) {
+        this.levelDifficulty = levelDifficulty;
     }
 }
