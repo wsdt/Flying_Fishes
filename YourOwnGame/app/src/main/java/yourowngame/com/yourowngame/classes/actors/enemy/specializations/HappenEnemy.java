@@ -62,7 +62,7 @@ public class HappenEnemy extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
     //but we surely should do something to slow it down
     @Override
     public void draw() {
-        this.setCurrentBitmap(getImages()[((int) this.getLoopCount() % IMAGE_FRAMES.length)]);
+        this.setCurrentBitmap(getImages()[((int) this.getLoopCount()/20 % IMAGE_FRAMES.length)]);
         this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
