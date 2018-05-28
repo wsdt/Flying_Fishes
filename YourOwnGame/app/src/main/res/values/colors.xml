@@ -18,9 +18,9 @@
 
     <!-- Colors for new Sliding-Fruit-View -->
     <color name="colorOne"> #262938</color>
-    <color name="colorTwo"> #181A24</color>
+    <color name="colorTwo">#181a24</color>
     <color name="colorEx"> #FF4881</color>
-    <color name="colorWhite2"> #FFFFFF</color>
+    <color name="colorWhite2">#ffffff</color>
     <color name="colorTransparentWhite"> #cccccc</color>
 
 </resources>
