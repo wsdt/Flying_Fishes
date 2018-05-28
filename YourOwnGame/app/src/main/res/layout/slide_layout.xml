@@ -4,27 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray">
+    android:background="#2d324b">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/fruitImageView"
+        android:layout_marginStart="202dp"
+        app:srcCompat="@drawable/avoci" />
 
     <ImageView
         android:id="@+id/fruitImageView"
-        android:layout_width="172dp"
-        android:layout_height="109dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="89dp"
-        app:srcCompat="@drawable/meloon" />
-
-    <TextView
-        android:id="@+id/fruitLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="115dp"
-        android:text="@string/sliderViewMeloons"
-        android:textSize="40sp" />
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="31dp"
+        app:srcCompat="@drawable/meloon" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/fruitImageView"
+        android:layout_marginEnd="174dp"
+        app:srcCompat="@drawable/pinapos" />
 
     <TextView
         android:id="@+id/amountCollectedLbl"
@@ -32,65 +40,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="44dp"
-        android:text="@string/sliderViewAmountCollected" />
+        android:layout_marginBottom="70dp"
+        android:text="@string/sliderViewAmountCollected"
+        android:textColor="@color/colorWhite2" />
 
     <TextView
         android:id="@+id/descriptionLbl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="34dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp"
-        android:gravity="center_horizontal"
-        android:text="@string/sliderViewMeloonDescription" />
-
-    <android.support.v7.widget.GridLayout
-        android:layout_width="162dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/fruitImageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-56dp">
+        android:layout_marginBottom="103dp"
+        android:text="@string/sliderViewMeloonDescription"
+        android:textColor="@color/colorWhite2" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/amountCollectedLbl"
-            app:srcCompat="@android:drawable/star_big_on" />
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/amountCollectedLbl"
-            app:srcCompat="@android:drawable/btn_star" />
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            app:srcCompat="@android:drawable/btn_star" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/fruitImageView"
-            android:layout_alignParentTop="true"
-            app:srcCompat="@android:drawable/btn_star_big_off" />
-
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/amountCollectedLbl"
-            android:layout_alignParentTop="true"
-            app:srcCompat="@android:drawable/btn_star" />
-
-    </android.support.v7.widget.GridLayout>
 </RelativeLayout>

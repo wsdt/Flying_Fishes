@@ -14,6 +14,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.counters.FruitCounter;
 import yourowngame.com.yourowngame.classes.counters.Highscore;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 
@@ -21,22 +22,20 @@ public class SliderAdapter extends PagerAdapter {
 
     Context context;
     LayoutInflater layoutInflater;
-    public String[] slide_heading = {"Meloons", "Avocis", "Pinapos"};
-    public int[] slide_images = {R.drawable.meloon, R.drawable.avoci, R.drawable.pinapos};
 
     public SliderAdapter(Context context){
         this.context = context;
     }
 
-
-    @Override
-    public int getCount() {
-        return slide_heading.length;
-    }
-
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object obj) {
         return view == (RelativeLayout) obj;
+    }
+
+    //Here we MUST return the number of views to switch!
+    @Override
+    public int getCount() {
+        return 3;
     }
 
     @NonNull
@@ -46,14 +45,11 @@ public class SliderAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.slide_layout, container, false);
 
         ImageView fruitImage    = (ImageView) view.findViewById(R.id.fruitImageView);
-        TextView fruitLbl       = (TextView) view.findViewById(R.id.fruitLbl);
         TextView amountLbl      = (TextView) view.findViewById(R.id.amountCollectedLbl);
         TextView descriptionLbl = (TextView) view.findViewById(R.id.descriptionLbl);
 
-        fruitImage.setImageResource(slide_images[position]);
-        fruitLbl.setText(slide_heading[position]);
-        amountLbl.setText(""+100);  //beware of OO
-        descriptionLbl.setText("balbalbal");    /**TODO --> we need to differ the text, we could do it like slide_headings[1]... but localization would be gone! */
+        amountLbl.setText(context.getResources().getString(R.string.sliderViewAmountCollected, FruitCounter.getTotalAmountOfMeloons()));  //beware of OO
+        descriptionLbl.setText("la dkfjas ökfjaskdfj askldjf askdjf askdjf askdjf asködjf asökldjf aksöldjf");    /**TODO --> we need to differ the text, we could do it like slide_headings[1]... but localization would be gone! */
 
         container.addView(view);
 

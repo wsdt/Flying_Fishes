@@ -24,9 +24,9 @@ public class FruitCounter {
     private int levelAmountAvocis  = 0;
 
     /** total amount of fruits, need to be saved at the end & restored at starting app */
-    private int totalAmountOfMeloons = 0;
-    private int totalAmountOfPinapos = 0;
-    private int totalAmountOfAvocis  = 0;
+    static int totalAmountOfMeloons = 0;
+    static int totalAmountOfPinapos = 0;
+    static int totalAmountOfAvocis  = 0;
 
 
     public static FruitCounter getInstance(){
@@ -41,10 +41,13 @@ public class FruitCounter {
     public void fruitCollected(Fruit fruit){
         if(fruit instanceof Meloon)
             levelAmountMeloons++;
+            totalAmountOfMeloons++;
         if(fruit instanceof Pinapo)
             levelAmountPinapos++;
+            totalAmountOfPinapos++;
         if(fruit instanceof Avoci)
             levelAmountAvocis++;
+            totalAmountOfAvocis++;
     }
 
     /** After level is over, collected fruits will be transfered*/
@@ -59,16 +62,6 @@ public class FruitCounter {
         levelAmountAvocis = levelAmountMeloons = levelAmountPinapos = 0;
     }
 
-
-
-    /** INSTANCE *******/
-    public static FruitCounter getINSTANCE() {
-        return INSTANCE;
-    }
-
-
-
-
     /** SETTERS AND GETTERS */
     public int getLevelAmountMeloons() {
         return levelAmountMeloons;
@@ -79,15 +72,16 @@ public class FruitCounter {
     public int getLevelAmountAvocis() {
         return levelAmountAvocis;
     }
-    public int getTotalAmountOfMeloons() {
+    public static int getTotalAmountOfMeloons() {
         return totalAmountOfMeloons;
     }
-    public int getTotalAmountOfPinapos() {
+    public static int getTotalAmountOfPinapos() {
         return totalAmountOfPinapos;
     }
-    public int getTotalAmountOfAvocis() {
+    public static int getTotalAmountOfAvocis() {
         return totalAmountOfAvocis;
     }
+
 
 
 }

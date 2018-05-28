@@ -40,8 +40,11 @@ public class OnMultiTouchHandler implements View.OnTouchListener{
                 Log.d(TAG, "MultiTouch, User moves and shoots");
                 isMultiTouching = true;
                 isShooting = true;
+                isMoving = true;
             }else if(eventAction == MotionEvent.ACTION_POINTER_UP) {
                 isMultiTouching = false;
+                isShooting = true;
+                isMoving = true;
             }
         }
 
@@ -72,10 +75,7 @@ public class OnMultiTouchHandler implements View.OnTouchListener{
     }
 
 
-
-    public boolean isMultiTouched(){
-        return isMultiTouching;
-    }
+    public boolean isMultiTouched(){ return isMultiTouching;}
 
     public boolean isMoving(){
         return isMoving;
