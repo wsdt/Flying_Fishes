@@ -82,7 +82,7 @@ public class GameViewActivity extends AppCompatActivity {
         pauseGame(null);
     } //do not make onResume(), bc. dialog should be shown and game should only resume, when resume is clicked and not automatically.
     public void pauseGame(@Nullable View v) {
-        this.getGameView().getThread().pauseGame(null);
+        this.getGameView().getThread().pauseGame();
     }
 
     //GETTER/SETTER (Base class)

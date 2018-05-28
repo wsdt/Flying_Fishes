@@ -24,19 +24,19 @@ public class PauseGameDialog {
 
         //To prevent badTokenExceptions
         if (!activity.isFinishing()) {
-            new LovelyCustomDialog(activity)
+            new LovelyStandardDialog(activity)
                     .setTopColorRes(R.color.colorPrimaryDark)
                     .setIcon(Constants.APP_ICON)
                     .setTitle(R.string.dialog_pausegame_title)
                     .setMessage(R.string.dialog_pausegame_description)
                     .setCancelable(false)
-                    .setListener(R.string.dialog_pausegame_btn_resume, new View.OnClickListener() {
+                    .setPositiveButton(R.string.dialog_pausegame_btn_positive, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             gameView.getThread().resumeGame();
                         }
                     })
-                    .setListener(R.string.dialog_pausegame_btn_exit, new View.OnClickListener() {
+                    .setNegativeButton(R.string.dialog_pausegame_btn_negative, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             gameView.exitGameNow();
