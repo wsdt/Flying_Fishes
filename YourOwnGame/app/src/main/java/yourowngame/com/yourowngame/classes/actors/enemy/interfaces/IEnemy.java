@@ -23,7 +23,7 @@ public interface IEnemy {
         /** Following interfaces can overwrite params of DEFAULT interface. */
         interface BOBA {
             int HIGHSCORE_REWARD = 100;
-            int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_boba};
+            int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_boba_01, R.drawable.enemy_boba_02, R.drawable.enemy_boba_03};
         }
 
         interface HAPPEN {
@@ -40,7 +40,7 @@ public interface IEnemy {
             float SPEED_Y_MIN = 5f; //TODO: Just use these here and add a lvlConstant (e.g. a difficulty e.g. *1.1 etc.
             float SPEED_Y_MAX = 10f;
 
-            int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_rocketfish};
+            int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_rocketfish_01, R.drawable.enemy_rocketfish_02};
         }
     }
 }

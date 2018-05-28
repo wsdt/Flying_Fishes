@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 
+import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
+
 /**
  * Combines drawable, updateable and initializer interface into this class to provide
  * generic abstract methods incl. class variables.
@@ -28,7 +30,7 @@ public abstract class DrawableObj {
     /**
      * Method is called to draw elem to canvas.
      */
-    public abstract void draw();
+    public abstract void draw() throws NoDrawableInArrayFound_Exception;
 
     /**
      * Method is called to mutate position, etc. of object.

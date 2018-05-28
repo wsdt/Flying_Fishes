@@ -42,7 +42,7 @@ public class GameView extends SurfaceView {
     private SurfaceHolder holder;
     private GameLoopThread thread;
     
-    private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
+    private static OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
     private FrameLayout layout;
 
     // ENEMIES are level-dependent, so specific level obj should own a list with all enemies. (LevelMgr.CURRENT_LEVEL)
@@ -384,7 +384,7 @@ public class GameView extends SurfaceView {
     }
 
 
-    public OnMultiTouchHandler getMultiTouchHandler() {
+    public static OnMultiTouchHandler getMultiTouchHandler() {
         return multiTouchHandler;
     }
 
