@@ -56,7 +56,7 @@ public class BobaEnemy extends Enemy implements IEnemy.PROPERTIES.BOBA {
 
     @Override
     public void draw() {
-        this.setCurrentBitmap(getImages()[((int) this.getLoopCount() % IMAGE_FRAMES.length)]);
+        this.setCurrentBitmap(getImages()[((int) this.getLoopCount()/5 % IMAGE_FRAMES.length)]);
         this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 

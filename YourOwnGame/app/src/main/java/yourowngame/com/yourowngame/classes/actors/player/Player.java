@@ -86,7 +86,11 @@ public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DE
 
     public void drawProjectiles() {
         for (Projectile e : this.projectileList) {
-            e.draw();
+            try {
+                e.draw();
+            } catch (NoDrawableInArrayFound_Exception e1) {
+                e1.printStackTrace();
+            }
         }
     }
 

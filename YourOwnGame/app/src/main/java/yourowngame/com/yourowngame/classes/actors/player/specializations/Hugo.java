@@ -8,9 +8,12 @@ import android.util.Log;
 
 import java.util.HashMap;
 
+import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
+import yourowngame.com.yourowngame.gameEngine.GameView;
+import yourowngame.com.yourowngame.gameEngine.OnMultiTouchHandler;
 
 public class Hugo extends Player implements IPlayer.PROPERTIES.HUGO {
     private static final String TAG = "Hugo";
@@ -41,11 +44,8 @@ public class Hugo extends Player implements IPlayer.PROPERTIES.HUGO {
     }
 
     @Override
-    public void draw() {
-        //SET current Bitmap, LOAD current Bitmap, DRAW current Bitmap
-        this.setCurrentBitmap(getImages().get(this.getRotationDegree() + "_" + ((int) this.getLoopCount() % IMAGE_FRAMES.length))); //reference for collision detection etc.
-        Log.d(TAG, "draw: Tried to draw bitmap index: " + this.getRotationDegree() + "_" + ((int) this.getLoopCount() % IMAGE_FRAMES.length) + "/Bitmap->" + this.getCurrentBitmap());
-
+    public void draw(){
+        this.setCurrentBitmap(getImages().get(this.getRotationDegree() + "_" + ((int) this.getLoopCount() / 5 % IMAGE_FRAMES.length))); //reference for collision detection etc.
         this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
