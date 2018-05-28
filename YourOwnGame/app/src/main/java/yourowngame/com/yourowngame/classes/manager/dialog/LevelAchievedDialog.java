@@ -39,7 +39,7 @@ public class LevelAchievedDialog {
                                 lm.setCurrentLevel(lm.getCurrentLevel() + 1);
                             } else {
                                 //user achieved last level
-                                Toast.makeText(activity, "", Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, "show: This should not happen. User got to last level and was able to click on nextLevel.");
                             }
                         }
                     })
