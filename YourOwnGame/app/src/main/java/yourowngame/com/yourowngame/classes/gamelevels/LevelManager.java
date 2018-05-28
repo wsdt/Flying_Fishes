@@ -44,13 +44,6 @@ public class LevelManager {
         return null;
     }
 
-    public void initiateLevelAchievedProcess() {
-        Log.d(TAG, "initiateLevelAchievedProcess: Trying to change level.");
-
-        //show dialog
-        LevelAchievedDialog.show(this.getActivity());
-    }
-
     private void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray
         setLevelList(new ArrayList<Level>()); //for restarting to avoid nullpointer and resetting levellist (here so we force this method to be called)
         getLevelList().add(new Level_SummerSky(this.getActivity()));
