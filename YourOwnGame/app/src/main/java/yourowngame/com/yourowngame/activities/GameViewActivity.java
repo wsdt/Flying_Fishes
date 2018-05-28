@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.activities;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -75,19 +76,13 @@ public class GameViewActivity extends AppCompatActivity {
         });
     }
 
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        /*TODO: Call the same method as in onPause(), so we pause the game thread and let the user
-        todo: continue when he comes back. */
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
-
-        //TODO: pause thread and show pause dialog!
+        pauseGame(null);
+    } //do not make onResume(), bc. dialog should be shown and game should only resume, when resume is clicked and not automatically.
+    public void pauseGame(@Nullable View v) {
+        this.getGameView().getThread().pauseGame(null);
     }
 
     //GETTER/SETTER (Base class)

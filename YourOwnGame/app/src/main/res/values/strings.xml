@@ -64,6 +64,12 @@
     <string name="dialog_levelachieved_description">Congratulation, you have won this level.</string>
     <string name="dialog_levelachieved_btn_positive">Next level</string>
     <string name="dialog_levelachieved_btn_negative">Close</string>
+    <!-- PauseGame-Dialog -->
+    <string name="dialog_pausegame_title">Game paused</string>
+    <string name="dialog_pausegame_description">Game has been paused successfully.</string>
+    <string name="dialog_pausegame_btn_resume">Resume</string>
+    <string name="dialog_pausegame_btn_exit">Exit</string>
+
 
 
 </resources>

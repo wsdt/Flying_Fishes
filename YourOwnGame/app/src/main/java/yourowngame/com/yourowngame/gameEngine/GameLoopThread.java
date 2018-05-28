@@ -3,8 +3,11 @@ package yourowngame.com.yourowngame.gameEngine;
 import android.graphics.Canvas;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import yourowngame.com.yourowngame.classes.manager.dialog.PauseGameDialog;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IGameLoopThread;
 
 /**
@@ -23,12 +26,43 @@ public class GameLoopThread extends Thread implements IGameLoopThread {
     private boolean isRunning;
     private static final String TAG = "Thread";
 
-    public GameLoopThread(GameView view){
+    public GameLoopThread(@NonNull GameView view){
         this.view = view;
     }
 
     public void setRunning(boolean run){
         isRunning = run;
+    }
+
+    public void pauseGame(@Nullable Long sleepTime) {
+        Log.d(TAG, "pauseGame: Tried to pause game.");
+        //assumes that startGame() has been called before.
+            try {
+                while(isRunning) {
+                    if (holdsLock(this)) {
+                        if (sleepTime == null || sleepTime < 0) {
+                            this.wait();
+                        } else {
+                            this.wait(sleepTime);
+                        }
+
+                        PauseGameDialog.show(this.view);
+                    } else {
+                        Log.w(TAG, "pauseGame: Thread does not hold lock.");
+                    }
+                }
+                Log.d(TAG, "pauseGame: Game might have been successfully paused.");
+            } catch (InterruptedException e) {
+                Log.e(TAG, "pauseGame: Could not pause game.");
+            }
+    }
+
+    public void resumeGame() {
+        Thread.State state = this.getState();
+        if (state == Thread.State.WAITING || state == Thread.State.TIMED_WAITING) {
+            //Only notify when thread is really waiting (so no problem that onResume() is time multiple times)
+            this.notify();
+        }
     }
 
     @Override
