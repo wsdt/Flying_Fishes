@@ -33,7 +33,13 @@ public class PauseGameDialog {
                     .setPositiveButton(R.string.dialog_pausegame_btn_positive, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            gameView.getThread().resumeGame();
+                            //New thread needed to get the outside dialog closed. 
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    gameView.getThread().resumeGame();
+                                }
+                            }).start();
                         }
                     })
                     .setNegativeButton(R.string.dialog_pausegame_btn_negative, new View.OnClickListener() {
