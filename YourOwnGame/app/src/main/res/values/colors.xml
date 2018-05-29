@@ -3,7 +3,7 @@
     <color name="colorWhite">#eeeeee</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303f9f</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
 
     <color name="black_overlay">#66000000</color>
 
@@ -17,7 +17,7 @@
     <color name="thegame_grey">#5b5b5b</color>
 
     <!-- Colors for new Sliding-Fruit-View -->
-    <color name="colorOne"> #262938</color>
+    <color name="colorOne">#262938</color>
     <color name="colorTwo">#181a24</color>
     <color name="colorEx"> #FF4881</color>
     <color name="colorWhite2">#ffffff</color>
