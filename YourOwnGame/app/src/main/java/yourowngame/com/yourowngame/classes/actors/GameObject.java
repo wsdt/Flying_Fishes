@@ -47,7 +47,6 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
      */
     public abstract void resetPos();
 
-
     /**
      * getCraftedDynamicBitmap:
      * <p>
