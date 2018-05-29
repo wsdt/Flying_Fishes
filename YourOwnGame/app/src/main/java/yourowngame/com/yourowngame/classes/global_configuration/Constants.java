@@ -21,7 +21,7 @@ import yourowngame.com.yourowngame.classes.annotations.Delete;
 
 public interface Constants {
     /** Change app icon here and in Android Manifest */
-    int APP_ICON = R.drawable.raw_app_icon_big;
+    int APP_ICON = R.drawable.meloon;
 
     interface Developers {
         String WSDT = "Kevin Riedl (WSDT)";
