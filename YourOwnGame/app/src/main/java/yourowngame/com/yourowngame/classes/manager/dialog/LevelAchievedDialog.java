@@ -31,7 +31,7 @@ public class LevelAchievedDialog {
 
             LovelyStandardDialog ld = new LovelyStandardDialog(activity)
                     .setTopColorRes(R.color.colorPrimaryDark)
-                    .setIcon(Constants.APP_ICON)
+                    .setIcon(activity.getResources().getDrawable(R.drawable.meloon))
                     .setTitle(R.string.dialog_levelachieved_title)
                     .setMessage(R.string.dialog_levelachieved_description)
                     .setPositiveButton(R.string.dialog_levelachieved_btn_positive, new View.OnClickListener() {
