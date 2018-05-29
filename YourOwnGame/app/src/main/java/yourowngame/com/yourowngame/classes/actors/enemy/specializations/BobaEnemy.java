@@ -50,7 +50,7 @@ public class BobaEnemy extends Enemy implements IEnemy.PROPERTIES.BOBA {
             // Reset if out of screen
             this.resetPos();
         } else {
-            this.setPosX(this.getPosX() - this.getSpeedX());
+            this.setPosX(this.getPosX() - (this.getSpeedX()*this.getModifier()));
         }
     }
 

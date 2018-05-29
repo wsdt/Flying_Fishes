@@ -55,7 +55,7 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
             // Reset if out of screen
             this.resetPos();
         } else {
-            this.setPosX(this.getPosX() - this.getSpeedX());
+            this.setPosX(this.getPosX() - (this.getSpeedX()*this.getModifier()));
         }
     }
 
