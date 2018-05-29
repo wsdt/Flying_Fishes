@@ -35,7 +35,6 @@ import static yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject.
 
 public class Level_NightRider extends Level {
     private static final String TAG = "Lvl_Nightrider";
-    private static double levelDifficulty = ILevel.NIGHT_RIDER.LEVEL_DIFFICULTY;
 
     public Level_NightRider(@NonNull Activity activity) {
         super(activity);
@@ -98,14 +97,5 @@ public class Level_NightRider extends Level {
     @Override
     protected void playBackgroundMusic() {
         //TODO: play bg sound [search resource] --> Level_SummerSky.soundMgr.play(LevelManager.getBackgroundManager().getGameView().getActivityContext(),R.raw.bgMusicLvl1,true);
-    }
-
-    //GETTER/SETTER ----------------------------
-    public static double getLevelDifficulty() {
-        return levelDifficulty;
-    }
-
-    public static void setLevelDifficulty(double levelDifficulty) {
-        Level_NightRider.levelDifficulty = levelDifficulty;
     }
 }

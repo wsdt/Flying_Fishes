@@ -20,7 +20,6 @@ public class Albert extends Player implements IPlayer.PROPERTIES.ALBERT {
         super(activity, posX, posY, speedX, speedY);
     }
 
-
     @Override
     public void update() {
         if (this.isGoUp()) {
