@@ -103,7 +103,7 @@ public class LevelHierarchyActivity extends AppCompatActivity {
 
         StringBuilder sb = new StringBuilder();
         for (LevelAssignment levelAssignment : level.getAllLevelAssignments()) {
-            sb.append(levelAssignment.getFormattedAssignment(this));
+            sb.append(levelAssignment.getFormatted(this));
         }
 
         TextView tvLevelAssignments = ((TextView) inflatedLevelView.findViewById(R.id.lvlAssignments));

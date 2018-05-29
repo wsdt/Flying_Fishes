@@ -33,6 +33,9 @@ public class Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTIES {
         this.setSpeedY(SPEED_Y);
     }
 
+    @Override
+    public void determineFruitPowers() { }
+
 
     /*************************************** UPDATE / DRAW *************************************************/
     @Override

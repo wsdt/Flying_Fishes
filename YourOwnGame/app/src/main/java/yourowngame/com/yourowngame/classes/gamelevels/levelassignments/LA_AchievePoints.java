@@ -13,9 +13,9 @@ public class LA_AchievePoints extends LevelAssignment {
     private Highscore highscore;
 
     public LA_AchievePoints(long amount, @NonNull Highscore highscore) {
-        this.setAmount(amount);
+        super(amount);
         this.setResDrawable_smallIcon(Constants.APP_ICON); //todo: change
-        this.setResString_whatToDo(R.string.levelAssignments_achievePoints_whatToDo);
+        this.setResString(R.string.levelAssignments_achievePoints_whatToDo);
         this.setHighscore(highscore);
     }
 
