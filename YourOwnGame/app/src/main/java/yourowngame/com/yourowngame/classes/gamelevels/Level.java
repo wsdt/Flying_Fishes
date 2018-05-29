@@ -20,30 +20,6 @@ import yourowngame.com.yourowngame.classes.counters.Highscore;
 public abstract class Level {
     private static final String TAG = "Level";
     private Activity activity;
-    /** TODO: Currently in no classes used.  
-     *
-     * STATIC, so we can access it from everywhere without trouble, BUT could be possible
-     * that each setting will overwrite the constant value of ALL other values. So we
-     * have to implement static member (like getImages() in GameObjects) in subclasses
-     * itself. (Maybe any suggestions?) --> static + polymorphism does not work!
-     *
-     * Used by enemies, etc. to make their actions dependent (e.g. faster movement)
-     * Theoretically we could also change this value within the same value, so fruits could have
-     * influence onto everything! :)
-     *
-     * 1 = No changes to default behaviour of enemies, bg, player, fruits etc. (=DEFAULT)
-     * ]0-1[ = (Zero to one, but NOT 0) --> Making level easier bc. level-dependent values get changed
-     * ]1-n] = Bigger than 1 to n for making the level harder (also comma-numbers allowed [e.g. 2.23])
-     *
-     * NOT ALLOWED VALUES = {[-n...0]}
-     *
-     * ATTENTION: When adding new levels be SURE when you don't want to use the default param
-     * to set the constant value in constructor (see other levelObjs for examples)
-
-     #################################################################################################
-     --> TO IMPLEMENT IN SUBCLASSES: private static double levelDifficulty = ILevel.LEVEL_INTERFACE.LEVEL_DIFFICULTY; (inkl. getter/setter)
-     #################################################################################################*/
-
 
     protected static SoundMgr soundMgr = new SoundMgr(); //static because always only one soundMgr instance
     private int levelNameResId; //Level name (maybe to show to user [e.g. Die dunkle Gruft, usw.] als Strings.xml res id for multilinguality!
