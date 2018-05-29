@@ -20,7 +20,7 @@ import yourowngame.com.yourowngame.classes.counters.Highscore;
 public abstract class Level {
     private static final String TAG = "Level";
     private Activity activity;
-    /** TODO: Currently in no classes used.  
+    /** TODO: Currently in no classes used.
      *
      * STATIC, so we can access it from everywhere without trouble, BUT could be possible
      * that each setting will overwrite the constant value of ALL other values. So we
