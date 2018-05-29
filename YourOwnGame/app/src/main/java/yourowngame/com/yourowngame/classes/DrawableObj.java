@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
@@ -39,6 +40,7 @@ public abstract class DrawableObj {
      * 1 = No changes to default behaviour of enemies, bg, player, fruits etc. (=DEFAULT)
      * ]0-1[ = (Zero to one, but NOT 0) --> Making level easier bc. level-dependent values get changed
      * ]1-n] = Bigger than 1 to n for making the level harder (also comma-numbers allowed [e.g. 2.23])
+     * Recommended Range: ]0-2.5]
      *
      * NOT ALLOWED VALUES = {[-n...0]} (blocked in setter)
      * */
@@ -48,8 +50,9 @@ public abstract class DrawableObj {
         this.setActivity(activity);
     }
 
-    /** Used e.g. of fruits, lvl etc. to set a new modifier of level's lists. */
-    public static void setModifierOfList(@NonNull List<DrawableObj> list, double modifier) {
+    /** Used e.g. of fruits, lvl etc. to set a new modifier of level's lists.
+     * Just as helper method, for making the code more legible.  */
+    public static void setModifierOfList(@NonNull ArrayList<? extends DrawableObj> list, double modifier) {
         for (DrawableObj obj : list) {
             obj.setModifier(modifier);
         }

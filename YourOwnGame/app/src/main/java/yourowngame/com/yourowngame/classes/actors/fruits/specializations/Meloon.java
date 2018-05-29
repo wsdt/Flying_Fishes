@@ -33,6 +33,11 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
         this.setSpeedY(SPEED_Y);
     }
 
+    @Override
+    public void determineFruitPowers() {
+
+    }
+
 
     /*************************************** UPDATE / DRAW *************************************************/
     @Override
@@ -104,4 +109,6 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
     public static void setImages(Bitmap[] images) {
         Meloon.images = images;
     }
+
+
 }

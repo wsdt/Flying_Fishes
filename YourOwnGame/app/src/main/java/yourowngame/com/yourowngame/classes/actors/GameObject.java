@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.DrawableObj;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;

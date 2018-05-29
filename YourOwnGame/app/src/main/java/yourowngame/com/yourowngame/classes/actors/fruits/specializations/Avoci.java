@@ -7,8 +7,10 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
+import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.TimeSlowMotion;
 import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
+import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 
@@ -30,6 +32,12 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
         this.setSpeedX(SPEED_X);
         this.setSpeedY(SPEED_Y);
+    }
+
+    @Override
+    public void determineFruitPowers() {
+        //TODO: Problem how to get here current levelMgr (do not create a new one here)
+        //this.getFruitPowers().add(new TimeSlowMotion(3,this.getActivity()));
     }
 
 
