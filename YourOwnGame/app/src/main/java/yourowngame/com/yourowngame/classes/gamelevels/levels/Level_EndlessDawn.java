@@ -1,30 +1,21 @@
 package yourowngame.com.yourowngame.classes.gamelevels.levels;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.EnemyMgr;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Avoci;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Pinapo;
-import yourowngame.com.yourowngame.classes.actors.player.Player;
-import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.player.specializations.Hugo;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
-import yourowngame.com.yourowngame.classes.gamelevels.interfaces.ILevel;
 import yourowngame.com.yourowngame.classes.gamelevels.levelassignments.LA_AchievePoints;
-
-import static yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject.PROPERTIES.DEFAULT.DEFAULT_ROTATION;
 
 
 /**
@@ -52,9 +43,9 @@ public class Level_EndlessDawn extends Level {
     @Override
     protected void determineBackgroundLayers() {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
-        * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
+         * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
         this.getAllBackgroundLayers().add(new BL_SingleColor(this.getActivity(), R.color.colorDarkRed));
-        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bglayer_1_cloud_2},15));
+        this.getAllBackgroundLayers().add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bglayer_1_cloud_2}, 15));
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)
@@ -64,10 +55,10 @@ public class Level_EndlessDawn extends Level {
     protected void determineAllEnemies() { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
         //Set allEnemies Arraylist
         /** Initializing Bomber-Enemy */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), HappenEnemy.class,6));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), HappenEnemy.class, 6));
 
         /**Initializing Rocket-Enemy */
-       this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), RocketFishEnemy.class, 3)); //damit die Leute derweil wirklich was zum Spielen haben haha, haha so geil
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), RocketFishEnemy.class, 3)); //damit die Leute derweil wirklich was zum Spielen haben haha, haha so geil
 
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
@@ -78,7 +69,7 @@ public class Level_EndlessDawn extends Level {
          *  FRUIT INITIALIZING AREA *
          ****************************/
 
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Meloon.class,1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Meloon.class, 1));
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
     }
