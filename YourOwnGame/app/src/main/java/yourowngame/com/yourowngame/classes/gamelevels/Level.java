@@ -54,7 +54,8 @@ public abstract class Level {
     private ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
 
     @Enhance (message = "maybe it's better to put it back into gameview or gameviewActivity and all levels access it. " +
-            "So we just have to reset the highscore on levelchange (what we have to do anyway).")
+            "So we just have to reset the highscore on levelchange (what we have to do anyway)." +
+            "totally, that is utterly useless & non OO")
     private Highscore levelHighscore = new Highscore(); //add Level-dependent Highscore
     //TODO: other level-dependent members/values
 
@@ -91,6 +92,10 @@ public abstract class Level {
     protected abstract void determineLevelAssigments();
     /** Defines default data (normally this method does not contain any logic* operations). E.g. setting the levelName by getting it from the strings.xml*/
     protected abstract void determineMetaData();
+    /**
+     * Difficulty range is between 0 - 5 (double)
+     * value increases or decreases difficulty in a game
+     */
 
     /** Check whether the assignments are achieved, or not. Every Level implements their assignments itself! */
     public boolean areLevelAssignmentsAchieved() {
@@ -139,7 +144,9 @@ public abstract class Level {
         Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
     }
 
-    //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    /**
+     * We really need to sort things out here, to much getter/setter
+     */
     public ArrayList<Background> getAllBackgroundLayers() {
         return allBackgroundLayers;
     }

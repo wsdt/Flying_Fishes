@@ -4,12 +4,7 @@ import yourowngame.com.yourowngame.R;
 
 /** Never implement IFruit as parent interface, only sub interfaces! */
 public interface IFruit {
-    /** If you want to use default properties, just do not overwrite them.
-     *
-     * param HIGHSCORE_REWARD:
-     *      appearing time, in which time the fruits are visible on the screen
-     *      0.1 indicates all 10 seconds, 1 would be all 100 seconds
-     */
+
     interface DEFAULT_FRUIT_PROPERTIES {
         float SPEED_X = 10f;
         float SPEED_Y = 10f;

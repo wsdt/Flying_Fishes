@@ -21,7 +21,6 @@ import yourowngame.com.yourowngame.classes.gamelevels.interfaces.ILevel;
 import static yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject.PROPERTIES.DEFAULT.DEFAULT_ROTATION;
 
 public class Level_DarkDescent extends Level {
-    private static double levelDifficulty = ILevel.DARK_DESCENT.LEVEL_DIFFICULTY;
 
     public Level_DarkDescent(@NonNull Activity activity) {
         super(activity);
@@ -63,12 +62,4 @@ public class Level_DarkDescent extends Level {
         this.setLevelNameResId(R.string.level_levelName_darkDescent);
     }
 
-    //GETTER/SETTER ----------------------------
-    public static double getLevelDifficulty() {
-        return levelDifficulty;
-    }
-
-    public static void setLevelDifficulty(double levelDifficulty) {
-        Level_DarkDescent.levelDifficulty = levelDifficulty;
-    }
 }
