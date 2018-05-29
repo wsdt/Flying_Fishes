@@ -54,7 +54,8 @@ public abstract class Level {
     private ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
 
     @Enhance (message = "maybe it's better to put it back into gameview or gameviewActivity and all levels access it. " +
-            "So we just have to reset the highscore on levelchange (what we have to do anyway).")
+            "So we just have to reset the highscore on levelchange (what we have to do anyway)." +
+            "totally, that is utterly useless & non OO")
     private Highscore levelHighscore = new Highscore(); //add Level-dependent Highscore
     //TODO: other level-dependent members/values
 
