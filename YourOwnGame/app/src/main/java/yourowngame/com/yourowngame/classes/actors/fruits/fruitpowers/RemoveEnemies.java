@@ -43,11 +43,7 @@ public class RemoveEnemies extends FruitPower {
         Log.d(TAG, "execute: Removing enemies -> "+enemiesToRemove);
 
         int i = 0;
-        for (Iterator<Enemy> enemyIterator = this.getLevelEnemies().iterator(); enemyIterator.hasNext();) {
-            if ((i++) >= enemiesToRemove) {
-                break; //stop iterating, bc. enough rvm
-            }
-
+        for (Iterator<Enemy> enemyIterator = this.getLevelEnemies().iterator(); (enemyIterator.hasNext() && (i++) < enemiesToRemove);) {
             /* save enemy for adding it later again and always get first one (bc. 0 should here always exist) */
             this.getRemovedEnemies().add(this.getLevelEnemies().get(0));
             this.getLevelEnemies().remove(0);
