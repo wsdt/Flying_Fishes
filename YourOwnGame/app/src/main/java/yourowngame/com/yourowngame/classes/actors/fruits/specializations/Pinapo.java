@@ -37,7 +37,7 @@ public class Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTIES {
 
     @Override
     public void determineFruitPowers(@NonNull Level currLevel) {
-        this.getFruitPowers().add(new RemoveEnemies(5,10,currLevel.getAllEnemies()));
+        this.getFruitPowers().add(new RemoveEnemies(10,10,currLevel.getAllEnemies()));
     }
 
 

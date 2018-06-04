@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
         ElementType.FIELD,ElementType.PARAMETER,
         ElementType.LOCAL_VARIABLE,ElementType.TYPE})
 @Retention(RetentionPolicy.CLASS)
-public @interface Test {
+public @interface Testing {
     enum Priority {
         NOT_DETERMINED, LOW, MEDIUM, HIGH
     }

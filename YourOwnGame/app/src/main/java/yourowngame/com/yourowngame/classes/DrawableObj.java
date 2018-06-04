@@ -28,34 +28,9 @@ public abstract class DrawableObj {
      * Can be not set, so name is not obligatory.
      */
     private int strResName;
-    /** NON-Static to also allow modification of specific gameObjects.
-     *
-     * Used by enemies, etc. to make their actions dependent (e.g. faster movement)
-     * Theoretically we could also change this value within the same value, so fruits could have
-     * influence onto everything! :) Maybe also some background layers could adapt itself through
-     * this value!
-     *
-     * So Value can be used completely individually on each obj.
-     *
-     * 1 = No changes to default behaviour of enemies, bg, player, fruits etc. (=DEFAULT)
-     * ]0-1[ = (Zero to one, but NOT 0) --> Making level easier bc. level-dependent values get changed
-     * ]1-n] = Bigger than 1 to n for making the level harder (also comma-numbers allowed [e.g. 2.23])
-     * Recommended Range: ]0-2.5]
-     *
-     * NOT ALLOWED VALUES = {[-n...0]} (blocked in setter)
-     * */
-    private double modifier = 1;
 
     public DrawableObj(@NonNull Activity activity) {
         this.setActivity(activity);
-    }
-
-    /** Used e.g. of fruits, lvl etc. to set a new modifier of level's lists.
-     * Just as helper method, for making the code more legible.  */
-    public static void setModifierOfList(@NonNull ArrayList<? extends DrawableObj> list, double modifier) {
-        for (DrawableObj obj : list) {
-            obj.setModifier(modifier);
-        }
     }
 
     /**
@@ -152,17 +127,5 @@ public abstract class DrawableObj {
 
     public void setStrResName(int strResName) {
         this.strResName = strResName;
-    }
-
-    public double getModifier() {
-        return modifier;
-    }
-
-    public void setModifier(double modifier) {
-        if (modifier <= 0) {
-            Log.e(TAG, "setModifier: Blocked setting new modifier, bc. not valid (See comments) -> "+modifier);
-        } else {
-            this.modifier = modifier;
-        }
     }
 }
