@@ -3,6 +3,7 @@ package yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitPower;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 
@@ -14,6 +15,7 @@ public class FruitPower_PlayerSpeed extends FruitPower {
     public FruitPower_PlayerSpeed(double amount, long durationMilliSeconds, @NonNull Player currPlayer) {
         super(amount, durationMilliSeconds);
         this.setCurrPlayer(currPlayer);
+        this.setResString(R.string.fruitPower_playerSpeed_effect);
     }
 
     @Override
