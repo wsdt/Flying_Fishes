@@ -57,6 +57,7 @@ public class FruitCounter {
         } else {
             Log.e(TAG, "fruitCollected: Could not determine which fruit has been collected-> "+fruit);
         }
+        Log.d(TAG, "fruitCollected: Collected fruit.");
 
         //Execute fruit power
         fruit.fruitCollected();

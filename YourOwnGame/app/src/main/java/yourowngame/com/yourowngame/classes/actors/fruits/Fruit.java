@@ -2,6 +2,7 @@ package yourowngame.com.yourowngame.classes.actors.fruits;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import yourowngame.com.yourowngame.classes.gamelevels.Level;
 
 
 public abstract class Fruit extends GameObject implements IHighscore_RewardableObj, IFruit.DEFAULT_FRUIT_PROPERTIES {
-
+    private static final String TAG = "Fruit";
     private List<FruitPower> fruitPowers = new ArrayList<>();
     @Enhance (message = "Needed or for what is this param?")
     private int spawnTime = 0;
@@ -40,6 +41,8 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
 
     /** Execute when fruit has been collected. */
     public void fruitCollected() {
+        Log.d(TAG, "fruitCollected: Executing powers -> "+this.getFruitPowers().size());
+
         //Execute all fruitPowers
         for (FruitPower fruitPower : this.getFruitPowers()) {
             fruitPower.execute();

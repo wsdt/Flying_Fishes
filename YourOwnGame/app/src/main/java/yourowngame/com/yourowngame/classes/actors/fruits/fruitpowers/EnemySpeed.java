@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ import yourowngame.com.yourowngame.classes.actors.fruits.FruitPower;
 
 /** Slows enemies */
 public class EnemySpeed extends FruitPower {
+    private static final String TAG = "EnemySpeed";
     private ArrayList<Enemy> levelEnemies;
 
     /** @param durationMilliSeconds:  -> how long is fruit power active.*/
@@ -19,7 +21,11 @@ public class EnemySpeed extends FruitPower {
 
     @Override
     public void execute() {
-        Enemy.setModifierOfList(getLevelEnemies(),this.getAmount());
+        Log.d(TAG, "execute: Started method.");
+
+        for(Enemy enemy : getLevelEnemies()) {
+            enemy.setSpeedX(enemy.getSpeedX()*this.getAmount());
+        }
 
         //Automatically stop it after amountTime.
         startStopTimer();
@@ -28,7 +34,9 @@ public class EnemySpeed extends FruitPower {
     @Override
     public void stop() {
         //back to normal speed
-        Enemy.setModifierOfList(getLevelEnemies(),1); //1=default value [Attention! If other fruits or lvls changed this value it gets overwritten]
+        for(Enemy enemy : getLevelEnemies()) {
+            enemy.setSpeedX(enemy.getSpeedX()/this.getAmount());
+        }
     }
 
     //GETTER / SETTER ----------------------------------------------
