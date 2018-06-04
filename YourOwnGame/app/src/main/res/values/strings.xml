@@ -41,6 +41,11 @@
     <!-- LevelAssigments -->
     <string name="levelAssignments_achievePoints_whatToDo">Achieve %1$.2f points.</string>
 
+    <!-- FruitPowers -->
+    <string name="fruitPower_enemySpeed_effect">Changes the speed of all enemies by the factor %1$.2f.</string>
+    <string name="fruitPower_playerSpeed_effect">Changes the vertical speed of your player by the factor %1$.2f.</string>
+    <string name="fruitPower_shootRage_effect">Spawns %1$.0f projectiles at random positions.</string>
+
     <!-- LevelHierarchy View -->
     <string name="targetPoints">Target: $1$d Points</string>
 

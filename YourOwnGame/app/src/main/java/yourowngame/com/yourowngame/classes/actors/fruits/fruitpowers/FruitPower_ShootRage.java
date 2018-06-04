@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitPower;
@@ -28,6 +29,7 @@ public class FruitPower_ShootRage extends FruitPower {
     public FruitPower_ShootRage(int amount, @NonNull Player currPlayer) {
         super(amount, 0);
         this.setCurrPlayer(currPlayer);
+        this.setResString(R.string.fruitPower_shootRage_effect);
     }
 
 
