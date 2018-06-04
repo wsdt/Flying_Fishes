@@ -4,19 +4,16 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
-import yourowngame.com.yourowngame.classes.actors.projectiles.specializations.IronProjectile;
+import yourowngame.com.yourowngame.classes.actors.projectiles.specializations.Projectile_Iron;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.GameView;
@@ -79,7 +76,7 @@ public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DE
      ***********************************************/
 
     public void addProjectiles() {
-        Projectile projectile = new IronProjectile(this.getActivity(), this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0);
+        Projectile projectile = new Projectile_Iron(this.getActivity(), this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0);
         projectile.initialize();
         this.getProjectiles().add(projectile);
     }

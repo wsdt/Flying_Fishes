@@ -1,20 +1,13 @@
 package yourowngame.com.yourowngame.classes.actors.fruits;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
-import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
-import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 /** Used for generating or/and managing fruits.*/
 

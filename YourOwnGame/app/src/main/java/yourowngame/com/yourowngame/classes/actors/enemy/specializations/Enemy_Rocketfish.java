@@ -1,18 +1,13 @@
 package yourowngame.com.yourowngame.classes.actors.enemy.specializations;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
-import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
@@ -20,7 +15,7 @@ import yourowngame.com.yourowngame.classes.manager.RandomMgr;
  * Created on 12.03.2018.
  */
 
-public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFISH {
+public class Enemy_Rocketfish extends Enemy implements IEnemy.PROPERTIES.ROCKETFISH {
     private static Bitmap[] images;
     private static final String TAG = "RocketFish";
 
@@ -33,14 +28,14 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
      * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!
      */
 
-    public RocketFishEnemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
+    public Enemy_Rocketfish(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
     }
 
     /**
      * Creates random enemy
      */
-    public RocketFishEnemy(@NonNull Activity activity) {
+    public Enemy_Rocketfish(@NonNull Activity activity) {
         super(activity); //also call super constr! (initializing)
 
         this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
@@ -102,6 +97,6 @@ public class RocketFishEnemy extends Enemy implements IEnemy.PROPERTIES.ROCKETFI
     }
 
     public static void setImages(Bitmap[] images) {
-        RocketFishEnemy.images = images;
+        Enemy_Rocketfish.images = images;
     }
 }

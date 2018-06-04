@@ -7,11 +7,11 @@ import yourowngame.com.yourowngame.classes.actors.fruits.FruitPower;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 
 /** Makes player e.g. 50% (= amount=1.5) faster  | e.g. 25% slower (= amount=0.75) in going up and down. */
-public class PlayerSpeed extends FruitPower {
+public class FruitPower_PlayerSpeed extends FruitPower {
     private static final String TAG = "PlayerSpeed";
     private Player currPlayer;
 
-    public PlayerSpeed(double amount, long durationMilliSeconds, @NonNull Player currPlayer) {
+    public FruitPower_PlayerSpeed(double amount, long durationMilliSeconds, @NonNull Player currPlayer) {
         super(amount, durationMilliSeconds);
         this.setCurrPlayer(currPlayer);
     }

@@ -15,11 +15,11 @@ import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exc
 import yourowngame.com.yourowngame.gameEngine.GameView;
 import yourowngame.com.yourowngame.gameEngine.OnMultiTouchHandler;
 
-public class Hugo extends Player implements IPlayer.PROPERTIES.HUGO {
+public class Player_Hugo extends Player implements IPlayer.PROPERTIES.HUGO {
     private static final String TAG = "Hugo";
     private HashMap<String, Bitmap> images; //must not be static
 
-    public Hugo(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
+    public Player_Hugo(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
     }
 
