@@ -6,10 +6,10 @@ import android.support.annotation.NonNull;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.EnemyMgr;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.Enemy_Rocketfish;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
-import yourowngame.com.yourowngame.classes.actors.player.specializations.Hugo;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Meloon;
+import yourowngame.com.yourowngame.classes.actors.player.specializations.Player_Hugo;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
@@ -22,7 +22,7 @@ public class Level_DarkDescent extends Level {
 
     @Override
     protected void determinePlayer() {
-        this.setPlayer(new Hugo(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2));
+        this.setPlayer(new Player_Hugo(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2));
     }
 
     @Override
@@ -33,12 +33,12 @@ public class Level_DarkDescent extends Level {
 
     @Override
     protected void determineAllEnemies() {
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(getActivity(), RocketFishEnemy.class, 15));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(getActivity(), Enemy_Rocketfish.class, 15));
     }
 
     @Override
     protected void determineAllFruits() {
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Meloon.class, 4));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Fruit_Meloon.class, 4));
     }
 
     @Override

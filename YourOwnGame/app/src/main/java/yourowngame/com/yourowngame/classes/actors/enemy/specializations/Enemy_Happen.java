@@ -3,7 +3,6 @@ package yourowngame.com.yourowngame.classes.actors.enemy.specializations;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
@@ -16,18 +15,18 @@ import yourowngame.com.yourowngame.classes.manager.RandomMgr;
  * Created  on 12.03.2018.
  */
 
-public class HappenEnemy extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
+public class Enemy_Happen extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
     private static final String TAG = "RoboEnemy";
     private static Bitmap[] images;
 
-    public HappenEnemy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
+    public Enemy_Happen(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
     }
 
     /**
      * Creates random enemy
      */
-    public HappenEnemy(@NonNull Activity activity) {
+    public Enemy_Happen(@NonNull Activity activity) {
         super(activity); //also call super constr! (initializing)
 
         this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
@@ -94,7 +93,7 @@ public class HappenEnemy extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
     }
 
     public static void setImages(Bitmap[] images) {
-        HappenEnemy.images = images;
+        Enemy_Happen.images = images;
     }
 
     /**
