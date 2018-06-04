@@ -7,14 +7,14 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.EnemyMgr;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.BobaEnemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.HappenEnemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.Enemy_Boba;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.Enemy_Happen;
+import yourowngame.com.yourowngame.classes.actors.enemy.specializations.Enemy_Rocketfish;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Avoci;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Pinapo;
-import yourowngame.com.yourowngame.classes.actors.player.specializations.Hugo;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Avoci;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Meloon;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Pinapo;
+import yourowngame.com.yourowngame.classes.actors.player.specializations.Player_Hugo;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
@@ -40,7 +40,7 @@ public class Level_NightRider extends Level {
 
     @Override
     protected void determinePlayer() {
-        this.setPlayer(new Hugo(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2));
+        this.setPlayer(new Player_Hugo(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2));
     }
 
     @Override
@@ -58,13 +58,13 @@ public class Level_NightRider extends Level {
     protected void determineAllEnemies() { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
         //Set allEnemies Arraylist
         /** Initializing Bomber-Enemy */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), HappenEnemy.class, 1));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), Enemy_Happen.class, 1));
 
         /**Initializing Rocket-Enemy */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), RocketFishEnemy.class, 12)); //damit die Leute derweil wirklich was zum Spielen haben haha, haha so geil
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), Enemy_Rocketfish.class, 12)); //damit die Leute derweil wirklich was zum Spielen haben haha, haha so geil
 
         /** Initializing Spawn-Enemies */
-        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), BobaEnemy.class, 1));
+        this.getAllEnemies().addAll(EnemyMgr.createRandomEnemies(this.getActivity(), Enemy_Boba.class, 1));
 
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
@@ -75,9 +75,9 @@ public class Level_NightRider extends Level {
          *  FRUIT INITIALIZING AREA *
          ****************************/
 
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Meloon.class, 1));
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Avoci.class, 1));
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Pinapo.class, 1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Fruit_Meloon.class, 1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Fruit_Avoci.class, 1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Fruit_Pinapo.class, 1));
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
     }

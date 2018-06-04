@@ -5,9 +5,9 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Avoci;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Pinapo;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Avoci;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Meloon;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Pinapo;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 
 /**
@@ -45,13 +45,13 @@ public class FruitCounter {
     @Enhance(byDeveloper = "Solution",
             message = "get rid of that instanceOf, but how can we optimise checking which fruit has been collected without getting unnecessary lines of code?")
     public void fruitCollected(@NonNull Fruit fruit) {
-        if (fruit instanceof Meloon) {
+        if (fruit instanceof Fruit_Meloon) {
             levelAmountMeloons++;
             totalAmountOfMeloons++;
-        } else if (fruit instanceof Pinapo) {
+        } else if (fruit instanceof Fruit_Pinapo) {
             levelAmountPinapos++;
             totalAmountOfPinapos++;
-        } else if (fruit instanceof Avoci) {
+        } else if (fruit instanceof Fruit_Avoci) {
             levelAmountAvocis++;
             totalAmountOfAvocis++;
         } else {

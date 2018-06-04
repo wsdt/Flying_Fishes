@@ -10,12 +10,12 @@ import yourowngame.com.yourowngame.classes.actors.fruits.FruitPower;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 
 /** Slows enemies */
-public class EnemySpeed extends FruitPower {
+public class FruitPower_EnemySpeed extends FruitPower {
     private static final String TAG = "EnemySpeed";
     private ArrayList<Enemy> levelEnemies;
 
     /** @param durationMilliSeconds:  -> how long is fruit power active.*/
-    public EnemySpeed(double amount, long durationMilliSeconds, @NonNull ArrayList<Enemy> levelEnemies) {
+    public FruitPower_EnemySpeed(double amount, long durationMilliSeconds, @NonNull ArrayList<Enemy> levelEnemies) {
         super(amount, durationMilliSeconds);
         this.setLevelEnemies(levelEnemies);
     }
