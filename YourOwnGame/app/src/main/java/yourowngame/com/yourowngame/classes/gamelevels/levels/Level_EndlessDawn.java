@@ -69,7 +69,7 @@ public class Level_EndlessDawn extends Level {
          *  FRUIT INITIALIZING AREA *
          ****************************/
 
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Meloon.class, 1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Meloon.class, 1));
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
     }

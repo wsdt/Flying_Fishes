@@ -7,10 +7,10 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
-import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.TimeSlowMotion;
+import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.EnemySpeed;
 import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 
@@ -18,26 +18,28 @@ public class Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
     public static final String TAG = "Avoci";
     private static Bitmap[] images;
 
-    public Avoci(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
-        super(activity, posX, posY, speedX, speedY);
+    public Avoci(@NonNull Activity activity, @NonNull Level currLevel, double posX, double posY, double speedX, double speedY) {
+        super(activity, currLevel, posX, posY, speedX, speedY);
+        //fruit powers are determined in super constr
     }
 
     /**
      * Create random fruit
      */
-    public Avoci(@NonNull Activity activity) {
-        super(activity);
+    public Avoci(@NonNull Activity activity, @NonNull Level currLevel) {
+        super(activity, currLevel);
 
         this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + (int) OFF_TIME));
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
         this.setSpeedX(SPEED_X);
         this.setSpeedY(SPEED_Y);
+
+        //Fruit powers are determined in super constr.
     }
 
     @Override
-    public void determineFruitPowers() {
-        //TODO: Problem how to get here current levelMgr (do not create a new one here)
-        //this.getFruitPowers().add(new TimeSlowMotion(3,this.getActivity()));
+    public void determineFruitPowers(@NonNull Level currLevel) {
+        this.getFruitPowers().add(new EnemySpeed(0.25,10,currLevel.getAllEnemies()));
     }
 
 
