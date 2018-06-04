@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitPower;
+import yourowngame.com.yourowngame.classes.annotations.Bug;
 
 /** Slows enemies */
 public class EnemySpeed extends FruitPower {
@@ -32,6 +33,7 @@ public class EnemySpeed extends FruitPower {
     }
 
     @Override
+    @Bug(problem = "Seems that this method makes Enemies extremely fast altough it should be normal speed. I don't know why.")
     public void stop() {
         //back to normal speed
         for(Enemy enemy : getLevelEnemies()) {

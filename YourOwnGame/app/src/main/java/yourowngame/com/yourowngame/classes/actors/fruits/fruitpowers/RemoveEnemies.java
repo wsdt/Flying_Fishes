@@ -24,7 +24,6 @@ public class RemoveEnemies extends FruitPower {
     }
 
     @Override
-    @Bug (problem = "Seems that this method makes Enemies faster. I don't know why.")
     public void execute() {
         Log.d(TAG, "execute: Started method.");
 
@@ -57,6 +56,7 @@ public class RemoveEnemies extends FruitPower {
     @Override
     public void stop() {
         for (Enemy removedEnemy : this.getRemovedEnemies()) {
+            removedEnemy.resetPos(); //reset pos for avoiding spawning in the middle of the screen and clashing with player
             this.getLevelEnemies().add(removedEnemy);
         }
     }
