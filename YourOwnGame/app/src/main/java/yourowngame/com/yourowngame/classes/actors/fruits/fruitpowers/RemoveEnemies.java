@@ -24,7 +24,6 @@ public class RemoveEnemies extends FruitPower {
     }
 
     @Override
-    @Bug (problem = "Seems that this method makes Enemies faster. I don't know why.")
     public void execute() {
         Log.d(TAG, "execute: Started method.");
 
@@ -43,11 +42,7 @@ public class RemoveEnemies extends FruitPower {
         Log.d(TAG, "execute: Removing enemies -> "+enemiesToRemove);
 
         int i = 0;
-        for (Iterator<Enemy> enemyIterator = this.getLevelEnemies().iterator(); enemyIterator.hasNext();) {
-            if ((i++) >= enemiesToRemove) {
-                break; //stop iterating, bc. enough rvm
-            }
-
+        for (Iterator<Enemy> enemyIterator = this.getLevelEnemies().iterator(); (enemyIterator.hasNext() && (i++) < enemiesToRemove);) {
             /* save enemy for adding it later again and always get first one (bc. 0 should here always exist) */
             this.getRemovedEnemies().add(this.getLevelEnemies().get(0));
             this.getLevelEnemies().remove(0);
@@ -61,6 +56,7 @@ public class RemoveEnemies extends FruitPower {
     @Override
     public void stop() {
         for (Enemy removedEnemy : this.getRemovedEnemies()) {
+            removedEnemy.resetPos(); //reset pos for avoiding spawning in the middle of the screen and clashing with player
             this.getLevelEnemies().add(removedEnemy);
         }
     }
