@@ -13,6 +13,7 @@ public interface IFruit {
 
     }
 
+    //TODO: Add for fruits maximum respawn, bc. we want to use them as money!
     interface AVOCI_FRUIT_PROPERTIES {
         int HIGHSCORE_REWARD = 50;
         float OFF_TIME = 500f;
