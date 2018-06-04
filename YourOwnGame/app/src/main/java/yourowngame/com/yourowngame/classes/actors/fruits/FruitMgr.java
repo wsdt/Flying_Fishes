@@ -13,6 +13,7 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Meloon;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
+import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 /** Used for generating or/and managing fruits.*/
@@ -23,13 +24,15 @@ public class FruitMgr {
 
     /**
      * Creates universally random fruits."
+     * @param currLevel: Used e.g. by some fruitpowers to take effect on the current level.
+     * @param fruitClass: Used to determine which fruit to generate.
      */
-    public static <F extends Fruit> ArrayList<F> createRandomFruits(@NonNull Activity activity, @NonNull Class<F> fruitClass, int numberOfFruits) {
+    public static <F extends Fruit> ArrayList<F> createRandomFruits(@NonNull Activity activity, @NonNull Level currLevel, @NonNull Class<F> fruitClass, int numberOfFruits) {
         ArrayList<F> craftedFruits = new ArrayList<>();
         try {
             for (int i = 0; i < numberOfFruits; i++) {
 
-                craftedFruits.add(fruitClass.getConstructor(Activity.class).newInstance(activity)); //use default constructor
+                craftedFruits.add(fruitClass.getConstructor(Activity.class, Level.class).newInstance(activity,currLevel)); //use default constructor
             }
             return craftedFruits;
         } catch (InstantiationException e) {

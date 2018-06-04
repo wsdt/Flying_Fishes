@@ -1,22 +1,16 @@
 package yourowngame.com.yourowngame.classes.actors.fruits;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Canvas;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
-import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.TimeSlowMotion;
 import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
-import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.global_configuration.Constants;
+import yourowngame.com.yourowngame.classes.gamelevels.Level;
 
 @Enhance(message = {"Maybe replace isCollected/isOutOfBound etc. with Zustandsmuster",
     "Bitmap/Drawable int array consistency!"})
@@ -25,15 +19,19 @@ import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 public abstract class Fruit extends GameObject implements IHighscore_RewardableObj, IFruit.DEFAULT_FRUIT_PROPERTIES {
 
     private List<FruitPower> fruitPowers = new ArrayList<>();
+    @Enhance (message = "Needed or for what is this param?")
     private int spawnTime = 0;
 
-    public Fruit(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
+
+    public Fruit(@NonNull Activity activity, @NonNull Level currLevel, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
+        determineFruitPowers(currLevel);
     }
 
     /**Creates random fruit*/
-    public Fruit(@NonNull Activity activity) {
+    public Fruit(@NonNull Activity activity, @NonNull Level currLevel) {
         super(activity);
+        determineFruitPowers(currLevel);
     }
 
     public boolean hasLeftScreen(){
@@ -49,7 +47,7 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
     }
 
     /** Set fruit powers. */
-    public abstract void determineFruitPowers();
+    public abstract void determineFruitPowers(@NonNull Level currLevel);
 
     //GETTER/SETTERS ---------------------------------------------
     public List<FruitPower> getFruitPowers() {

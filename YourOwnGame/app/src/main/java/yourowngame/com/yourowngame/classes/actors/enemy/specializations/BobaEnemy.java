@@ -51,6 +51,7 @@ public class BobaEnemy extends Enemy implements IEnemy.PROPERTIES.BOBA {
             this.resetPos();
         } else {
             this.setPosX(this.getPosX() - (this.getSpeedX()*this.getModifier()));
+            Log.e(TAG,"update: JJJ-> "+this.getSpeedX()*this.getModifier());
         }
     }
 

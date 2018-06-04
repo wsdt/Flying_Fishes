@@ -6,11 +6,9 @@ import android.support.annotation.NonNull;
 /** E.g. used by FruitPower or LevelAssignment */
 public abstract class Feature {
     /** See below. But e.g.:
-     * - 1500 (e.g. for 1500 points to achieve)
-     * - 2 (e.g. for 2 meloon)
-     * - 10 (e.g. for 10 seconds to slow time)
+     * - 1.5 as multiplicator for player speed (EnergyDrink e.g.)
      * - 2 (e.g. for killing two enemies one shot)*/
-    private long amount;
+    private double amount;
 
     /** Following int should contain a string resource id. Which refers to a string which points
      * out what the user needs to do to achieve this assignment or e.g. what happens when the fruit
@@ -45,7 +43,7 @@ public abstract class Feature {
      * - "Black square with two white numbers in it which could represent all highscore related assignments."*/
     private int resDrawable_smallIcon;
 
-    public Feature(long amount) {
+    public Feature(double amount) {
         this.setAmount(amount);
     }
 
@@ -71,11 +69,12 @@ public abstract class Feature {
         this.resString = resString;
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
+
 }

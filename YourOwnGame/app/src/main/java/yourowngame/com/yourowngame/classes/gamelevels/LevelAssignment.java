@@ -1,8 +1,5 @@
 package yourowngame.com.yourowngame.classes.gamelevels;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-
 import yourowngame.com.yourowngame.classes.Feature;
 
 /** Extend from this class to create levelAssigments for levels.

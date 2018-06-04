@@ -3,13 +3,14 @@ package yourowngame.com.yourowngame.classes.actors.fruits.specializations;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
+import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.PlayerSpeed;
 import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
+import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
@@ -17,15 +18,16 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
 
     private static Bitmap[] images;
 
-    public Meloon(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
-        super(activity, posX, posY, speedX, speedY);
+    public Meloon(@NonNull Activity activity, @NonNull Level currLevel, double posX, double posY, double speedX, double speedY) {
+        super(activity, currLevel, posX, posY, speedX, speedY);
+        //powers assigned in super constr
     }
 
     /**
      * Creates random fruit
      */
-    public Meloon(@NonNull Activity activity) {
-        super(activity); //also call super constr! (initializing)
+    public Meloon(@NonNull Activity activity, @NonNull Level currLevel) {
+        super(activity, currLevel); //also call super constr! (initializing) and determining powers
 
         this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + (int) OFF_TIME));
         this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
@@ -34,8 +36,8 @@ public class Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIES {
     }
 
     @Override
-    public void determineFruitPowers() {
-
+    public void determineFruitPowers(@NonNull Level currLevel) {
+        this.getFruitPowers().add(new PlayerSpeed(4,10,currLevel.getPlayer()));
     }
 
 

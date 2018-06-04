@@ -70,9 +70,9 @@ public class Level_SummerSky extends Level {
 
     @Override
     protected void determineAllFruits() {
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Meloon.class, 1));
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Avoci.class, 1));
-        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), Pinapo.class, 1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Meloon.class, 1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Avoci.class, 1));
+        this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Pinapo.class, 1));
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
     }
