@@ -1,14 +1,11 @@
 package yourowngame.com.yourowngame.classes.actors.enemy;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.RocketFishEnemy;
 
 /**
  * Used for generating enemies etc.

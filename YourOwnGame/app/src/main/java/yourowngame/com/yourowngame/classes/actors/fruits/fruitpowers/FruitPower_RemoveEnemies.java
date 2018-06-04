@@ -11,14 +11,14 @@ import yourowngame.com.yourowngame.classes.actors.fruits.FruitPower;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 
 /** Removes some (= amount) enemies for a given time. */
-public class RemoveEnemies extends FruitPower {
+public class FruitPower_RemoveEnemies extends FruitPower {
     private static final String TAG = "RemoveEnemies";
     private ArrayList<Enemy> removedEnemies = new ArrayList<>(); //should be initialized
     private ArrayList<Enemy> levelEnemies;
 
     /** @param amount: How many enemies to remove. Here exceptionally a int instead of double so
      * we can cast it without any problems later. */
-    public RemoveEnemies(int amount, long durationMilliSeconds, @NonNull ArrayList<Enemy> levelEnemies) {
+    public FruitPower_RemoveEnemies(int amount, long durationMilliSeconds, @NonNull ArrayList<Enemy> levelEnemies) {
         super(amount, durationMilliSeconds);
         this.setLevelEnemies(levelEnemies);
     }

@@ -12,11 +12,11 @@ import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 
-public class Albert extends Player implements IPlayer.PROPERTIES.ALBERT {
+public class Player_Albert extends Player implements IPlayer.PROPERTIES.ALBERT {
     private static final String TAG = "Albert";
     private HashMap<String, Bitmap> images; //must not be static
 
-    public Albert(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
+    public Player_Albert(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
     }
 
