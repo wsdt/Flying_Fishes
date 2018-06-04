@@ -8,6 +8,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 
 /**
@@ -22,6 +23,8 @@ public abstract class DrawableObj {
     private Activity activity;
     private Canvas canvas;
     private long loopCount;
+    @Enhance (message = "Make static and adapt initialize() procedures. --> Better performance bc. only foreach specialization " +
+            "executed once, instead for each instance as now!")
     private boolean isInitialized = false; //should be only set to true in initialize() --> no getter setter because only class itself should have access
     /**
      * String resource id (multilingual) for setting a to user visible name of the drawable obj.
