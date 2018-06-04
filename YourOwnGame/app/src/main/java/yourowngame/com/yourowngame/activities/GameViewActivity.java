@@ -76,9 +76,10 @@ public class GameViewActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() { //not onPause, bc. on exiting activity and onStart also onPause is called!
+        super.onStop();
         pauseGame(null);
     } //do not make onResume(), bc. dialog should be shown and game should only resume, when resume is clicked and not automatically.
     public void pauseGame(@Nullable View v) {

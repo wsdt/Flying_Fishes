@@ -39,7 +39,7 @@
     <string name="success">Success! You Achieved level x</string>
 
     <!-- LevelAssigments -->
-    <string name="levelAssignments_achievePoints_whatToDo">Achieve %1$d points.</string>
+    <string name="levelAssignments_achievePoints_whatToDo">Achieve %1$.2f points.</string>
 
     <!-- LevelHierarchy View -->
     <string name="targetPoints">Target: $1$d Points</string>
