@@ -46,9 +46,9 @@ public class HappenEnemy extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
             this.resetPos();
         } else {
             if (this.getTargetGameObj().getPosX() < this.getPosX())
-                this.setPosX(this.getPosX() - (this.getSpeedX()*this.getModifier()));
+                this.setPosX(this.getPosX() - this.getSpeedX());
             else if (this.getTargetGameObj().getPosX() > this.getPosX())
-                this.setPosX(this.getPosX() + (this.getSpeedX()*this.getModifier()));
+                this.setPosX(this.getPosX() + this.getSpeedX());
 
             if (this.getTargetGameObj().getPosY() < this.getPosY())
                 this.setPosY(this.getPosY() - this.getSpeedY());

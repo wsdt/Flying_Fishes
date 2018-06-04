@@ -8,9 +8,11 @@ import java.util.Iterator;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitPower;
+import yourowngame.com.yourowngame.classes.annotations.Bug;
 
 /** Removes some (= amount) enemies for a given time. */
 public class RemoveEnemies extends FruitPower {
+    private static final String TAG = "RemoveEnemies";
     private ArrayList<Enemy> removedEnemies = new ArrayList<>(); //should be initialized
     private ArrayList<Enemy> levelEnemies;
 
@@ -22,7 +24,10 @@ public class RemoveEnemies extends FruitPower {
     }
 
     @Override
+    @Bug (problem = "Seems that this method makes Enemies faster. I don't know why.")
     public void execute() {
+        Log.d(TAG, "execute: Started method.");
+
         /* Iterate over levelEnemies acc. to desired amount [= how many enemies should be removed]
         * If desired Amount of rvm enemies is bigger than level size, then just remove all enemies except 1.*/
         int countLvlEnemies = this.getLevelEnemies().size();
@@ -35,12 +40,18 @@ public class RemoveEnemies extends FruitPower {
         } else {
             enemiesToRemove = (int) this.getAmount();
         }
+        Log.d(TAG, "execute: Removing enemies -> "+enemiesToRemove);
 
         int i = 0;
-        for (Iterator<Enemy> enemyIterator = this.getLevelEnemies().iterator(); (enemyIterator.hasNext() && (i++)<enemiesToRemove);) {
+        for (Iterator<Enemy> enemyIterator = this.getLevelEnemies().iterator(); enemyIterator.hasNext();) {
+            if ((i++) >= enemiesToRemove) {
+                break; //stop iterating, bc. enough rvm
+            }
+
             /* save enemy for adding it later again and always get first one (bc. 0 should here always exist) */
             this.getRemovedEnemies().add(this.getLevelEnemies().get(0));
             this.getLevelEnemies().remove(0);
+            Log.d(TAG, "execute: Removed enemy.");
         }
 
         //Show removed enemies after duration
