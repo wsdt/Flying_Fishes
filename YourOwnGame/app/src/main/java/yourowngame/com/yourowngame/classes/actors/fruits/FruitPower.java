@@ -10,9 +10,16 @@ import yourowngame.com.yourowngame.classes.Feature;
  * What influence have collected fruits.
  */
 public abstract class FruitPower extends Feature {
-    /** duration (=amount) in milliseconds! */
-    public FruitPower(long duration) {
-        super(duration);
+    /** How long should be Feature activated.
+     * E.g. 10 Seconds (= 10*1000), etc. */
+    private long durationMilliseconds;
+
+    /** amount (e.g. new levelConstant or multiplier for changing player attributes etc.)
+     *
+     * DurationMilliSeconds SHOULD ONLY BE LONG (thread startStopTimer())*/
+    public FruitPower(double amount, long durationMilliSeconds) {
+        super(amount);
+        this.setDurationMilliseconds(durationMilliSeconds);
     }
 
     /**
@@ -37,6 +44,14 @@ public abstract class FruitPower extends Feature {
                 //Clear up timerTask (loose Thread)
                 cancel();
             }
-        }, this.getAmount());
+        }, this.getDurationMilliseconds());
+    }
+
+    public long getDurationMilliseconds() {
+        return durationMilliseconds;
+    }
+
+    public void setDurationMilliseconds(long durationMilliseconds) {
+        this.durationMilliseconds = durationMilliseconds;
     }
 }
