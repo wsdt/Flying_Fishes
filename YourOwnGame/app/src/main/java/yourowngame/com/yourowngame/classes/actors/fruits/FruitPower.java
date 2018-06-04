@@ -8,6 +8,10 @@ import yourowngame.com.yourowngame.classes.Feature;
 /**
  * Analogy to LevelAssigment.class
  * What influence have collected fruits.
+ *
+ * ATTENTION: Be careful with creating new fruitpowers. They should NOT influence other fruits.
+ * E.g. removing enemies + changing speed of enemies (stop execute and removed enemies get faster
+ * instead it's original speed)
  */
 public abstract class FruitPower extends Feature {
     /** How long should be Feature activated.

@@ -7,7 +7,7 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
-import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.FruitPower_RemoveEnemies;
+import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.FruitPower_ShootRage;
 import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
@@ -37,7 +37,7 @@ public class Fruit_Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTI
 
     @Override
     public void determineFruitPowers(@NonNull Level currLevel) {
-        this.getFruitPowers().add(new FruitPower_RemoveEnemies(5,10000,currLevel.getAllEnemies()));
+        this.getFruitPowers().add(new FruitPower_ShootRage(15,currLevel.getPlayer()));
     }
 
 
