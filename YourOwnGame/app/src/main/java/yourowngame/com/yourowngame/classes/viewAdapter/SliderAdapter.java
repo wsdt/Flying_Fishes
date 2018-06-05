@@ -3,7 +3,6 @@ package yourowngame.com.yourowngame.classes.viewAdapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
-import yourowngame.com.yourowngame.classes.counters.Highscore;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 
 public class SliderAdapter extends PagerAdapter {
 

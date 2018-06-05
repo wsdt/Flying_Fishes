@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.manager;
+package yourowngame.com.yourowngame.gameEngine;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,19 +15,19 @@ import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 /**
  * Created  on 02.03.2018.
  *
- * The CollisionManager checks whether two bitmaps are
+ * The CollisionDetection checks whether two bitmaps are
  * colliding or not, if they collide, then he gets the "area-of-colliding"
  * -> the pixels that overlap and if just 1 pixel of both images
  * does not contain transparent background, the collision occurred.
  *
  */
 
-public class CollisionManager {
+public class CollisionDetection {
     private static SoundMgr soundMgr = new SoundMgr(); //no setter
     private static final String TAG = "Collision";
 
     /** private Access, no instantiation!*/
-    private CollisionManager(){}
+    private CollisionDetection(){}
 
     /**
      * @param player     -> first Bitmap
@@ -166,9 +166,9 @@ public class CollisionManager {
 
     /** Collision Sound effects */
     public static void playProjectileEnemyCollisionSound(@NonNull Context context) {
-        //TODO: [search for sound res] --> CollisionManager.soundMgr.play(context, R.raw.collisionSound1,false);
+        //TODO: [search for sound res] --> CollisionDetection.soundMgr.play(context, R.raw.collisionSound1,false);
     }
     public static void playPlayerEnemyCollisionSound(@NonNull Context context) {
-        //TODO: [search for sound res] --> CollisionManager.soundMgr.play(context, R.raw.collisionSound2,false);
+        //TODO: [search for sound res] --> CollisionDetection.soundMgr.play(context, R.raw.collisionSound2,false);
     }
 }

@@ -47,7 +47,7 @@ public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DE
     }
 
 
-
+    @Deprecated
     public boolean hitsTheGround(@NonNull GameView currentView) {
         float playerPosYWithoutImage = (float) this.getPosY();
 
