@@ -19,11 +19,11 @@ import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
 import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
-import yourowngame.com.yourowngame.classes.manager.CollisionManager;
+import yourowngame.com.yourowngame.classes.manager.CollisionMgr;
 import yourowngame.com.yourowngame.classes.manager.dialog.GameOverDialog;
 import yourowngame.com.yourowngame.classes.manager.dialog.LevelAchievedDialog;
 import yourowngame.com.yourowngame.classes.manager.storage.SharedPrefStorageMgr;
-import yourowngame.com.yourowngame.classes.counters.Highscore;
+import yourowngame.com.yourowngame.classes.counters.HighScore;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
 
 /**
@@ -38,6 +38,7 @@ public class GameView extends SurfaceView {
     private LevelManager levelManager;
     private SurfaceHolder holder;
     private GameLoopThread thread;
+    private CollisionMgr collisionMgr;
     
     private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
     private FrameLayout layout;
@@ -115,18 +116,20 @@ public class GameView extends SurfaceView {
         /**current starting level */
         final Level currLevel = this.getLevelManager().getCurrentLevelObj();
 
-        //clean level properties
+        /** cleanup Level Properties */
         currLevel.cleanUpLevelProperties();
-        //clean the fruitCounter
+        /** clean the fruitCounter*/
         FruitCounter.getInstance().cleanUpFruitCounter();
-        //clean bglayers
+        /** Create CollisionManager*/
+        collisionMgr = new CollisionMgr(currLevel, getActivityContext(), getHighscore());
+
 
         this.getHighscore().addListener(new IHighscore_Observer() {
             @Override
             public void onHighscoreChanged() {
-                Log.d(TAG, "initGameObjects:onHighscoreChanged: Highscore has changed!");
+                Log.d(TAG, "initGameObjects:onHighscoreChanged: HighScore has changed!");
 
-                /*Refresh Highscore lbl*/
+                /*Refresh HighScore lbl*/
                 GameView.this.getActivityContext().setNewHighscoreOnUI();
 
                 /*Evaluate whether user achieved level or not. */
@@ -231,60 +234,15 @@ public class GameView extends SurfaceView {
         /** Update bullets */
         currLevel.getPlayer().updateProjectiles();
 
+        /** Check for Collisions - if player hits the ground or gets hit by an enemy, game stops!*/
+        if(collisionMgr.checkForCollisions()){
+            startExitGameProcedure();
+        }
+
         /** Check Shooting */
         if(getMultiTouchHandler().isShooting()){
             currLevel.getPlayer().addProjectiles();
             getMultiTouchHandler().stopShooting();
-        }
-
-        /** check Collision with Border */
-        if (currLevel.getPlayer().hitsTheGround(this)) {
-            startExitGameProcedure();
-        }
-
-        /** check Player-to-Enemy collision */
-        for (Enemy e : currLevel.getAllEnemies()){
-            if(CollisionManager.checkCollision(currLevel.getPlayer(), e)){
-                CollisionManager.playPlayerEnemyCollisionSound(this.getActivityContext());
-                startExitGameProcedure();
-            }
-        }
-
-        /** check Projectile-to-Enemy collision */
-        for (Enemy e : currLevel.getAllEnemies()){
-            for (int i = 0; i < currLevel.getPlayer().getProjectiles().size(); i++){
-                if(CollisionManager.checkCollision(e, currLevel.getPlayer().getProjectiles().get(i))){
-                    //enemy dies, spawns on the other side
-                    e.resetPos();
-                    //projectile needs to be deleted
-                    currLevel.getPlayer().getProjectiles().remove(currLevel.getPlayer().getProjectiles().get(i));
-                    //play sound when enemy dies
-                    CollisionManager.playProjectileEnemyCollisionSound(this.getActivityContext());
-                    //increment the players highScore
-                    getHighscore().increment(e);
-
-                    Log.d(TAG, "Highscore = " + getHighscore().getValue());
-                }
-            }
-        }
-
-        /** Check player to Fruit Collision*/
-        for (Fruit fruit : getLevelManager().getCurrentLevelObj().getAllFruits()) {
-            if (CollisionManager.checkCollision(getLevelManager().getCurrentLevelObj().getPlayer(), fruit)) {
-                //increment highscore
-                getHighscore().increment(fruit);
-                //add collected Fruit
-                FruitCounter.getInstance().fruitCollected(fruit);
-                //reset fruit
-                fruit.resetPos();
-                Log.e(TAG, "Player collected a fruit.");
-            }
-            //fruits has left the screen, will rejoin
-            if(fruit.hasLeftScreen()){
-                fruit.resetPos();
-            }
-
-            Log.d(TAG, "Fruit " + fruit + " = " + fruit.getPosX());
         }
 
         /** Check if levelAssignment is true */
@@ -356,8 +314,8 @@ public class GameView extends SurfaceView {
         this.activityContext = activityContext;
     }
 
-    /** this returns the current Highscore */
-    public Highscore getHighscore() {
+    /** this returns the current HighScore */
+    public HighScore getHighscore() {
         return getLevelManager().getCurrentLevelObj().getCurrentLevelHighscore();
     }
 
