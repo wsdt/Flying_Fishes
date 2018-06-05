@@ -146,6 +146,10 @@ public class GameView extends SurfaceView {
     /********************************
      * 1. Draw Objects here         *
      ********************************/
+    @Enhance(byDeveloper = "Solution49", message = "why passing the loopcount and the canvas in an extra method? " +
+            "we could just add params to the draw method by draw(int amount, canvas canvas), surely every" +
+            "draw method will need to have those params")
+
     public void redraw(Canvas canvas, long loopCount) { //Create separate method, so we could add some things here
         Log.d(TAG, "redraw: Trying to invalidate/redraw GameView.");
         if (canvas != null) {
@@ -180,7 +184,7 @@ public class GameView extends SurfaceView {
                     enemy.draw();
                 }
 
-                // (5.) draw fruits, need to implement a timer, to push a fruit
+                // (5.) draw fruits
                 for (Fruit fruit : currLevel.getAllFruits()) {
                     fruit.setCanvas(canvas);
                     fruit.setLoopCount(loopCount);
@@ -264,7 +268,7 @@ public class GameView extends SurfaceView {
             }
         }
 
-        /** Check player to Fruit Collision - Works fine, but somehow collisionDetection of Avoci isnt 100% perfect");*/
+        /** Check player to Fruit Collision*/
         for (Fruit fruit : getLevelManager().getCurrentLevelObj().getAllFruits()) {
             if (CollisionManager.checkCollision(getLevelManager().getCurrentLevelObj().getPlayer(), fruit)) {
                 //increment highscore

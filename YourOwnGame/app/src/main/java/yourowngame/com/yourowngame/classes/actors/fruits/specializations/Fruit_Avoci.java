@@ -39,7 +39,7 @@ public class Fruit_Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES 
 
     @Override
     public void determineFruitPowers(@NonNull Level currLevel) {
-        this.getFruitPowers().add(new FruitPower_EnemySpeed(0.5,10000,currLevel.getAllEnemies()));
+        this.getFruitPowers().add(new FruitPower_EnemySpeed(0.5,10000, currLevel.getAllEnemies()));
     }
 
 
