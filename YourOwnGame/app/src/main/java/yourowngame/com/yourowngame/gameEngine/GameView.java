@@ -212,7 +212,7 @@ public class GameView extends SurfaceView {
         Level currLevel = getLevelManager().getCurrentLevelObj();
 
         /** Uppdate player */
-        currLevel.getPlayer().setGoUp(GameView.this.getMultiTouchHandler().isMultiTouched() || GameView.this.getMultiTouchHandler().isMoving());
+        currLevel.getPlayer().setGoUp(GameView.this.getMultiTouchHandler().isMoving());
         currLevel.getPlayer().update();
 
         /** Update all enemies */
