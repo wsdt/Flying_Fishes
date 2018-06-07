@@ -40,9 +40,12 @@ public class Enemy_Happen extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
      */
     @Override
     public void update() {
-        if (getPosX() <= 0) {
-            // Reset if out of screen
-            this.resetPos();
+        // special case: if the player jumps over an happen enemy, he has no chance to kill it. So the happen
+        // will track the player to a specific value, and then just moves constant.
+        if (this.getPosX() < 300) {
+
+            this.setPosX(this.getPosX() - this.getSpeedX());
+
         } else {
             if (this.getTargetGameObj().getPosX() < this.getPosX())
                 this.setPosX(this.getPosX() - this.getSpeedX());
@@ -54,7 +57,6 @@ public class Enemy_Happen extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
             else if (this.getTargetGameObj().getPosY() > this.getPosY())
                 this.setPosY(this.getPosY() + this.getSpeedY());
         }
-
     }
 
     //in my opinion, a simple bitmap array would match the animation the best!
