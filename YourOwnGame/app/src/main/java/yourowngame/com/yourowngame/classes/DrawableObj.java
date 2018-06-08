@@ -10,6 +10,7 @@ import java.util.List;
 
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
+import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 
 /**
  * Combines drawable, updateable and initializer interface into this class to provide
@@ -24,7 +25,10 @@ public abstract class DrawableObj {
     private Canvas canvas;
     private long loopCount;
     @Enhance (message = "Make static and adapt initialize() procedures. --> Better performance bc. only foreach specialization " +
-            "executed once, instead for each instance as now!")
+            "executed once, instead for each instance as now!" +
+            "BUT if we make this static, then we have to put it manually in all lowest subclasses bc. java resolves" +
+            "static references otherwise for all. So if we initialize player our app thinks enemies are also initialized.",
+        priority = Enhance.Priority.HIGH, byDeveloper = Constants.Developers.WSDT)
     private boolean isInitialized = false; //should be only set to true in initialize() --> no getter setter because only class itself should have access
     /**
      * String resource id (multilingual) for setting a to user visible name of the drawable obj.
