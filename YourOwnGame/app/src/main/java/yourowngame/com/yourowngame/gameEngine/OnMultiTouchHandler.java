@@ -23,7 +23,6 @@ public class OnMultiTouchHandler implements View.OnTouchListener{
     private MotionEvent.PointerCoords secondTouch = new MotionEvent.PointerCoords();
     private boolean isMoving = false;
     private boolean isShooting = false;
-    private boolean isMultiTouching = false;
     private boolean isHolding = false;
 
     @Override
@@ -32,22 +31,29 @@ public class OnMultiTouchHandler implements View.OnTouchListener{
         int eventAction = event.getActionMasked();
 
         /** Check for Multi-Touch*/
-        if(event.getPointerCount() > 1 ){
+        if(event.getPointerCount() > 1 ) {
             event.getPointerCoords(0, firstTouch);
             event.getPointerCoords(1, secondTouch);
 
-            if(eventAction == MotionEvent.ACTION_POINTER_DOWN) {
-                Log.d(TAG, "MultiTouch, User moves and shoots");
-                isMultiTouching = true;
+            /**
+            * NORMAL CASE: he puts his left finger on the screen, then his right one. That indicates that he first wants to fly & then shoot
+            * So Shooting and Moving must be true.
+            */
+            if (eventAction == MotionEvent.ACTION_POINTER_DOWN && (firstTouch.x < gameWidth / 2 && secondTouch.x > gameWidth / 2)) {
+                Log.d(TAG, "MultiTouch, User shoots and moves");
                 isShooting = true;
                 isMoving = true;
-            }else if(eventAction == MotionEvent.ACTION_POINTER_UP) {
-                isMultiTouching = false;
-                isShooting = true;
+            /**
+            * SPECIAL CASE: The user first wants to shoot, so he puts his Finger on the right side, holds it (although holding doesnt have any effects)
+            * and than wants to move upwards --> is Shooting should not be true, because the right finger is currently in MODE "HOLDING", which doesnt have an effect.
+            *
+            * Conclusion: he only goes upwards, without firing a single shot.
+            */
+            } else if (eventAction == MotionEvent.ACTION_POINTER_DOWN && firstTouch.x > gameWidth / 2 && secondTouch.x < gameWidth / 2) {
+                Log.d(TAG, "MultiTouch, User shoots and moves");
                 isMoving = true;
             }
         }
-
         /** Check for Single-Touch!*/
         if(event.getPointerCount() == 1) {
             event.getPointerCoords(0, firstTouch);
@@ -73,9 +79,6 @@ public class OnMultiTouchHandler implements View.OnTouchListener{
         }
         return false;
     }
-
-
-    public boolean isMultiTouched(){ return isMultiTouching;}
 
     public boolean isMoving(){
         return isMoving;

@@ -51,6 +51,8 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
 
     /** Set fruit powers. */
     public abstract void determineFruitPowers(@NonNull Level currLevel);
+    /** Remove fruit powers, for bonus levels!*/
+    public abstract void removeFruitPowers(@NonNull Level currLevel);
 
     //GETTER/SETTERS ---------------------------------------------
     public List<FruitPower> getFruitPowers() {

@@ -2,7 +2,6 @@ package yourowngame.com.yourowngame.classes.gamelevels;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -10,12 +9,11 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
-import yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
-import yourowngame.com.yourowngame.classes.counters.Highscore;
+import yourowngame.com.yourowngame.classes.counters.HighScore;
 
 public abstract class Level {
     private static final String TAG = "Level";
@@ -32,7 +30,7 @@ public abstract class Level {
     @Enhance (message = "maybe it's better to put it back into gameview or gameviewActivity and all levels access it. " +
             "So we just have to reset the highscore on levelchange (what we have to do anyway)." +
             "totally, that is utterly useless & non OO")
-    private Highscore levelHighscore = new Highscore(); //add Level-dependent Highscore
+    private HighScore levelHighScore = new HighScore(); //add Level-dependent HighScore
     //TODO: other level-dependent members/values
 
     //Do not make more constructors
@@ -154,11 +152,11 @@ public abstract class Level {
     public void setAllFruits(ArrayList<Fruit> allFruits) {
         this.allFruits = allFruits;
     }
-    public Highscore getCurrentLevelHighscore() {
-        return levelHighscore;
+    public HighScore getCurrentLevelHighscore() {
+        return levelHighScore;
     }
-    public void setLevelHighscore(Highscore levelHighscore) {
-        this.levelHighscore = levelHighscore;
+    public void setLevelHighScore(HighScore levelHighScore) {
+        this.levelHighScore = levelHighScore;
     }
 
     public ArrayList<LevelAssignment> getAllLevelAssignments() {

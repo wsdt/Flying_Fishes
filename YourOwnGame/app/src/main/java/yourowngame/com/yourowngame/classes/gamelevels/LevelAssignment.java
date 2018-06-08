@@ -13,7 +13,7 @@ import yourowngame.com.yourowngame.classes.Feature;
  *     this.setResDrawable(R.drawable.levelassigments_achievePoints_smallIcon);
  * }
  *
- * If you need e.g. also the highscore obj just put it also into the constructor and add the Highscore
+ * If you need e.g. also the highscore obj just put it also into the constructor and add the HighScore
  * obj in the subclass as member (see AchievePoints).
  * */
 public abstract class LevelAssignment extends Feature {

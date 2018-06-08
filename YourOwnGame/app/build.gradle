@@ -59,6 +59,10 @@ dependencies {
 
     implementation 'com.android.support:design:27.1.1'
 
+    //TODO is it allowed to use other libraries in an commercial project?
+    /* recyclerview*/
+    implementation "com.android.support:recyclerview-v7:27.1.1"
+
     /* Play services */
     //implementation 'com.google.android.gms:play-services-games:15.0.1'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'

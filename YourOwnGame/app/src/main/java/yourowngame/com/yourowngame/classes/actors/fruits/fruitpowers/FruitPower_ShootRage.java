@@ -14,6 +14,7 @@ import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.actors.projectiles.interfaces.IProjectile;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
+import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 /** Adds additional projectiles (= amount) and sets for all an arbitrary PosY to simulate
@@ -38,7 +39,7 @@ public class FruitPower_ShootRage extends FruitPower {
         Log.d(TAG, "execute: Started method.");
 
         //Add desired amount of projectiles additionally
-        for (int i = 0;i<this.getAmount();i++) {
+        for (int i = 0;i < this.getAmount();i++) {
             this.getCurrPlayer().addProjectiles();
         }
 
