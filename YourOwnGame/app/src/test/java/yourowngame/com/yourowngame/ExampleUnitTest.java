@@ -2,6 +2,8 @@ package yourowngame.com.yourowngame;
 
 import org.junit.Test;
 
+import yourowngame.com.yourowngame.classes.actors.player.Player;
+
 import static org.junit.Assert.*;
 
 /**
