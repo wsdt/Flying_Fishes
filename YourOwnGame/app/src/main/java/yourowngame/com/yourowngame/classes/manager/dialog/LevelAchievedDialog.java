@@ -11,6 +11,7 @@ import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.GameLevelHorizontalActivity;
 import yourowngame.com.yourowngame.activities.LevelHierarchyActivity;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
@@ -48,7 +49,7 @@ public class LevelAchievedDialog {
                     .setNegativeButton(R.string.dialog_levelachieved_btn_negative, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            activity.startActivity(new Intent(activity, LevelHierarchyActivity.class));
+                            activity.startActivity(new Intent(activity, GameLevelHorizontalActivity.class));
                         }
                     })
                     .setCancelable(false);
