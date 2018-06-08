@@ -6,8 +6,8 @@ android {
         applicationId "solution_wsdt.com.yourowngame"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 5
-        versionName "0.0.5" /* Auch mehrstellig: {major changes}.{minor changes}.{bug fixes} */
+        versionCode 6
+        versionName "0.0.6" /* Auch mehrstellig: {major changes}.{minor changes}.{bug fixes} */
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -60,6 +60,7 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
 
     //TODO is it allowed to use other libraries in an commercial project?
+    //TODO --> Depends on the LICENSE; but in most cases it's no problem (please always look into github reps)
     /* recyclerview*/
     implementation "com.android.support:recyclerview-v7:27.1.1"
 
