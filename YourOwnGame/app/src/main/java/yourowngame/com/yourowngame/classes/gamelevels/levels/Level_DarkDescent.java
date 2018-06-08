@@ -39,6 +39,7 @@ public class Level_DarkDescent extends Level {
     @Override
     protected void determineAllFruits() {
         this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Fruit_Meloon.class, 4));
+
     }
 
     @Override
