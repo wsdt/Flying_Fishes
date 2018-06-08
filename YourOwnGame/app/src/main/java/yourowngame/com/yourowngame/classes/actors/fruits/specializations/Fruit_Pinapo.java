@@ -40,6 +40,11 @@ public class Fruit_Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTI
         this.getFruitPowers().add(new FruitPower_ShootRage(15, currLevel.getPlayer()));
     }
 
+    @Override
+    public void removeFruitPowers(@NonNull Level currLevel) {
+        this.getFruitPowers().remove(0);
+    }
+
 
     /*************************************** UPDATE / DRAW *************************************************/
     @Override

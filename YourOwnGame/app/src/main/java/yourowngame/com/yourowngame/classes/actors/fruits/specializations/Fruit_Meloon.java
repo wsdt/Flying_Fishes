@@ -40,6 +40,11 @@ public class Fruit_Meloon extends Fruit implements IFruit.MELOON_FRUIT_PROPERTIE
         this.getFruitPowers().add(new FruitPower_PlayerSpeed(2,10000, currLevel.getPlayer()));
     }
 
+    @Override
+    public void removeFruitPowers(@NonNull Level currLevel) {
+        this.getFruitPowers().remove(0);
+    }
+
 
     /*************************************** UPDATE / DRAW *************************************************/
     @Override
