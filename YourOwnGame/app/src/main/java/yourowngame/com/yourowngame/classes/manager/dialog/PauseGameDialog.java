@@ -11,6 +11,7 @@ import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.GameLevelHorizontalActivity;
 import yourowngame.com.yourowngame.activities.LevelHierarchyActivity;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.GameView;
@@ -46,7 +47,7 @@ public class PauseGameDialog {
                         @Override
                         public void onClick(View v) {
                             gameView.exitGameNow();
-                            activity.startActivity(new Intent(activity, LevelHierarchyActivity.class));
+                            activity.startActivity(new Intent(activity, GameLevelHorizontalActivity.class));
                         }
                     })
                     .show();
