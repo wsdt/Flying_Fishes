@@ -13,16 +13,17 @@ android {
     buildTypes {
         debugMini {
             initWith debug
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //minifyEnabled true
+            //shrinkResources true
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['debug']
         }
         release {
             /* Making the app smaller, but could be also the source of errors!! */
-            shrinkResources true /* shrinks unused res (drawables, etc.)*/
-            minifyEnabled true /* same as shrinkResources but for code itself*/
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //TODO: Solve dex bug (presumably not with multidex, but by removing/updating libraries) or removing reflection methods
+            //shrinkResources true /* shrinks unused res (drawables, etc.)*/
+            //minifyEnabled true /* same as shrinkResources but for code itself*/
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     //this creates resource string while compiling with current versionName! (e.g. Loading screen)
@@ -53,7 +54,7 @@ android {
 
 dependencies {
     /* FIREBASE */
-    implementation 'com.google.firebase:firebase-core:16.0.0'
+    //implementation 'com.google.firebase:firebase-core:16.0.0'
     /* Dialogues */
     implementation 'com.yarolegovich:lovely-dialog:1.1.0'
 
@@ -69,7 +70,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:gridlayout-v7:27.1.1'
 
