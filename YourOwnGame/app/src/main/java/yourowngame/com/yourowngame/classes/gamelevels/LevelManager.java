@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_BonusLevel01;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_DarkDescent;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_EndlessDawn;
 import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_SummerSky;
@@ -50,6 +51,7 @@ public class LevelManager {
         getLevelList().add(new Level_NightRider(this.getActivity()));
         getLevelList().add(new Level_EndlessDawn(this.getActivity()));
         getLevelList().add(new Level_DarkDescent(this.getActivity()));
+        getLevelList().add(new Level_BonusLevel01(this.getActivity()));
         Log.d(TAG, "createDefaultLevelList: Have set the default level list.");
     }
 

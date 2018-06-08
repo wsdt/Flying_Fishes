@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_for_leveldialog">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:text="@string/success"
+        android:textColor="@color/colorBlack"
+        android:textColorLink="@color/colorBlack"
+        android:textSize="20sp" />
+
+    <TableLayout
+        android:layout_width="458dp"
+        android:layout_height="242dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/meloonImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                app:srcCompat="@drawable/meloon" />
+
+            <ImageView
+                android:id="@+id/avociImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                app:srcCompat="@drawable/avoci" />
+
+            <ImageView
+                android:id="@+id/pinapoImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                app:srcCompat="@drawable/pinapos" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/meloonTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="TextView"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/avociTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="TextView"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/pinapoTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="TextView"
+                android:textColor="@color/colorBlack" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                app:srcCompat="@drawable/enemy_rocketfish_01" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                app:srcCompat="@drawable/enemy_happen_1" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                app:srcCompat="@drawable/enemy_boba_01" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/rocketfishTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="TextView"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/happenTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical|center"
+                android:text="TextView"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/bobaTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical|center"
+                android:text="TextView"
+                android:textColor="@color/colorBlack" />
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical|center">
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next Level" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show Highstore" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Restart" />
+
+        </TableRow>
+    </TableLayout>
+
+    <!-- TODO we will manipulate this ratingBar, so show how many stars the player has achieved for this level, he will not be able to change it.
+         TODO or if there is a better way presenting the stars he has got, just fix it. or we could just add three silver stars and fill the others gold if achieved-->
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="58dp"
+        android:layout_toStartOf="@+id/textView"
+        android:clickable="false"
+        android:saveEnabled="false" />
+
+    <TextView
+        android:id="@+id/highscoreCurrentLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:text="TextView"
+        android:textColor="@color/colorBlack" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorAccent"
+        android:text="Zum Shop" />
+
+</RelativeLayout>

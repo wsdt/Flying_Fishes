@@ -47,15 +47,6 @@ public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DE
     }
 
 
-
-    public boolean hitsTheGround(@NonNull GameView currentView) {
-        float playerPosYWithoutImage = (float) this.getPosY();
-
-        //compares, if player hits ground or top
-        return (getWidthOfPlayer() > currentView.getLayout().getHeight() || playerPosYWithoutImage < 0);
-    }
-
-
     /** Here as long as all players are cleaned up the same way. */
     @Override
     public boolean cleanup() {

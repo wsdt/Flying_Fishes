@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/biotop_one_1080">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imageButton4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="75dp"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/level_04_icon" />
+
+            <ImageButton
+                android:id="@+id/imageButton5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="118dp"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/level_05_bonus_icon" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/imageButton2"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/level_01_icon" />
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="35dp"
+                android:layout_marginStart="238dp"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/level_03_icon" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/imageButton3"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="137dp"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/level_02_icon" />
+        </RelativeLayout>
+    </HorizontalScrollView>
+
+</android.widget.RelativeLayout>

@@ -13,6 +13,7 @@ import yourowngame.com.yourowngame.classes.actors.player.specializations.Player_
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamelevels.Level;
+import yourowngame.com.yourowngame.classes.gamelevels.levelassignments.LA_AchievePoints;
 
 public class Level_DarkDescent extends Level {
 
@@ -39,6 +40,7 @@ public class Level_DarkDescent extends Level {
     @Override
     protected void determineAllFruits() {
         this.getAllFruits().addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Fruit_Meloon.class, 4));
+
     }
 
     @Override
@@ -48,7 +50,7 @@ public class Level_DarkDescent extends Level {
 
     @Override
     protected void determineLevelAssigments() {
-
+        getAllLevelAssignments().add(new LA_AchievePoints(15_000, getCurrentLevelHighscore()));
     }
 
     @Override
