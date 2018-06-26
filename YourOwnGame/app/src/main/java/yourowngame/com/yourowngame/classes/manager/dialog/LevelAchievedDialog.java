@@ -5,26 +5,22 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameLevelHorizontalActivity;
-import yourowngame.com.yourowngame.activities.LevelHierarchyActivity;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.gamelevels.Level;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.gamedesign.LevelManager;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
-import yourowngame.com.yourowngame.gameEngine.GameView;
+import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
 public class LevelAchievedDialog {
     private static final String TAG = "LevelAchievedDialog";
 
     @Enhance(byDeveloper = "Solution49", message = "Guess we should make a short summary after every level & what he has achieved!")
     public static void show(@NonNull final GameView gameView) {
-        final Activity activity = gameView.getActivityContext();
+        final Activity activity = gameView.getDrawableSurfaceActivity();
 
         //To prevent badTokenExceptions
         if (!activity.isFinishing()) {

@@ -8,12 +8,9 @@ import android.util.Log;
 
 import java.util.HashMap;
 
-import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
-import yourowngame.com.yourowngame.gameEngine.GameView;
-import yourowngame.com.yourowngame.gameEngine.OnMultiTouchHandler;
 
 public class Player_Hugo extends Player implements IPlayer.PROPERTIES.HUGO {
     private static final String TAG = "Hugo";

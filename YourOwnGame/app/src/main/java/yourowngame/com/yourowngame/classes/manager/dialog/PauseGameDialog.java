@@ -6,22 +6,19 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 
-import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
-import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameLevelHorizontalActivity;
-import yourowngame.com.yourowngame.activities.LevelHierarchyActivity;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
-import yourowngame.com.yourowngame.gameEngine.GameView;
+import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
 /** Shown when user presses pause btn during game. */
 public class PauseGameDialog {
     private static final String TAG = "PauseGameDialog";
 
     public static void show(@NonNull final GameView gameView) {
-        final Activity activity = gameView.getActivityContext();
+        final Activity activity = gameView.getDrawableSurfaceActivity();
 
         //To prevent badTokenExceptions
         if (!activity.isFinishing()) {
@@ -38,7 +35,7 @@ public class PauseGameDialog {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    gameView.getThread().resumeGame();
+                                    gameView.getThread().resumeThread();
                                 }
                             }).start();
                         }
@@ -46,7 +43,7 @@ public class PauseGameDialog {
                     .setNegativeButton(R.string.dialog_pausegame_btn_negative, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            gameView.exitGameNow();
+                            gameView.exitNow();
                             activity.startActivity(new Intent(activity, GameLevelHorizontalActivity.class));
                         }
                     })

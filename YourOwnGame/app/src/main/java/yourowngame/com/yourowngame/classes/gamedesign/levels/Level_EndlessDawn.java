@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.gamelevels.levels;
+package yourowngame.com.yourowngame.classes.gamedesign.levels;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -14,8 +14,8 @@ import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_M
 import yourowngame.com.yourowngame.classes.actors.player.specializations.Player_Hugo;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
-import yourowngame.com.yourowngame.classes.gamelevels.Level;
-import yourowngame.com.yourowngame.classes.gamelevels.levelassignments.LA_AchievePoints;
+import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.gamedesign.levelassignments.LA_AchievePoints;
 
 
 /**

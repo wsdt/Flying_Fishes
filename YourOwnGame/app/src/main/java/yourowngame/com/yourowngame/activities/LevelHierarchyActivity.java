@@ -16,9 +16,9 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.annotations.Idea;
 import yourowngame.com.yourowngame.classes.commercial.AdManager;
-import yourowngame.com.yourowngame.classes.gamelevels.Level;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelAssignment;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.gamedesign.LevelAssignment;
+import yourowngame.com.yourowngame.classes.gamedesign.LevelManager;
 
 @Enhance (message = "All methods here are terrible, I just implemented them like that so we have a simple" +
         "levelHierarchy that works." +

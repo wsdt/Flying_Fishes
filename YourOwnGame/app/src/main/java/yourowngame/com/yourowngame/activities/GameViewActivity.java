@@ -2,19 +2,15 @@ package yourowngame.com.yourowngame.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
-import yourowngame.com.yourowngame.gameEngine.GameLoopThread;
-import yourowngame.com.yourowngame.gameEngine.GameView;
+import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
 /**
  * The GameViewActivity does only add the GameView!
@@ -24,7 +20,7 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
  */
 
 
-public class GameViewActivity extends AppCompatActivity {
+public class GameViewActivity extends DrawableSurfaceActivity {
     private static final String TAG = "GameViewActivity";
     private GameView gameView;
     private static SoundMgr soundMgr = new SoundMgr();
@@ -82,8 +78,9 @@ public class GameViewActivity extends AppCompatActivity {
         super.onStop();
         pauseGame(null);
     } //do not make onResume(), bc. dialog should be shown and game should only resume, when resume is clicked and not automatically.
+
     public void pauseGame(@Nullable View v) {
-        this.getGameView().getThread().pauseGame();
+        this.getGameView().getThread().pauseThread();
     }
 
     //GETTER/SETTER (Base class)
