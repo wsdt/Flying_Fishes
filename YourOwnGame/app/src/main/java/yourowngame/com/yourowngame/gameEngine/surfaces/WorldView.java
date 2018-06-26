@@ -35,6 +35,7 @@ public class WorldView extends DrawableSurfaces {
 
     private World currWorld;
     private Bitmap initializedLevelRepresentant;
+    //TODO REMOVE
     private LevelManager levelManager;
 
     public WorldView(Context context) {
@@ -97,7 +98,7 @@ public class WorldView extends DrawableSurfaces {
             }
 
             /* Draw levels */
-            Log.d(TAG, "drawAll: Trying to draw levelRepresentants. Count: "+this.getCurrWorld().getAllLevels().size());
+            //Log.d(TAG, "drawAll: Trying to draw levelRepresentants. Count: "+this.getCurrWorld().getAllLevels().size());
             Point positionOfLastLevel = null; // to draw line
             // Calculate how much we need to add so the lines are in the mid of the icons.
             float addToX = this.getInitializedLevelRepresentant().getWidth()/2;
@@ -107,15 +108,41 @@ public class WorldView extends DrawableSurfaces {
                 if (positionOfLastLevel != null) {
                     canvas.drawLine(addToX+positionOfLastLevel.x,addToY+positionOfLastLevel.y,addToX+level.getKey().x,addToY+level.getKey().y, new Paint(R.color.colorBlack));
                 }
-                
+
                 canvas.drawBitmap(this.getInitializedLevelRepresentant(),level.getKey().x,level.getKey().y,null);
                 positionOfLastLevel = level.getKey();
-
-                Log.d(TAG, "drawAll: Drew levelRepresentant.");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /** Plain rectobj (outside to avoid obj allocations in draw()), for determining whether lvlObj
+     * is clicked. */
+    Rect r = new Rect();
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+                for (Map.Entry<Point, Level> level : this.getCurrWorld().getAllLevels().entrySet()) {
+                    int lvlReprX = this.getInitializedLevelRepresentant().getWidth();
+                    int lvlReprY = this.getInitializedLevelRepresentant().getHeight();
+                    int lvlX = level.getKey().x;
+                    int lvlY = level.getKey().y;
+
+                    r.set(lvlX,lvlY,lvlX+lvlReprX,lvlY+lvlReprY);
+
+                    if (r.contains(x,y)) {
+                        Log.d(TAG, "onTouchEvent: Lvl clicked.");
+                        //TODO: Open lvl via lvlObj (change LevelMgr logic)
+                        return true;
+                    }
+                }
+                break;
+        }
+        return false;
     }
 
     @Override
