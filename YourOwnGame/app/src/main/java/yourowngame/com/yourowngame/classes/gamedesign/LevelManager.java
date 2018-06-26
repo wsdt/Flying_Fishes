@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_BonusLevel01;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_DarkDescent;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_EndlessDawn;
@@ -17,6 +18,8 @@ import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_NightRider;
  *
  * DO NOT MAKE ANY METHODS HERE STATIC (we have a Singleton, so no problem)! ALL PARAMS (IF POSSIBLE) SHOULD BE STATIC.
  * */
+@Enhance (message = "I think we don't need this class anymore, we just have to rewrite some classes a bit (now the world logic" +
+        "should do it). Maybe we need a WorldManager (but better would be if we don't)")
 public class LevelManager {
     private static final String TAG = "LevelManager";
 
@@ -44,6 +47,7 @@ public class LevelManager {
         return null;
     }
 
+    @Enhance (message = "Is obsolete, bc. levels are now determined by World! So REMOVE this method.")
     private void createDefaultLevelList() { //used for restarting game (add levels chronologically) --> faster than sparseArray
         setLevelList(new ArrayList<Level>()); //for restarting to avoid nullpointer and resetting levellist (here so we force this method to be called)
         getLevelList().add(new Level_SummerSky(this.getActivity()));
