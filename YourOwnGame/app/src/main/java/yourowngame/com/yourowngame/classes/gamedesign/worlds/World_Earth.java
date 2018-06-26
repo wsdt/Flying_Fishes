@@ -7,6 +7,10 @@ import android.support.annotation.NonNull;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamedesign.World;
+import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_BonusLevel01;
+import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_DarkDescent;
+import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_EndlessDawn;
+import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_NightRider;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_SummerSky;
 
 public class World_Earth extends World {
@@ -18,9 +22,10 @@ public class World_Earth extends World {
     @Override
     protected void determineAllLevels() {
         this.getAllLevels().put(new Point(50,50),new Level_SummerSky(this.getActivity()));
-        this.getAllLevels().put(new Point(100,50),new Level_SummerSky(this.getActivity()));
-        this.getAllLevels().put(new Point(300,50),new Level_SummerSky(this.getActivity()));
-        this.getAllLevels().put(new Point(250,150),new Level_SummerSky(this.getActivity()));
+        this.getAllLevels().put(new Point(400,50),new Level_NightRider(this.getActivity()));
+        this.getAllLevels().put(new Point(1200,300),new Level_EndlessDawn(this.getActivity()));
+        this.getAllLevels().put(new Point(1200,500),new Level_DarkDescent(this.getActivity()));
+        this.getAllLevels().put(new Point(1200,800),new Level_BonusLevel01(this.getActivity()));
     }
 
     @Override
