@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.gamelevels.levels;
+package yourowngame.com.yourowngame.classes.gamedesign.levels;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -6,19 +6,16 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.actors.enemy.EnemyMgr;
-import yourowngame.com.yourowngame.classes.actors.enemy.specializations.Enemy_Rocketfish;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Avoci;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Meloon;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Pinapo;
-import yourowngame.com.yourowngame.classes.actors.player.specializations.Player_Albert;
 import yourowngame.com.yourowngame.classes.actors.player.specializations.Player_Hugo;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
-import yourowngame.com.yourowngame.classes.gamelevels.Level;
-import yourowngame.com.yourowngame.classes.gamelevels.levelassignments.LA_AchievePoints;
+import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.gamedesign.levelassignments.LA_AchievePoints;
 
 public class Level_BonusLevel01 extends Level {
 

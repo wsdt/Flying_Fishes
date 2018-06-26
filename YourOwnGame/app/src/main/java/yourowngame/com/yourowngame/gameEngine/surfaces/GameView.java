@@ -1,15 +1,12 @@
-package yourowngame.com.yourowngame.gameEngine;
+package yourowngame.com.yourowngame.gameEngine.surfaces;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.widget.FrameLayout;
 
-import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
@@ -17,13 +14,15 @@ import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
-import yourowngame.com.yourowngame.classes.gamelevels.Level;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.gamedesign.LevelManager;
 import yourowngame.com.yourowngame.classes.manager.CollisionMgr;
 import yourowngame.com.yourowngame.classes.manager.dialog.GameOverDialog;
 import yourowngame.com.yourowngame.classes.manager.dialog.LevelAchievedDialog;
 import yourowngame.com.yourowngame.classes.manager.storage.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.classes.counters.HighScore;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
+import yourowngame.com.yourowngame.gameEngine.OnMultiTouchHandler;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
 
 /**
@@ -32,16 +31,12 @@ import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
  * GameView Surface, draw players here and in the end add it to the GameViewActivity
  */
 
-public class GameView extends SurfaceView {
+public class GameView extends DrawableSurfaces {
     private static final String TAG = "GameView";
-    private GameViewActivity activityContext;
     private LevelManager levelManager;
-    private SurfaceHolder holder;
-    private GameLoopThread thread;
     private CollisionMgr collisionMgr;
     
     private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
-    private FrameLayout layout;
 
     // ENEMIES are level-dependent, so specific level obj should own a list with all enemies. (LevelMgr.CURRENT_LEVEL)
 
@@ -60,18 +55,17 @@ public class GameView extends SurfaceView {
     /** This method MUST NOT be called in constructor,
      * moved GameView-Creation to XML so btns might be in foreground,
      * but there we can't call canvas.lock (so thread can't be started unless
-     * activity:onCreate() is done.*/
-    public void startGame(GameViewActivity context) {
-        this.setActivityContext(context);
+     * activity:onCreate() is done.
+     *
+     * @param context: IMPORTANT ONLY ALLOW GameViewActivity here and not the DrawableSurface! */
+    public void startGame(@NonNull GameViewActivity context) {
+        this.setDrawableSurfaceActivity(context);
 
         //Set LvlMgr
-        this.setLevelManager(new LevelManager(this.getActivityContext()));
+        this.setLevelManager(new LevelManager(this.getDrawableSurfaceActivity()));
 
         /** At every Gamestart, get the metrics from screen, otherwise hole Game will crash in future!,
          *  because we used the metric nearly everywhere!! */
-
-        /** Initialize View Components */
-        layout = (FrameLayout) context.findViewById(R.id.gameViewLayout);
 
         /** Initialize GameObjects & eq here! After initializing, the GameLoop will start!*/
         initGameObjects();
@@ -79,39 +73,12 @@ public class GameView extends SurfaceView {
         /** React to user input */
         getRootView().setOnTouchListener(getMultiTouchHandler());
 
-        /**************************************
-         * Start of the Surface & Thread Page *
-         **************************************/
-        setThread(new GameLoopThread(this));
-        holder = getHolder();
-
-        //Callback-method: 3 Types
-        holder.addCallback(new SurfaceHolder.Callback() {
-
-            //Surface gets created, Thread starts
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                getThread().setRunning(true);
-                getThread().start();
-            }
-
-            //No need
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height){
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                startExitGameProcedure();
-            }
-        });
+        //Draw everything etc.
+        this.initializeDrawing();
     }
 
-    @Enhance(byDeveloper = "Solution",
-    message = {"We shouldnt clean Objs AFTER Game exit, we should maybe just clean it before? would make much more sense",
-        "Is this already changed in all classes?"},
-    priority = Enhance.Priority.LOW)
+
+
     private void initGameObjects() {
         /**current starting level */
         final Level currLevel = this.getLevelManager().getCurrentLevelObj();
@@ -121,7 +88,7 @@ public class GameView extends SurfaceView {
         /** clean the fruitCounter*/
         FruitCounter.getInstance().cleanUpFruitCounter();
         /** Create CollisionManager*/
-        collisionMgr = new CollisionMgr(currLevel, getActivityContext(), getHighscore());
+        collisionMgr = new CollisionMgr(currLevel, getDrawableSurfaceActivity(), getHighscore());
 
 
         this.getHighscore().addListener(new IHighscore_Observer() {
@@ -129,13 +96,14 @@ public class GameView extends SurfaceView {
             public void onHighscoreChanged() {
                 Log.d(TAG, "initGameObjects:onHighscoreChanged: HighScore has changed!");
 
-                /*Refresh HighScore lbl*/
-                GameView.this.getActivityContext().setNewHighscoreOnUI();
+                /*Refresh HighScore lbl
+                * IMPORTANT to be sure that only GameViewActivity is assigned to GameView. */
+                ((GameViewActivity) GameView.this.getDrawableSurfaceActivity()).setNewHighscoreOnUI();
 
                 /*Evaluate whether user achieved level or not. */
                 if (currLevel.areLevelAssignmentsAchieved()) {
                     getThread().setRunning(false);
-                    getActivityContext().runOnUiThread(new Runnable() {
+                    GameView.this.getDrawableSurfaceActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             LevelAchievedDialog.show(GameView.this);
@@ -152,10 +120,10 @@ public class GameView extends SurfaceView {
     @Enhance(byDeveloper = "Solution49", message = "why passing the loopcount and the canvas in an extra method? " +
             "we could just add params to the draw method by draw(int amount, canvas canvas), surely every" +
             "draw method will need to have those params")
-
-    public void redraw(Canvas canvas, long loopCount) { //Create separate method, so we could add some things here
+    @Override
+    public void drawAll(@NonNull Canvas canvas, long loopCount) { //Create separate method, so we could add some things here
         Log.d(TAG, "redraw: Trying to invalidate/redraw GameView.");
-        if (canvas != null) {
+        if (canvas != null) { //NOT REALLY!!! (system calls)
             //in loop, BUT we don't do anything if already set
             canvas.drawColor(0, PorterDuff.Mode.CLEAR); //remove previous bitmaps etc. (it does not work to set here only bg color!, because of mode)
 
@@ -201,14 +169,15 @@ public class GameView extends SurfaceView {
             }
             //Log.d(TAG, "redraw: SUCCESS");
         } else {
-            startExitGameProcedure();
+            startExitProcedure();
         }
     }
 
     /*****************************
      * 2. Update GameObjects here *
      *****************************/
-    public void updateGameObjects() {
+    @Override
+    public void updateAll() {
         Level currLevel = getLevelManager().getCurrentLevelObj();
 
         /** Uppdate player */
@@ -236,7 +205,7 @@ public class GameView extends SurfaceView {
 
         /** Check for Collisions - if player hits the ground or gets hit by an enemy, game stops!*/
         if(collisionMgr.checkForCollisions()){
-            startExitGameProcedure();
+            startExitProcedure();
         }
 
         /** Check Shooting */
@@ -255,15 +224,18 @@ public class GameView extends SurfaceView {
 
     /*********************************************************
      * 3. Game Over Methods                                  *
-     *********************************************************/
-    public void startExitGameProcedure() {
+     ********************************************************
+     *
+     * ExitProcedure e.g. not needed in WorldView. So not abstract. */
+    @Override
+    public void startExitProcedure() {
         boolean retry = true;
         getThread().setRunning(false);
-        Log.d(TAG, "startExitGameProcedure: Trying to exit game."); //but this is logged?
+        Log.d(TAG, "startExitProcedure: Trying to exit game."); //but this is logged?
         while (retry) {
             try {
-                Log.d(TAG, "startExitGameProcedure: Trying to join threads and showing dialog before.");
-                getActivityContext().runOnUiThread(new Runnable() {
+                Log.d(TAG, "startExitProcedure: Trying to join threads and showing dialog before.");
+                this.getDrawableSurfaceActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         GameOverDialog.show(GameView.this);
@@ -277,9 +249,10 @@ public class GameView extends SurfaceView {
         }
     }
 
-    /** Small helper method for startExitGameProcedure(), which really cleans/exits the game WITHOUT any validation!
+    /** Small helper method for startExitProcedure(), which really cleans/exits the game WITHOUT any validation!
      * A wrong call will surely cause an exception. */
-    public void exitGameNow() {
+    @Override
+    public void exitNow() {
         //End everything here in future, so we could resume game when entering failure_is_false :)
         try {
             getThread().join();
@@ -289,30 +262,18 @@ public class GameView extends SurfaceView {
 
         //save highscore before cleaning
         //TODO: Remove in future (bc. this method is also called when exiting game by dialogs although game was not over)
-        new SharedPrefStorageMgr(getActivityContext()).saveNewHighscoreEntry(getHighscore().getValue());
+        new SharedPrefStorageMgr(getDrawableSurfaceActivity()).saveNewHighscoreEntry(getHighscore().getValue());
         getHighscore().removeAllListeners();
 
         //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
         getLevelManager().resetGame(); //reset gameLevelState so user starts from level 0 again.
 
-        getActivityContext().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
+        getDrawableSurfaceActivity().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
     }
 
    /*********************************************************
      * 4. Getters & Setters and all of that annoying methods *
      *********************************************************/
-
-    public FrameLayout getLayout() {
-        return layout;
-    }
-
-    public GameViewActivity getActivityContext() {
-        return activityContext;
-    }
-
-    public void setActivityContext(GameViewActivity activityContext) {
-        this.activityContext = activityContext;
-    }
 
     /** this returns the current HighScore */
     public HighScore getHighscore() {
@@ -334,13 +295,5 @@ public class GameView extends SurfaceView {
 
     public void setLevelManager(LevelManager levelManager) {
         this.levelManager = levelManager;
-    }
-
-    public GameLoopThread getThread() {
-        return thread;
-    }
-
-    public void setThread(GameLoopThread thread) {
-        this.thread = thread;
     }
 }

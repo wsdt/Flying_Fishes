@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.gamedesign.LevelManager;
 
 /**
  * PLEASE READ THIS

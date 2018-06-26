@@ -7,40 +7,41 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.manager.dialog.PauseGameDialog;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IGameLoopThread;
+import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
 /**
  * Created by Solution on 16.02.2018.
  * <p>
- * Thread to handle the GameView operations
+ * Thread to handle the GameView or e.g. WorldView operations
  */
 
-public class GameLoopThread extends Thread implements IGameLoopThread {
+public class CanvasDrawThread extends Thread implements IGameLoopThread {
     /**
      * @link GameLoopThread#isRunning: {true}->Gameloop will be executed || {false}->Gameloop stopped/paused
      */
-    //refers to the view
-    private GameView view;
+
+    /** Can be e.g. GameView or WorldActivity. */
+    private DrawableSurfaces view;
 
     private boolean isRunning;
     private static final String TAG = "Thread";
 
-    public GameLoopThread(@NonNull GameView view) {
-        this.view = view;
+    public CanvasDrawThread(@NonNull DrawableSurfaces view) {
+        this.setView(view);
     }
 
-    public void setRunning(boolean run) {
-        isRunning = run;
+    public void pauseThread() {
+        setRunning(false);
+
+        if (this.getView() instanceof GameView) {
+            PauseGameDialog.show((GameView) CanvasDrawThread.this.getView());
+        } //otherwise just do not show a pause dialog
+
+        Log.d(TAG, "pauseThread: Tried to pause game.");
     }
 
-    public void pauseGame() {
-        isRunning = false;
-        PauseGameDialog.show(GameLoopThread.this.view);
-
-        Log.d(TAG, "pauseGame: Tried to pause game.");
-    }
-
-    public void resumeGame() {
-        isRunning = true;
+    public void resumeThread() {
+        setRunning(true);
         /* use run() to start updating/drawing again to use this thread and not a new thread.
         Start() would create a new one.*/
         run();
@@ -59,22 +60,23 @@ public class GameLoopThread extends Thread implements IGameLoopThread {
             Looper.prepare(); //necessary for handlers etc.
         }
 
-        while (isRunning) {
+        while (isRunning()) {
             Log.d(TAG, "run: Game loop got started.");
             c = null;
 
             try {
-                if (!view.getHolder().getSurface().isValid()) {
+                if (!getView().getHolder().getSurface().isValid()) {
                     continue;
                 }
-                c = view.getHolder().lockCanvas();
-                synchronized (view.getHolder()) {
+                c = getView().getHolder().lockCanvas();
+                Log.e(TAG, "CANVAS: "+c);
+                synchronized (getView().getHolder()) {
                     beginTime = System.currentTimeMillis();
                     framesSkipped = 0; //resetting
-                    view.updateGameObjects();
+                    getView().updateAll();
 
                     //draws canvas on panel
-                    view.redraw(c, countRenderedCycles++);
+                    getView().drawAll(c, countRenderedCycles++);
                     timeDiff = System.currentTimeMillis() - beginTime;
 
                     if (sleepTime > 0) {
@@ -88,7 +90,7 @@ public class GameLoopThread extends Thread implements IGameLoopThread {
 
                     while (sleepTime < 0 && framesSkipped < MAX_FRAMES_SKIPPABLE) { //= Max frames skipped
                         //catch up, update without rendering
-                        view.updateGameObjects();
+                        getView().updateAll();
                         //add frame period to check if in next frame
                         sleepTime += (1000 / MAX_FPS); //FRAMEPERIOD = 1000 / 50 [50 = MAX_FPS]
                         framesSkipped++;
@@ -98,9 +100,26 @@ public class GameLoopThread extends Thread implements IGameLoopThread {
             } finally {
                 if (c != null) {
                     Log.d(TAG, "run:finally: Trying to unlock canvas and post.");
-                    view.getHolder().unlockCanvasAndPost(c);
+                    getView().getHolder().unlockCanvasAndPost(c);
                 }
             }
         }
+    }
+
+    //GETTER / SETTER  ++++++++++++++++++++++++++++++++++++++
+    public DrawableSurfaces getView() {
+        return view;
+    }
+
+    public void setView(DrawableSurfaces view) {
+        this.view = view;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean run) {
+        isRunning = run;
     }
 }

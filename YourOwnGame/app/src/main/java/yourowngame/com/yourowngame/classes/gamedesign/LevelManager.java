@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.gamelevels;
+package yourowngame.com.yourowngame.classes.gamedesign;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -6,12 +6,11 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_BonusLevel01;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_DarkDescent;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_EndlessDawn;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_SummerSky;
-import yourowngame.com.yourowngame.classes.gamelevels.levels.Level_NightRider;
-import yourowngame.com.yourowngame.classes.manager.dialog.LevelAchievedDialog;
+import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_BonusLevel01;
+import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_DarkDescent;
+import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_EndlessDawn;
+import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_SummerSky;
+import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_NightRider;
 
 /**
  * Pattern: SINGLETON
