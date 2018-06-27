@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamedesign.World;
-import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_BonusLevel01;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_DarkDescent;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_EndlessDawn;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_NightRider;
@@ -25,7 +24,6 @@ public class World_Earth extends World {
         this.getAllLevels().put(new Point(400,50),new Level_NightRider(this.getActivity()));
         this.getAllLevels().put(new Point(1200,300),new Level_EndlessDawn(this.getActivity()));
         this.getAllLevels().put(new Point(1200,500),new Level_DarkDescent(this.getActivity()));
-        this.getAllLevels().put(new Point(1200,800),new Level_BonusLevel01(this.getActivity()));
     }
 
     @Override
