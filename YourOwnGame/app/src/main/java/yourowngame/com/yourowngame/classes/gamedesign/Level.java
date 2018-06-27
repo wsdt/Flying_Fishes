@@ -19,13 +19,13 @@ public abstract class Level {
     private static final String TAG = "Level";
     private Activity activity;
 
-    protected static SoundMgr soundMgr = new SoundMgr(); //static because always only one soundMgr instance
+    protected static SoundMgr soundMgr; //static because always only one soundMgr instance
     private int levelNameResId; //Level name (maybe to show to user [e.g. Die dunkle Gruft, usw.] als Strings.xml res id for multilinguality!
     private Player player;
-    private ArrayList<Background> allBackgroundLayers = new ArrayList<>(); //Background layers for each level (as Arraylist to avoid NullpointerExceptions, so we just do not allow gaps)
-    private ArrayList<Enemy> allEnemies = new ArrayList<>(); //MUST NOT BE STATIC (different levels, different enemies), All enemies on screen (will be spawned again if isGone) for specific level
-    private ArrayList<Fruit> allFruits = new ArrayList<>();
-    private ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
+    private ArrayList<Background> allBackgroundLayers; //Background layers for each level (as Arraylist to avoid NullpointerExceptions, so we just do not allow gaps)
+    private ArrayList<Enemy> allEnemies; //MUST NOT BE STATIC (different levels, different enemies), All enemies on screen (will be spawned again if isGone) for specific level
+    private ArrayList<Fruit> allFruits;
+    private ArrayList<LevelAssignment> allLevelAssignments;
 
     @Enhance (message = "maybe it's better to put it back into gameview or gameviewActivity and all levels access it. " +
             "So we just have to reset the highscore on levelchange (what we have to do anyway)." +
@@ -37,12 +37,15 @@ public abstract class Level {
     public Level(@NonNull Activity activity) {
         Log.d(TAG, "Level: ###################### STARTING LOADING LEVEL ###############################");
         this.setActivity(activity);
+
+        //TODO: Maybe get rid of this method, but surely make lvlInformation statically accessible.
         this.determineMetaData();
-        this.determinePlayer();
-        this.determineBackgroundLayers();
-        this.determineAllEnemies();
-        this.determineAllFruits();
-        this.determineLevelAssigments();
+
+
+        /* IMPORTANT: DO NOT ADD HERE DETERMINE_OBJ METHODS, WE ONLY APPEND ENEMIES ETC.
+        * WHEN NEEDED AND NOT AT LVLOBJ_CREATION. THIS HAS THE ADVANTAGE THAT THE LVL_OBJ
+        * AND SUPERIOR WORLD_OBJS REMAIN SMALL UNLESS WE NEED A SPECIFIC LVL OBJECT (WHEN
+        * WE PLAY IT). */
 
         /* Initialize all objs, bc. this is not done anymore in constructors. */
         this.initializeLevelProperties();
@@ -119,16 +122,20 @@ public abstract class Level {
         Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
     }
 
-    /**
-     * We really need to sort things out here, to much getter/setter
-     */
+
+    //GETTER/SETTER +++++++++++++++++++++++++++++++++++++++++++++++++
+
     public ArrayList<Background> getAllBackgroundLayers() {
+        if (allBackgroundLayers == null || allBackgroundLayers.size() <= 0) {
+            this.determineBackgroundLayers();
+        }
         return allBackgroundLayers;
     }
 
     public void setAllBackgroundLayers(ArrayList<Background> allBackgroundLayers) {
         this.allBackgroundLayers = allBackgroundLayers;
     }
+
     public int getLevelNameResId() {
         return levelNameResId;
     }
@@ -136,18 +143,27 @@ public abstract class Level {
         this.levelNameResId = levelNameResId;
     }
     public ArrayList<Enemy> getAllEnemies() {
+        if (allEnemies == null || allEnemies.size() <= 0) {
+            this.determineAllEnemies();
+        }
         return allEnemies;
     }
     public void setAllEnemies(ArrayList<Enemy> allEnemies) {
         this.allEnemies = allEnemies;
     }
     public Player getPlayer() {
+        if (player == null) {
+            this.determinePlayer();
+        }
         return player;
     }
     public void setPlayer(Player player) {
         this.player = player;
     }
     public ArrayList<Fruit> getAllFruits() {
+        if (allFruits == null || allFruits.size() <= 0) {
+            this.determineAllFruits();
+        }
         return allFruits;
     }
     public void setAllFruits(ArrayList<Fruit> allFruits) {
@@ -161,6 +177,9 @@ public abstract class Level {
     }
 
     public ArrayList<LevelAssignment> getAllLevelAssignments() {
+        if (allLevelAssignments == null || allLevelAssignments.size() <= 0) {
+            this.determineLevelAssigments();
+        }
         return allLevelAssignments;
     }
 
