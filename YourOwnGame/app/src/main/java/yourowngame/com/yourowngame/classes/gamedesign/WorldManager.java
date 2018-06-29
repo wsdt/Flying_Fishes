@@ -13,10 +13,6 @@ import yourowngame.com.yourowngame.classes.gamedesign.worlds.World_Earth;
 public class WorldManager {
     private static final String TAG = "WorldManager";
     /** Which worlds are in which order. */
-    @Enhance(message = "We have to dispose of the List of Worlds and also the LevelLlist in the" +
-            "LevelMgr, to avoid allocating too much memory. We need a light access to Metadata (e.g. by" +
-            "making the method static) and we should always ONLY instantiate ONE World and ONE Level" +
-            "if needed.")
     private static ArrayList<World> worlds = new ArrayList<>();
 
     /** IMPORTANT: Do not give activity by constructor (to avoid saving old activities etc.)*/
@@ -33,6 +29,11 @@ public class WorldManager {
     private static void createDefaultWorldOrder(@NonNull WorldActivity activity) {
         setWorlds(new ArrayList<World>());
         getWorlds().add(new World_Earth(activity));
+    }
+
+    /** Dummy/Redundant method for resetting game. */
+    public static void resetGame(@NonNull Level level) {
+        level.cleanUpLevelProperties();
     }
 
 

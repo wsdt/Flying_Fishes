@@ -3,6 +3,7 @@ package yourowngame.com.yourowngame.activities;
 import android.os.Bundle;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.gamedesign.worlds.World_Earth;
 import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
 
 public class WorldActivity extends DrawableSurfaceActivity {
@@ -14,7 +15,9 @@ public class WorldActivity extends DrawableSurfaceActivity {
         setContentView(R.layout.activity_world);
 
         this.setWorldView((WorldView) findViewById(R.id.worldActivity_worldView));
-        this.getWorldView().startWorldAnimations(this);
+
+        //TODO: just for testing --> replace world_earth() with var
+        this.getWorldView().startWorldAnimations(this, new World_Earth(this));
     }
 
     @Override

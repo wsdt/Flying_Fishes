@@ -68,7 +68,6 @@ public abstract class Level {
     /** Put all wanted LevelAssigment Objs in there. These will be accessed and evaluated in areLevelAssigmentsAchieved().*/
     protected abstract void determineLevelAssigments();
     /** Defines default data (normally this method does not contain any logic* operations). E.g. setting the levelName by getting it from the strings.xml*/
-    @Enhance (message = "Make static, so we can access it without loading the whole level (e.g. for levelHierarchies etc.)")
     protected abstract void determineMetaData();
     /**
      * Difficulty range is between 0 - 5 (double)

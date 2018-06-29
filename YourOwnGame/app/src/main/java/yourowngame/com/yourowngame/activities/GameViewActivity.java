@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
+import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_SummerSky;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
@@ -36,6 +38,10 @@ public class GameViewActivity extends DrawableSurfaceActivity {
         getGameDimens();
         setContentView(R.layout.activity_game_view);
 
+        /* RECEIVE Level */
+        //TODO just for testing later maybe by intent
+        Level currLevel = new Level_SummerSky(this);
+
 
         /* Set highscore val textview */
         this.setHighscoreVal_textView((TextView) findViewById(R.id.gameViewActivity_highscoreVal));
@@ -43,9 +49,9 @@ public class GameViewActivity extends DrawableSurfaceActivity {
 
         Log.d(TAG, "onCreate: Trying to load game.");
 
-        /** Master-call, create GameView*/
+        /* Master-call, create GameView*/
         setGameView(((GameView) findViewById(R.id.gameViewActivity_gameView)));
-        getGameView().startGame(this);
+        getGameView().startGame(this, currLevel);
     }
 
     @Deprecated

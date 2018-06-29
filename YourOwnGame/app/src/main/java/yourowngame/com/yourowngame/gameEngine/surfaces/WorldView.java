@@ -18,13 +18,9 @@ import java.util.Map;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.activities.WorldActivity;
-import yourowngame.com.yourowngame.classes.annotations.Testing;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
-import yourowngame.com.yourowngame.classes.gamedesign.LevelManager;
 import yourowngame.com.yourowngame.classes.gamedesign.World;
-import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_NightRider;
-import yourowngame.com.yourowngame.classes.gamedesign.worlds.World_Earth;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 /**
@@ -35,8 +31,6 @@ public class WorldView extends DrawableSurfaces {
 
     private World currWorld;
     private Bitmap initializedLevelRepresentant;
-    //TODO REMOVE
-    private LevelManager levelManager;
 
     public WorldView(Context context) {
         super(context);
@@ -50,11 +44,9 @@ public class WorldView extends DrawableSurfaces {
         super(context, attrs, defStyleAttr);
     }
 
-    public void startWorldAnimations(@NonNull WorldActivity worldActivity) {
+    public void startWorldAnimations(@NonNull WorldActivity worldActivity, @NonNull World currWorld) {
         this.setDrawableSurfaceActivity(worldActivity);
-        //TODO: Just for testing
-        this.setCurrWorld(new World_Earth(worldActivity));
-        this.levelManager = new LevelManager(worldActivity);
+        this.setCurrWorld(currWorld);
 
         this.initializeDrawableObjs();
         this.initializeDrawing();
@@ -77,14 +69,16 @@ public class WorldView extends DrawableSurfaces {
         exitNow();
     }
 
-    /** Here we have to manually initialize DrawableObjs, bc. here we have no levelObj which does that.*/
+    /**
+     * Here we have to manually initialize DrawableObjs, bc. here we have no levelObj which does that.
+     */
     private void initializeDrawableObjs() {
         for (Background background : this.getCurrWorld().getAllBackgroundLayers()) {
             background.initialize();
         }
 
         //Initialize Level Representant
-        this.setInitializedLevelRepresentant(BitmapFactory.decodeResource(this.getResources(),this.getCurrWorld().getLevelRepresentativeResId()));
+        this.setInitializedLevelRepresentant(BitmapFactory.decodeResource(this.getResources(), this.getCurrWorld().getLevelRepresentativeResId()));
         Log.d(TAG, "initializeDrawableObjs: Have initialized worldView.");
     }
 
@@ -101,15 +95,15 @@ public class WorldView extends DrawableSurfaces {
             //Log.d(TAG, "drawAll: Trying to draw levelRepresentants. Count: "+this.getCurrWorld().getAllLevels().size());
             Point positionOfLastLevel = null; // to draw line
             // Calculate how much we need to add so the lines are in the mid of the icons.
-            float addToX = this.getInitializedLevelRepresentant().getWidth()/2;
-            float addToY = this.getInitializedLevelRepresentant().getHeight()/2;
-            for (Map.Entry<Point,Level> level : this.getCurrWorld().getAllLevels().entrySet()) {
+            float addToX = this.getInitializedLevelRepresentant().getWidth() / 2;
+            float addToY = this.getInitializedLevelRepresentant().getHeight() / 2;
+            for (Map.Entry<Point, Level> level : this.getCurrWorld().getAllLevels().entrySet()) {
                 //Draw connection lines
                 if (positionOfLastLevel != null) {
-                    canvas.drawLine(addToX+positionOfLastLevel.x,addToY+positionOfLastLevel.y,addToX+level.getKey().x,addToY+level.getKey().y, new Paint(R.color.colorBlack));
+                    canvas.drawLine(addToX + positionOfLastLevel.x, addToY + positionOfLastLevel.y, addToX + level.getKey().x, addToY + level.getKey().y, new Paint(R.color.colorBlack));
                 }
 
-                canvas.drawBitmap(this.getInitializedLevelRepresentant(),level.getKey().x,level.getKey().y,null);
+                canvas.drawBitmap(this.getInitializedLevelRepresentant(), level.getKey().x, level.getKey().y, null);
                 positionOfLastLevel = level.getKey();
             }
         } catch (Exception e) {
@@ -117,9 +111,12 @@ public class WorldView extends DrawableSurfaces {
         }
     }
 
-    /** Plain rectobj (outside to avoid obj allocations in draw()), for determining whether lvlObj
-     * is clicked. */
+    /**
+     * Plain rectobj (outside to avoid obj allocations in draw()), for determining whether lvlObj
+     * is clicked.
+     */
     Rect r = new Rect();
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
@@ -132,11 +129,12 @@ public class WorldView extends DrawableSurfaces {
                     int lvlX = level.getKey().x;
                     int lvlY = level.getKey().y;
 
-                    r.set(lvlX,lvlY,lvlX+lvlReprX,lvlY+lvlReprY);
+                    r.set(lvlX, lvlY, lvlX + lvlReprX, lvlY + lvlReprY);
 
-                    if (r.contains(x,y)) {
+                    if (r.contains(x, y)) {
                         Log.d(TAG, "onTouchEvent: Lvl clicked.");
                         //TODO: Open lvl via lvlObj (change LevelMgr logic)
+
                         return true;
                     }
                 }

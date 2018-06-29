@@ -25,10 +25,10 @@ public abstract class World {
      * in each World individually, by just using the Setter in the inheritated/default constructor. */
     private int levelRepresentativeResId = R.drawable.avoci; //TODO: Use a real icon
     /** Background layers for each world. These layers are determined by each subclass in the determineBgLayers(). */
-    private ArrayList<Background> allBackgroundLayers = new ArrayList<>();
+    private ArrayList<Background> allBackgroundLayers;
     /** All levels of this world, with a PointObj (not for identification, but for positioning on the
      * levelScreen). Levels are arranged according on which position they are in the map itself. */
-    private HashMap<Point, Level> allLevels = new HashMap<>();
+    private HashMap<Point, Level> allLevels;
 
 
     /** Initializing constructor. */
@@ -72,6 +72,9 @@ public abstract class World {
     }
 
     public ArrayList<Background> getAllBackgroundLayers() {
+        if (allBackgroundLayers == null) {
+            allBackgroundLayers = new ArrayList<>();
+        }
         return allBackgroundLayers;
     }
 
@@ -80,6 +83,9 @@ public abstract class World {
     }
 
     public HashMap<Point, Level> getAllLevels() {
+        if (allLevels == null) {
+            allLevels = new HashMap<>();
+        }
         return allLevels;
     }
 
