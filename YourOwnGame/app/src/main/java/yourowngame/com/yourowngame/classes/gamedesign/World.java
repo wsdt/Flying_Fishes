@@ -16,6 +16,7 @@ import yourowngame.com.yourowngame.classes.background.Background;
  * influence on gameLogic! */
 public abstract class World {
     private static final String TAG = "World";
+    public static final String INTENT_EXTRAID_POINT = "POINT_STR_ID";
 
     private Activity activity;
     /** World name (maybe to show to user [e.g. Die dunkle Gruft, usw.] als Strings.xml res id for multilinguality!*/

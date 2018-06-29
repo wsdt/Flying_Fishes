@@ -133,8 +133,11 @@ public class WorldView extends DrawableSurfaces {
 
                     if (r.contains(x, y)) {
                         Log.d(TAG, "onTouchEvent: Lvl clicked.");
-                        //TODO: Open lvl via lvlObj (change LevelMgr logic)
-
+                        //TODO: Change 0 for first index world repr with var
+                        Intent startGameIntent = new Intent(this.getDrawableSurfaceActivity(),GameViewActivity.class);
+                        startGameIntent.putExtra(World.INTENT_EXTRAID_POINT,
+                                new int[]{0,lvlX,lvlY});
+                        this.getDrawableSurfaceActivity().startActivity(startGameIntent);
                         return true;
                     }
                 }
