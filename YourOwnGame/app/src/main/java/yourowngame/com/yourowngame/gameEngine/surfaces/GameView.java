@@ -14,63 +14,63 @@ import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
+import yourowngame.com.yourowngame.classes.counters.HighScore;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
-import yourowngame.com.yourowngame.classes.gamedesign.LevelManager;
+import yourowngame.com.yourowngame.classes.gamedesign.WorldManager;
 import yourowngame.com.yourowngame.classes.manager.CollisionMgr;
 import yourowngame.com.yourowngame.classes.manager.dialog.GameOverDialog;
 import yourowngame.com.yourowngame.classes.manager.dialog.LevelAchievedDialog;
 import yourowngame.com.yourowngame.classes.manager.storage.SharedPrefStorageMgr;
-import yourowngame.com.yourowngame.classes.counters.HighScore;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 import yourowngame.com.yourowngame.gameEngine.OnMultiTouchHandler;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
 
 /**
- * Created by Solution on 16.02.2018.
- * <p>
  * GameView Surface, draw players here and in the end add it to the GameViewActivity
  */
 
 public class GameView extends DrawableSurfaces {
     private static final String TAG = "GameView";
-    private LevelManager levelManager;
+    private Level currLevelObj;
     private CollisionMgr collisionMgr;
-    
     private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
 
-    // ENEMIES are level-dependent, so specific level obj should own a list with all enemies. (LevelMgr.CURRENT_LEVEL)
-
-    /** Without this method our app will crash, keep it XML needs this constructor */
+    /**
+     * Without this method our app will crash, keep it XML needs this constructor
+     */
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
     }
 
-    /** Constructor for creating in runtime (not used currently, but recommended to keep though)*/
+    /**
+     * Constructor for creating in runtime (not used currently, but recommended to keep though)
+     */
     public GameView(Context context) {
         super(context);
     }
 
 
-
-    /** This method MUST NOT be called in constructor,
+    /**
+     * This method MUST NOT be called in constructor,
      * moved GameView-Creation to XML so btns might be in foreground,
      * but there we can't call canvas.lock (so thread can't be started unless
      * activity:onCreate() is done.
      *
-     * @param context: IMPORTANT ONLY ALLOW GameViewActivity here and not the DrawableSurface! */
-    public void startGame(@NonNull GameViewActivity context) {
+     * @param context: IMPORTANT ONLY ALLOW GameViewActivity here and not the DrawableSurface!
+     */
+    public void startGame(@NonNull GameViewActivity context, @NonNull Level currLevelObj) {
         this.setDrawableSurfaceActivity(context);
 
         //Set LvlMgr
-        this.setLevelManager(new LevelManager(this.getDrawableSurfaceActivity()));
+        this.setCurrLevelObj(currLevelObj);
 
-        /** At every Gamestart, get the metrics from screen, otherwise hole Game will crash in future!,
+        /* At every Gamestart, get the metrics from screen, otherwise hole Game will crash in future!,
          *  because we used the metric nearly everywhere!! */
 
-        /** Initialize GameObjects & eq here! After initializing, the GameLoop will start!*/
+        /* Initialize GameObjects & eq here! After initializing, the GameLoop will start!*/
         initGameObjects();
 
-        /** React to user input */
+        /* React to user input */
         getRootView().setOnTouchListener(getMultiTouchHandler());
 
         //Draw everything etc.
@@ -78,17 +78,13 @@ public class GameView extends DrawableSurfaces {
     }
 
 
-
     private void initGameObjects() {
-        /**current starting level */
-        final Level currLevel = this.getLevelManager().getCurrentLevelObj();
-
-        /** cleanup Level Properties */
-        currLevel.cleanUpLevelProperties();
-        /** clean the fruitCounter*/
+        /* cleanup Level Properties */
+        this.getCurrLevelObj().cleanUpLevelProperties();
+        /* clean the fruitCounter*/
         FruitCounter.getInstance().cleanUpFruitCounter();
-        /** Create CollisionManager*/
-        collisionMgr = new CollisionMgr(currLevel, getDrawableSurfaceActivity(), getHighscore());
+        /* Create CollisionManager*/
+        collisionMgr = new CollisionMgr(this.getCurrLevelObj(), getDrawableSurfaceActivity(), getHighscore());
 
 
         this.getHighscore().addListener(new IHighscore_Observer() {
@@ -97,11 +93,11 @@ public class GameView extends DrawableSurfaces {
                 Log.d(TAG, "initGameObjects:onHighscoreChanged: HighScore has changed!");
 
                 /*Refresh HighScore lbl
-                * IMPORTANT to be sure that only GameViewActivity is assigned to GameView. */
+                 * IMPORTANT to be sure that only GameViewActivity is assigned to GameView. */
                 ((GameViewActivity) GameView.this.getDrawableSurfaceActivity()).setNewHighscoreOnUI();
 
                 /*Evaluate whether user achieved level or not. */
-                if (currLevel.areLevelAssignmentsAchieved()) {
+                if (GameView.this.getCurrLevelObj().areLevelAssignmentsAchieved()) {
                     getThread().setRunning(false);
                     GameView.this.getDrawableSurfaceActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -128,35 +124,33 @@ public class GameView extends DrawableSurfaces {
             canvas.drawColor(0, PorterDuff.Mode.CLEAR); //remove previous bitmaps etc. (it does not work to set here only bg color!, because of mode)
 
             try {
-                Level currLevel = getLevelManager().getCurrentLevelObj();
-
                 // (1.) draw background
-                for (Background background : currLevel.getAllBackgroundLayers()) {
+                for (Background background : this.getCurrLevelObj().getAllBackgroundLayers()) {
                     background.setCanvas(canvas);
                     background.draw();
                 }
 
                 // (2.) draw player
-                currLevel.getPlayer().setCanvas(canvas);
-                currLevel.getPlayer().setLoopCount(loopCount);
-                currLevel.getPlayer().draw();
+                this.getCurrLevelObj().getPlayer().setCanvas(canvas);
+                this.getCurrLevelObj().getPlayer().setLoopCount(loopCount);
+                this.getCurrLevelObj().getPlayer().draw();
 
                 // (3.) draw Projectiles
-                for (Projectile projectile : currLevel.getPlayer().getProjectiles()) {
+                for (Projectile projectile : this.getCurrLevelObj().getPlayer().getProjectiles()) {
                     projectile.setLoopCount(loopCount);
                     projectile.setCanvas(canvas);
                 }
-                currLevel.getPlayer().drawProjectiles();
+                this.getCurrLevelObj().getPlayer().drawProjectiles();
 
                 // (4.) draw enemies
-                for (Enemy enemy : currLevel.getAllEnemies()) {
+                for (Enemy enemy : this.getCurrLevelObj().getAllEnemies()) {
                     enemy.setCanvas(canvas);
                     enemy.setLoopCount(loopCount);
                     enemy.draw();
                 }
 
                 // (5.) draw fruits
-                for (Fruit fruit : currLevel.getAllFruits()) {
+                for (Fruit fruit : this.getCurrLevelObj().getAllFruits()) {
                     fruit.setCanvas(canvas);
                     fruit.setLoopCount(loopCount);
                     fruit.draw();
@@ -178,44 +172,42 @@ public class GameView extends DrawableSurfaces {
      *****************************/
     @Override
     public void updateAll() {
-        Level currLevel = getLevelManager().getCurrentLevelObj();
+        /* Uppdate player */
+        this.getCurrLevelObj().getPlayer().setGoUp(GameView.this.getMultiTouchHandler().isMoving());
+        this.getCurrLevelObj().getPlayer().update();
 
-        /** Uppdate player */
-        currLevel.getPlayer().setGoUp(GameView.this.getMultiTouchHandler().isMoving());
-        currLevel.getPlayer().update();
-
-        /** Update all enemies */
-        for (Enemy enemy : currLevel.getAllEnemies()) {
-            enemy.setTargetGameObj(currLevel.getPlayer()); //also not all enemies need this
+        /* Update all enemies */
+        for (Enemy enemy : this.getCurrLevelObj().getAllEnemies()) {
+            enemy.setTargetGameObj(this.getCurrLevelObj().getPlayer()); //also not all enemies need this
             enemy.update();
         }
 
-        /** Update all fruits */
-        for (Fruit fruit : currLevel.getAllFruits()) {
+        /* Update all fruits */
+        for (Fruit fruit : this.getCurrLevelObj().getAllFruits()) {
             fruit.update();
         }
 
-        /** Update bglayers */
-        for (Background background : currLevel.getAllBackgroundLayers()) {
+        /* Update bglayers */
+        for (Background background : this.getCurrLevelObj().getAllBackgroundLayers()) {
             background.update();
         }
 
-        /** Update bullets */
-        currLevel.getPlayer().updateProjectiles();
+        /* Update bullets */
+        this.getCurrLevelObj().getPlayer().updateProjectiles();
 
-        /** Check for Collisions - if player hits the ground or gets hit by an enemy, game stops!*/
-        if(collisionMgr.checkForCollisions()){
+        /* Check for Collisions - if player hits the ground or gets hit by an enemy, game stops!*/
+        if (collisionMgr.checkForCollisions()) {
             startExitProcedure();
         }
 
-        /** Check Shooting */
-        if(getMultiTouchHandler().isShooting()){
-            currLevel.getPlayer().addProjectiles();
+        /* Check Shooting */
+        if (getMultiTouchHandler().isShooting()) {
+            this.getCurrLevelObj().getPlayer().addProjectiles();
             getMultiTouchHandler().stopShooting();
         }
 
-        /** Check if levelAssignment is true */
-        if(getLevelManager().getCurrentLevelObj().areLevelAssignmentsAchieved()){
+        /* Check if levelAssignment is true */
+        if (this.getCurrLevelObj().areLevelAssignmentsAchieved()) {
             // LevelManager.startDialog()... -> that dialog will be the one from levelAchieved()
             // and the LevelManager will then lead to further action
 
@@ -249,8 +241,10 @@ public class GameView extends DrawableSurfaces {
         }
     }
 
-    /** Small helper method for startExitProcedure(), which really cleans/exits the game WITHOUT any validation!
-     * A wrong call will surely cause an exception. */
+    /**
+     * Small helper method for startExitProcedure(), which really cleans/exits the game WITHOUT any validation!
+     * A wrong call will surely cause an exception.
+     */
     @Override
     public void exitNow() {
         //End everything here in future, so we could resume game when entering failure_is_false :)
@@ -266,18 +260,20 @@ public class GameView extends DrawableSurfaces {
         getHighscore().removeAllListeners();
 
         //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
-        getLevelManager().resetGame(); //reset gameLevelState so user starts from level 0 again.
+        WorldManager.resetGame(this.getCurrLevelObj()); //reset gameLevelState so user starts from level 0 again.
 
         getDrawableSurfaceActivity().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
     }
 
-   /*********************************************************
+    /*********************************************************
      * 4. Getters & Setters and all of that annoying methods *
      *********************************************************/
 
-    /** this returns the current HighScore */
+    /**
+     * this returns the current HighScore
+     */
     public HighScore getHighscore() {
-        return getLevelManager().getCurrentLevelObj().getCurrentLevelHighscore();
+        return this.getCurrLevelObj().getCurrentLevelHighscore();
     }
 
 
@@ -289,11 +285,14 @@ public class GameView extends DrawableSurfaces {
         this.multiTouchHandler = multiTouchHandler;
     }
 
-    public LevelManager getLevelManager() {
-        return levelManager;
+    /**
+     * Current levelObj which player can play now.
+     */
+    public Level getCurrLevelObj() {
+        return currLevelObj;
     }
 
-    public void setLevelManager(LevelManager levelManager) {
-        this.levelManager = levelManager;
+    public void setCurrLevelObj(Level currLevelObj) {
+        this.currLevelObj = currLevelObj;
     }
 }
