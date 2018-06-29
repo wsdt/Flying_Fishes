@@ -1,16 +1,20 @@
 package yourowngame.com.yourowngame.activities;
 
+import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
-import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_SummerSky;
+import yourowngame.com.yourowngame.classes.gamedesign.World;
+import yourowngame.com.yourowngame.classes.gamedesign.WorldManager;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
@@ -38,27 +42,41 @@ public class GameViewActivity extends DrawableSurfaceActivity {
         getGameDimens();
         setContentView(R.layout.activity_game_view);
 
-        /* RECEIVE Level */
-        //TODO just for testing later maybe by intent
-        Level currLevel = new Level_SummerSky(this);
-
-
         /* Set highscore val textview */
         this.setHighscoreVal_textView((TextView) findViewById(R.id.gameViewActivity_highscoreVal));
 
-
-        Log.d(TAG, "onCreate: Trying to load game.");
-
         /* Master-call, create GameView*/
         setGameView(((GameView) findViewById(R.id.gameViewActivity_gameView)));
-        getGameView().startGame(this, currLevel);
+
+        /* RECEIVE Level */
+        Intent intent = getIntent();
+        if (intent != null) {
+            // [0] = World ; [1] = X ; [2] = Y
+            int[] lvlRepresentants = intent.getIntArrayExtra(World.INTENT_EXTRAID_POINT);
+            if (lvlRepresentants != null) {
+                getGameView().startGame(this, WorldManager.getWorlds().get(
+                        lvlRepresentants[0]).getAllLevels().get(
+                        new Point(lvlRepresentants[1], lvlRepresentants[2])));
+            } else {
+                showLvlLoadError();
+            }
+        } else {
+            showLvlLoadError();
+        }
+
+        Log.d(TAG, "onCreate: Tried to load game.");
+    }
+
+    private void showLvlLoadError() {
+        Toast.makeText(this,R.string.error_gameViewActivity_lvlLoad, Toast.LENGTH_LONG).show();
+        Log.e(TAG, getResources().getString(R.string.error_gameViewActivity_lvlLoad));
     }
 
     @Deprecated
     @Enhance(byDeveloper = "Solution",
-    message = "I wanna keep it that way, the GameViewActivity should provide the metrics," +
-              "so the levelHierarchy will deliver it! See @LevelHierarchyActivity.java",
-    priority = Enhance.Priority.LOW)
+            message = "I wanna keep it that way, the GameViewActivity should provide the metrics," +
+                    "so the levelHierarchy will deliver it! See @LevelHierarchyActivity.java",
+            priority = Enhance.Priority.LOW)
     public void getGameDimens() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -67,7 +85,9 @@ public class GameViewActivity extends DrawableSurfaceActivity {
         Log.d(TAG, "HEIGHT = " + GAME_HEIGHT + "WIDTH = " + GAME_WIDTH);
     }
 
-    /** This method should only be called by Observer-Pattern! (better performance)*/
+    /**
+     * This method should only be called by Observer-Pattern! (better performance)
+     */
     public void setNewHighscoreOnUI() {
         this.runOnUiThread(new Runnable() {
             @Override

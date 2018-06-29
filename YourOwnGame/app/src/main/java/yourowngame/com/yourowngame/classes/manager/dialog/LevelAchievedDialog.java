@@ -34,7 +34,7 @@ public class LevelAchievedDialog {
                     .setPositiveButton(R.string.dialog_levelachieved_btn_positive, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (lm.getLevelList().size() > (lm.getCurrentLevel()+1)) {
+                            if (lm.getLevelList().size() > (lm.getCurrentLevel() + 1)) {
                                 lm.setCurrentLevel(lm.getCurrentLevel() + 1);
                             } else {
                                 //user achieved last level
@@ -51,11 +51,11 @@ public class LevelAchievedDialog {
                     .setCancelable(false);
 
             //Should we show positive btn (is this the last level?)
-            if (lm.getLevelList().size() > (lm.getCurrentLevel()+1)) {
+            if (lm.getLevelList().size() > (lm.getCurrentLevel() + 1)) {
                 ld.setPositiveButton(R.string.dialog_levelachieved_btn_positive, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        lm.setCurrentLevel(lm.getCurrentLevel()+1);
+                        lm.setCurrentLevel(lm.getCurrentLevel() + 1);
                         activity.finish();
                         activity.startActivity(activity.getIntent());
                     }
