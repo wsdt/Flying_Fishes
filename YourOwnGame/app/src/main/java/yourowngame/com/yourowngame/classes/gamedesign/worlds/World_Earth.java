@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.background.Background;
+import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.gamedesign.World;
@@ -38,6 +39,10 @@ public class World_Earth extends World {
     protected void determineBackgroundLayers() {
         ArrayList<Background> backgrounds = new ArrayList<>();
         backgrounds.add(new BL_SingleColor(this.getActivity(),R.color.colorSkyBlue));
+        backgrounds.add(new BL_FlyingElements(this.getActivity(),
+                new int[]{R.drawable.bglayer_1_cloud_1, R.drawable.bglayer_1_cloud_2, R.drawable.bglayer_1_cloud_3},3));
+        backgrounds.add(new BL_FlyingElements(this.getActivity(),
+                new int[]{R.drawable.enemy_rocketfish_01, R.drawable.avoci},1));
         this.setAllBackgroundLayers(backgrounds);
     }
 
