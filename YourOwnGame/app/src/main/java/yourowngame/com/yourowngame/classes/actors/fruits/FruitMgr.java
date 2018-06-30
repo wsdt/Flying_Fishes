@@ -7,7 +7,7 @@ import android.util.Log;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-import yourowngame.com.yourowngame.classes.gamelevels.Level;
+import yourowngame.com.yourowngame.classes.gamedesign.Level;
 
 /** Used for generating or/and managing fruits.*/
 

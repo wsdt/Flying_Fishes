@@ -12,7 +12,7 @@
     android:background="@color/colorShadow">
 
 
-    <yourowngame.com.yourowngame.gameEngine.GameView
+    <yourowngame.com.yourowngame.gameEngine.surfaces.GameView
         android:id="@+id/gameViewActivity_gameView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

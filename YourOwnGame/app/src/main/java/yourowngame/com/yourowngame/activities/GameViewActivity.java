@@ -1,20 +1,19 @@
 package yourowngame.com.yourowngame.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.gamedesign.WorldManager;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
-import yourowngame.com.yourowngame.gameEngine.GameLoopThread;
-import yourowngame.com.yourowngame.gameEngine.GameView;
+import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
 /**
  * The GameViewActivity does only add the GameView!
@@ -24,48 +23,34 @@ import yourowngame.com.yourowngame.gameEngine.GameView;
  */
 
 
-public class GameViewActivity extends AppCompatActivity {
+public class GameViewActivity extends DrawableSurfaceActivity {
     private static final String TAG = "GameViewActivity";
     private GameView gameView;
     private static SoundMgr soundMgr = new SoundMgr();
     private TextView highscoreVal; //for the points
-    public static int GAME_HEIGHT;
-    public static int GAME_WIDTH;
-
 
     //(1.) Initialize objects
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getGameDimens();
         setContentView(R.layout.activity_game_view);
-
 
         /* Set highscore val textview */
         this.setHighscoreVal_textView((TextView) findViewById(R.id.gameViewActivity_highscoreVal));
 
-
-        Log.d(TAG, "onCreate: Trying to load game.");
-
-        /** Master-call, create GameView*/
+        /* Master-call, create GameView*/
         setGameView(((GameView) findViewById(R.id.gameViewActivity_gameView)));
-        getGameView().startGame(this);
+
+        //Start game
+        getGameView().startGame(this, WorldManager.getWorlds(this).get(
+                WorldManager.getCurr_world_index()).getAllLevels().get(WorldManager.getCurr_lvl_index()));
+
+        Log.d(TAG, "onCreate: Tried to load game.");
     }
 
-    @Deprecated
-    @Enhance(byDeveloper = "Solution",
-    message = "I wanna keep it that way, the GameViewActivity should provide the metrics," +
-              "so the levelHierarchy will deliver it! See @LevelHierarchyActivity.java",
-    priority = Enhance.Priority.LOW)
-    public void getGameDimens() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        GAME_WIDTH = displayMetrics.widthPixels;
-        GAME_HEIGHT = displayMetrics.heightPixels;
-        Log.d(TAG, "HEIGHT = " + GAME_HEIGHT + "WIDTH = " + GAME_WIDTH);
-    }
-
-    /** This method should only be called by Observer-Pattern! (better performance)*/
+    /**
+     * This method should only be called by Observer-Pattern! (better performance)
+     */
     public void setNewHighscoreOnUI() {
         this.runOnUiThread(new Runnable() {
             @Override
@@ -82,8 +67,9 @@ public class GameViewActivity extends AppCompatActivity {
         super.onStop();
         pauseGame(null);
     } //do not make onResume(), bc. dialog should be shown and game should only resume, when resume is clicked and not automatically.
+
     public void pauseGame(@Nullable View v) {
-        this.getGameView().getThread().pauseGame();
+        this.getGameView().getThread().pauseThread();
     }
 
     //GETTER/SETTER (Base class)

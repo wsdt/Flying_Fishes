@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
@@ -15,8 +16,7 @@ import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
 import yourowngame.com.yourowngame.classes.counters.HighScore;
-import yourowngame.com.yourowngame.classes.gamelevels.Level;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelManager;
+import yourowngame.com.yourowngame.classes.gamedesign.Level;
 
 
 /**
@@ -97,7 +97,7 @@ public class CollisionMgr {
 
     /** check Player to Border Collision*/
     public boolean playerToBorderCollision() {                                          //we need the height of the bitmap here, didn't had any time left sorry
-        if (currLevel.getPlayer().getWidthOfPlayer() > GameViewActivity.GAME_HEIGHT || currLevel.getPlayer().getPosY() < 0) {
+        if (currLevel.getPlayer().getWidthOfPlayer() > DrawableSurfaceActivity.GAME_HEIGHT || currLevel.getPlayer().getPosY() < 0) {
             return true;
         }
             return false;

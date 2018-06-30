@@ -16,7 +16,6 @@ import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.actors.projectiles.specializations.Projectile_Iron;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
-import yourowngame.com.yourowngame.gameEngine.GameView;
 
 
 public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DEFAULT {

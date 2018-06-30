@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.gamelevels;
+package yourowngame.com.yourowngame.classes.gamedesign;
 
 import yourowngame.com.yourowngame.classes.Feature;
 
