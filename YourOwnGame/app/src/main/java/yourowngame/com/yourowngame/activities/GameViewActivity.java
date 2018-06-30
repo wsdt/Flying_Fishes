@@ -28,15 +28,11 @@ public class GameViewActivity extends DrawableSurfaceActivity {
     private GameView gameView;
     private static SoundMgr soundMgr = new SoundMgr();
     private TextView highscoreVal; //for the points
-    public static int GAME_HEIGHT;
-    public static int GAME_WIDTH;
-
 
     //(1.) Initialize objects
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getGameDimens();
         setContentView(R.layout.activity_game_view);
 
         /* Set highscore val textview */
@@ -50,20 +46,6 @@ public class GameViewActivity extends DrawableSurfaceActivity {
                 WorldManager.getCurr_world_index()).getAllLevels().get(WorldManager.getCurr_lvl_index()));
 
         Log.d(TAG, "onCreate: Tried to load game.");
-    }
-
-
-    @Deprecated
-    @Enhance(byDeveloper = "Solution",
-            message = "I wanna keep it that way, the GameViewActivity should provide the metrics," +
-                    "so the levelHierarchy will deliver it! See @LevelHierarchyActivity.java",
-            priority = Enhance.Priority.LOW)
-    public void getGameDimens() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        GAME_WIDTH = displayMetrics.widthPixels;
-        GAME_HEIGHT = displayMetrics.heightPixels;
-        Log.d(TAG, "HEIGHT = " + GAME_HEIGHT + "WIDTH = " + GAME_WIDTH);
     }
 
     /**
