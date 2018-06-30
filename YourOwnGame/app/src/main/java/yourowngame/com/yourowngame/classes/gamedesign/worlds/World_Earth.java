@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,12 +26,12 @@ public class World_Earth extends World {
 
     @Override
     protected void determineAllLevels() {
-        HashMap<Point, Level> levelMap = new HashMap<>();
-        levelMap.put(new Point(50,50),new Level_SummerSky(this.getActivity()));
-        levelMap.put(new Point(400,50),new Level_NightRider(this.getActivity()));
-        levelMap.put(new Point(1200,300),new Level_EndlessDawn(this.getActivity()));
-        levelMap.put(new Point(1200,500),new Level_DarkDescent(this.getActivity()));
-        this.setAllLevels(levelMap);
+        ArrayList<Level> levelList = new ArrayList<>();
+        levelList.add(new Level_SummerSky(this.getActivity(),new Point(50,50)));
+        levelList.add(new Level_NightRider(this.getActivity(), new Point(400,50)));
+        levelList.add(new Level_EndlessDawn(this.getActivity(), new Point(1200,300)));
+        levelList.add(new Level_DarkDescent(this.getActivity(), new Point(1200,500)));
+        this.setAllLevels(levelList);
     }
 
     @Override

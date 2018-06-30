@@ -3,13 +3,16 @@ package yourowngame.com.yourowngame.classes.gamedesign;
 import android.app.Activity;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import java.lang.invoke.WrongMethodTypeException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
+import yourowngame.com.yourowngame.classes.exceptions.WrongConfigured_Exception;
 
 /** Contains several levels which then are displayed in a LevelHierarchy.
  * No cleanUp() and no initialize() necessary bc. we this class has no
@@ -29,17 +32,32 @@ public abstract class World {
     private ArrayList<Background> allBackgroundLayers;
     /** All levels of this world, with a PointObj (not for identification, but for positioning on the
      * levelScreen). Levels are arranged according on which position they are in the map itself. */
-    private HashMap<Point, Level> allLevels;
+    private ArrayList<Level> allLevels;
 
 
     /** Initializing constructor. */
     public World(@NonNull Activity activity) {
         // Must be the first assignment
         this.setActivity(activity);
-
         this.determineMetaData();
         this.determineAllLevels();
         this.determineBackgroundLayers();
+
+        /* Evaluate constraints (e.g. at minimum one lvl defined.
+        * Check should be last method! */
+        try {
+            this.developerConfigurationCheck();
+        } catch (WrongConfigured_Exception e) {
+            Log.e(TAG, "World: World has been configured badly!");
+            e.printStackTrace();
+        }
+    }
+
+    private void developerConfigurationCheck() throws WrongConfigured_Exception {
+        // CONSTRAINT 1 - At minimum one lvl is configured.
+        if (this.getAllLevels() == null || this.getAllLevels().size() <= 0) {
+            throw new WrongConfigured_Exception("World has no levels configured! You have to define at least one lvl for each worldObj!");
+        }
     }
 
     /** Setting all levels which should be displayed on the custom LevelHierarchy. */
@@ -83,14 +101,14 @@ public abstract class World {
         this.allBackgroundLayers = allBackgroundLayers;
     }
 
-    public HashMap<Point, Level> getAllLevels() {
+    public ArrayList<Level> getAllLevels() {
         if (allLevels == null) {
-            allLevels = new HashMap<>();
+            allLevels = new ArrayList<>();
         }
         return allLevels;
     }
 
-    public void setAllLevels(HashMap<Point, Level> allLevels) {
+    public void setAllLevels(ArrayList<Level> allLevels) {
         this.allLevels = allLevels;
     }
 

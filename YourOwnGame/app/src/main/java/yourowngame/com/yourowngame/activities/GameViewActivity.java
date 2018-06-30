@@ -1,7 +1,6 @@
 package yourowngame.com.yourowngame.activities;
 
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
@@ -12,8 +11,6 @@ import android.widget.Toast;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.gamedesign.Level;
-import yourowngame.com.yourowngame.classes.gamedesign.World;
 import yourowngame.com.yourowngame.classes.gamedesign.WorldManager;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
@@ -48,29 +45,13 @@ public class GameViewActivity extends DrawableSurfaceActivity {
         /* Master-call, create GameView*/
         setGameView(((GameView) findViewById(R.id.gameViewActivity_gameView)));
 
-        /* RECEIVE Level */
-        Intent intent = getIntent();
-        if (intent != null) {
-            // [0] = World ; [1] = X ; [2] = Y
-            int[] lvlRepresentants = intent.getIntArrayExtra(World.INTENT_EXTRAID_POINT);
-            if (lvlRepresentants != null) {
-                getGameView().startGame(this, WorldManager.getWorlds().get(
-                        lvlRepresentants[0]).getAllLevels().get(
-                        new Point(lvlRepresentants[1], lvlRepresentants[2])));
-            } else {
-                showLvlLoadError();
-            }
-        } else {
-            showLvlLoadError();
-        }
+        //Start game
+        getGameView().startGame(this, WorldManager.getWorlds(this).get(
+                WorldManager.getCurr_world_index()).getAllLevels().get(WorldManager.getCurr_lvl_index()));
 
         Log.d(TAG, "onCreate: Tried to load game.");
     }
 
-    private void showLvlLoadError() {
-        Toast.makeText(this,R.string.error_gameViewActivity_lvlLoad, Toast.LENGTH_LONG).show();
-        Log.e(TAG, getResources().getString(R.string.error_gameViewActivity_lvlLoad));
-    }
 
     @Deprecated
     @Enhance(byDeveloper = "Solution",
