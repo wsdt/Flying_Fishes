@@ -46,8 +46,8 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
         private float randomSpeed;
 
         private FlyingElement(Bitmap flyingElementBitmap) {
-            this.posX = RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 1500);
-            this.posY = RandomMgr.getRandomFloat(0, (int) (GameViewActivity.GAME_HEIGHT * FLYINGELEMENT_RANDOM_Y_PLACEMENT_IN_PERCENTAGE));
+            this.posX = getRandomPosX();
+            this.posY = getRandomPosY();
             Log.d(TAG, "Width and Height of GVA " +GameViewActivity.GAME_HEIGHT + " " + GameViewActivity.GAME_WIDTH);
 
             this.flyingElementBitmap = flyingElementBitmap;
@@ -57,9 +57,18 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
         //this methods updates the flying element (e.g. cloud)
         private void updateFlyingElement(float speed) {
             this.posX -= (speed);
-            if (this.posX < -100) //-100 is on every screen outside of visible area
-                posX = GameViewActivity.GAME_WIDTH + 100;
-            Log.d(TAG, "Position of Cloud = " + this.posY);
+            if (this.posX < -100) { //-100 is on every screen outside of visible area
+                //When outside of screen craft new positions
+                posX = getRandomPosX();
+                posY = getRandomPosY();
+            }
+        }
+
+        private float getRandomPosX() {
+            return RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 1500);
+        }
+        private float getRandomPosY() {
+            return RandomMgr.getRandomFloat(0, (int) (GameViewActivity.GAME_HEIGHT * FLYINGELEMENT_RANDOM_Y_PLACEMENT_IN_PERCENTAGE));
         }
     }
 
@@ -90,9 +99,6 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
     /**
      * Crafts FlyingElements (e.g. clouds)
      */
-    @Bug(byDeveloper = "SOLUTION",
-    message = "Metrics of Display are vanished!",
-    possibleSolution = "Game Metrics are not working anymore, they need to be set at every level!")
     private void craftClouds() {
         Log.d(TAG, "craftClouds: Trying to craft clouds.");
         for (int i = 0; i < this.getAmountOfFlyingElements(); i++) {
