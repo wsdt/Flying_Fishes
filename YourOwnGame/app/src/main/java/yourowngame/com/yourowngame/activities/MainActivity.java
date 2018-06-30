@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     //GAME BUTTONS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public void startAdventureMode(View view) {
-        startActivity(new Intent(this, GameLevelHorizontalActivity.class));
+        startActivity(new Intent(this, WorldActivity.class));
     }
 
 

@@ -1,10 +1,10 @@
-package yourowngame.com.yourowngame.classes.gamelevels.levelassignments;
+package yourowngame.com.yourowngame.classes.gamedesign.levelassignments;
 
 import android.support.annotation.NonNull;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.counters.HighScore;
-import yourowngame.com.yourowngame.classes.gamelevels.LevelAssignment;
+import yourowngame.com.yourowngame.classes.gamedesign.LevelAssignment;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 
 /** To achieve this levelAssignment the user has to reach a specific
