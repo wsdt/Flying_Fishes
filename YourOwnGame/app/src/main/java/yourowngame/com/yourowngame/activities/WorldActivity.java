@@ -1,8 +1,11 @@
 package yourowngame.com.yourowngame.activities;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.gamedesign.WorldManager;
 import yourowngame.com.yourowngame.classes.gamedesign.worlds.World_Earth;
 import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
 
@@ -15,16 +18,15 @@ public class WorldActivity extends DrawableSurfaceActivity {
         setContentView(R.layout.activity_world);
 
         this.setWorldView((WorldView) findViewById(R.id.worldActivity_worldView));
-
-        //TODO: just for testing --> replace world_earth() with var
-        this.getWorldView().startWorldAnimations(this, new World_Earth(this));
+        this.getWorldView().startWorldAnimations(this);
     }
 
+    /** Stop animations when activity isn't shown. */
     @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
+    protected void onStop() { //not onPause, bc. on exiting activity and onStart also onPause is called!
+        super.onStop();
+        this.getWorldView().getThread().pauseThread();
+    } //do not make onResume(), bc. dialog should be shown and game should only resume, when resume is clicked and not automatically.
 
     //GETTER/SETTER +++++++++++++++++++++++++++++++++++++
     public WorldView getWorldView() {

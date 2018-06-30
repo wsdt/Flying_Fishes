@@ -9,9 +9,10 @@ import android.view.View;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.activities.GameLevelHorizontalActivity;
+import yourowngame.com.yourowngame.activities.WorldActivity;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
+import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
 
 /** Shown when user presses pause btn during game. */
 public class PauseGameDialog {
@@ -44,7 +45,7 @@ public class PauseGameDialog {
                         @Override
                         public void onClick(View v) {
                             gameView.exitNow();
-                            activity.startActivity(new Intent(activity, GameLevelHorizontalActivity.class));
+                            activity.startActivity(new Intent(activity, WorldActivity.class));
                         }
                     })
                     .show();

@@ -2,6 +2,7 @@ package yourowngame.com.yourowngame.classes.gamedesign.levels;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -23,8 +24,8 @@ import yourowngame.com.yourowngame.classes.gamedesign.levelassignments.LA_Achiev
 
 public class Level_DarkDescent extends Level {
 
-    public Level_DarkDescent(@NonNull Activity activity) {
-        super(activity);
+    public Level_DarkDescent(@NonNull Activity activity, @NonNull Point worldMapPosition) {
+        super(activity, worldMapPosition);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class Level_DarkDescent extends Level {
     @Override
     protected void determineLevelAssigments() {
         ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
-        allLevelAssignments.add(new LA_AchievePoints(15_000, getCurrentLevelHighscore()));
+        //allLevelAssignments.add(new LA_AchievePoints(15_000, getCurrentLevelHighscore())); // open end currently
         this.setAllLevelAssignments(allLevelAssignments);
     }
 

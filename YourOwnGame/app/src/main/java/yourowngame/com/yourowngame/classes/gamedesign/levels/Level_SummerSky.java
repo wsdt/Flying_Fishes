@@ -2,6 +2,7 @@ package yourowngame.com.yourowngame.classes.gamedesign.levels;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -35,8 +36,8 @@ import yourowngame.com.yourowngame.classes.gamedesign.levelassignments.LA_Achiev
 public class Level_SummerSky extends Level {
     private static final String TAG = "Lvl_HarmlessSky";
 
-    public Level_SummerSky(@NonNull Activity activity) {
-        super(activity);
+    public Level_SummerSky(@NonNull Activity activity, @NonNull Point worldMapPosition) {
+        super(activity, worldMapPosition);
     }
 
     @Override
