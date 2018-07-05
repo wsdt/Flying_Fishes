@@ -81,6 +81,14 @@
     <string name="dialog_pausegame_description">Game has been paused successfully.</string>
     <string name="dialog_pausegame_btn_positive">Resume</string>
     <string name="dialog_pausegame_btn_negative">Exit</string>
+    <!-- show level info dialog -->
+    <string name="level_name"> Level: 00%1$d </string>
+    <string name="your_highscore"> Your Level-Score: %1$s </string>
+    <string name="fruits_available"> Available Fruits: </string>
+    <string name="start_level_btn"> Start Level </string>
+    <string name="cancel_level_btn"> Cancel </string>
+    <string name="level_information"> Level Information</string>
+
 
 
 </resources>
