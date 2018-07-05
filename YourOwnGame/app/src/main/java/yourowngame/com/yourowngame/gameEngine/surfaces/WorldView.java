@@ -22,6 +22,7 @@ import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.gamedesign.World;
 import yourowngame.com.yourowngame.classes.gamedesign.WorldManager;
+import yourowngame.com.yourowngame.classes.manager.dialog.LevelInformationDialog;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 /**
@@ -135,7 +136,8 @@ public class WorldView extends DrawableSurfaces {
                         // Pause/Stop thread before opening new activity
                         getThread().pauseThread();
                         WorldManager.setCurr_lvl_index(lvlIndex);
-                        this.getDrawableSurfaceActivity().startActivity(new Intent(this.getDrawableSurfaceActivity(),GameViewActivity.class));
+                        //this.getDrawableSurfaceActivity().startActivity(new Intent(this.getDrawableSurfaceActivity(),GameViewActivity.class));
+                        LevelInformationDialog.show(this, lvlIndex);
                         return true;
                     }
                     lvlIndex++;
