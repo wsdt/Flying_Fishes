@@ -42,7 +42,7 @@
     <string name="level_levelName_nightRider">Night Rider</string>
     <string name="level_levelName_endlessDawn">Endless Dawn</string>
     <string name="level_levelName_darkDescent">Dark Descent</string>
-    <string name="level_levelName_bonusLevel01">Bonus Level!</string>
+    <string name="level_levelName_fruityIsland">FruityIsland</string>
     <string name="success">Success! You Achieved level x</string>
 
     <!-- LevelAssigments -->
