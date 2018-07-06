@@ -16,6 +16,7 @@ import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.gamedesign.World;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_DarkDescent;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_EndlessDawn;
+import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_FruityIsland;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_NightRider;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_SummerSky;
 
@@ -32,6 +33,7 @@ public class World_Earth extends World {
         levelList.add(new Level_NightRider(this.getActivity(), new Point(400,50)));
         levelList.add(new Level_EndlessDawn(this.getActivity(), new Point(1200,300)));
         levelList.add(new Level_DarkDescent(this.getActivity(), new Point(1200,500)));
+        levelList.add(new Level_FruityIsland(this.getActivity(), new Point(1500, 800)));
         this.setAllLevels(levelList);
     }
 

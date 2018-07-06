@@ -31,6 +31,7 @@ import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 public class WorldView extends DrawableSurfaces {
     private static final String TAG = "WorldView";
     private Bitmap initializedLevelRepresentant;
+    private boolean initDone = false;
 
     public WorldView(Context context) {
         super(context);
@@ -46,9 +47,8 @@ public class WorldView extends DrawableSurfaces {
 
     public void startWorldAnimations(@NonNull WorldActivity worldActivity) {
         this.setDrawableSurfaceActivity(worldActivity);
-
-        this.initializeDrawableObjs();
-        this.initializeDrawing();
+            this.initializeDrawableObjs();
+            this.initializeDrawing();
     }
 
     @Override

@@ -15,6 +15,7 @@
     <color name="colorDarkRed">#880000</color>
     <color name="colorBlack">#111111</color>
     <color name="thegame_grey">#5b5b5b</color>
+    <color name="fruityIsland">#00ff48</color>
 
     <!-- Colors for new Sliding-Fruit-View -->
     <color name="colorOne">#262938</color>
