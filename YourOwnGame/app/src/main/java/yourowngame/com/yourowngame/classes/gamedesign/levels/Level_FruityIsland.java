@@ -69,7 +69,7 @@ public class Level_FruityIsland extends Level {
     @Override
     protected void determineLevelAssigments() {
         ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
-        allLevelAssignments.add(new LA_AchievePoints(17_500, getCurrentLevelHighscore())); // open end currently
+        allLevelAssignments.add(new LA_AchievePoints(17_500, getCurrentLevelHighscore()));
         this.setAllLevelAssignments(allLevelAssignments);
     }
 

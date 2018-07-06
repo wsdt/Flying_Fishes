@@ -69,7 +69,7 @@ public class Level_DarkDescent extends Level {
 
     @Override
     protected void determineMetaData() {
-        this.setLevelNameResId(R.string.level_levelName_darkDescent);
+        this.setLevelNameResId(R.string.level_levelName_fruityIsland);
     }
 
 }

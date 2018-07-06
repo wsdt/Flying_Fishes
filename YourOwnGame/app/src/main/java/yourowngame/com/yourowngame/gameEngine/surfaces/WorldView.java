@@ -138,6 +138,7 @@ public class WorldView extends DrawableSurfaces {
                         WorldManager.setCurr_lvl_index(lvlIndex);
                         //this.getDrawableSurfaceActivity().startActivity(new Intent(this.getDrawableSurfaceActivity(),GameViewActivity.class));
                         LevelInformationDialog.show(this, lvlIndex);
+
                         return true;
                     }
                     lvlIndex++;

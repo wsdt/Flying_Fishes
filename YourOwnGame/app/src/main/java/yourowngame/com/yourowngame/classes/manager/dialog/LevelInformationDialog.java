@@ -15,6 +15,7 @@ import java.text.NumberFormat;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.activities.WorldActivity;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Avoci;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Meloon;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Pinapo;
@@ -53,7 +54,7 @@ public class LevelInformationDialog {
             infoDialog.setListener(R.id.cancelLevelButton, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    infoDialog.dismiss();
+                    activity.startActivity(new Intent(activity, WorldActivity.class));
                 }
             });
 
