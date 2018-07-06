@@ -124,6 +124,10 @@ public abstract class Level {
 
     //GETTER/SETTER +++++++++++++++++++++++++++++++++++++++++++++++++
 
+    public int getLevelName(){
+        return levelNameResId;
+    }
+
     public ArrayList<Background> getAllBackgroundLayers() {
         if (allBackgroundLayers == null || allBackgroundLayers.size() <= 0) {
             this.determineBackgroundLayers();

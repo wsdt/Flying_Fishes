@@ -69,12 +69,12 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/YourScore"
+                android:id="@+id/pointsToAchieve"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:paddingRight="25dp"
-                android:text="@string/your_highscore" />
+                android:text="@string/points_to_achieve" />
         </TableRow>
     </TableLayout>
 

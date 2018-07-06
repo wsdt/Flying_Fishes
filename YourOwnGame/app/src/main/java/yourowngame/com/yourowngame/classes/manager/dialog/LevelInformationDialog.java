@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.yarolegovich.lovelydialog.LovelyCustomDialog;
+
+import java.text.NumberFormat;
+
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Avoci;
@@ -20,7 +23,7 @@ import yourowngame.com.yourowngame.classes.gamedesign.WorldManager;
 import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
 
 /**
- * Creates a simple Dialog which holds the information for the choosen level
+ * Creates a simple Dialog which holds the information for the chosen level
  * -> available fruits
  * -> level-Number
  * -> current best-highscore
@@ -65,10 +68,11 @@ public class LevelInformationDialog {
     }
 
     //init dialog data
-    public static void initiate(View view, Activity activity){
+    private static void initiate(View view, Activity activity){
         ImageView meloon = (ImageView)  view.findViewById(R.id.meloonAvailable);
         ImageView avoci  = (ImageView)  view.findViewById(R.id.avociAvailable);
         ImageView pinapo = (ImageView)  view.findViewById(R.id.pinapoAvailable);
+
 
         Level lvlobj = WorldManager.getCurrLvlObj(activity);
 
@@ -83,12 +87,18 @@ public class LevelInformationDialog {
             }
         }
 
+        //we could also display the enemies, which will be in that level.
+
         //level number
         TextView levelNumber = view.findViewById(R.id.levelName);
-        levelNumber.setText(activity.getResources().getString(R.string.level_name, levelIndex +1));
+        levelNumber.setText(activity.getResources().getString(R.string.level_name, levelIndex+1));
 
-        //level score (later on -> best score could be shown!)
-        TextView highscore = view.findViewById(R.id.YourScore);
-        highscore.setText(activity.getResources().getString(R.string.your_highscore, "N/V"));
+        //Points to achieve this level
+        TextView pointsToAchieve = view.findViewById(R.id.pointsToAchieve);
+        //using local-specific separator
+        String formattedAmount = NumberFormat.getIntegerInstance().format(lvlobj.getAllLevelAssignments().get(0).getAmount());
+        pointsToAchieve.setText(activity.getResources().getString(R.string.points_to_achieve, formattedAmount));
+
+
     }
 }
