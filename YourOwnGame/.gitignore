@@ -1,3 +1,6 @@
+# do not push sensitive files
+app\src\main\java\yourowngame\com\yourowngame\classes\commercial\interfaces\IAdManager.java
+
 *.iml
 .gradle
 /local.properties
