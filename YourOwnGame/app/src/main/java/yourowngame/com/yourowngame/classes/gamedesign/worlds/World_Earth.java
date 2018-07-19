@@ -40,7 +40,7 @@ public class World_Earth extends World {
         ArrayList<Background> backgrounds = new ArrayList<>();
         backgrounds.add(new BL_SingleColor(this.getActivity(),R.color.colorSkyBlue));
         backgrounds.add(new BL_FlyingElements(this.getActivity(),
-                new int[]{R.drawable.bglayer_1_cloud_1, R.drawable.bglayer_1_cloud_2, R.drawable.bglayer_1_cloud_3},3));
+                new int[]{R.drawable.bglayer_1_cloud_1, R.drawable.bglayer_1_cloud_2, R.drawable.bglayer_1_cloud_3},2));
         backgrounds.add(new BL_FlyingElements(this.getActivity(),
                 new int[]{R.drawable.enemy_rocketfish_01, R.drawable.avoci},1));
         this.setAllBackgroundLayers(backgrounds);
