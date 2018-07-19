@@ -1,6 +1,6 @@
 # Flying Fishes [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/wsdt/Flying_Fishes/graphs/commit-activity) [![Generic badge](https://img.shields.io/badge/In-JAVA-RED.svg)](https://www.java.com/) [![GitHub license](https://img.shields.io/github/license/wsdt/Flying_Fishes.svg)](https://github.com/wsdt/Flying_Fishes/blob/master/LICENSE)
 
-Native Android game which has been written as modular as possible. Consequently, new levels, worlds, enemies, backgrounds can be integrated into the game within a few minutes. 
+Native Android game which has been written as modular as possible. Consequently, new levels, worlds, enemies, backgrounds can be integrated into the game within a few minutes. Here you can jump to the [class-section](https://github.com/wsdt/Flying_Fishes/tree/master/YourOwnGame/app/src/main/java/yourowngame/com/yourowngame).
 
 ## Contribution [![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
