@@ -35,12 +35,12 @@ public class WorldManager {
     private WorldManager() {
     }
 
-    public static WorldManager getInstance() {
+    /*public static WorldManager getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new WorldManager();
         }
         return INSTANCE;
-    }
+    }*/
 
     /**
      * Only worldActivity should have access.
