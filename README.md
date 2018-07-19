@@ -1,4 +1,4 @@
-# Flying Fishes [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/wsdt/Flying_Fishes/graphs/commit-activity) [![Generic badge](https://img.shields.io/badge/Made with-JAVA-RED.svg)](https://www.java.com/) [![GitHub license](https://img.shields.io/github/license/wsdt/Flying_Fishes.svg)](https://github.com/wsdt/Flying_Fishes/blob/master/LICENSE)
+# Flying Fishes [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/wsdt/Flying_Fishes/graphs/commit-activity) [![Generic badge](https://img.shields.io/badge/In-JAVA-RED.svg)](https://www.java.com/) [![GitHub license](https://img.shields.io/github/license/wsdt/Flying_Fishes.svg)](https://github.com/wsdt/Flying_Fishes/blob/master/LICENSE)
 
 Native Android game which has been written as modular as possible. Consequently, new levels, worlds, enemies, backgrounds can be integrated into the game within a few minutes. 
 
