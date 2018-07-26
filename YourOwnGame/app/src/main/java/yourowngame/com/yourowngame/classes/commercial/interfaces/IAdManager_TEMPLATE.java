@@ -2,7 +2,8 @@ package yourowngame.com.yourowngame.classes.commercial.interfaces;
 
 import yourowngame.com.yourowngame.BuildConfig;
 
-/** Rename this file from IAdManager_TEMPLATE.java to IAdManager.java
+/** COPY (not simply rename) this file AND 
+			AFTER THAT RENAME the copied file from e.g. IAdManager_TEMPLATE (1).java to IAdManager.java
 */
 
 
