@@ -2,6 +2,12 @@
 
 Native Android game which has been written as modular as possible. Consequently, new levels, worlds, enemies, backgrounds can be integrated into the game within a few minutes. Here you can jump to the [class-section](https://github.com/wsdt/Flying_Fishes/tree/master/YourOwnGame/app/src/main/java/yourowngame/com/yourowngame).
 
+## Playstore
+This app is currently only available to Alpha (Closed-Alpha track) and Beta (Open-Beta track) testers. 
+- Playstore -> [Flying Fishes (https://play.google.com/store/apps/details?id=solution_wsdt.com.yourowngame.free)](https://play.google.com/store/apps/details?id=solution_wsdt.com.yourowngame.free)
+
+_All (senseful) contributions/pull-requests will be examined and added to the next release (if you want so / if you don't just fork this repository)._
+
 ## Contribution [![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 This project is licensed under GNU V3, so contributions/pull-requests are welcome. All contributors get listed here.  
