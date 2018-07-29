@@ -11,6 +11,8 @@ public class RandomMgr {
     private final String TAG = "RandomHandler";
     private static Random random;
 
+    private RandomMgr() {} //no instance allowed
+
     //RandomHandler is a static class and will only hold static references, so initiating a Random is not necessary
     private static void initiateRandom() {
         if (random == null) { //to avoid unnecessary object allocations (when used in loops e.g.)

@@ -16,7 +16,7 @@ import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
 import yourowngame.com.yourowngame.classes.counters.HighScore;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
-import yourowngame.com.yourowngame.classes.gamedesign.WorldManager;
+import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.classes.manager.CollisionMgr;
 import yourowngame.com.yourowngame.classes.manager.dialog.GameOverDialog;
 import yourowngame.com.yourowngame.classes.manager.dialog.LevelAchievedDialog;
@@ -260,7 +260,7 @@ public class GameView extends DrawableSurfaces {
         getHighscore().removeAllListeners();
 
         //Cleanup all enemy objects etc. (so restart of game is possible without old enemy positions, etc.)
-        WorldManager.resetGame(this.getCurrLevelObj()); //reset gameLevelState so user starts from level 0 again.
+        WorldMgr.resetGame(this.getCurrLevelObj()); //reset gameLevelState so user starts from level 0 again.
 
         getDrawableSurfaceActivity().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
     }

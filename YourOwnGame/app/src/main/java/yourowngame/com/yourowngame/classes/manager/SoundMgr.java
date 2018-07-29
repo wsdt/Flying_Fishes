@@ -6,9 +6,11 @@ import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 
 public class SoundMgr {
-    private MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer;
 
-    public void play(@NonNull Context context, int resSound, boolean looping) {
+    private SoundMgr() {} //no instance allowed
+
+    public static void play(@NonNull Context context, int resSound, boolean looping) {
         setMediaPlayer(MediaPlayer.create(context, resSound));
 
         getMediaPlayer().setLooping(looping);
@@ -28,7 +30,7 @@ public class SoundMgr {
         getMediaPlayer().prepareAsync();
     }
 
-    public void stop() {
+    public static void stop() {
         if (getMediaPlayer() != null) {
             getMediaPlayer().stop();
         }
@@ -41,7 +43,7 @@ public class SoundMgr {
         finishMediaPlayer();
     }
 
-    public void finishMediaPlayer() {
+    public static void finishMediaPlayer() {
         //Release memory
         if (getMediaPlayer() != null) {
             getMediaPlayer().release();
@@ -51,11 +53,11 @@ public class SoundMgr {
 
 
     //GETTER/SETTER ---------------------------------
-    public MediaPlayer getMediaPlayer() {
+    public static MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
 
-    public void setMediaPlayer(MediaPlayer mediaPlayer) {
-        this.mediaPlayer = mediaPlayer;
+    public static void setMediaPlayer(MediaPlayer mediaPlayer) {
+        SoundMgr.mediaPlayer = mediaPlayer;
     }
 }

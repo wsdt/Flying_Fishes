@@ -1,5 +1,9 @@
-# do not push sensitive files
+# Sensitive data ---------------------
+# Old paths (for backward compatibility)
 app/src/main/java/yourowngame/com/yourowngame/classes/commercial/interfaces/IAdManager.java
+
+#new paths
+app/src/main/java/yourowngame/com/yourowngame/classes/manager/interfaces/IAdManager.java
 
 *.iml
 .gradle

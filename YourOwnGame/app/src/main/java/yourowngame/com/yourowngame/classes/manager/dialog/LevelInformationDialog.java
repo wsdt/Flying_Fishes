@@ -20,7 +20,8 @@ import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_A
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Meloon;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Pinapo;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
-import yourowngame.com.yourowngame.classes.gamedesign.WorldManager;
+import yourowngame.com.yourowngame.classes.manager.WorldMgr;
+import yourowngame.com.yourowngame.gameEngine.CanvasDrawThread;
 import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
 
 /**
@@ -40,32 +41,44 @@ public class LevelInformationDialog {
         if(!activity.isFinishing()) {
             //inflate for imageView visibility
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.dialog_level_information, null);
+            if (inflater == null) {
+                Log.w(TAG, "show: Could not show levelInfo dialog. Starting lvl instead.");
 
-            final LovelyCustomDialog infoDialog = new LovelyCustomDialog(activity);
-            infoDialog.setView(view);
-            infoDialog.setListener(R.id.startLevelButton, new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    WorldManager.setCurr_lvl_index(levelIndex);
-                    activity.startActivity(new Intent(activity, GameViewActivity.class));
-                }
-            });
-            infoDialog.setListener(R.id.cancelLevelButton, new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    activity.startActivity(new Intent(activity, WorldActivity.class));
-                }
-            });
+            } else {
+                View view = inflater.inflate(R.layout.dialog_level_information, null);
 
-            //initiate dialog-data
-            initiate(view, activity);
+                final LovelyCustomDialog infoDialog = new LovelyCustomDialog(activity);
+                infoDialog.setView(view);
+                infoDialog.setListener(R.id.startLevelButton, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startLvl(activity,infoDialog);
+                    }
+                });
+                infoDialog.setListener(R.id.cancelLevelButton, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //activity.startActivity(new Intent(activity, WorldActivity.class));
+                        infoDialog.dismiss();
+                        worldView.getThread().resumeThread(); //resume world animations
+                    }
+                });
 
-            //show the dialog
-            infoDialog.show();
+                //initiate dialog-data
+                initiate(view, activity);
+
+                //show the dialog
+                infoDialog.show();
+            }
         }else{
-            Log.d(TAG, "Whups, couldnt show dialog!");
+            Log.d(TAG, "show: Whups, couldnt show dialog!");
         }
+    }
+
+    private static void startLvl(@NonNull Activity activity, @NonNull LovelyCustomDialog infoDialog) {
+        WorldMgr.setCurr_lvl_index(levelIndex);
+        infoDialog.dismiss();
+        activity.startActivity(new Intent(activity, GameViewActivity.class));
     }
 
     //init dialog data
@@ -75,7 +88,7 @@ public class LevelInformationDialog {
         ImageView pinapo = (ImageView)  view.findViewById(R.id.pinapoAvailable);
 
 
-        Level lvlobj = WorldManager.getCurrLvlObj(activity);
+        Level lvlobj = WorldMgr.getCurrLvlObj(activity);
 
         //unhappy with that solution!
         for (int i = 0; i < lvlobj.getAllFruits().size(); i++){

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class EnemyMgr {
     private static final String TAG = "EnemyMgr";
 
+    private EnemyMgr() {} //no instance allowed
+
     /**
      * Creates universally random enemies."
      */

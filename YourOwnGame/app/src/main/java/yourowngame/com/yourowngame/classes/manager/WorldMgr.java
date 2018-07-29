@@ -1,19 +1,18 @@
-package yourowngame.com.yourowngame.classes.gamedesign;
+package yourowngame.com.yourowngame.classes.manager;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.gamedesign.World;
 import yourowngame.com.yourowngame.classes.gamedesign.worlds.World_Earth;
 
 /**
  * SINGLETON PATTERN
  */
-public class WorldManager {
+public class WorldMgr {
     private static final String TAG = "WorldManager";
     private static int curr_world_index = 0;
     /**
@@ -30,17 +29,9 @@ public class WorldManager {
      * IMPORTANT: Do not give activity by constructor (to avoid saving old activities etc.),
      * bc. we use a Singleton (to avoid memory leaks)
      */
-    private static WorldManager INSTANCE;
+    private WorldMgr() {} //no instance allowed
 
-    private WorldManager() {
-    }
 
-    /*public static WorldManager getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new WorldManager();
-        }
-        return INSTANCE;
-    }*/
 
     /**
      * Only worldActivity should have access.
@@ -86,11 +77,11 @@ public class WorldManager {
     }
 
     public static Level getCurrLvlObj(@NonNull Activity activity) {
-        return getCurrWorldObj(activity).getAllLevels().get(WorldManager.getCurr_lvl_index());
+        return getCurrWorldObj(activity).getAllLevels().get(WorldMgr.getCurr_lvl_index());
     }
 
     public static World getCurrWorldObj(@NonNull Activity activity) {
-        return WorldManager.getWorlds(activity).get(WorldManager.getCurr_world_index());
+        return WorldMgr.getWorlds(activity).get(WorldMgr.getCurr_world_index());
     }
 
 
@@ -103,7 +94,7 @@ public class WorldManager {
     }
 
     public static void setWorlds(ArrayList<World> worlds) {
-        WorldManager.worlds = worlds;
+        WorldMgr.worlds = worlds;
     }
 
     public static int getCurr_world_index() {
@@ -111,7 +102,7 @@ public class WorldManager {
     }
 
     public static void setCurr_world_index(int curr_world_index) {
-        WorldManager.curr_world_index = curr_world_index;
+        WorldMgr.curr_world_index = curr_world_index;
     }
 
     public static int getCurr_lvl_index() {
@@ -119,6 +110,6 @@ public class WorldManager {
     }
 
     public static void setCurr_lvl_index(int curr_lvl_index) {
-        WorldManager.curr_lvl_index = curr_lvl_index;
+        WorldMgr.curr_lvl_index = curr_lvl_index;
     }
 }

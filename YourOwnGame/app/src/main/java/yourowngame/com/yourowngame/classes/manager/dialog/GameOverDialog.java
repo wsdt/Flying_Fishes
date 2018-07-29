@@ -8,7 +8,7 @@ import android.view.View;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.commercial.AdManager;
+import yourowngame.com.yourowngame.classes.manager.AdManager;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
 import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
@@ -31,7 +31,7 @@ public class GameOverDialog {
                     .setPositiveButton(R.string.dialog_gameover_btn_positive, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            new AdManager(gameView.getDrawableSurfaceActivity()).loadRewardedVideoInRewardActivity(
+                            AdManager.loadRewardedVideoInRewardActivity(
                                     gameView.getDrawableSurfaceActivity(), new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
                                         @Override
                                         public void success_is_true() {

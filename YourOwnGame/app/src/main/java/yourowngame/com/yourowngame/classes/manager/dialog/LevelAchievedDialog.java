@@ -12,8 +12,7 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.WorldActivity;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 
-import yourowngame.com.yourowngame.classes.gamedesign.World;
-import yourowngame.com.yourowngame.classes.gamedesign.WorldManager;
+import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
@@ -40,11 +39,11 @@ public class LevelAchievedDialog {
                     .setCancelable(false);
 
             //Should we show positive btn (is this the last level?)
-            if (WorldManager.getCurrWorldObj(activity).getAllLevels().size() > (WorldManager.getCurr_lvl_index() + 1)) {
+            if (WorldMgr.getCurrWorldObj(activity).getAllLevels().size() > (WorldMgr.getCurr_lvl_index() + 1)) {
                 ld.setPositiveButton(R.string.dialog_levelachieved_btn_positive, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        WorldManager.setNextLvl(activity);
+                        WorldMgr.setNextLvl(activity);
                         activity.finish();
                         activity.startActivity(activity.getIntent());
                     }

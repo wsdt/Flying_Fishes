@@ -1,17 +1,13 @@
 package yourowngame.com.yourowngame.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.gamedesign.WorldManager;
+import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
@@ -26,7 +22,6 @@ import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 public class GameViewActivity extends DrawableSurfaceActivity {
     private static final String TAG = "GameViewActivity";
     private GameView gameView;
-    private static SoundMgr soundMgr = new SoundMgr();
     private TextView highscoreVal; //for the points
 
     //(1.) Initialize objects
@@ -42,8 +37,8 @@ public class GameViewActivity extends DrawableSurfaceActivity {
         setGameView(((GameView) findViewById(R.id.gameViewActivity_gameView)));
 
         //Start game
-        getGameView().startGame(this, WorldManager.getWorlds(this).get(
-                WorldManager.getCurr_world_index()).getAllLevels().get(WorldManager.getCurr_lvl_index()));
+        getGameView().startGame(this, WorldMgr.getWorlds(this).get(
+                WorldMgr.getCurr_world_index()).getAllLevels().get(WorldMgr.getCurr_lvl_index()));
 
         Log.d(TAG, "onCreate: Tried to load game.");
     }

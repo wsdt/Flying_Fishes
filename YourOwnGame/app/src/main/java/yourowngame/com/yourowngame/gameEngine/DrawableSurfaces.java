@@ -41,7 +41,7 @@ public abstract class DrawableSurfaces extends SurfaceView {
         /**************************************
          * Start of the Surface & Thread Page *
          **************************************/
-        setThread(new CanvasDrawThread(this));
+        setThread(new CanvasDrawThread(this)); //via singleton there can always be only one thread!
         this.setSurfaceHolder(getHolder());
 
         //Callback-method: 3 Types

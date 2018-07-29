@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.commercial.AdManager;
+import yourowngame.com.yourowngame.classes.manager.AdManager;
 import yourowngame.com.yourowngame.classes.manager.storage.SharedPrefStorageMgr;
 
 //TODO: This class might/should be connected/reviewed by Google-Play-Services in future or similar!
@@ -31,7 +31,7 @@ public class HighscoreActivity extends AppCompatActivity {
         printAllHighscoreEntries();
 
         // Load ads
-        new AdManager(this).loadBannerAd((RelativeLayout) findViewById(R.id.highscoreActivity_RL));
+        AdManager.loadBannerAd(this,(RelativeLayout) findViewById(R.id.highscoreActivity_RL));
     }
 
     private void printHighscoreEntry(int points) {

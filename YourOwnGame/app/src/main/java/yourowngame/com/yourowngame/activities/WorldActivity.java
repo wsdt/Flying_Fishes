@@ -1,12 +1,8 @@
 package yourowngame.com.yourowngame.activities;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.gamedesign.WorldManager;
-import yourowngame.com.yourowngame.classes.gamedesign.worlds.World_Earth;
 import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
 
 public class WorldActivity extends DrawableSurfaceActivity {

@@ -1,17 +1,17 @@
-package yourowngame.com.yourowngame.classes.commercial.interfaces;
+package yourowngame.com.yourowngame.classes.manager.interfaces;
 
 import yourowngame.com.yourowngame.BuildConfig;
 
-/** COPY (not simply rename) this file AND 
+/** To use this file do the following:
+ * 1. Copy this file.
+ * 2. Rename the COPIED file AND the interface name of the copied file from IAdManager_TEMPLATE (1) -> IAdManager
+ * 2. Place your ADMOB id in the "ADMOB_ID" constant.
+ *
+ * COPY (not simply rename) this file AND
 			AFTER THAT RENAME the copied file from e.g. IAdManager_TEMPLATE (1).java to IAdManager.java
 */
 
-
-/** Extracted from Constants interface (better separation of concern)
- * --> By extracting it to an separate interface again and not simply
- * making it to class members we could add here several methods etc. */
-
-public interface IAdManager {
+public interface IAdManager_TEMPLATE {
     String ADMOB_ID = "YOUR_ADMOB_ID";
     boolean USE_TEST_ADS = true; // true, so REAL_ADS doesn't need to be filled. 
 	/* UNCOMMENT and comment line above to use test ads automatically acc. to buildtype

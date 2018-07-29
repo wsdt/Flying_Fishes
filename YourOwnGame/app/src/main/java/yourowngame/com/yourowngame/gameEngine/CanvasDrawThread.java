@@ -16,7 +16,7 @@ import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
  */
 
 public class CanvasDrawThread extends Thread implements IGameLoopThread {
-    /**
+    /*
      * @link GameLoopThread#isRunning: {true}->Gameloop will be executed || {false}->Gameloop stopped/paused
      */
 
@@ -25,6 +25,7 @@ public class CanvasDrawThread extends Thread implements IGameLoopThread {
 
     private boolean isRunning;
     private static final String TAG = "Thread";
+
 
     public CanvasDrawThread(@NonNull DrawableSurfaces view) {
         this.setView(view);
@@ -69,6 +70,7 @@ public class CanvasDrawThread extends Thread implements IGameLoopThread {
                     continue;
                 }
                 c = getView().getHolder().lockCanvas();
+                if (c==null) {setRunning(false);break;} //if canvas is gone setRunning to false and exit loop
                 Log.e(TAG, "CANVAS: "+c);
                 synchronized (getView().getHolder()) {
                     beginTime = System.currentTimeMillis();

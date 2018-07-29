@@ -10,7 +10,7 @@ import yourowngame.com.yourowngame.R;
 /** This class provides (mostly static) methods/params which might be used in a huge amount
  * of different classes. So only put here methods where you surely know you will need it more often,
  * and only when it does not make any sense to put the method to other classes (cohesion). */
-public class HelperClass {
+public class MetaDataMgr {
     /** @param versionName: If true then method will use the param versionName, if false then the
      * versionCode will be returned (see build.gradle). */
     public static String getAppVersion(@NonNull Context context, boolean versionName) {

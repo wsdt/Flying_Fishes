@@ -8,8 +8,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.classes.commercial.AdManager;
-import yourowngame.com.yourowngame.classes.manager.HelperClass;
+import yourowngame.com.yourowngame.classes.manager.AdManager;
+import yourowngame.com.yourowngame.classes.manager.MetaDataMgr;
 
 /**
  *
@@ -26,11 +26,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Load Banner Ad (declared as a member of class, so we could easily display more)
-        new AdManager(this).loadBannerAd((RelativeLayout) findViewById(R.id.mainActivity_RL));
+        AdManager.loadBannerAd(this,(RelativeLayout) findViewById(R.id.mainActivity_RL));
 
 
         //Show current app version to user
-        ((TextView) findViewById(R.id.mainActivity_appVersion)).setText(HelperClass.getAppVersion(this,true));
+        ((TextView) findViewById(R.id.mainActivity_appVersion)).setText(MetaDataMgr.getAppVersion(this,true));
     }
 
     //GAME BUTTONS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

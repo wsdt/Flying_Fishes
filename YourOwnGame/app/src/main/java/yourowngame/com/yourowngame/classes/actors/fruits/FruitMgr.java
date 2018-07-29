@@ -15,6 +15,8 @@ import yourowngame.com.yourowngame.classes.gamedesign.Level;
 public class FruitMgr {
     private static final String TAG = "FruitMgr";
 
+    private FruitMgr() {} //no instance allowed
+
     /**
      * Creates universally random fruits."
      * @param currLevel: Used e.g. by some fruitpowers to take effect on the current level.
