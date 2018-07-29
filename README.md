@@ -19,7 +19,7 @@ This project is licensed under GNU V3, so contributions/pull-requests are welcom
 ### How to get started
 This project has certain files, which have been added to the [.gitignore](https://github.com/wsdt/Flying_Fishes/blob/master/.gitignore) to avoid pushing specific secrets (e.g. advertisment tokens, etc.). As you wouldn't be able to compile/execute the app without those files we always add a so-called Template-File. Those template files are always named according to their original name + "\_TEMPLATE", so the file gets pushed. These files have most of the time a short explanation how you have to use/configure them. All template files are listed below (you have to configure all of them to execute the app): 
 
-- IAdManager.java -> [Template-File](https://github.com/wsdt/Flying_Fishes/blob/master/YourOwnGame/app/src/main/java/yourowngame/com/yourowngame/classes/commercial/interfaces/IAdManager_TEMPLATE.java)
+- IAdManager.java -> [Template-File](https://github.com/wsdt/Flying_Fishes/blob/master/YourOwnGame/app/src/main/java/yourowngame/com/yourowngame/classes/manager/interfaces/IAdManager_TEMPLATE.java)
 
 To configure all template files above correctly, you just need to **copy** the template-file and then **rename** the **copied** file according the original name (e.g. IAdManager_TEMPLATE.java -> IAdManager.java). Additionally, you presumably should change some constants/lines in those newly created files (Reminder: also your new file won't get pushed at it is in the [.gitignore]((https://github.com/wsdt/Flying_Fishes/blob/master/.gitignore)). After that short configuration everything should run fine. Looking forward to your contribution :)!
 
