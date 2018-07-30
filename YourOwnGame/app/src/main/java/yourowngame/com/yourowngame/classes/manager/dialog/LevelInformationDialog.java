@@ -19,7 +19,9 @@ import yourowngame.com.yourowngame.activities.WorldActivity;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Avoci;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Meloon;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Pinapo;
+import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.gameEngine.CanvasDrawThread;
 import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
@@ -56,11 +58,18 @@ public class LevelInformationDialog {
                     }
                 });
                 infoDialog.setListener(R.id.cancelLevelButton, new View.OnClickListener() {
+                    @Bug(byDeveloper = Constants.Developers.SOLUTION,
+                         message = "The dialog stops our thread and our animation in the background," +
+                                   "our thread is getting resumed, but somehow effects are dead.",
+                        possibleSolution = "(1) restart Activity, but that is the worst approach, bc our background would never run fluently," +
+                                           "(2) the thread needs to be resumed, but does not take effect." )
                     @Override
                     public void onClick(View view) {
-                        //activity.startActivity(new Intent(activity, WorldActivity.class));
                         infoDialog.dismiss();
                         worldView.getThread().resumeThread(); //resume world animations
+
+                        //TODO this is a bad approach, BUT would work!
+                        // activity.startActivity(new Intent(activity, WorldActivity.class));
                     }
                 });
 
