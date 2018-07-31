@@ -19,7 +19,8 @@ import yourowngame.com.yourowngame.classes.annotations.Idea;
 
 @Idea(idea = "Frequency of bullets shouldn't be determined by MultiTouch (maybe add frequency member in\n" +
         "Projectile.class and then calculate how many projectiles/second-hold.")
-@Enhance (message = "Why is shooting frequency assymmetric?")
+@Enhance (message = "Why is shooting frequency assymmetric? --> Maybe bc. frequency not limited (so longer method calls " +
+        "are blocking the drawing procedures [high probability])")
 public class MultiTouchMgr implements View.OnTouchListener {
     private static final String TAG = "MultiTouchMgr";
 
