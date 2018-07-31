@@ -22,7 +22,7 @@ import yourowngame.com.yourowngame.classes.manager.dialog.GameOverDialog;
 import yourowngame.com.yourowngame.classes.manager.dialog.LevelAchievedDialog;
 import yourowngame.com.yourowngame.classes.manager.storage.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
-import yourowngame.com.yourowngame.gameEngine.OnMultiTouchHandler;
+import yourowngame.com.yourowngame.classes.manager.MultiTouchMgr;
 import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
 
 /**
@@ -33,7 +33,7 @@ public class GameView extends DrawableSurfaces {
     private static final String TAG = "GameView";
     private Level currLevelObj;
     private CollisionMgr collisionMgr;
-    private OnMultiTouchHandler multiTouchHandler = new OnMultiTouchHandler();
+    private MultiTouchMgr multiTouchHandler = new MultiTouchMgr();
 
     /**
      * Without this method our app will crash, keep it XML needs this constructor
@@ -277,11 +277,11 @@ public class GameView extends DrawableSurfaces {
     }
 
 
-    public OnMultiTouchHandler getMultiTouchHandler() {
+    public MultiTouchMgr getMultiTouchHandler() {
         return multiTouchHandler;
     }
 
-    public void setMultiTouchHandler(OnMultiTouchHandler multiTouchHandler) {
+    public void setMultiTouchHandler(MultiTouchMgr multiTouchHandler) {
         this.multiTouchHandler = multiTouchHandler;
     }
 
