@@ -128,10 +128,8 @@ public class WorldView extends DrawableSurfaces {
                     //Is clickedPosition inside a rect of a lvlRepresentant?
                     if (r.contains((int) event.getX(), (int) event.getY())) {
                         Log.d(TAG, "onTouchEvent: Lvl clicked.");
-                        // Pause/Stop thread before opening new activity
-                        getThread().pauseThread();
+                        // Pause/Stop thread before opening new activity --> is done in LevelInformationDialog
                         WorldMgr.setCurr_lvl_index(lvlIndex);
-                        //this.getDrawableSurfaceActivity().startActivity(new Intent(this.getDrawableSurfaceActivity(),GameViewActivity.class));
                         LevelInformationDialog.show(this, lvlIndex);
 
                         return true;

@@ -41,6 +41,9 @@ public class LevelInformationDialog {
         levelIndex = lvlindex;
 
         if(!activity.isFinishing()) {
+            //Pause/Stop thread
+            worldView.getThread().pauseThread();
+
             //inflate for imageView visibility
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (inflater == null) {
