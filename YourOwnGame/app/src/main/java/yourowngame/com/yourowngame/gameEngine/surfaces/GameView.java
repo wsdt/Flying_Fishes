@@ -11,6 +11,7 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
+import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
@@ -136,11 +137,7 @@ public class GameView extends DrawableSurfaces {
                 this.getCurrLevelObj().getPlayer().draw();
 
                 // (3.) draw Projectiles
-                for (Projectile projectile : this.getCurrLevelObj().getPlayer().getProjectiles()) {
-                    projectile.setLoopCount(loopCount);
-                    projectile.setCanvas(canvas);
-                }
-                this.getCurrLevelObj().getPlayer().drawProjectiles();
+                ProjectileMgr.drawProjectiles(canvas, loopCount);
 
                 // (4.) draw enemies
                 for (Enemy enemy : this.getCurrLevelObj().getAllEnemies()) {
@@ -193,7 +190,7 @@ public class GameView extends DrawableSurfaces {
         }
 
         /* Update bullets */
-        this.getCurrLevelObj().getPlayer().updateProjectiles();
+        ProjectileMgr.updateProjectiles();
 
         /* Check for Collisions - if player hits the ground or gets hit by an enemy, game stops!*/
         if (collisionMgr.checkForCollisions()) {
@@ -202,8 +199,8 @@ public class GameView extends DrawableSurfaces {
 
         /* Check Shooting */
         if (getMultiTouchHandler().isShooting()) {
-            this.getCurrLevelObj().getPlayer().addProjectiles();
-            getMultiTouchHandler().stopShooting();
+            ProjectileMgr.shoot(this.getCurrLevelObj().getPlayer());
+            //getMultiTouchHandler().stopShooting();
         }
 
         /* Check if levelAssignment is true */

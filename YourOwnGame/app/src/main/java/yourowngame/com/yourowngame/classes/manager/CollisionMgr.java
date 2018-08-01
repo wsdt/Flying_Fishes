@@ -14,6 +14,7 @@ import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
+import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
 import yourowngame.com.yourowngame.classes.counters.HighScore;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
@@ -46,12 +47,12 @@ public class CollisionMgr {
     /** check Projectile-to-Enemy collision */
     private void projectileToEnemyCollision(){
         for (Enemy e : currLevel.getAllEnemies()){
-            for (int i = 0; i < currLevel.getPlayer().getProjectiles().size(); i++){
-                if(CollisionDetection.checkCollision(e, currLevel.getPlayer().getProjectiles().get(i))){
+            for (int i = 0; i < ProjectileMgr.getShotProjectiles().size(); i++){
+                if(CollisionDetection.checkCollision(e, ProjectileMgr.getShotProjectiles().get(i))){
                     //enemy dies, spawns on the other side
                     e.resetPos();
                     //projectile needs to be deleted
-                    currLevel.getPlayer().getProjectiles().remove(currLevel.getPlayer().getProjectiles().get(i));
+                    ProjectileMgr.getShotProjectiles().remove(ProjectileMgr.getShotProjectiles().get(i));
                     //play sound when enemy dies
                     CollisionDetection.playProjectileEnemyCollisionSound(context);
                     //increment the players highScore

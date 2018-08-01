@@ -12,6 +12,7 @@ import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitPower;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
+import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
 import yourowngame.com.yourowngame.classes.actors.projectiles.interfaces.IProjectile;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
@@ -40,10 +41,10 @@ public class FruitPower_ShootRage extends FruitPower {
 
         //Add desired amount of projectiles additionally
         for (int i = 0;i < this.getAmount();i++) {
-            this.getCurrPlayer().addProjectiles();
+            ProjectileMgr.shoot(this.getCurrPlayer());
         }
 
-        for (Projectile projectile : this.getCurrPlayer().getProjectiles()) {
+        for (Projectile projectile : ProjectileMgr.getShotProjectiles()) {
             projectile.setPosY(RandomMgr.getRandomFloat(0, GameViewActivity.GAME_HEIGHT));
         }
 

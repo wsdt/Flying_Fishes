@@ -17,6 +17,10 @@ public class Projectile_Iron extends Projectile implements IProjectile.PROPERTIE
         super(activity, posX, posY, speedX, speedY);
     }
 
+    public Projectile_Iron(@NonNull Activity activity, double speedX, double speedY) {
+        super(activity, 0, 0, speedX, speedY);
+    }
+
     @Override
     public void update() {
         this.setPosX(getPosX() + getSpeedX());
@@ -46,6 +50,11 @@ public class Projectile_Iron extends Projectile implements IProjectile.PROPERTIE
             Log.d(TAG, "Initialize: Initialize Failure!");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public short getShortFrequency() {
+        return IProjectile.PROPERTIES.IRON.SHOOT_FREQUENCY;
     }
 
     //GETTER/SETTER ----------------------------------------

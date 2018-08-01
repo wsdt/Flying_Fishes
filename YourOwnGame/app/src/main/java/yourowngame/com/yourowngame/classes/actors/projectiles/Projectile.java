@@ -35,6 +35,11 @@ public abstract class Projectile extends GameObject implements IProjectile.PROPE
         super(activity, posX, posY, speedX, speedY);
     }
 
+    // Short constr (e.g. for ProjectileMgr no posX/Y in constr needed)
+    public Projectile(@NonNull Activity activity, double speedX, double speedY) {
+        super(activity, 0, 0, speedX, speedY);
+    }
+
     /** Block simplified constructor call, bc. we don't want random Projectiles. */
     private Projectile(@NonNull Activity activity) {
         super(activity);
@@ -52,5 +57,8 @@ public abstract class Projectile extends GameObject implements IProjectile.PROPE
         this.resetPos(); //outside of display to prevent projectiles hitting new enemies altough projectiles were fired in previous game
         return true;
     }
+
+    /** How many bullets at maximum simultaneously on screen? */
+    public abstract short getShortFrequency();
 
 }

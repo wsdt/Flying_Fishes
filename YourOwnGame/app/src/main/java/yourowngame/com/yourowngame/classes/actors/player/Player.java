@@ -13,6 +13,8 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
+import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
+import yourowngame.com.yourowngame.classes.actors.projectiles.interfaces.IProjectile;
 import yourowngame.com.yourowngame.classes.actors.projectiles.specializations.Projectile_Iron;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
@@ -27,9 +29,6 @@ public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DE
     private boolean goUp = false;
     private boolean goForward = false;
 
-    //Projectiles
-    private List<Projectile> projectileList = new ArrayList<>();
-
     /*-- Preloaded --*/
     private int intrinsicHeightOfPlayer;
     private Bitmap currentBitmap;
@@ -37,6 +36,9 @@ public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DE
 
     public Player(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
+
+        //TODO: Remove in future
+        ProjectileMgr.runDefaultConfiguration(activity);
     }
 
     /**
@@ -51,9 +53,6 @@ public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DE
     @Override
     public boolean cleanup() {
         resetPos();
-        for (Projectile projectile : this.getProjectiles()) {
-            projectile.cleanup();
-        }
         return true;
     }
 
@@ -62,45 +61,9 @@ public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DE
         this.setPosY(Resources.getSystem().getDisplayMetrics().heightPixels / 4); //reset y when hitting ground
     }
 
-    /***********************************************
-     *             PROJECTILES AREA                *
-     ***********************************************/
-
-    @Enhance (message = "Is called in draw-method!! Avoid object allocations, additionally initialize might be called (evaluate if inside)!?")
-    public void addProjectiles() {
-        Projectile projectile = new Projectile_Iron(this.getActivity(), this.getPosX() + this.getWidthOfBitmap() / 2, this.getPosY() + this.getHeightOfBitmap() / 2, 10, 0);
-        projectile.initialize();
-        this.getProjectiles().add(projectile);
-    }
-
-    public void drawProjectiles() throws NoDrawableInArrayFound_Exception {
-        for (Projectile e : this.projectileList) {
-                e.draw();
-        }
-    }
-
-    //Here we need to access the array backwards, otherwise we will remove an index, that will be progressed, but isn't there anymore!
-    public void updateProjectiles() {
-        Log.d(TAG, "updateProjectiles: Projectile Size = " + this.getProjectiles().size());
-        if (!this.getProjectiles().isEmpty()) {
-            for (int i = this.getProjectiles().size() - 1; i > -1; i--) {
-                this.getProjectiles().get(i).update();
-
-                if (this.getProjectiles().get(i).getPosX() > GameViewActivity.GAME_WIDTH - 50) {
-                    Log.e(TAG, "updateProjectiles: Bullet removed!");
-                    this.getProjectiles().remove(this.getProjectiles().get(i));
-                }
-            }
-        }
-    }
-
     /*************************
      *  GETTER & SETTER      *
      *************************/
-
-    public List<Projectile> getProjectiles() {
-        return projectileList;
-    }
 
     public int getIntrinsicHeightOfPlayer() {
         return intrinsicHeightOfPlayer;

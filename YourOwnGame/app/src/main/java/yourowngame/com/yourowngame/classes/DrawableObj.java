@@ -23,12 +23,14 @@ public abstract class DrawableObj {
 
     private Activity activity;
     private Canvas canvas;
+    //TODO: Make loopcount static as ALL subclasses will have the same value
     private long loopCount;
     @Enhance (message = "Make static and adapt initialize() procedures. --> Better performance bc. only foreach specialization " +
             "executed once, instead for each instance as now!" +
             "BUT if we make this static, then we have to put it manually in all lowest subclasses bc. java resolves" +
             "static references otherwise for all. So if we initialize player our app thinks enemies are also initialized.",
         priority = Enhance.Priority.HIGH, byDeveloper = Constants.Developers.WSDT)
+    //TODO: Evaluate isInitialized dynamically whether bitmapp array is filled or NOT!!!!!!!!!!!!
     private boolean isInitialized = false; //should be only set to true in initialize() --> no getter setter because only class itself should have access
     /**
      * String resource id (multilingual) for setting a to user visible name of the drawable obj.
