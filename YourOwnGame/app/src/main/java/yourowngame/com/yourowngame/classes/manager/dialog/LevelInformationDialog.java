@@ -69,7 +69,6 @@ public class LevelInformationDialog {
                     @Override
                     public void onClick(View view) {
                         infoDialog.dismiss();
-                        worldView.getThread().resumeThread(); //resume world animations
 
                         //TODO this is a bad approach, BUT would work!
                         // activity.startActivity(new Intent(activity, WorldActivity.class));

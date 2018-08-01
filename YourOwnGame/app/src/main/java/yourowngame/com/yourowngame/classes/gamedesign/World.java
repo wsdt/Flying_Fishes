@@ -13,6 +13,7 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.exceptions.WrongConfigured_Exception;
+import yourowngame.com.yourowngame.classes.gamedesign.worlds.World_Earth;
 
 /** Contains several levels which then are displayed in a LevelHierarchy.
  * No cleanUp() and no initialize() necessary bc. we this class has no

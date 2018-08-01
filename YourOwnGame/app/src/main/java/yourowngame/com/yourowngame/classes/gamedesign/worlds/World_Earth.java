@@ -3,6 +3,7 @@ package yourowngame.com.yourowngame.classes.gamedesign.worlds;
 import android.app.Activity;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -19,16 +20,22 @@ import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_EndlessDawn;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_FruityIsland;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_NightRider;
 import yourowngame.com.yourowngame.classes.gamedesign.levels.Level_SummerSky;
+import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 
 public class World_Earth extends World {
+    private static final String TAG = "World_Earth";
+
+
     /** Initializing constructor. */
     public World_Earth(@NonNull Activity activity) {
         super(activity);
+
     }
 
     @Override
     protected void determineAllLevels() {
         ArrayList<Level> levelList = new ArrayList<>();
+
         levelList.add(new Level_SummerSky(this.getActivity(),new Point(50,50)));
         levelList.add(new Level_NightRider(this.getActivity(), new Point(400,50)));
         levelList.add(new Level_EndlessDawn(this.getActivity(), new Point(1200,300)));
@@ -40,12 +47,13 @@ public class World_Earth extends World {
     @Override
     protected void determineBackgroundLayers() {
         ArrayList<Background> backgrounds = new ArrayList<>();
-        backgrounds.add(new BL_SingleColor(this.getActivity(),R.color.colorSkyBlue));
-        backgrounds.add(new BL_FlyingElements(this.getActivity(),
-                new int[]{R.drawable.bglayer_1_cloud_1, R.drawable.bglayer_1_cloud_2, R.drawable.bglayer_1_cloud_3},2));
-        backgrounds.add(new BL_FlyingElements(this.getActivity(),
-                new int[]{R.drawable.enemy_rocketfish_01, R.drawable.avoci},1));
+
+        backgrounds.add(new BL_SingleColor(this.getActivity(), R.color.colorSkyBlue));
+        backgrounds.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bglayer_1_cloud_1}, 1));
+        backgrounds.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.enemy_rocketfish_01}, 1));
+        Log.d(TAG, "Added:" + backgrounds.size());
         this.setAllBackgroundLayers(backgrounds);
+
     }
 
     @Override
