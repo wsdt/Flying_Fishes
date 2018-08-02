@@ -54,7 +54,7 @@ public class Level_EndlessDawn extends Level {
 
         ArrayList<Background> allBgs = new ArrayList<>();
         allBgs.add(new BL_SingleColor(this.getActivity(), R.color.colorDarkRed));
-        allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_2}, 15));
+        allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_2}, 9));
         this.setAllBackgroundLayers(allBgs);
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
