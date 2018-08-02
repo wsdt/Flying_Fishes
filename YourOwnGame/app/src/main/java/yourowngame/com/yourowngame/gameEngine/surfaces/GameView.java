@@ -84,8 +84,11 @@ public class GameView extends DrawableSurfaces {
         this.getCurrLevelObj().cleanUpLevelProperties();
         /* clean the fruitCounter*/
         FruitCounter.getInstance().cleanUpFruitCounter();
+        /* Clean Up Projectiles*/
+        ProjectileMgr.getShotProjectiles().clear();
         /* Create CollisionManager*/
         collisionMgr = new CollisionMgr(this.getCurrLevelObj(), getDrawableSurfaceActivity(), getHighscore());
+
 
 
         this.getHighscore().addListener(new IHighscore_Observer() {

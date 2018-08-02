@@ -82,7 +82,7 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
     @Override
     public void update() {
         for (FlyingElement flyingElement : this.getCraftedFlyingElements()) {
-            flyingElement.updateFlyingElement(flyingElement.randomSpeed); //Where is the speed defined? couldnt find it!
+            flyingElement.updateFlyingElement(flyingElement.randomSpeed);
         }
     }
 
@@ -112,7 +112,7 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
     /** allObjs == NULL/no param to provide */
     @Override
     public void initialize() {
-        //TODO: Maybe make amount clouds configurable by constr or similar?
+
         this.craftClouds(); //also sets simultaneously
     }
 

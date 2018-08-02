@@ -90,7 +90,6 @@ public class WorldView extends DrawableSurfaces {
         try {
             for (Background background : WorldMgr.getCurrWorldObj(this.getDrawableSurfaceActivity()).getAllBackgroundLayers()) {
                 background.setCanvas(canvas);
-                //Log.d(TAG, "Drawing Element " + background + " of Element " + WorldMgr.getCurrWorldObj(this.getDrawableSurfaceActivity()).getAllBackgroundLayers().size());
                 background.draw();
             }
 

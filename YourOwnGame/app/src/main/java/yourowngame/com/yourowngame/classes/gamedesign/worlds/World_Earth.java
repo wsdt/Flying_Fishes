@@ -51,7 +51,7 @@ public class World_Earth extends World {
         backgrounds.add(new BL_SingleColor(this.getActivity(), R.color.colorSkyBlue));
         backgrounds.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bglayer_1_cloud_1}, 1));
         backgrounds.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.enemy_rocketfish_01}, 1));
-        Log.d(TAG, "Added:" + backgrounds.size());
+        Log.d(TAG, "Added Background Objects " + backgrounds.size() + " to World_Earth");
         this.setAllBackgroundLayers(backgrounds);
 
     }
