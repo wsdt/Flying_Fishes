@@ -25,7 +25,7 @@ To configure all template files above correctly, you just need to **copy** the t
 
 ### What is so special about this project?
 1. This app hasn't been built with Unity or similar IDEs. We decided to code everything by ourself (though it might not the best solution, but yeah we wanted to know how it works). We would love to see you contributing!
-1. Additionally, we tried to code as object-oriented as possible and aimed to keep the game as **generic** as possible. This means you could easily use this project as draft for another Arcade game. You would just need to change the Graphics, some params etc. and you would have a working game. 
+1. Additionally, we tried to code as object-oriented and **generic** as possible. This means you could easily use this project as draft for another Arcade games. You would just need to change the Graphics, some params etc. and you would have a working game. 
 
 ### How to add an issue
 1. **Add a good title to your issue.** Please use a concise and precise title. 
