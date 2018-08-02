@@ -19,7 +19,6 @@ import yourowngame.com.yourowngame.classes.counters.HighScore;
 public abstract class Level {
     private static final String TAG = "Level";
     private Activity activity;
-
     protected static SoundMgr soundMgr; //static because always only one soundMgr instance
     private int levelNameResId; //Level name (maybe to show to user [e.g. Die dunkle Gruft, usw.] als Strings.xml res id for multilinguality!
     /** Where on the superior world map is the level located? (x,y) */
@@ -122,6 +121,7 @@ public abstract class Level {
     }
 
 
+
     //GETTER/SETTER +++++++++++++++++++++++++++++++++++++++++++++++++
 
     public int getLevelName(){
@@ -205,4 +205,6 @@ public abstract class Level {
     public void setWorldMapPosition(Point worldMapPosition) {
         this.worldMapPosition = worldMapPosition;
     }
+
+
 }

@@ -36,9 +36,7 @@ public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DE
 
     public Player(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
-
-        //TODO: Remove in future
-        ProjectileMgr.runDefaultConfiguration(activity);
+        
     }
 
     /**

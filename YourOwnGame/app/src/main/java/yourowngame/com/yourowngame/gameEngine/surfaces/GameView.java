@@ -35,6 +35,7 @@ public class GameView extends DrawableSurfaces {
     private Level currLevelObj;
     private CollisionMgr collisionMgr;
     private MultiTouchMgr multiTouchHandler = new MultiTouchMgr();
+    private boolean allowShooting = true;
 
     /**
      * Without this method our app will crash, keep it XML needs this constructor
@@ -62,6 +63,10 @@ public class GameView extends DrawableSurfaces {
     public void startGame(@NonNull GameViewActivity context, @NonNull Level currLevelObj) {
         this.setDrawableSurfaceActivity(context);
 
+
+        /*Set Projectiles TODO later on, the level should decide by a simple method wethere u can shoot or not!*/
+        ProjectileMgr.runDefaultConfiguration(context);
+
         //Set LvlMgr
         this.setCurrLevelObj(currLevelObj);
 
@@ -80,11 +85,14 @@ public class GameView extends DrawableSurfaces {
 
 
     private void initGameObjects() {
-        /* cleanup Level Properties */
+        /* Cleanup Level Properties */
         this.getCurrLevelObj().cleanUpLevelProperties();
-        /* clean the fruitCounter*/
+        /* Clean the fruitCounter*/
         FruitCounter.getInstance().cleanUpFruitCounter();
         /* Clean Up Projectiles*/
+
+
+
         ProjectileMgr.getShotProjectiles().clear();
         /* Create CollisionManager*/
         collisionMgr = new CollisionMgr(this.getCurrLevelObj(), getDrawableSurfaceActivity(), getHighscore());
