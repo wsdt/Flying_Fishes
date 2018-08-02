@@ -56,7 +56,7 @@ public class Level_NightRider extends Level {
          * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
         ArrayList<Background> allBgs = new ArrayList<>();
         allBgs.add(new BL_SingleColor(this.getActivity(), R.color.colorPrimaryDark));
-        allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bglayer_1_cloud_2}, 8));
+        allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_2}, 8));
         this.setAllBackgroundLayers(allBgs);
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");

@@ -56,7 +56,7 @@ public class Level_SummerSky extends Level {
          * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
         ArrayList<Background> allBgs = new ArrayList<>();
         allBgs.add(new BL_SingleColor(this.getActivity(), R.color.colorSkyBlue));
-        allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bglayer_1_cloud_1, R.drawable.bglayer_1_cloud_2, R.drawable.bglayer_1_cloud_3}, 10));
+        allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_1, R.drawable.bg_layer_flying_elements_clouds_2, R.drawable.bglayer_1_cloud_3}, 10));
         this.setAllBackgroundLayers(allBgs);
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
