@@ -10,6 +10,7 @@ import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 /**
  * Created  on 12.03.2018.
@@ -30,8 +31,8 @@ public class Enemy_Boba extends Enemy implements IEnemy.PROPERTIES.BOBA {
     public Enemy_Boba(@NonNull Activity activity) {
         super(activity); //also call super constr! (initializing)
 
-        this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
-        this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
+        this.setPosX(RandomMgr.getRandomInt(DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawWidth() + ADDITIONAL_GAME_WIDTH));
+        this.setPosY(RandomMgr.getRandomInt(0, DrawableSurfaces.getDrawHeight()));
         this.setSpeedX(RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX));
         this.setSpeedY(RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX));
     }

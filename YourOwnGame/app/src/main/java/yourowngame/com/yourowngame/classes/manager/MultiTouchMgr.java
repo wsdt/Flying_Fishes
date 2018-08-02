@@ -8,6 +8,7 @@ import android.view.View;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.annotations.Idea;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 /**
  * onLeftClick/Hold: Move upwards
@@ -45,7 +46,7 @@ public class MultiTouchMgr implements View.OnTouchListener {
      * @param pointerX:    On which site did the user click?
      */
     private void pushNewCommand(int maskedEvent, float pointerX) {
-        if (pointerX < (GameViewActivity.GAME_WIDTH / 2)) {
+        if (pointerX < (DrawableSurfaces.getDrawWidth() / 2)) {
             //player clicked on the left side
             isMoving = !(maskedEvent == MotionEvent.ACTION_UP || maskedEvent == MotionEvent.ACTION_POINTER_UP); //if user is currently pressing then isMoving = true!
             Log.d(TAG, "pushNewCommand: isMoving->"+isMoving);

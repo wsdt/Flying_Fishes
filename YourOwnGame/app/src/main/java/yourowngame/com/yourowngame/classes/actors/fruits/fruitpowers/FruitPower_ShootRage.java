@@ -17,6 +17,7 @@ import yourowngame.com.yourowngame.classes.actors.projectiles.interfaces.IProjec
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 /** Adds additional projectiles (= amount) and sets for all an arbitrary PosY to simulate
  * an amazing shoot. */
@@ -45,7 +46,7 @@ public class FruitPower_ShootRage extends FruitPower {
         }
 
         for (Projectile projectile : ProjectileMgr.getShotProjectiles()) {
-            projectile.setPosY(RandomMgr.getRandomFloat(0, GameViewActivity.GAME_HEIGHT));
+            projectile.setPosY(RandomMgr.getRandomFloat(0, DrawableSurfaces.getDrawHeight()));
         }
 
         //Show removed enemies after duration

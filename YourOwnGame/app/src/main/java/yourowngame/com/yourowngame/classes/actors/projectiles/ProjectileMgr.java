@@ -3,6 +3,7 @@ package yourowngame.com.yourowngame.classes.actors.projectiles;
 import android.app.Activity;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -10,12 +11,14 @@ import java.util.Iterator;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
+import yourowngame.com.yourowngame.classes.actors.projectiles.interfaces.IProjectile;
 import yourowngame.com.yourowngame.classes.actors.projectiles.specializations.Projectile_Iron;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.annotations.Delete;
 import yourowngame.com.yourowngame.classes.annotations.Testing;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 public class ProjectileMgr {
     private static final String TAG = "ProjectileMgr";
@@ -37,9 +40,10 @@ public class ProjectileMgr {
     public static void runDefaultConfiguration(@NonNull Activity activity) {
         //by default set 20 bullets for shoot before reload necessary (bullets leaving screen [currently])
         for (int i = 0; i < 5; i++) {
-            Projectile p = new Projectile_Iron(activity, 0, 0, 10, 0);
+            Projectile p = new Projectile_Iron(activity, 10, 0);
             p.initialize();
             getReadyForShotProjectiles().add(p);
+            Log.d(TAG, "runDefaultConfiguration: Added bullet no. "+(i+1));
         }
     }
 
@@ -55,6 +59,7 @@ public class ProjectileMgr {
 
                 getReadyForShotProjectiles().remove(p);
                 getShotProjectiles().add(p); //if out of screen the bullet gets added back to the getready list
+                Log.d(TAG, "shoot: Fired bullet.");
             } else {
                 Log.d(TAG, "shoot: Frequency capping, this bullet cannot be fired that often -> "+p.getLoopCount()+" / "+p.getShortFrequency());
             }
@@ -77,14 +82,24 @@ public class ProjectileMgr {
                 Projectile p = it.next();
                 p.update();
 
-                if (p.getPosX() > GameViewActivity.GAME_WIDTH - 50) {
+                Log.d(TAG, "updateProjectiles: "+p.getPosX()+" > "+DrawableSurfaces.getDrawWidth() +"+"+ IProjectile.PROPERTIES.DEFAULT.ADDITIONAL_GAME_WIDTH);
+                if (p.getPosX() > DrawableSurfaces.getDrawWidth() + IProjectile.PROPERTIES.DEFAULT.ADDITIONAL_GAME_WIDTH) {
                     Log.e(TAG, "updateProjectiles: Bullet out of screen!");
-                    p.resetPos(); //reset pos
-
-                    it.remove(); //remove from shot projectiles
-                    getReadyForShotProjectiles().add(p);//add to shootable again
+                    reuseBullet(p,it);
                 }
             }
+    }
+
+    /** @param projectileIterator: Iterator obj (for avoiding concurrentModificationException)
+     *          Iterator should point to the same obj as 'p'!! (no next-call)
+     *          Currently this method is only used in loops so the param is @NonNull
+     *
+     * @param p: iterator.next()-call would be perfectly. I used this approach so we can use the p-obj in
+     * in the meantime for evaluation purposes etc. (just look e.g. at updateProjectiles()). */
+    public static void reuseBullet(@NonNull Projectile p, @NonNull Iterator projectileIterator) {
+        p.resetPos();
+        getReadyForShotProjectiles().add(p); //add to shootable again
+        projectileIterator.remove();
     }
 
 

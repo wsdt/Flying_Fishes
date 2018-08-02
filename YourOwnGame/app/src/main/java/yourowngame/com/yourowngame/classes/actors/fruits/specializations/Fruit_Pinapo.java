@@ -12,6 +12,7 @@ import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 
 public class Fruit_Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTIES {
@@ -29,8 +30,8 @@ public class Fruit_Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTI
     public Fruit_Pinapo(@NonNull Activity activity, @NonNull Level currLevel) {
         super(activity, currLevel); //also call super constr! (initializing) and fruit powers
 
-        this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + (int) OFF_TIME));
-        this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
+        this.setPosX(RandomMgr.getRandomInt(DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawWidth() + (int) OFF_TIME));
+        this.setPosY(RandomMgr.getRandomInt(0, DrawableSurfaces.getDrawHeight()));
         this.setSpeedX(SPEED_X);
         this.setSpeedY(SPEED_Y);
     }
@@ -96,8 +97,8 @@ public class Fruit_Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTI
      */
     @Override
     public void resetPos() {
-        this.setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + OFF_TIME));
-        this.setPosY(RandomMgr.getRandomFloat(IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT, GameViewActivity.GAME_HEIGHT - Y_UPLIFT));
+        this.setPosX(RandomMgr.getRandomFloat(DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawWidth() + OFF_TIME));
+        this.setPosY(RandomMgr.getRandomFloat(IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT, DrawableSurfaces.getDrawHeight() - Y_UPLIFT));
     }
 
     /**

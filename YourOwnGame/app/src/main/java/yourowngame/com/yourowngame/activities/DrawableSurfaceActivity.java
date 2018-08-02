@@ -6,29 +6,25 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 /** Dummy activity without layout file for DrawableSurfaces.class */
 public abstract class DrawableSurfaceActivity extends AppCompatActivity {
     private static final String TAG = "DrawableSurfaceActivity";
-    public static int GAME_HEIGHT;
-    public static int GAME_WIDTH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getGameDimens();
+        this.setInitialGameDim();
     }
 
-    @Deprecated
-    @Enhance(byDeveloper = "Solution",
-            message = "I wanna keep it that way, the GameViewActivity should provide the metrics," +
-                    "so the levelHierarchy will deliver it! See @LevelHierarchyActivity.java",
-            priority = Enhance.Priority.LOW)
-    public void getGameDimens() {
+    public void setInitialGameDim() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        GAME_WIDTH = displayMetrics.widthPixels;
-        GAME_HEIGHT = displayMetrics.heightPixels;
-        Log.d(TAG, "HEIGHT = " + GAME_HEIGHT + "\nWIDTH = " + GAME_WIDTH);
+        DrawableSurfaces.setDrawWidth(displayMetrics.widthPixels);
+        DrawableSurfaces.setDrawHeight(displayMetrics.heightPixels);
+
+        Log.d(TAG, "Initial height = " + DrawableSurfaces.getDrawHeight() + "\nInitial width = " + DrawableSurfaces.getDrawWidth());
     }
+
 }

@@ -8,6 +8,7 @@ import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 /**
  *
@@ -40,8 +41,8 @@ public abstract class Enemy extends GameObject implements IEnemy.PROPERTIES.DEFA
     //Now also used in cleanup()
     @Override
     public void resetPos() {
-        setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + ADDITIONAL_GAME_WIDTH));
-        setPosY(RandomMgr.getRandomFloat(0, GameViewActivity.GAME_HEIGHT));
+        setPosX(RandomMgr.getRandomFloat(DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawWidth() + ADDITIONAL_GAME_WIDTH));
+        setPosY(RandomMgr.getRandomFloat(0, DrawableSurfaces.getDrawHeight()));
     }
 
     @Override

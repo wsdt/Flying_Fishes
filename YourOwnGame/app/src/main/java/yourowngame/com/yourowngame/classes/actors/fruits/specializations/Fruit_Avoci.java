@@ -12,6 +12,7 @@ import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 
 public class Fruit_Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
@@ -29,8 +30,8 @@ public class Fruit_Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES 
     public Fruit_Avoci(@NonNull Activity activity, @NonNull Level currLevel) {
         super(activity, currLevel);
 
-        this.setPosX(RandomMgr.getRandomInt(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + (int) OFF_TIME));
-        this.setPosY(RandomMgr.getRandomInt(0, GameViewActivity.GAME_HEIGHT));
+        this.setPosX(RandomMgr.getRandomInt(DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawWidth() + (int) OFF_TIME));
+        this.setPosY(RandomMgr.getRandomInt(0, DrawableSurfaces.getDrawHeight()));
         this.setSpeedX(SPEED_X);
         this.setSpeedY(SPEED_Y);
 
@@ -90,8 +91,8 @@ public class Fruit_Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES 
 
     @Override
     public void resetPos() {
-        this.setPosX(RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + IFruit.AVOCI_FRUIT_PROPERTIES.OFF_TIME));
-        this.setPosY(RandomMgr.getRandomFloat(IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT, GameViewActivity.GAME_HEIGHT - IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT));
+        this.setPosX(RandomMgr.getRandomFloat(DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawWidth() + IFruit.AVOCI_FRUIT_PROPERTIES.OFF_TIME));
+        this.setPosY(RandomMgr.getRandomFloat(IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT, DrawableSurfaces.getDrawHeight() - IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT));
     }
 
     /**

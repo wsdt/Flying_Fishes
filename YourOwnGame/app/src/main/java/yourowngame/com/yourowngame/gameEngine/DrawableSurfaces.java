@@ -8,14 +8,17 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
-import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 
 /** Abstract class for GameView and WorldView etc. */
 public abstract class DrawableSurfaces extends SurfaceView {
     private DrawableSurfaceActivity drawableSurfaceActivity;
     private SurfaceHolder surfaceHolder;
     private CanvasDrawThread thread;
+
+    /** Area which is used to draw (only visible area)
+     * Can be static, bc. only one drawable Surface should be on screen at the time! */
+    private static int drawWidth;
+    private static int drawHeight;
 
     public DrawableSurfaces(Context context) {
         super(context);
@@ -58,7 +61,14 @@ public abstract class DrawableSurfaces extends SurfaceView {
             //No need
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height){
-
+                /*Set current width/height (also called on creation)
+                * Added additionally from DrawableSurfaceActivity to here, bc. size would be wrong if screen
+                * would change during runtime! Here we would set automatically the new size.
+                *
+                * We need it in DrawableSurfaceActivity though, bc. this method get's called only onDraw()
+                * so e.g. flying elements would have no access at instantiation for those values. */
+                setDrawHeight(height);
+                setDrawWidth(width);
             }
 
             @Override
@@ -91,5 +101,21 @@ public abstract class DrawableSurfaces extends SurfaceView {
 
     public void setSurfaceHolder(SurfaceHolder surfaceHolder) {
         this.surfaceHolder = surfaceHolder;
+    }
+
+    public static int getDrawWidth() {
+        return drawWidth;
+    }
+
+    public static void setDrawWidth(int drawWidth) {
+        DrawableSurfaces.drawWidth = drawWidth;
+    }
+
+    public static int getDrawHeight() {
+        return drawHeight;
+    }
+
+    public static void setDrawHeight(int drawHeight) {
+        DrawableSurfaces.drawHeight = drawHeight;
     }
 }

@@ -213,13 +213,6 @@ public class GameView extends DrawableSurfaces {
             ProjectileMgr.shoot(this.getCurrLevelObj().getPlayer());
             //getMultiTouchHandler().stopShooting();
         }
-
-        /* Check if levelAssignment is true */
-        if (this.getCurrLevelObj().areLevelAssignmentsAchieved()) {
-            // LevelManager.startDialog()... -> that dialog will be the one from levelAchieved()
-            // and the LevelManager will then lead to further action
-
-        }
     }
 
     /*********************************************************

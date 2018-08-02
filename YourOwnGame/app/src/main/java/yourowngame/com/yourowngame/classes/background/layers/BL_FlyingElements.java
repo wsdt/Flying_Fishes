@@ -17,6 +17,7 @@ import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.layers.interfaces.IBL_FlyingElements;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 /** BL_FlyingElements is used for showing drawables, which are spawning at a specific height randomly.
  * This can be used e.g for clouds. But we could be creative here (showing different clouds, etc.)
@@ -48,7 +49,7 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
         private FlyingElement(Bitmap flyingElementBitmap) {
             this.posX = getRandomPosX();
             this.posY = getRandomPosY();
-            Log.d(TAG, "Width and Height of GVA " +GameViewActivity.GAME_HEIGHT + " " + GameViewActivity.GAME_WIDTH);
+            Log.d(TAG, "Width and Height of GVA " +DrawableSurfaces.getDrawHeight() + " " + DrawableSurfaces.getDrawWidth());
 
             this.flyingElementBitmap = flyingElementBitmap;
             this.randomSpeed = RandomMgr.getRandomFloat(FLYINGELEMENT_RANDOM_SPEED_MIN, FLYINGELEMENT_RANDOM_SPEED_MAX);
@@ -65,10 +66,10 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
         }
 
         private float getRandomPosX() {
-            return RandomMgr.getRandomFloat(GameViewActivity.GAME_WIDTH, GameViewActivity.GAME_WIDTH + 1500);
+            return RandomMgr.getRandomFloat(DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawWidth() + 1500);
         }
         private float getRandomPosY() {
-            return RandomMgr.getRandomFloat(0, (int) (GameViewActivity.GAME_HEIGHT * FLYINGELEMENT_RANDOM_Y_PLACEMENT_IN_PERCENTAGE));
+            return RandomMgr.getRandomFloat(0, (int) (DrawableSurfaces.getDrawHeight() * FLYINGELEMENT_RANDOM_Y_PLACEMENT_IN_PERCENTAGE));
         }
     }
 

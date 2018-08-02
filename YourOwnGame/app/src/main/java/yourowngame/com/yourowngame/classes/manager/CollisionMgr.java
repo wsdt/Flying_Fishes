@@ -8,6 +8,8 @@ import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.util.Iterator;
+
 import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
@@ -18,6 +20,7 @@ import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
 import yourowngame.com.yourowngame.classes.counters.FruitCounter;
 import yourowngame.com.yourowngame.classes.counters.HighScore;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 
 /**
@@ -47,12 +50,15 @@ public class CollisionMgr {
     /** check Projectile-to-Enemy collision */
     private void projectileToEnemyCollision(){
         for (Enemy e : currLevel.getAllEnemies()){
-            for (int i = 0; i < ProjectileMgr.getShotProjectiles().size(); i++){
-                if(CollisionDetection.checkCollision(e, ProjectileMgr.getShotProjectiles().get(i))){
+            for (Iterator<Projectile> it = ProjectileMgr.getShotProjectiles().iterator(); it.hasNext();){
+                Projectile p = it.next();
+
+                if(CollisionDetection.checkCollision(e, p)){
                     //enemy dies, spawns on the other side
                     e.resetPos();
-                    //projectile needs to be deleted
-                    ProjectileMgr.getShotProjectiles().remove(ProjectileMgr.getShotProjectiles().get(i));
+                    //projectile needs to be deleted and reloaded into other lists (also here otherwise when enemy shot the bullet would never reload)
+                    ProjectileMgr.reuseBullet(p,it);
+
                     //play sound when enemy dies
                     CollisionDetection.playProjectileEnemyCollisionSound(context);
                     //increment the players highScore
@@ -98,7 +104,7 @@ public class CollisionMgr {
 
     /** check Player to Border Collision*/
     public boolean playerToBorderCollision() {                                          //we need the height of the bitmap here, didn't had any time left sorry
-        if (currLevel.getPlayer().getWidthOfPlayer() > DrawableSurfaceActivity.GAME_HEIGHT || currLevel.getPlayer().getPosY() < 0) {
+        if (currLevel.getPlayer().getWidthOfPlayer() > DrawableSurfaces.getDrawHeight() || currLevel.getPlayer().getPosY() < 0) {
             return true;
         }
             return false;
