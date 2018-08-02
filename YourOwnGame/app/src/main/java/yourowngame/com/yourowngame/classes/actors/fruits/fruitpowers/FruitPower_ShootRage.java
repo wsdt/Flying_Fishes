@@ -40,13 +40,13 @@ public class FruitPower_ShootRage extends FruitPower {
     public void execute() {
         Log.d(TAG, "execute: Started method.");
 
-        //Add desired amount of projectiles additionally
+        /* Shoot desired amount of projectiles (projectiles only shot if munition not exhausted). */
         for (int i = 0;i < this.getAmount();i++) {
-            ProjectileMgr.shoot(this.getCurrPlayer());
-        }
-
-        for (Projectile projectile : ProjectileMgr.getShotProjectiles()) {
-            projectile.setPosY(RandomMgr.getRandomFloat(0, DrawableSurfaces.getDrawHeight()));
+            Projectile p = ProjectileMgr.shoot(this.getCurrPlayer(),true);
+            if (p != null) {
+                //also set random Y
+                p.setPosY(RandomMgr.getRandomFloat(0, DrawableSurfaces.getDrawHeight())); //try to shoot regardless whether we have munition at that time
+            }
         }
 
         //Show removed enemies after duration

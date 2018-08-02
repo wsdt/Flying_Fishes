@@ -37,35 +37,45 @@ public class ProjectileMgr {
     @Testing(message = "Currently just for testing, in future remove this and set those configs dynamically",
             priority = Testing.Priority.MEDIUM, byDeveloper = Constants.Developers.WSDT)
     @Delete(lastModified = "01.08.2018 12:25", createdBy = Constants.Developers.WSDT)
+    private static boolean alreadyExecuted = false;
     public static void runDefaultConfiguration(@NonNull Activity activity) {
         //by default set 20 bullets for shoot before reload necessary (bullets leaving screen [currently])
-        for (int i = 0; i < 5; i++) {
-            Projectile p = new Projectile_Iron(activity, 10, 0);
-            p.initialize();
-            getReadyForShotProjectiles().add(p);
-            Log.d(TAG, "runDefaultConfiguration: Added bullet no. "+(i+1));
+        if (!alreadyExecuted) {
+            for (int i = 0; i < 5; i++) {
+                Projectile p = new Projectile_Iron(activity, 10, 0);
+                p.initialize();
+                getReadyForShotProjectiles().add(p);
+                Log.d(TAG, "runDefaultConfiguration: Added bullet no. " + (i + 1));
+            }
+            alreadyExecuted = true;
         }
     }
 
-    @Bug(problem = "No bullets left not correct? Why? --> curr only 5 bullets should be on screen at maximum")
-    public static void shoot(@NonNull Player player) {
+    /** @param forceShoot: If true then frequency capping is IGNORED (which means bullets can be shot
+     * simultaneously). If false the shooting frequency of the bullet is used. NOTE: If the user has
+     * no munition at that time also the forceShoot-param won't change anything on this.
+     * @return Projectile: Returns shot projectile. WARNING: If no bullet has been shot this method
+     * returns NULL! */
+    public static Projectile shoot(@NonNull Player player, boolean forceShoot) {
         if (getReadyForShotProjectiles().size() > 0) {
             Projectile p = getReadyForShotProjectiles().get(0);
 
             //use player loopcount as bullets are not updated when not shot
-            if (player.getLoopCount() % p.getShortFrequency() == 0) {
+            if (player.getLoopCount() % p.getShortFrequency() == 0 || forceShoot) {
                 p.setPosX(player.getPosX() + player.getWidthOfBitmap() / 2);
                 p.setPosY(player.getPosY() + player.getHeightOfBitmap() / 2);
 
                 getReadyForShotProjectiles().remove(p);
                 getShotProjectiles().add(p); //if out of screen the bullet gets added back to the getready list
                 Log.d(TAG, "shoot: Fired bullet.");
+                return p;
             } else {
                 Log.d(TAG, "shoot: Frequency capping, this bullet cannot be fired that often -> "+p.getLoopCount()+" / "+p.getShortFrequency());
             }
         } else {
             Log.d(TAG, "shoot: No bullets left.");
         }
+        return null;
     }
 
     public static void drawProjectiles(@NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
@@ -100,6 +110,14 @@ public class ProjectileMgr {
         p.resetPos();
         getReadyForShotProjectiles().add(p); //add to shootable again
         projectileIterator.remove();
+    }
+
+    /** Call after level ends. */
+    public static void cleanUp() {
+        for (Iterator<Projectile> it = getShotProjectiles().iterator(); it.hasNext();) {
+            reuseBullet(it.next(), it);
+        }
+        Log.d(TAG, "cleanUp: Cleaned up shot bullets.");
     }
 
 

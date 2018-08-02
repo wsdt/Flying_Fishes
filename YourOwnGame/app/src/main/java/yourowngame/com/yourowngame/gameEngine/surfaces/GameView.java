@@ -90,10 +90,7 @@ public class GameView extends DrawableSurfaces {
         /* Clean the fruitCounter*/
         FruitCounter.getInstance().cleanUpFruitCounter();
         /* Clean Up Projectiles*/
-
-
-
-        ProjectileMgr.getShotProjectiles().clear();
+        ProjectileMgr.cleanUp();
         /* Create CollisionManager*/
         collisionMgr = new CollisionMgr(this.getCurrLevelObj(), getDrawableSurfaceActivity(), getHighscore());
 
@@ -210,7 +207,7 @@ public class GameView extends DrawableSurfaces {
 
         /* Check Shooting */
         if (getMultiTouchHandler().isShooting()) {
-            ProjectileMgr.shoot(this.getCurrLevelObj().getPlayer());
+            ProjectileMgr.shoot(this.getCurrLevelObj().getPlayer(), false); //false = enable frequency capping
             //getMultiTouchHandler().stopShooting();
         }
     }
