@@ -20,7 +20,6 @@ import yourowngame.com.yourowngame.classes.gamedesign.worlds.World_Earth;
  * influence on gameLogic! */
 public abstract class World {
     private static final String TAG = "World";
-    public static final String INTENT_EXTRAID_POINT = "POINT_STR_ID";
 
     private Activity activity;
     /** World name (maybe to show to user [e.g. Die dunkle Gruft, usw.] als Strings.xml res id for multilinguality!*/
@@ -28,7 +27,7 @@ public abstract class World {
     /** Which icon is used to represent the level on the map? These icons are placed according to
      * set pointObj in alllevels-Map. By default a default one is used, but you can change this Icon
      * in each World individually, by just using the Setter in the inheritated/default constructor. */
-    private int levelRepresentativeResId = R.drawable.avoci; //TODO: Use a real icon
+    private int levelRepresentativeResId = R.drawable.world_1_lvl_representant;
     /** Background layers for each world. These layers are determined by each subclass in the determineBgLayers(). */
     private ArrayList<Background> allBackgroundLayers;
     /** All levels of this world, with a PointObj (not for identification, but for positioning on the
