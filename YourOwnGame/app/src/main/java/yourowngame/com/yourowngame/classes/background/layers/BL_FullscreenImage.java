@@ -10,10 +10,12 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
+import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
-@Enhance (message = "Maybe create an alternative constructor for an URI/URL to load a bg-image from " +
-        "the web (making the apk smaller).")
+@Enhance (message = {"Maybe create an alternative constructor for an URI/URL to load a bg-image from " +
+        "the web (making the apk smaller).", "E.g. api key of pexels (but here attribution required?!!): " +
+        "https://www.pexels.com/de/api/documentation/"}, priority = Enhance.Priority.MEDIUM, byDeveloper = Constants.Developers.WSDT)
 public class BL_FullscreenImage extends Background {
     private static final String TAG = "BL_FullscreenImage";
     private int resBgImage; //normal drawable resource int
