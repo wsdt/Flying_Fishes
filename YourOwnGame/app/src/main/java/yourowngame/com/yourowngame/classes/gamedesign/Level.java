@@ -49,9 +49,6 @@ public abstract class Level {
         * WHEN NEEDED AND NOT AT LVLOBJ_CREATION. THIS HAS THE ADVANTAGE THAT THE LVL_OBJ
         * AND SUPERIOR WORLD_OBJS REMAIN SMALL UNLESS WE NEED A SPECIFIC LVL OBJECT (WHEN
         * WE PLAY IT). */
-
-        /* Initialize all objs, bc. this is not done anymore in constructors. */
-        this.initializeLevelProperties();
         Log.d(TAG, "Level: ###################### ENDED LOADING LEVEL ##################################");
     }
 
@@ -106,22 +103,6 @@ public abstract class Level {
         Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
     }
 
-    /** Initialize here now, because it might be the same for all levels :) */
-    public void initializeLevelProperties() {
-        //CleanUp Player
-        this.getPlayer().initialize();
-        //CleanUp Enemies
-        for (Enemy enemy : this.getAllEnemies()) {enemy.initialize();}
-        //CleanUp Bglayers
-        for (Background background : this.getAllBackgroundLayers()) {background.initialize();}
-        //CleanUp all fruits
-        for (Fruit fruit : this.getAllFruits()) {fruit.initialize();}
-
-        Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
-    }
-
-
-
     //GETTER/SETTER +++++++++++++++++++++++++++++++++++++++++++++++++
 
     public int getLevelName(){
@@ -131,6 +112,7 @@ public abstract class Level {
     public ArrayList<Background> getAllBackgroundLayers() {
         if (allBackgroundLayers == null || allBackgroundLayers.size() <= 0) {
             this.determineBackgroundLayers();
+            for (Background background : this.getAllBackgroundLayers()) {background.initialize();}
         }
         return allBackgroundLayers;
     }
@@ -148,6 +130,7 @@ public abstract class Level {
     public ArrayList<Enemy> getAllEnemies() {
         if (allEnemies == null || allEnemies.size() <= 0) {
             this.determineAllEnemies();
+            for (Enemy enemy : this.getAllEnemies()) {enemy.initialize();}
         }
         return allEnemies;
     }
@@ -157,6 +140,7 @@ public abstract class Level {
     public Player getPlayer() {
         if (player == null) {
             this.determinePlayer();
+            this.getPlayer().initialize();
         }
         return player;
     }
@@ -166,6 +150,7 @@ public abstract class Level {
     public ArrayList<Fruit> getAllFruits() {
         if (allFruits == null || allFruits.size() <= 0) {
             this.determineAllFruits();
+            for (Fruit fruit : this.getAllFruits()) {fruit.initialize();}
         }
         return allFruits;
     }

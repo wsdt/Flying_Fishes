@@ -1,15 +1,15 @@
 package yourowngame.com.yourowngame.classes;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 
 /**
@@ -46,7 +46,7 @@ public abstract class DrawableObj {
      * Method is called to draw elem to canvas.
      * This method CAN actually throw the NoDrawableInArrayFound_Exception!
      */
-    public abstract void draw() throws NoDrawableInArrayFound_Exception;
+    public abstract void draw();
 
     /**
      * Method is called to mutate position, etc. of object.
@@ -96,6 +96,35 @@ public abstract class DrawableObj {
      */
     public abstract boolean cleanup();
 
+
+    /**
+     * getCraftedDynamicBitmap:
+     * <p>
+     * Creates a dynamic bitmap from a drawable res
+     *
+     * @param resDrawable:        Drawable to craft (resource int)
+     * @param rotationDegrees: how much should be image tilted or rotated? (in degrees) / if null then image won't be rotated
+     * @param width:  reduce/enlarge width / if this param OR scaleHeight is null, both values get ignored! Use . as comma ;) --> Values MUST be higher than 0
+     * @param height: same as scaleWidth.
+     */
+    public static Bitmap getCraftedDynamicBitmap(@NonNull Activity activity, int resDrawable, @Nullable Integer rotationDegrees, @Nullable Integer width, @Nullable Integer height) {
+
+        Log.d(TAG, "getCraftedBitmaps: Trying to craft bitmap.");
+
+        //not else (because despite normal if method should continue)
+        Bitmap targetImg = BitmapFactory.decodeResource(activity.getResources(), resDrawable);
+        if ((width != null && height != null) && (width > 0 && height > 0)) { //must be before rotationDegrees-If
+            //also don't scale if 0!
+            targetImg = Bitmap.createScaledBitmap(targetImg, width, height, true);
+        } //not else if!
+        if (rotationDegrees != null) {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(rotationDegrees);
+            targetImg = Bitmap.createBitmap(targetImg, 0, 0, targetImg.getWidth(), targetImg.getHeight(), matrix, true);
+        } //not else if (we want to make several combinations)
+
+        return targetImg;
+    }
 
     //GETTER/SETTER ----------------------------------------------------------------
     public Activity getActivity() {

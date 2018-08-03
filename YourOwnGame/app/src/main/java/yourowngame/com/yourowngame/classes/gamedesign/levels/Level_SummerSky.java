@@ -23,6 +23,7 @@ import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_P
 import yourowngame.com.yourowngame.classes.actors.player.specializations.Player_Hugo;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
+import yourowngame.com.yourowngame.classes.background.layers.BL_FullscreenImage;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.gamedesign.LevelAssignment;
@@ -55,7 +56,7 @@ public class Level_SummerSky extends Level {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
          * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
         ArrayList<Background> allBgs = new ArrayList<>();
-        allBgs.add(new BL_SingleColor(this.getActivity(), R.color.colorSkyBlue));
+        allBgs.add(new BL_FullscreenImage(this.getActivity(), R.drawable.bg_layer_fullscreenimage_mountains_1));
         allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_1, R.drawable.bg_layer_flying_elements_clouds_2, R.drawable.bg_layer_flying_elements_clouds_3}, 5));
         this.setAllBackgroundLayers(allBgs);
 

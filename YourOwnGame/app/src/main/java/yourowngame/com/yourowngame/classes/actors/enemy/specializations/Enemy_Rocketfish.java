@@ -5,10 +5,8 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
-import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
@@ -70,14 +68,14 @@ public class Enemy_Rocketfish extends Enemy implements IEnemy.PROPERTIES.ROCKETF
                 setImages(new Bitmap[IMAGE_FRAMES.length]);
 
                 for (int imgFrame = 0; imgFrame < IMAGE_FRAMES.length; imgFrame++) {
-                    getImages()[imgFrame] = this.getCraftedDynamicBitmap(IMAGE_FRAMES, imgFrame, DEFAULT_ROTATION, null, null);
+                    getImages()[imgFrame] = getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], DEFAULT_ROTATION, null, null);
                 }
                 this.setCurrentBitmap(getImages()[0]);
 
                 Log.d(TAG, "Robo-Enemy: Successfully initialized!");
                 setInitialized(true);
             }
-        } catch (NoDrawableInArrayFound_Exception | ClassCastException | NullPointerException e) {
+        } catch (ClassCastException | NullPointerException e) {
             Log.d(TAG, "Robo-Enemy: Initialize Failure!");
             e.printStackTrace();
         }

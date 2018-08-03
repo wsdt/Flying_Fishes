@@ -58,12 +58,14 @@
             android:onClick="startAdventureMode"
             android:text="@string/mainActivity_button_mode_adventure" />
 
+        <!-- For adventure mode we don't need a highscore (only gather fruits and buy sth.)
+
         <Button
             android:id="@+id/mainActivity_btnHighscore"
             style="@style/menu_btn_white"
             android:layout_width="162dp"
             android:onClick="showHighscore"
-            android:text="@string/mainActivity_button_highscores" />
+            android:text="@string/mainActivity_button_highscores" /> -->
     </LinearLayout>
 
 </android.widget.RelativeLayout>

@@ -10,7 +10,6 @@ import java.util.HashMap;
 
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
-import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 
 public class Player_Hugo extends Player implements IPlayer.PROPERTIES.HUGO {
     private static final String TAG = "Hugo";
@@ -58,9 +57,9 @@ public class Player_Hugo extends Player implements IPlayer.PROPERTIES.HUGO {
                 HashMap<String, Bitmap> loadedBitmaps = new HashMap<>();
                 Log.d(TAG, "initialize: Player img length: " + IMAGE_FRAMES.length);
                 for (int imgFrame = 0; imgFrame < this.IMAGE_FRAMES.length; imgFrame++) {
-                    loadedBitmaps.put(ROTATION_UP + "_" + imgFrame, this.getCraftedDynamicBitmap(IMAGE_FRAMES, imgFrame, ROTATION_UP, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
-                    loadedBitmaps.put(ROTATION_DOWN + "_" + imgFrame, this.getCraftedDynamicBitmap(IMAGE_FRAMES, imgFrame, ROTATION_DOWN, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
-                    loadedBitmaps.put(DEFAULT_ROTATION + "_" + imgFrame, this.getCraftedDynamicBitmap(IMAGE_FRAMES, imgFrame, DEFAULT_ROTATION, SCALED_WIDTH_PERCENTAGE, SCALED_HEIGHT_PERCENTAGE));
+                    loadedBitmaps.put(ROTATION_UP + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], ROTATION_UP, null,null));
+                    loadedBitmaps.put(ROTATION_DOWN + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], ROTATION_DOWN, null,null));
+                    loadedBitmaps.put(DEFAULT_ROTATION + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], DEFAULT_ROTATION,null,null));
                     Log.d(TAG, "initialize: Loaded following bitmaps->" +
                             ROTATION_UP + "_" + imgFrame + "//" +
                             ROTATION_DOWN + "_" + imgFrame + "//" +
@@ -74,7 +73,7 @@ public class Player_Hugo extends Player implements IPlayer.PROPERTIES.HUGO {
                 this.setInitialized(true);
                 Log.d(TAG, "HEIGHT of Bitmap = " + getHeightOfBitmap());
             }
-        } catch (ClassCastException | NullPointerException | NoDrawableInArrayFound_Exception e) {
+        } catch (ClassCastException | NullPointerException e) {
             //This should never be thrown! Just check in try block if null and if instance of to prevent issues!
             Log.e(TAG, "initialize: Initializing of Player object FAILED! See error below.");
             e.printStackTrace();

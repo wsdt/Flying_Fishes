@@ -1,19 +1,11 @@
 package yourowngame.com.yourowngame.classes.actors.projectiles;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
-import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.projectiles.interfaces.IProjectile;
-import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
-import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 
 /**
  * Created by Solution on 27.02.2018.

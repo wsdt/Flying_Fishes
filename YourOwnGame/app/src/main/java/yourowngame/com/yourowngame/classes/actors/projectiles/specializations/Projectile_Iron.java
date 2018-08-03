@@ -7,7 +7,6 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.actors.projectiles.interfaces.IProjectile;
-import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 
 public class Projectile_Iron extends Projectile implements IProjectile.PROPERTIES.IRON {
     private static final String TAG = "IronProjectile";
@@ -39,14 +38,14 @@ public class Projectile_Iron extends Projectile implements IProjectile.PROPERTIE
                 setImages(new Bitmap[IMAGE_FRAMES.length]);
 
                 for (int imgFrame = 0; imgFrame < IMAGE_FRAMES.length; imgFrame++) {
-                    getImages()[imgFrame] = this.getCraftedDynamicBitmap(IMAGE_FRAMES, imgFrame, DEFAULT_ROTATION, null, null);
+                    getImages()[imgFrame] = getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], DEFAULT_ROTATION, null, null);
                 }
                 this.setCurrentBitmap(getImages()[0]);
 
                 Log.d(TAG, "Initialize: Successfully initialized!");
                 this.setInitialized(true);
             }
-        } catch (NoDrawableInArrayFound_Exception | NullPointerException e) {
+        } catch (NullPointerException e) {
             Log.d(TAG, "Initialize: Initialize Failure!");
             e.printStackTrace();
         }

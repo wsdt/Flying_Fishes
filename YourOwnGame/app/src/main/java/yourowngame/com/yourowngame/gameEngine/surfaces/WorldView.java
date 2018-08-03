@@ -16,9 +16,7 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.WorldActivity;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.background.Background;
-import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
-import yourowngame.com.yourowngame.classes.gamedesign.World;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.classes.manager.dialog.LevelInformationDialog;
@@ -102,7 +100,10 @@ public class WorldView extends DrawableSurfaces {
             for (Level level : WorldMgr.getCurrWorldObj(getDrawableSurfaceActivity()).getAllLevels()) {
                 //Draw connection lines
                 if (positionOfLastLevel != null) {
-                    canvas.drawLine(addToX + positionOfLastLevel.x, addToY + positionOfLastLevel.y, addToX + level.getWorldMapPosition().x, addToY + level.getWorldMapPosition().y, new Paint(R.color.colorBlack));
+                    canvas.drawLine(addToX + positionOfLastLevel.x,
+                            addToY + positionOfLastLevel.y,
+                            addToX + level.getWorldMapPosition().x,
+                            addToY + level.getWorldMapPosition().y, new Paint(R.color.colorBlack));
                 }
 
                 canvas.drawBitmap(this.getInitializedLevelRepresentant(), level.getWorldMapPosition().x, level.getWorldMapPosition().y, null);

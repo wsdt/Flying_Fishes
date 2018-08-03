@@ -4,20 +4,9 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
-import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
-import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
-import yourowngame.com.yourowngame.classes.actors.projectiles.interfaces.IProjectile;
-import yourowngame.com.yourowngame.classes.actors.projectiles.specializations.Projectile_Iron;
-import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 
 

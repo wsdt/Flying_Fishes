@@ -3,20 +3,16 @@ package yourowngame.com.yourowngame.classes.actors.projectiles;
 import android.app.Activity;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.projectiles.interfaces.IProjectile;
 import yourowngame.com.yourowngame.classes.actors.projectiles.specializations.Projectile_Iron;
-import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.annotations.Delete;
 import yourowngame.com.yourowngame.classes.annotations.Testing;
-import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
@@ -78,7 +74,7 @@ public class ProjectileMgr {
         return null;
     }
 
-    public static void drawProjectiles(@NonNull Canvas canvas, long loopCount) throws NoDrawableInArrayFound_Exception {
+    public static void drawProjectiles(@NonNull Canvas canvas, long loopCount) {
         for (Projectile p : getShotProjectiles()) {
             p.setLoopCount(loopCount);
             p.setCanvas(canvas); //todo: not necessary to set in every loop

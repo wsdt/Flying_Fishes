@@ -5,11 +5,9 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.FruitPower_ShootRage;
 import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
-import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
@@ -69,14 +67,14 @@ public class Fruit_Pinapo extends Fruit implements IFruit.PINAPOS_FRUIT_PROPERTI
                 setImages(new Bitmap[IMAGE_FRAMES.length]);
 
                 for (int imgFrame = 0; imgFrame < IMAGE_FRAMES.length; imgFrame++) {
-                    getImages()[imgFrame] = this.getCraftedDynamicBitmap(IMAGE_FRAMES, imgFrame, DEFAULT_ROTATION, null, null);
+                    getImages()[imgFrame] = getCraftedDynamicBitmap(this.getActivity(), IMAGE_FRAMES[imgFrame], DEFAULT_ROTATION, null, null);
                 }
                 this.setCurrentBitmap(getImages()[0]);
 
                 Log.d(TAG, "Meloon-Fruit: Successfully initialized!");
                 setInitialized(true);
             }
-        } catch (NoDrawableInArrayFound_Exception | ClassCastException | NullPointerException e) {
+        } catch (ClassCastException | NullPointerException e) {
             Log.d(TAG, "Meloon-Fruit: Initialize Failure!");
             e.printStackTrace();
         }

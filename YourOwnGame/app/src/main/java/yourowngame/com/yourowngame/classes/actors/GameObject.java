@@ -2,17 +2,10 @@ package yourowngame.com.yourowngame.classes.actors;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
-import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.DrawableObj;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject;
-import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.exceptions.NoDrawableInArrayFound_Exception;
 
 
 public abstract class GameObject extends DrawableObj implements IGameObject.PROPERTIES.DEFAULT {
@@ -47,42 +40,6 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
      * Here and not in DrawableObj, bc. Backgrounds cannot move as a whole.
      */
     public abstract void resetPos();
-
-    /**
-     * getCraftedDynamicBitmap:
-     * <p>
-     * Creates a dynamic bitmap from a drawable res
-     *
-     * @param imgFrame:        index of int-array (set/getImg())
-     * @param rotationDegrees: how much should be image tilted or rotated? (in degrees) / if null then image won't be rotated
-     * @param widthInPercent:  reduce/enlarge width / if this param OR scaleHeight is null, both values get ignored! Use . as comma ;) --> Values MUST be higher than 0 and should not be higher than 1! (quality)
-     * @param heightInPercent: same as scaleWidth.
-     */
-    public Bitmap getCraftedDynamicBitmap(@NonNull int[] allImgFrames, int imgFrame, @Nullable Integer rotationDegrees, @Nullable Float widthInPercent, @Nullable Float heightInPercent) throws NoDrawableInArrayFound_Exception {
-
-        Log.d(TAG, "getCraftedBitmaps: Trying to craft bitmaps.");
-        if (allImgFrames.length <= imgFrame && allImgFrames.length >= 1) {
-            Log.e(TAG, "getCraftedDynamicBitmap: IndexOutOfBounds, could not determine correct drawable for animation. Returning drawable at index 0! Provided imgFrame: " + imgFrame);
-            imgFrame = 0;
-        } else if (allImgFrames.length <= 0) {
-            throw new NoDrawableInArrayFound_Exception("getCraftedDynamicBitmap: FATAL EXCEPTION->Integer array (getImg()) has no content! Could not return bitmap.");
-        }
-        //not else (because despite normal if method should continue)
-        Bitmap targetImg = BitmapFactory.decodeResource(this.getActivity().getResources(), allImgFrames[imgFrame]);
-        if ((widthInPercent != null && heightInPercent != null)) { //must be before rotationDegrees-If
-            if ((widthInPercent != 1 && heightInPercent != 1)) { //so we also don't scale if factor is 1
-                targetImg = Bitmap.createScaledBitmap(targetImg, (int) (targetImg.getWidth() * widthInPercent), (int) (targetImg.getHeight() * heightInPercent), true);
-            }
-
-        } //not else if!
-        if (rotationDegrees != null) {
-            Matrix matrix = new Matrix();
-            matrix.postRotate(rotationDegrees);
-            targetImg = Bitmap.createBitmap(targetImg, 0, 0, targetImg.getWidth(), targetImg.getHeight(), matrix, true);
-        } //not else if (we want to make several combinations)
-
-        return targetImg;
-    }
 
     protected int getRotationDegree() {
         return rotationDegree;
