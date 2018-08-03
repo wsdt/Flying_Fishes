@@ -43,9 +43,9 @@ public class WorldView extends DrawableSurfaces {
     }
 
     public void startWorldAnimations(@NonNull WorldActivity worldActivity) {
-            this.setDrawableSurfaceActivity(worldActivity);
-            this.initializeDrawableObjs();
-            this.initializeDrawing();
+        this.setDrawableSurfaceActivity(worldActivity);
+        this.initializeDrawableObjs();
+        this.initializeDrawing();
 
     }
 
@@ -70,16 +70,16 @@ public class WorldView extends DrawableSurfaces {
      * Here we have to manually initialize DrawableObjs, bc. here we have no levelObj which does that.
      */
     private void initializeDrawableObjs() {
+            for (Background background : WorldMgr.getCurrWorldObj(this.getDrawableSurfaceActivity()).getAllBackgroundLayers()) {
+                background.initialize();
 
-        for (Background background : WorldMgr.getCurrWorldObj(this.getDrawableSurfaceActivity()).getAllBackgroundLayers()) {
-            background.initialize();
-
-        //Initialize Level Representant
-        this.setInitializedLevelRepresentant(BitmapFactory.decodeResource(
-                this.getResources(), WorldMgr.getCurrWorldObj(getDrawableSurfaceActivity()).getLevelRepresentativeResId()));
-        Log.d(TAG, "initializeDrawableObjs: Have initialized worldView.");
-        }
+                //Initialize Level Representant
+                this.setInitializedLevelRepresentant(BitmapFactory.decodeResource(
+                        this.getResources(), WorldMgr.getCurrWorldObj(getDrawableSurfaceActivity()).getLevelRepresentativeResId()));
+                Log.d(TAG, "initializeDrawableObjs: Have initialized worldView.");
+            }
     }
+
     @Bug(byDeveloper = Constants.Developers.SOLUTION, possibleSolution = "Im quite sure the solution is within these lines. The list seems to be OK, everything else too," +
             "but somehow... next test would be the x/y of all objects on the screen, then we can track it back!")
     @Override
@@ -119,6 +119,7 @@ public class WorldView extends DrawableSurfaces {
      * is clicked.
      */
     Rect r = new Rect();
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {

@@ -36,11 +36,16 @@ public class BL_SingleColor extends Background {
     /** No param to provide. */
     @Override
     public void initialize() {
-        try {
-            this.setPreParsedBgColor(this.getUnparsedBgColor()); //only here in initialize() because we parse the color (not really signifikant, but ok let's be consistent)
-        } catch (NullPointerException e) {
-            Log.e(TAG, "initialize: Could not initialize Static background!");
-            e.printStackTrace();
+        if (!isInitialized()) {
+            try {
+                this.setPreParsedBgColor(this.getUnparsedBgColor()); //only here in initialize() because we parse the color (not really signifikant, but ok let's be consistent)
+                this.setInitialized(true);
+            } catch (NullPointerException e) {
+                Log.e(TAG, "initialize: Could not initialize Static background!");
+                e.printStackTrace();
+            }
+        } else {
+            Log.w(TAG, "initialize: Already initialized.");
         }
     }
 

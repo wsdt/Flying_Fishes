@@ -19,7 +19,7 @@ import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 public class BL_FullscreenImage extends Background {
     private static final String TAG = "BL_FullscreenImage";
     private int resBgImage; //normal drawable resource int
-    private Bitmap initializedBgImage; //non-static to make multiple instances with different images.
+    private static Bitmap initializedBgImage;
 
     /**
      * @param bgImage: Background image for whole screen
@@ -52,11 +52,16 @@ public class BL_FullscreenImage extends Background {
     /** No param to provide. */
     @Override
     public void initialize() {
-        try {
-            this.setInitializedBgImage(getCraftedDynamicBitmap(this.getActivity(),this.getResBgImage(),null,DrawableSurfaces.getDrawWidth(),DrawableSurfaces.getDrawHeight())); //only here in initialize() for performance enhancement
-        } catch (NullPointerException e) {
-            Log.e(TAG, "initialize: Could not initialize Static background!");
-            e.printStackTrace();
+        if (!isInitialized()) {
+            try {
+                setInitializedBgImage(getCraftedDynamicBitmap(this.getActivity(), this.getResBgImage(), null, DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawHeight())); //only here in initialize() for performance enhancement
+                this.setInitialized(true);
+            } catch (NullPointerException e) {
+                Log.e(TAG, "initialize: Could not initialize Static background!");
+                e.printStackTrace();
+            }
+        } else {
+            Log.w(TAG, "initialize: Already initialized.");
         }
     }
 
@@ -75,11 +80,11 @@ public class BL_FullscreenImage extends Background {
         this.resBgImage = resBgImage;
     }
 
-    public Bitmap getInitializedBgImage() {
+    public static Bitmap getInitializedBgImage() {
         return initializedBgImage;
     }
 
-    public void setInitializedBgImage(Bitmap initializedBgImage) {
-        this.initializedBgImage = initializedBgImage;
+    public static void setInitializedBgImage(Bitmap initializedBgImage) {
+        BL_FullscreenImage.initializedBgImage = initializedBgImage;
     }
 }

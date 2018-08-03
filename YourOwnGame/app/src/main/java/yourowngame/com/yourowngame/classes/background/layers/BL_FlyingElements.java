@@ -23,10 +23,10 @@ import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
  * This can be used e.g for clouds. But we could be creative here (showing different clouds, etc.)
  **/
 public class BL_FlyingElements extends Background implements IBL_FlyingElements {
+    private static final String TAG = "BL_FlyingElements";
     private int[] resDrawables;
     private int amountOfFlyingElements;
     private ArrayList<FlyingElement> craftedFlyingELements = new ArrayList<>();
-    private static final String TAG = "BL_FlyingElements";
 
     /** @param resDrawables: Provide int-array with all possible drawable resource ints.
      * @param amountOfFlyingElements: How many of those drawables should be drawn on display?*/
@@ -113,8 +113,12 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
     /** allObjs == NULL/no param to provide */
     @Override
     public void initialize() {
-
-        this.craftClouds(); //also sets simultaneously
+        if (!isInitialized()) {
+            this.craftClouds(); //also sets simultaneously
+            this.setInitialized(true);
+        } else {
+            Log.w(TAG, "initialize: Already initialized.");
+        }
     }
 
     @Override
