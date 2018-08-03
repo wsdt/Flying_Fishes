@@ -23,7 +23,6 @@ import yourowngame.com.yourowngame.classes.actors.player.specializations.Player_
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FullscreenImage;
-import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.gamedesign.LevelAssignment;
 import yourowngame.com.yourowngame.classes.gamedesign.levelassignments.LA_AchievePoints;
@@ -88,9 +87,9 @@ public class Level_NightRider extends Level {
          *  FRUIT INITIALIZING AREA *
          ****************************/
         ArrayList<Fruit> allFruits = new ArrayList<>();
-        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Fruit_Meloon.class, 1));
-        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Fruit_Avoci.class, 1));
-        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Fruit_Pinapo.class, 1));
+        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Fruit_Meloon.class, 1));
+        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Fruit_Avoci.class, 1));
+        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Fruit_Pinapo.class, 1));
         this.setAllFruits(allFruits);
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");

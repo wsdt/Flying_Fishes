@@ -3,6 +3,8 @@ package yourowngame.com.yourowngame.classes.background.layers;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -18,7 +20,7 @@ public class BL_SingleColor extends Background {
     /**
      * @param bgColor: By only allowing one integer getValue we ensure that at least one color has to be given and not more than one color is provided (because we would ignore it)
      */
-    public BL_SingleColor(@NonNull Activity activity, int bgColor) {
+    public BL_SingleColor(@NonNull Activity activity, @ColorRes int bgColor) {
         super(activity);
         this.setUnparsedBgColor(bgColor);
     }
@@ -60,7 +62,7 @@ public class BL_SingleColor extends Background {
         return unparsedBgColor;
     }
 
-    public void setUnparsedBgColor(int unparsedBgColor) {
+    public void setUnparsedBgColor(@ColorRes int unparsedBgColor) {
         this.unparsedBgColor = unparsedBgColor;
     }
 
@@ -71,7 +73,7 @@ public class BL_SingleColor extends Background {
     /**
      * @param unparsedColor: Normal res-drawable integer (get's implicitly casted to color integer
      */
-    public void setPreParsedBgColor(int unparsedColor) {
+    public void setPreParsedBgColor(@ColorRes int unparsedColor) {
         this.preParsedBgColor = this.getActivity().getResources().getColor(unparsedColor);
     }
 }

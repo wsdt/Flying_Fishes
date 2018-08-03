@@ -80,8 +80,6 @@ public class WorldView extends DrawableSurfaces {
             }
     }
 
-    @Bug(byDeveloper = Constants.Developers.SOLUTION, possibleSolution = "Im quite sure the solution is within these lines. The list seems to be OK, everything else too," +
-            "but somehow... next test would be the x/y of all objects on the screen, then we can track it back!")
     @Override
     public void drawAll(@NonNull Canvas canvas, long loopCount) {
         /* Update bglayers */

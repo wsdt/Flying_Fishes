@@ -79,6 +79,7 @@ public class CanvasDrawThread extends Thread implements IGameLoopThread {
 
                     //draws canvas on panel
                     getView().drawAll(c, countRenderedCycles++);
+                    if (countRenderedCycles >= (Integer.MAX_VALUE-1)) {countRenderedCycles = 0;} //reset to avoid overflow
                     timeDiff = System.currentTimeMillis() - beginTime;
 
                     if (sleepTime > 0) {

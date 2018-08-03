@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -32,7 +33,7 @@ public class BL_FullscreenImage extends Background {
      *               IMPORTANT: DO NOT add too much such huge images to the app as the app grows with
      *               each image (maybe really download images on app(!)/level start).
      */
-    public BL_FullscreenImage(@NonNull Activity activity, int bgImage) {
+    public BL_FullscreenImage(@NonNull Activity activity, @DrawableRes int bgImage) {
         super(activity);
         this.setResBgImage(bgImage);
     }
@@ -43,9 +44,7 @@ public class BL_FullscreenImage extends Background {
 
     @Override
     public void draw() {
-
-        this.getCanvas().drawBitmap(this.getInitializedBgImage(),0,0,null);
-        //this.getCanvas().drawBitmap(this.getInitializedBgImage(),0,0,null); //fullscreen (left and top 0 to cover everything)
+        this.getCanvas().drawBitmap(getInitializedBgImage(),0,0,null);
     }
 
 
@@ -76,7 +75,7 @@ public class BL_FullscreenImage extends Background {
         return resBgImage;
     }
 
-    public void setResBgImage(int resBgImage) {
+    public void setResBgImage(@DrawableRes int resBgImage) {
         this.resBgImage = resBgImage;
     }
 
@@ -84,7 +83,7 @@ public class BL_FullscreenImage extends Background {
         return initializedBgImage;
     }
 
-    public static void setInitializedBgImage(Bitmap initializedBgImage) {
+    public static void setInitializedBgImage(@NonNull Bitmap initializedBgImage) {
         BL_FullscreenImage.initializedBgImage = initializedBgImage;
     }
 }

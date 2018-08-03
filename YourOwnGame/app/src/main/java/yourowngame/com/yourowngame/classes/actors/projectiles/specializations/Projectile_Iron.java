@@ -20,15 +20,16 @@ public class Projectile_Iron extends Projectile implements IProjectile.PROPERTIE
         super(activity, 0, 0, speedX, speedY);
     }
 
-    @Override
-    public void update() {
-        this.setPosX(getPosX() + getSpeedX());
-    }
 
     @Override
     public void draw() {
         this.setCurrentBitmap(getImages()[((int) this.getLoopCount() % IMAGE_FRAMES.length)]);
         this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
+    }
+
+    @Override
+    public void update() {
+        this.setPosX(getPosX() + getSpeedX());
     }
 
     @Override
@@ -52,7 +53,7 @@ public class Projectile_Iron extends Projectile implements IProjectile.PROPERTIE
     }
 
     @Override
-    public short getShortFrequency() {
+    public short getShootFrequency() {
         return IProjectile.PROPERTIES.IRON.SHOOT_FREQUENCY;
     }
 

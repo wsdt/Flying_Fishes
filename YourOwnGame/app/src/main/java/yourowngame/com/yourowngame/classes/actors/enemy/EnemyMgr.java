@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.classes.actors.enemy;
 
 import android.app.Activity;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -20,7 +21,7 @@ public class EnemyMgr {
     /**
      * Creates universally random enemies."
      */
-    public static <E extends Enemy> ArrayList<E> createRandomEnemies(@NonNull Activity activity, @NonNull Class<E> enemyClass, int numberOfEnemies) {
+    public static <E extends Enemy> ArrayList<E> createRandomEnemies(@NonNull Activity activity, @NonNull Class<E> enemyClass, @IntRange(from = 1) int numberOfEnemies) {
         ArrayList<E> craftedEnemies = new ArrayList<>();
         try {
             for (int i = 0; i < numberOfEnemies; i++) {

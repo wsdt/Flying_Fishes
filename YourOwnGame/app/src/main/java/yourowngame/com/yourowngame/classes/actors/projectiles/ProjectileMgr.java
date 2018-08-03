@@ -57,7 +57,7 @@ public class ProjectileMgr {
             Projectile p = getReadyForShotProjectiles().get(0);
 
             //use player loopcount as bullets are not updated when not shot
-            if (player.getLoopCount() % p.getShortFrequency() == 0 || forceShoot) {
+            if (player.getLoopCount() % p.getShootFrequency() == 0 || forceShoot) {
                 p.setPosX(player.getPosX() + player.getWidthOfBitmap() / 2);
                 p.setPosY(player.getPosY() + player.getHeightOfBitmap() / 2);
 
@@ -66,7 +66,7 @@ public class ProjectileMgr {
                 Log.d(TAG, "shoot: Fired bullet.");
                 return p;
             } else {
-                Log.d(TAG, "shoot: Frequency capping, this bullet cannot be fired that often -> "+p.getLoopCount()+" / "+p.getShortFrequency());
+                Log.d(TAG, "shoot: Frequency capping, this bullet cannot be fired that often -> "+p.getLoopCount()+" / "+p.getShootFrequency());
             }
         } else {
             Log.d(TAG, "shoot: No bullets left.");
@@ -122,7 +122,7 @@ public class ProjectileMgr {
         return shotProjectiles;
     }
 
-    public static void setShotProjectiles(ArrayList<Projectile> shotProjectiles) {
+    public static void setShotProjectiles(@NonNull ArrayList<Projectile> shotProjectiles) {
         ProjectileMgr.shotProjectiles = shotProjectiles;
     }
 
@@ -130,7 +130,7 @@ public class ProjectileMgr {
         return readyForShotProjectiles;
     }
 
-    public static void setReadyForShotProjectiles(ArrayList<Projectile> readyForShotProjectiles) {
+    public static void setReadyForShotProjectiles(@NonNull ArrayList<Projectile> readyForShotProjectiles) {
         ProjectileMgr.readyForShotProjectiles = readyForShotProjectiles;
     }
 }

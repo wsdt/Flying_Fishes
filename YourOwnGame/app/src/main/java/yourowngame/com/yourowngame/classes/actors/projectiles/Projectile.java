@@ -51,6 +51,6 @@ public abstract class Projectile extends GameObject implements IProjectile.PROPE
     }
 
     /** How many bullets at maximum simultaneously on screen? */
-    public abstract short getShortFrequency();
+    public abstract short getShootFrequency();
 
 }

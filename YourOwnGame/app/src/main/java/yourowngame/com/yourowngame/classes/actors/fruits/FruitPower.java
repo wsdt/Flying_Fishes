@@ -1,5 +1,7 @@
 package yourowngame.com.yourowngame.classes.actors.fruits;
 
+import android.support.annotation.IntRange;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,8 +22,10 @@ public abstract class FruitPower extends Feature {
 
     /** amount (e.g. new levelConstant or multiplier for changing player attributes etc.)
      *
-     * DurationMilliSeconds SHOULD ONLY BE LONG (thread startStopTimer())*/
-    public FruitPower(double amount, long durationMilliSeconds) {
+     * DurationMilliSeconds SHOULD ONLY BE LONG (thread startStopTimer())
+     *
+     * Int range from 20 to ensure that not seconds are supplied, but milliseconds. */
+    public FruitPower(double amount, @IntRange(from = 20) long durationMilliSeconds) {
         super(amount);
         this.setDurationMilliseconds(durationMilliSeconds);
     }
@@ -55,7 +59,7 @@ public abstract class FruitPower extends Feature {
         return durationMilliseconds;
     }
 
-    public void setDurationMilliseconds(long durationMilliseconds) {
+    public void setDurationMilliseconds(@IntRange(from = 20) long durationMilliseconds) {
         this.durationMilliseconds = durationMilliseconds;
     }
 }

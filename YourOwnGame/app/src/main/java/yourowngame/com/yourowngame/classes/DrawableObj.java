@@ -5,8 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.support.annotation.CallSuper;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
+import android.support.annotation.WorkerThread;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
@@ -46,11 +51,13 @@ public abstract class DrawableObj {
      * Method is called to draw elem to canvas.
      * This method CAN actually throw the NoDrawableInArrayFound_Exception!
      */
+    @MainThread
     public abstract void draw();
 
     /**
      * Method is called to mutate position, etc. of object.
      */
+    @WorkerThread
     public abstract void update();
 
     /**
@@ -86,6 +93,7 @@ public abstract class DrawableObj {
      * return true;
      * }
      */
+    //TODO: @CallSuper --> do work here which is the same for all subclasses (e.g. isInitialized)
     public abstract void initialize();
 
     /**
@@ -107,7 +115,7 @@ public abstract class DrawableObj {
      * @param width:  reduce/enlarge width / if this param OR scaleHeight is null, both values get ignored! Use . as comma ;) --> Values MUST be higher than 0
      * @param height: same as scaleWidth.
      */
-    public static Bitmap getCraftedDynamicBitmap(@NonNull Activity activity, int resDrawable, @Nullable Integer rotationDegrees, @Nullable Integer width, @Nullable Integer height) {
+    public static Bitmap getCraftedDynamicBitmap(@NonNull Activity activity, @DrawableRes int resDrawable, @Nullable Integer rotationDegrees, @Nullable Integer width, @Nullable Integer height) {
 
         Log.d(TAG, "getCraftedBitmaps: Trying to craft bitmap.");
 
@@ -163,7 +171,7 @@ public abstract class DrawableObj {
         return strResName;
     }
 
-    public void setStrResName(int strResName) {
+    public void setStrResName(@StringRes int strResName) {
         this.strResName = strResName;
     }
 }

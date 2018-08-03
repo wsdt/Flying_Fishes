@@ -1,7 +1,10 @@
 package yourowngame.com.yourowngame.classes;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 /** E.g. used by FruitPower or LevelAssignment */
 public abstract class Feature {
@@ -43,7 +46,7 @@ public abstract class Feature {
      * - "Black square with two white numbers in it which could represent all highscore related assignments."*/
     private int resDrawable_smallIcon;
 
-    public Feature(double amount) {
+    public Feature(@FloatRange(from = 1) double amount) {
         this.setAmount(amount);
     }
 
@@ -57,7 +60,7 @@ public abstract class Feature {
         return resDrawable_smallIcon;
     }
 
-    public void setResDrawable_smallIcon(int resDrawable_smallIcon) {
+    public void setResDrawable_smallIcon(@DrawableRes int resDrawable_smallIcon) {
         this.resDrawable_smallIcon = resDrawable_smallIcon;
     }
 
@@ -65,7 +68,7 @@ public abstract class Feature {
         return resString;
     }
 
-    public void setResString(int resString) {
+    public void setResString(@StringRes int resString) {
         this.resString = resString;
     }
 
@@ -73,7 +76,7 @@ public abstract class Feature {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(@FloatRange(from = 1) double amount) {
         this.amount = amount;
     }
 

@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.classes.actors.fruits;
 
 import android.app.Activity;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -22,7 +23,7 @@ public class FruitMgr {
      * @param currLevel: Used e.g. by some fruitpowers to take effect on the current level.
      * @param fruitClass: Used to determine which fruit to generate.
      */
-    public static <F extends Fruit> ArrayList<F> createRandomFruits(@NonNull Activity activity, @NonNull Level currLevel, @NonNull Class<F> fruitClass, int numberOfFruits) {
+    public static <F extends Fruit> ArrayList<F> createRandomFruits(@NonNull Activity activity, @NonNull Level currLevel, @NonNull Class<F> fruitClass, @IntRange(from = 1) int numberOfFruits) {
         ArrayList<F> craftedFruits = new ArrayList<>();
         try {
             for (int i = 0; i < numberOfFruits; i++) {

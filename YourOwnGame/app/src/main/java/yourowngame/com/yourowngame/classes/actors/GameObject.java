@@ -41,6 +41,11 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
      */
     public abstract void resetPos();
 
+
+    /**
+     * GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  *
+     */
+
     protected int getRotationDegree() {
         return rotationDegree;
     }
@@ -48,11 +53,6 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
     public void setRotationDegree(int rotationDegree) {
         this.rotationDegree = rotationDegree;
     }
-
-
-    /**
-     * GETTER/SETTER SHIT ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  *
-     */
 
     public int getHeightOfBitmap() {
         return heightOfBitmap;

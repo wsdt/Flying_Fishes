@@ -6,6 +6,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.support.annotation.IntRange;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -30,7 +32,7 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
 
     /** @param resDrawables: Provide int-array with all possible drawable resource ints.
      * @param amountOfFlyingElements: How many of those drawables should be drawn on display?*/
-    public BL_FlyingElements(@NonNull Activity activity, int[] resDrawables, int amountOfFlyingElements) {
+    public BL_FlyingElements(@NonNull Activity activity, @IntegerRes int[] resDrawables, @IntRange(from = 1,to = 250) int amountOfFlyingElements) {
         super(activity);
         this.setResDrawables(resDrawables);
         this.setAmountOfFlyingElements(amountOfFlyingElements);
@@ -132,7 +134,7 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
         return resDrawables;
     }
 
-    public void setResDrawables(int[] resDrawables) {
+    public void setResDrawables(@IntegerRes int[] resDrawables) {
         this.resDrawables = resDrawables;
     }
 
@@ -140,7 +142,7 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
         return amountOfFlyingElements;
     }
 
-    public void setAmountOfFlyingElements(int amountOfFlyingElements) {
+    public void setAmountOfFlyingElements(@IntRange(from = 1,to = 250) int amountOfFlyingElements) {
         this.amountOfFlyingElements = amountOfFlyingElements;
     }
 
