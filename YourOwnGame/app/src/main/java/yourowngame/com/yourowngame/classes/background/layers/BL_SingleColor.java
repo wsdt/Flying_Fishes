@@ -9,7 +9,7 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.background.Background;
 
-
+/** Don't delete, I think we could use this layer for Tutorials or e.g. a "Training"-mode or similar. */
 public class BL_SingleColor extends Background {
     private static final String TAG = "BackgroundLayer_static";
     private int unparsedBgColor; //normal color resource int
