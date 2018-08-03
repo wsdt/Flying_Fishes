@@ -28,6 +28,9 @@ public class BL_FullscreenImage extends Background {
      *               --> ONLY place biggest resolution, bc. we scale regardless of the size (with that we make the apk smaller)
      *
      *               Recommended source: pexels.com (no attribution required and free to use)
+     *
+     *               IMPORTANT: DO NOT add too much such huge images to the app as the app grows with
+     *               each image (maybe really download images on app(!)/level start).
      */
     public BL_FullscreenImage(@NonNull Activity activity, int bgImage) {
         super(activity);

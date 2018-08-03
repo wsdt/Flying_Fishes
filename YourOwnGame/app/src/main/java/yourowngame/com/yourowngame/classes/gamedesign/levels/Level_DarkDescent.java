@@ -37,7 +37,7 @@ public class Level_DarkDescent extends Level {
     @Override
     protected void determineBackgroundLayers() {
         ArrayList<Background> allBgs = new ArrayList<>();
-        allBgs.add(new BL_FullscreenImage(this.getActivity(), R.drawable.bg_layer_fullscreenimage_mountains_1));
+        allBgs.add(new BL_FullscreenImage(this.getActivity(), R.drawable.bg_layer_fullscreenimage_mountains_2));
         allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_3}, 6));
         this.setAllBackgroundLayers(allBgs);
     }
