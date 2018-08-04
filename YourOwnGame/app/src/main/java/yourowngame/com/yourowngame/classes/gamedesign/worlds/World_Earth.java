@@ -49,7 +49,7 @@ public class World_Earth extends World {
         ArrayList<Background> backgrounds = new ArrayList<>(); //override old
 
         backgrounds.add(new BL_SingleColor(this.getActivity(), R.color.colorSkyBlue));
-        backgrounds.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.enemy_rocketfish_01}, 3));
+        backgrounds.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.enemy_rocketfish_1}, 3));
         this.setAllBackgroundLayers(backgrounds);
 
     }

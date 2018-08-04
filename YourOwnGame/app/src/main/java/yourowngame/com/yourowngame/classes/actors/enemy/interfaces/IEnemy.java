@@ -40,7 +40,7 @@ public interface IEnemy {
             float SPEED_Y_MIN = 5f; //TODO: Just use these here and add a lvlConstant (e.g. a difficulty e.g. *1.1 etc.
             float SPEED_Y_MAX = 10f;
 
-            int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_rocketfish_01, R.drawable.enemy_rocketfish_02};
+            int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_rocketfish_1};
         }
     }
 }
