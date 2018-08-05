@@ -24,7 +24,7 @@ public interface IFruit {
         int HIGHSCORE_REWARD = 100;
         float OFF_TIME = 1000;
 
-        int[] IMAGE_FRAMES = new int[] {R.drawable.meloon};
+        int[] IMAGE_FRAMES = new int[] {R.drawable.fruit_meloon};
     }
     interface PINAPOS_FRUIT_PROPERTIES {
         int HIGHSCORE_REWARD = 200;
