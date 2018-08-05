@@ -23,7 +23,7 @@ public interface IEnemy {
         /** Following interfaces can overwrite params of DEFAULT interface. */
         interface BOBA {
             int HIGHSCORE_REWARD = 100;
-            int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_boba_01, R.drawable.enemy_boba_02, R.drawable.enemy_boba_03};
+            int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_boba_1};
         }
 
         interface HAPPEN {
