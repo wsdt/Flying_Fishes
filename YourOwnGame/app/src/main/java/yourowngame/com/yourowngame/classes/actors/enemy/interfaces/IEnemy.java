@@ -28,8 +28,7 @@ public interface IEnemy {
 
         interface HAPPEN {
             int HIGHSCORE_REWARD = 75;
-            int[] IMAGE_FRAMES = new int[] {R.drawable.enemy_happen_1, R.drawable.enemy_happen_2,
-                    R.drawable.enemy_happen_3,R.drawable.enemy_happen_2};
+            int[] IMAGE_FRAMES = new int[] {R.drawable.enemy_happen_1};
         }
 
         interface ROCKETFISH {
