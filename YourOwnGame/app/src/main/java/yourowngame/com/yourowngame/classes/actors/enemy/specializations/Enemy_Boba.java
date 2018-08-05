@@ -42,7 +42,11 @@ public class Enemy_Boba extends Enemy implements IEnemy.PROPERTIES.BOBA {
             // Reset if out of screen
             this.resetPos();
         } else {
-            this.setPosX(this.getPosX() - this.getSpeedX());
+            double speed = this.getSpeedX();
+            if (this.getTargetGameObj().getPosY() > (this.getPosY()-50) && this.getTargetGameObj().getPosY() < (this.getPosY()+50)) {
+                speed *= 2; //double speed if user is at same/similar height
+            }
+            this.setPosX(this.getPosX()-speed);
         }
     }
 
