@@ -26,7 +26,7 @@ public class GameOverDialog {
         if (!activity.isFinishing()) {
             new LovelyStandardDialog(activity, LovelyStandardDialog.ButtonLayout.HORIZONTAL)
                     .setTopColorRes(R.color.colorPrimaryDark)
-                    .setIcon(Constants.APP_ICON)
+                    .setIcon(Constants.DEFAULT_ICON)
                     .setTitle(R.string.dialog_gameover_title)
                     .setMessage(R.string.dialog_gameover_description)
                     .setCancelable(false)

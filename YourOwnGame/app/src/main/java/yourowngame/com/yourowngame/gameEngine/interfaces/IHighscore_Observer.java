@@ -5,7 +5,7 @@ public interface IHighscore_Observer {
     /** Gets called when HighScore has been changed. */
     void onHighscoreChanged();
 
-    /**Maybe also in future:
+    /* Maybe also in future:
      * onHighscoreIncremented();
      * onHighscoreDecremented();
      * onHighscoreNotChanged();

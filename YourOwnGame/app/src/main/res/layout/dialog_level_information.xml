@@ -1,100 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<!-- If you change parent layout please also change casting in LevelInformationDialog (otherwise
+ClassCastException will occur), not catched there for some reasons -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimary">
 
     <TextView
-        android:id="@+id/levelName"
+        android:id="@+id/dialogLvlInformationTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@color/colorAccent"
-        android:text="@string/level_name"
-        android:textSize="25sp" />
+        style="@style/defaultHeading"
+        android:layout_marginBottom="6dp"
+        android:text="@string/generic_error" />
 
+    <!-- Add ImageViews of available fruits here -->
     <GridLayout
-        android:id="@+id/gridTopLayout"
+        android:id="@+id/dialogLvlInformationFruits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/dialogLvlInformationTitle"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/levelName">
+        android:layout_marginBottom="15dp"/>
 
-        <TextView
-            android:id="@+id/findableFruits"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:padding="10dp"
-            android:text="@string/fruits_available" />
+    <TextView
+        android:id="@+id/dialogLvlInformationAssignments"
+        android:layout_below="@id/dialogLvlInformationFruits"
+        style="@style/defaultText"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-
-        <!-- Address the fruits visibility, whether they take part or not -->
-        <ImageView
-            android:id="@+id/avociAvailable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:srcCompat="@drawable/avoci" />
-
-        <ImageView
-            android:id="@+id/meloonAvailable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:srcCompat="@drawable/fruit_meloon" />
-
-        <ImageView
-            android:id="@+id/pinapoAvailable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:srcCompat="@drawable/pinapos" />
-
-
-    </GridLayout>
-
-    <TableLayout
-        android:id="@+id/tableLayout"
+    <Button
+        android:id="@+id/dialogLvlInformationBtnStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/gridTopLayout"
-        android:layout_centerHorizontal="true">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/dialogLvlInformationAssignments"
+        android:text="@string/dialog_levelinformation_btn_startgame" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/pointsToAchieve"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:paddingRight="25dp"
-                android:text="@string/points_to_achieve" />
-        </TableRow>
-    </TableLayout>
-
-    <GridLayout
+    <Button
+        android:id="@+id/dialogLvlInformationBtnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tableLayout"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/startLevelButton"
-            android:text="@string/start_level_btn" />
+        android:layout_below="@id/dialogLvlInformationAssignments"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/dialog_levelinformation_btn_cancel" />
 
-        <Button
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:id="@+id/cancelLevelButton"
-            android:text="@string/cancel_level_btn"/>
-    </GridLayout>
-
-</android.widget.RelativeLayout>
+</RelativeLayout>

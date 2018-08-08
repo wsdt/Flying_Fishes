@@ -20,8 +20,8 @@ import yourowngame.com.yourowngame.classes.annotations.Delete;
  */
 
 public interface Constants {
-    /** Change app icon here and in Android Manifest */
-    int APP_ICON = R.drawable.fruit_meloon;
+    /** Change default icon here (can be, but doesn't have to be the same as app-icon) */
+    int DEFAULT_ICON = R.drawable.fruit_meloon;
 
     interface Developers {
         String WSDT = "Kevin Riedl (WSDT)";

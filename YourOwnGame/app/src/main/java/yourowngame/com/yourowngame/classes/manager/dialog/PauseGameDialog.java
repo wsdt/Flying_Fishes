@@ -26,7 +26,7 @@ public class PauseGameDialog {
         if (!activity.isFinishing()) {
             new LovelyStandardDialog(activity)
                     .setTopColorRes(R.color.colorPrimaryDark)
-                    .setIcon(Constants.APP_ICON)
+                    .setIcon(Constants.DEFAULT_ICON)
                     .setTitle(R.string.dialog_pausegame_title)
                     .setMessage(R.string.dialog_pausegame_description)
                     .setCancelable(false)

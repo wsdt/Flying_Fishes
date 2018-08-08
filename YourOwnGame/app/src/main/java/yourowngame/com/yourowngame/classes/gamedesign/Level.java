@@ -4,6 +4,7 @@ package yourowngame.com.yourowngame.classes.gamedesign;
 import android.app.Activity;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -105,8 +106,8 @@ public abstract class Level {
 
     //GETTER/SETTER +++++++++++++++++++++++++++++++++++++++++++++++++
 
-    public int getLevelName(){
-        return levelNameResId;
+    public String getLevelName(){
+        return getActivity().getResources().getString(getLevelNameResId());
     }
 
     public ArrayList<Background> getAllBackgroundLayers() {
@@ -124,7 +125,7 @@ public abstract class Level {
     public int getLevelNameResId() {
         return levelNameResId;
     }
-    public void setLevelNameResId(int levelNameResId) {
+    public void setLevelNameResId(@StringRes int levelNameResId) {
         this.levelNameResId = levelNameResId;
     }
     public ArrayList<Enemy> getAllEnemies() {

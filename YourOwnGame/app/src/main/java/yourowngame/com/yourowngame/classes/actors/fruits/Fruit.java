@@ -7,6 +7,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
@@ -32,7 +33,6 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
      */
     protected static final float SPEED_X = 10f;
     protected static final float SPEED_Y = 10f;
-
 
     public Fruit(@NonNull Activity activity, @NonNull Level currLevel, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);

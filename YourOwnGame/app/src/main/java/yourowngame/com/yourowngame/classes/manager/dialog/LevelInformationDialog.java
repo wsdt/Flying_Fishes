@@ -3,24 +3,32 @@ package yourowngame.com.yourowngame.classes.manager.dialog;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 
-import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.activities.WorldActivity;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Avoci;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Meloon;
-import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Pinapo;
+import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
+import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
+import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.gamedesign.LevelAssignment;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
@@ -33,15 +41,14 @@ import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
  */
 public class LevelInformationDialog {
     private static final String TAG = "LevelInformationDialog";
-    private static int levelIndex;
 
-    private LevelInformationDialog() {}
+    private LevelInformationDialog() {
+    }
 
-    public static void show(@NonNull final WorldView worldView, int lvlindex){
+    public static void show(@NonNull final WorldView worldView, final int lvlIndex) {
         final Activity activity = worldView.getDrawableSurfaceActivity();
-        levelIndex = lvlindex;
 
-        if(!activity.isFinishing()) {
+        if (!activity.isFinishing()) {
             //Pause/Stop thread
             worldView.getThread().pauseThread();
 
@@ -49,24 +56,28 @@ public class LevelInformationDialog {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (inflater == null) {
                 Log.w(TAG, "show: Could not show levelInfo dialog. Starting lvl instead.");
-
+                startLvl(activity, null, lvlIndex);
             } else {
-                View view = inflater.inflate(R.layout.dialog_level_information, null);
+                RelativeLayout inflatedDialog = (RelativeLayout) inflater.inflate(R.layout.dialog_level_information, null);
 
-                final LovelyCustomDialog infoDialog = new LovelyCustomDialog(activity);
-                infoDialog.setView(view);
-                infoDialog.setListener(R.id.startLevelButton, new View.OnClickListener() {
+                final LovelyCustomDialog infoDialog = new LovelyCustomDialog(activity)
+                        .setTopTitle(R.string.dialog_levelinformation_toptitle)
+                        .setTopColorRes(R.color.colorPrimaryDark)
+                        .setTopTitleColor(activity.getResources().getColor(R.color.colorWhite))
+                        .setView(inflatedDialog);
+
+                infoDialog.setListener(R.id.dialogLvlInformationBtnStart, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startLvl(activity,infoDialog);
+                        startLvl(activity, infoDialog, lvlIndex);
                     }
                 });
-                infoDialog.setListener(R.id.cancelLevelButton, new View.OnClickListener() {
+                infoDialog.setListener(R.id.dialogLvlInformationBtnCancel, new View.OnClickListener() {
                     @Bug(byDeveloper = Constants.Developers.SOLUTION,
-                         message = "The dialog stops our thread and our animation in the background," +
-                                   "our thread is getting resumed, but somehow effects are dead.",
-                        possibleSolution = "(1) restart Activity, but that is the worst approach, bc our background would never run fluently," +
-                                           "(2) the thread needs to be resumed, but does not take effect." )
+                            message = "The dialog stops our thread and our animation in the background," +
+                                    "our thread is getting resumed, but somehow effects are dead.",
+                            possibleSolution = "(1) restart Activity, but that is the worst approach, bc our background would never run fluently," +
+                                    "(2) the thread needs to be resumed, but does not take effect.")
                     @Override
                     public void onClick(View view) {
                         infoDialog.dismiss();
@@ -74,55 +85,65 @@ public class LevelInformationDialog {
                     }
                 });
 
-                //initiate dialog-data
-                initiate(view, activity);
+                //loadDataToDialog dialog-data
+                loadDataToDialog(activity, inflatedDialog, lvlIndex);
 
                 //show the dialog
                 infoDialog.show();
             }
-        }else{
+        } else {
             Log.d(TAG, "show: Whups, couldnt show dialog!");
         }
     }
 
-    private static void startLvl(@NonNull Activity activity, @NonNull LovelyCustomDialog infoDialog) {
-        WorldMgr.setCurr_lvl_index(levelIndex);
-        infoDialog.dismiss();
+    private static void startLvl(@NonNull Activity activity, @Nullable LovelyCustomDialog infoDialog, int lvlIndex) {
+        WorldMgr.setCurr_lvl_index(lvlIndex);
+        if (infoDialog != null) {
+            infoDialog.dismiss();
+        }
         activity.startActivity(new Intent(activity, GameViewActivity.class));
     }
 
-    //init dialog data
-    private static void initiate(View view, Activity activity){
-        ImageView meloon = (ImageView)  view.findViewById(R.id.meloonAvailable);
-        ImageView avoci  = (ImageView)  view.findViewById(R.id.avociAvailable);
-        ImageView pinapo = (ImageView)  view.findViewById(R.id.pinapoAvailable);
+    /**
+     * Load lvl data into dialog.
+     */
+    @Enhance(message = "Improve performance and legibility", byDeveloper = Constants.Developers.WSDT,
+            priority = Enhance.Priority.MEDIUM)
+    private static void loadDataToDialog(@NonNull Activity activity, @NonNull RelativeLayout dialogParent, int lvlIndex) {
+        Resources r = dialogParent.getResources();
+        Level currLvl = WorldMgr.getCurrLvlObj(activity);
 
+        //Set title
+        ((TextView) dialogParent.findViewById(R.id.dialogLvlInformationTitle)).setText(r.getString(R.string.dialog_levelinformation_title, lvlIndex, currLvl.getLevelName()));
 
-        Level lvlobj = WorldMgr.getCurrLvlObj(activity);
+        //Set fruits
+        HashSet<Class> differentFruits = new HashSet<>();
+        for (Fruit f : currLvl.getAllFruits()) {
+            differentFruits.add(f.getClass()); //simply add (hashset only accepts distinct values)
+        }
 
-        //unhappy with that solution!
-        for (int i = 0; i < lvlobj.getAllFruits().size(); i++){
-            if(lvlobj.getAllFruits().get(i) instanceof Fruit_Meloon){
-                meloon.setVisibility(View.VISIBLE);
-            }else if(lvlobj.getAllFruits().get(i) instanceof Fruit_Avoci){
-                avoci.setVisibility(View.VISIBLE);
-            }else if(lvlobj.getAllFruits().get(i) instanceof Fruit_Pinapo){
-                pinapo.setVisibility(View.VISIBLE);
+        GridLayout gridLayout = dialogParent.findViewById(R.id.dialogLvlInformationFruits);
+        for (Class f : differentFruits) {
+            ImageView iv = new ImageView(activity);
+
+            ArrayList fruitList = FruitMgr.createRandomFruits(activity, currLvl, f, 1);
+            if (fruitList != null && fruitList.size() > 0) {
+                ((Fruit) fruitList.get(0)).initialize(); //for bitmap
+                Bitmap loadedBitmap = ((Fruit) fruitList.get(0)).getCurrentBitmap();
+
+                iv.setImageBitmap(Bitmap.createScaledBitmap(loadedBitmap, loadedBitmap.getWidth() / 2, loadedBitmap.getHeight() / 2, true));
+                gridLayout.addView(iv);
+                Log.d(TAG, "loadDataToDialog:SetFruits: Loaded fruit->" + f);
+            } else {
+                Log.e(TAG, "loadDataToDialog:SetFruits: Could not generate fruit -> " + f);
             }
         }
 
-        //we could also display the enemies, which will be in that level.
 
-        //level number
-        TextView levelNumber = view.findViewById(R.id.levelName);
-        levelNumber.setText(activity.getResources().getString(R.string.level_name, levelIndex+1));
-
-        //Points to achieve this level
-        TextView pointsToAchieve = view.findViewById(R.id.pointsToAchieve);
-        //using local-specific separator
-        String formattedAmount = NumberFormat.getIntegerInstance().format(lvlobj.getAllLevelAssignments().get(0).getAmount());
-        pointsToAchieve.setText(activity.getResources().getString(R.string.points_to_achieve, formattedAmount));
-
-
+        //Set assigments
+        TextView laView = dialogParent.findViewById(R.id.dialogLvlInformationAssignments);
+        for (LevelAssignment la : currLvl.getAllLevelAssignments()) {
+            laView.append(la.getFormatted(activity) + "\n");
+        }
     }
 }

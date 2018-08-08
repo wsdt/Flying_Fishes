@@ -1,8 +1,9 @@
 <resources>
     <!-- GLOBAL -->
-    <string name="appName">Flying Fishes - Save the Fruits</string>
+    <string name="appName">Flying Fishes</string>
 
-    <!-- Error -->
+    <!-- Generic Errors -->
+    <string name="generic_error">Error</string>
     <string name="error_gameViewActivity_lvlLoad">Could not load level.</string>
 
     <!-- Content Descriptions of images etc. -->
@@ -81,13 +82,11 @@
     <string name="dialog_pausegame_description">Game has been paused successfully.</string>
     <string name="dialog_pausegame_btn_positive">Resume</string>
     <string name="dialog_pausegame_btn_negative">Exit</string>
-    <!-- show level info dialog -->
-    <string name="level_name"> Level: 00%1$d</string>
-    <string name="points_to_achieve"> Target: %1$s Points </string>
-    <string name="fruits_available"> Available Fruits: </string>
-    <string name="start_level_btn"> Start Level </string>
-    <string name="cancel_level_btn"> Cancel </string>
-    <string name="level_information"> Level Information</string>
+    <!-- LevelInformation-Dialog -->
+    <string name="dialog_levelinformation_toptitle">Level abstract</string>
+    <string name="dialog_levelinformation_title">%1$d - %2$s</string> <!-- e.g. 1 - The dark night etc. -->
+    <string name="dialog_levelinformation_btn_startgame">Start</string>
+    <string name="dialog_levelinformation_btn_cancel">Cancel</string>
 
 
 

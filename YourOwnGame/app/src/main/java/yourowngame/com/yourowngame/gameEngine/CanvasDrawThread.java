@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.manager.dialog.PauseGameDialog;
-import yourowngame.com.yourowngame.gameEngine.interfaces.IGameLoopThread;
 import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
 /**
@@ -15,7 +14,7 @@ import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
  * Thread to handle the GameView or e.g. WorldView operations
  */
 
-public class CanvasDrawThread extends Thread implements IGameLoopThread {
+public class CanvasDrawThread extends Thread {
     /*
      * @link GameLoopThread#isRunning: {true}->Gameloop will be executed || {false}->Gameloop stopped/paused
      */
@@ -25,6 +24,10 @@ public class CanvasDrawThread extends Thread implements IGameLoopThread {
 
     private boolean isRunning;
     private static final String TAG = "Thread";
+
+    /** Thread constants */
+    private static final int MAX_FRAMES_SKIPPABLE = 5;
+    private static final int MAX_FPS = 50;
 
 
     public CanvasDrawThread(@NonNull DrawableSurfaces view) {

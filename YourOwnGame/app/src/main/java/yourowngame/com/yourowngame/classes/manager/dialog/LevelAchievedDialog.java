@@ -29,7 +29,7 @@ public class LevelAchievedDialog {
         if (!activity.isFinishing()) {
             LovelyStandardDialog ld = new LovelyStandardDialog(activity)
                     .setTopColorRes(R.color.colorPrimaryDark)
-                    .setIcon(Constants.APP_ICON)
+                    .setIcon(Constants.DEFAULT_ICON)
                     .setTitle(R.string.dialog_levelachieved_title)
                     .setMessage(R.string.dialog_levelachieved_description)
                     .setNegativeButton(R.string.dialog_levelachieved_btn_negative, new View.OnClickListener() {
