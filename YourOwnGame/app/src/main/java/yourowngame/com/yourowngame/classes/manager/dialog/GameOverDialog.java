@@ -9,6 +9,7 @@ import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.annotations.Testing;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.manager.AdManager;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
@@ -37,7 +38,8 @@ public class GameOverDialog {
                         public void onClick(View v) {
                             AdManager.loadRewardedVideoInRewardActivity(
                                     gameView.getDrawableSurfaceActivity(), new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
-                                        @Override
+                                        @Override @Testing(message = "Please test whether revive works and what happens if we abort watching the ad",
+                                                byDeveloper = Constants.Developers.WSDT, priority = Testing.Priority.HIGH)
                                         public void success_is_true() {
                                             //revive method/procedure (e.g. put all positions a few seconds back!)
                                             for (Enemy e : currLvl.getAllEnemies()) {
