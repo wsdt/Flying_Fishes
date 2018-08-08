@@ -10,16 +10,12 @@ import android.util.Log;
 
 import java.util.Iterator;
 
-import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
-import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
-import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
-import yourowngame.com.yourowngame.classes.counters.FruitCounter;
-import yourowngame.com.yourowngame.classes.counters.HighScore;
+import yourowngame.com.yourowngame.classes.observer.Observer_HighScore;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
@@ -34,9 +30,9 @@ public class CollisionMgr {
     private final String TAG = "CollisionMgr";
     private Level currLevel;
     private Context context;
-    private HighScore highScore;
+    private Observer_HighScore highScore;
 
-    public CollisionMgr(Level level, Context context, HighScore highScore){
+    public CollisionMgr(Level level, Context context, Observer_HighScore highScore){
         this.currLevel = level;
         this.context = context;
         this.highScore = highScore;
@@ -80,7 +76,7 @@ public class CollisionMgr {
                 //increment highScore
                 highScore.increment(fruit);
                 //add collected Fruit
-                FruitCounter.getInstance().fruitCollected(fruit);
+                Level.getLevelFruitCounter().fruitCollected(fruit);
                 //reset fruit
                 fruit.resetPos();
                 Log.e(TAG, "Player collected a fruit.");

@@ -1,7 +1,6 @@
 package yourowngame.com.yourowngame.classes.gamedesign.levels;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -98,7 +97,7 @@ public class Level_NightRider extends Level {
     @Override
     protected void determineLevelAssigments() {
         ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
-        allLevelAssignments.add(new LA_AchievePoints(3000, this.getCurrentLevelHighscore()));
+        allLevelAssignments.add(new LA_AchievePoints(3000, this.getLevelHighscore()));
         this.setAllLevelAssignments(allLevelAssignments);
     }
 

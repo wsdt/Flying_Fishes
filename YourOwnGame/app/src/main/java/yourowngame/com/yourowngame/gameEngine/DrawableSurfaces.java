@@ -42,7 +42,7 @@ public abstract class DrawableSurfaces extends SurfaceView {
     public abstract void updateAll();
 
     public void initializeDrawing() {
-        /**************************************
+        /* *************************************
          * Start of the Surface & Thread Page *
          **************************************/
         setThread(new CanvasDrawThread(this)); //via singleton there can always be only one thread!

@@ -15,7 +15,8 @@ import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
-import yourowngame.com.yourowngame.classes.counters.HighScore;
+import yourowngame.com.yourowngame.classes.observer.Observer_FruitCounter;
+import yourowngame.com.yourowngame.classes.observer.Observer_HighScore;
 
 public abstract class Level {
     private static final String TAG = "Level";
@@ -30,10 +31,10 @@ public abstract class Level {
     private ArrayList<Fruit> allFruits;
     private ArrayList<LevelAssignment> allLevelAssignments;
 
-    @Enhance (message = "maybe it's better to put it back into gameview or gameviewActivity and all levels access it. " +
-            "So we just have to reset the highscore on levelchange (what we have to do anyway)." +
-            "totally, that is utterly useless & non OO")
-    private HighScore levelHighScore = new HighScore(); //add Level-dependent HighScore
+    /** Static to save memory, but this means we have to care about resetting highscore when new lvl starts */
+    private static Observer_HighScore levelHighScore = new Observer_HighScore(); //add Level-dependent HighScore
+    /** Also static, don't forget to reset. */
+    private static Observer_FruitCounter levelFruitCounter = new Observer_FruitCounter();
     //TODO: other level-dependent members/values
 
     //Do not make more constructors
@@ -51,6 +52,14 @@ public abstract class Level {
         * AND SUPERIOR WORLD_OBJS REMAIN SMALL UNLESS WE NEED A SPECIFIC LVL OBJECT (WHEN
         * WE PLAY IT). */
         Log.d(TAG, "Level: ###################### ENDED LOADING LEVEL ##################################");
+    }
+
+    public static Observer_FruitCounter getLevelFruitCounter() {
+        return levelFruitCounter;
+    }
+
+    public static void setLevelFruitCounter(Observer_FruitCounter levelFruitCounter) {
+        Level.levelFruitCounter = levelFruitCounter;
     }
 
     @Override
@@ -99,7 +108,7 @@ public abstract class Level {
         //no reason to cleanup levelAssignments, because they calculate their result out from extern values (highscore e.g.) which are resetted.
 
         //Because level-dependent, also reset when level has changed
-        getCurrentLevelHighscore().resetCounter();
+        getLevelHighscore().resetCounter();
 
         Log.d(TAG, "cleanUpLevelProperties: Clean up all level properties.");
     }
@@ -158,11 +167,11 @@ public abstract class Level {
     public void setAllFruits(ArrayList<Fruit> allFruits) {
         this.allFruits = allFruits;
     }
-    public HighScore getCurrentLevelHighscore() {
+    public static Observer_HighScore getLevelHighscore() {
         return levelHighScore;
     }
-    public void setLevelHighScore(HighScore levelHighScore) {
-        this.levelHighScore = levelHighScore;
+    public static void setLevelHighScore(Observer_HighScore levelHighScore) {
+        Level.levelHighScore = levelHighScore;
     }
 
     public ArrayList<LevelAssignment> getAllLevelAssignments() {

@@ -10,12 +10,10 @@ import android.util.Log;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
-import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
-import yourowngame.com.yourowngame.classes.counters.FruitCounter;
-import yourowngame.com.yourowngame.classes.counters.HighScore;
+import yourowngame.com.yourowngame.classes.observer.Observer_HighScore;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.classes.manager.CollisionMgr;
@@ -24,7 +22,7 @@ import yourowngame.com.yourowngame.classes.manager.dialog.LevelAchievedDialog;
 import yourowngame.com.yourowngame.classes.manager.storage.SharedPrefStorageMgr;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 import yourowngame.com.yourowngame.classes.manager.MultiTouchMgr;
-import yourowngame.com.yourowngame.gameEngine.interfaces.IHighscore_Observer;
+import yourowngame.com.yourowngame.classes.observer.interfaces.IHighscore_Observer;
 
 /**
  * GameView Surface, draw players here and in the end add it to the GameViewActivity
@@ -87,7 +85,7 @@ public class GameView extends DrawableSurfaces {
         /* Cleanup Level Properties */
         this.getCurrLevelObj().cleanUpLevelProperties();
         /* Clean the fruitCounter*/
-        FruitCounter.getInstance().cleanUpFruitCounter();
+        Level.getLevelFruitCounter().resetCounter();
         /* Clean Up Projectiles*/
         ProjectileMgr.cleanUp();
         /* Create CollisionManager*/
@@ -269,8 +267,8 @@ public class GameView extends DrawableSurfaces {
     /**
      * this returns the current HighScore
      */
-    public HighScore getHighscore() {
-        return this.getCurrLevelObj().getCurrentLevelHighscore();
+    public Observer_HighScore getHighscore() {
+        return Level.getLevelHighscore();
     }
 
 

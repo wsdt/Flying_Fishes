@@ -1,7 +1,6 @@
 package yourowngame.com.yourowngame.classes.gamedesign.levels;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -20,7 +19,6 @@ import yourowngame.com.yourowngame.classes.actors.player.specializations.Player_
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FullscreenImage;
-import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.gamedesign.LevelAssignment;
 import yourowngame.com.yourowngame.classes.gamedesign.levelassignments.LA_AchievePoints;
@@ -93,7 +91,7 @@ public class Level_EndlessDawn extends Level {
     @Override
     protected void determineLevelAssigments() {
         ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
-        allLevelAssignments.add(new LA_AchievePoints(10_000, getCurrentLevelHighscore()));
+        allLevelAssignments.add(new LA_AchievePoints(10_000, getLevelHighscore()));
         this.setAllLevelAssignments(allLevelAssignments);
     }
 
