@@ -11,7 +11,9 @@ import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 /**
- * Created  on 12.03.2018.
+ * Manual:
+ * - Aggressivity: This enemy doubles its speed when at the same height as the player (= targetGameObj), but stops with that
+ * when the distance is too big. By adjusting the aggressivity you can adapt that value. Usual values are e.g. 50.
  */
 
 public class Enemy_Boba extends Enemy {
@@ -21,14 +23,15 @@ public class Enemy_Boba extends Enemy {
     /**
      * Boba Constants ++++++++++++++++++++++++++++++++++++++++++++++++++++
      */
+    private static final double DEFAULT_AGGRESSIVITY = 50;
     private static final int HIGHSCORE_REWARD = 100;
     private static final int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_boba_1};
 
     /**
      * READ -> if you use this constructor, the current img will not be set as the currentBitmap!
      */
-    public Enemy_Boba(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
-        super(activity, posX, posY, speedX, speedY);
+    public Enemy_Boba(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, double aggressivity) {
+        super(activity, posX, posY, speedX, speedY, aggressivity);
     }
 
     /**
@@ -36,6 +39,7 @@ public class Enemy_Boba extends Enemy {
      */
     public Enemy_Boba(@NonNull Activity activity) {
         super(activity); //also call super constr! (initializing)
+        this.setAggressivity(DEFAULT_AGGRESSIVITY);
     }
 
 
@@ -43,7 +47,7 @@ public class Enemy_Boba extends Enemy {
     public void update() {
         super.update();
             double speed = this.getSpeedX();
-            if (this.getTargetGameObj().getPosY() > (this.getPosY() - 50) && this.getTargetGameObj().getPosY() < (this.getPosY() + 50)) {
+            if (this.getTargetGameObj().getPosY() > (this.getPosY() - this.getAggressivity()) && this.getTargetGameObj().getPosY() < (this.getPosY() + this.getAggressivity())) {
                 speed *= 2; //double speed if user is at same/similar height
             }
             this.setPosX(this.getPosX() - speed);

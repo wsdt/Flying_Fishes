@@ -9,21 +9,25 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 
 /**
- * Created  on 12.03.2018.
+ * Manual:
+ * - Aggressivity: This enemy follows the movement of the Player (= targetGameObj), but stops following
+ * when the distance is too big. By adjusting the aggressivity you can adapt that value. Usual values are e.g. 300.
  */
 
 public class Enemy_Happen extends Enemy {
     private static final String TAG = "RoboEnemy";
     private static Bitmap[] images;
 
+
     /**
      * Happen Constants +++++++++++++++++++++++++++++++++++
      */
+    private static final double DEFAULT_AGGRESSIVITY = 300;
     private static final int HIGHSCORE_REWARD = 75;
     private static final int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_happen_1};
 
-    public Enemy_Happen(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
-        super(activity, posX, posY, speedX, speedY);
+    public Enemy_Happen(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, double aggressivity) {
+        super(activity, posX, posY, speedX, speedY, aggressivity);
     }
 
     /**
@@ -31,6 +35,7 @@ public class Enemy_Happen extends Enemy {
      */
     public Enemy_Happen(@NonNull Activity activity) {
         super(activity); //also call super constr! (initializing)
+        this.setAggressivity(DEFAULT_AGGRESSIVITY);
     }
 
     /**
@@ -41,7 +46,9 @@ public class Enemy_Happen extends Enemy {
         super.update();
         // special case: if the player jumps over an happen enemy, he has no chance to kill it. So the happen
         // will track the player to a specific value, and then just moves constant.
-        if (this.getPosX() < 300) {
+        if ((this.getTargetGameObj().getPosY() - this.getPosY()) > this.getAggressivity() ||
+                (this.getTargetGameObj().getPosX() - this.getPosX()) > this.getAggressivity() ||
+                (this.getTargetGameObj().getPosX()+this.getTargetGameObj().getWidthOfBitmap()) >= this.getPosX()) { // to avoid being killed by vertically coming enemy
             this.setPosX(this.getPosX() - this.getSpeedX());
         } else {
             if (this.getTargetGameObj().getPosX() < this.getPosX())

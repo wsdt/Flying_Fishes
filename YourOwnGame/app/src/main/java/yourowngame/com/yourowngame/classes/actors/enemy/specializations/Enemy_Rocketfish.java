@@ -7,6 +7,8 @@ import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.annotations.Bug;
+import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 
 /**
  * Created on 12.03.2018.
@@ -20,10 +22,10 @@ public class Enemy_Rocketfish extends Enemy {
      * Rocketfish Constants +++++++++++++++++++++++++++++
      */
     private static final int HIGHSCORE_REWARD = 50;
+    @Bug(priority = Bug.Priority.MEDIUM, problem = "params not used/as the method is in base class",
+            byDeveloper = Constants.Developers.WSDT)
     private static final float SPEED_X_MIN = 10f;
     private static final float SPEED_X_MAX = 15f; //TODO: could be also level dependent :) this will surely be level dependent :)
-    private static final float SPEED_Y_MIN = 5f; //TODO: Just use these here and add a lvlConstant (e.g. a difficulty e.g. *1.1 etc.
-    private static final float SPEED_Y_MAX = 10f;
     private static final int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_rocketfish_1};
 
     /**
@@ -35,8 +37,8 @@ public class Enemy_Rocketfish extends Enemy {
      * --> SHOULD NOT BE STATIC also not in subclasses so we can modify also single enemies!
      */
 
-    public Enemy_Rocketfish(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
-        super(activity, posX, posY, speedX, speedY);
+    public Enemy_Rocketfish(@NonNull Activity activity, double posX, double posY, double speedX, double speedY, double aggressivity) {
+        super(activity, posX, posY, speedX, speedY, aggressivity);
     }
 
     /**
@@ -44,6 +46,8 @@ public class Enemy_Rocketfish extends Enemy {
      */
     public Enemy_Rocketfish(@NonNull Activity activity) {
         super(activity); //also call super constr! (initializing)
+
+        //does not use aggressivity value, so no setting here
     }
 
     @Override

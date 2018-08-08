@@ -126,10 +126,10 @@ public class LevelInformationDialog {
         for (Class f : differentFruits) {
             ImageView iv = new ImageView(activity);
 
-            ArrayList fruitList = FruitMgr.createRandomFruits(activity, currLvl, f, 1);
-            if (fruitList != null && fruitList.size() > 0) {
-                ((Fruit) fruitList.get(0)).initialize(); //for bitmap
-                Bitmap loadedBitmap = ((Fruit) fruitList.get(0)).getCurrentBitmap();
+            Fruit fruit = FruitMgr.createRandomFruit(activity, currLvl, f);
+            if (fruit != null) {
+                fruit.initialize(); //for bitmap
+                Bitmap loadedBitmap = fruit.getCurrentBitmap();
 
                 iv.setImageBitmap(Bitmap.createScaledBitmap(loadedBitmap, loadedBitmap.getWidth() / 2, loadedBitmap.getHeight() / 2, true));
                 gridLayout.addView(iv);
