@@ -5,18 +5,22 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
-import yourowngame.com.yourowngame.classes.manager.RandomMgr;
-import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 /**
  * Created  on 12.03.2018.
  */
 
-public class Enemy_Happen extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
+public class Enemy_Happen extends Enemy {
     private static final String TAG = "RoboEnemy";
     private static Bitmap[] images;
+
+    /**
+     * Happen Constants +++++++++++++++++++++++++++++++++++
+     */
+    private static final int HIGHSCORE_REWARD = 75;
+    private static final int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_happen_1};
 
     public Enemy_Happen(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
@@ -27,11 +31,6 @@ public class Enemy_Happen extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
      */
     public Enemy_Happen(@NonNull Activity activity) {
         super(activity); //also call super constr! (initializing)
-
-        this.setPosX(RandomMgr.getRandomInt(DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawWidth() + ADDITIONAL_GAME_WIDTH));
-        this.setPosY(RandomMgr.getRandomInt(0, DrawableSurfaces.getDrawHeight() + ADDITIONAL_GAME_WIDTH));
-        this.setSpeedX(RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX));
-        this.setSpeedY(RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX));
     }
 
     /**
@@ -39,12 +38,11 @@ public class Enemy_Happen extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
      */
     @Override
     public void update() {
+        super.update();
         // special case: if the player jumps over an happen enemy, he has no chance to kill it. So the happen
         // will track the player to a specific value, and then just moves constant.
         if (this.getPosX() < 300) {
-
             this.setPosX(this.getPosX() - this.getSpeedX());
-
         } else {
             if (this.getTargetGameObj().getPosX() < this.getPosX())
                 this.setPosX(this.getPosX() - this.getSpeedX());
@@ -62,7 +60,7 @@ public class Enemy_Happen extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
     //but we surely should do something to slow it down
     @Override
     public void draw() {
-        this.setCurrentBitmap(getImages()[((int) this.getLoopCount()/20 % IMAGE_FRAMES.length)]);
+        this.setCurrentBitmap(getImages()[((int) this.getLoopCount() / 20 % IMAGE_FRAMES.length)]);
         this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
@@ -73,7 +71,7 @@ public class Enemy_Happen extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
                 setImages(new Bitmap[IMAGE_FRAMES.length]);
 
                 for (int imgFrame = 0; imgFrame < IMAGE_FRAMES.length; imgFrame++) {
-                    getImages()[imgFrame] = getCraftedDynamicBitmap(this.getActivity(), IMAGE_FRAMES[imgFrame], DEFAULT_ROTATION, null, null);
+                    getImages()[imgFrame] = getCraftedDynamicBitmap(this.getActivity(), IMAGE_FRAMES[imgFrame], ROTATION_DEFAULT, null, null);
                 }
 
                 this.setCurrentBitmap(getImages()[0]);
@@ -102,6 +100,6 @@ public class Enemy_Happen extends Enemy implements IEnemy.PROPERTIES.HAPPEN {
      */
     @Override
     public int getReward() {
-        return IEnemy.PROPERTIES.HAPPEN.HIGHSCORE_REWARD;
+        return HIGHSCORE_REWARD;
     }
 }

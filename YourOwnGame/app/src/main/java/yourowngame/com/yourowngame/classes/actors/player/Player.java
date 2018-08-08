@@ -6,11 +6,11 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import yourowngame.com.yourowngame.classes.actors.GameObject;
-import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 
-public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DEFAULT {
+public abstract class Player extends GameObject {
     private static final String TAG = "Player";
     /**
      * Use wrapperClasses to determine whether they are set or not.
@@ -18,58 +18,44 @@ public abstract class Player extends GameObject implements IPlayer.PROPERTIES.DE
     private boolean goUp = false;
     private boolean goForward = false;
 
-    /*-- Preloaded --*/
-    private int intrinsicHeightOfPlayer;
-    private Bitmap currentBitmap;
+    /* Default Player constants ++++++++++++++++++++++++++++++++++*/
+    /**
+     * Jump Speed multiplied by MOVE_UP_MULTIPLIER
+     */
+    protected static final int DEFAULT_POS_X = 100;
+    protected static final int DEFAULT_SPEED_X = 5; //should be overwritten by loadConfiguration() from Db
+    protected static final int DEFAULT_SPEED_Y = 2; //should be overwritten by loadConfiguration() from Db
 
-
-    public Player(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
+    /** Constructor blocked to prevent unconfigured players. Just use simplified constr. and set all
+     * params after defaultConfig() when you want a custom player. */
+    private Player(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
-        
     }
 
     /**
-     * Block here creating simplified playerInstances, bc. we don't need random players.
+     * Simplified constr. which loads it's params from DB (shop logic).
      */
-    private Player(@NonNull Activity activity) {
+    public Player(@NonNull Activity activity) {
         super(activity);
+        this.loadConfiguration();
     }
 
-
-    /** Here as long as all players are cleaned up the same way. */
-    @Override
-    public boolean cleanup() {
-        resetPos();
-        return true;
-    }
+    /** What has user bought, what can player do etc. (load from Db)
+     *
+     * As every Player can get modified and levelled up separately we make this abstract and
+     * implement it in base classes. */
+    protected abstract void loadConfiguration();
 
     @Override
     public void resetPos() {
-        this.setPosY(Resources.getSystem().getDisplayMetrics().heightPixels / 4); //reset y when hitting ground
+        this.setPosY(DrawableSurfaces.getDrawHeight() / 4); //reset y when hitting ground
+        this.setPosX(DEFAULT_POS_X);
     }
 
-    /*************************
-     *  GETTER & SETTER      *
-     *************************/
-
-    public int getIntrinsicHeightOfPlayer() {
-        return intrinsicHeightOfPlayer;
-    }
-
-    public void setIntrinsicHeightOfPlayer(int intrinsicHeightOfPlayer) {
-        this.intrinsicHeightOfPlayer = intrinsicHeightOfPlayer;
-    }
-
-    public float getWidthOfPlayer() {
-        return (float) this.getPosY() + (this.getIntrinsicHeightOfPlayer() * Constants.GameLogic.GameView.widthInPercentage);
-    }
-
-    public Bitmap getCurrentBitmap() {
-        return currentBitmap;
-    }
-
-    public void setCurrentBitmap(Bitmap currentBitmap) {
-        this.currentBitmap = currentBitmap;
+    @Override
+    public void resetSpeed() {
+        this.setSpeedY(DEFAULT_SPEED_Y);
+        this.setSpeedX(DEFAULT_SPEED_X);
     }
 
     /**

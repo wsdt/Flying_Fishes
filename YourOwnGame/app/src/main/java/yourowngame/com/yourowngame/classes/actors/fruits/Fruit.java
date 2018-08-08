@@ -8,20 +8,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import yourowngame.com.yourowngame.classes.actors.GameObject;
-import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.manager.RandomMgr;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 @Enhance(message = {"Maybe replace isCollected/isOutOfBound etc. with Zustandsmuster",
-    "Bitmap/Drawable int array consistency!"})
+        "Bitmap/Drawable int array consistency!"})
 
 
-public abstract class Fruit extends GameObject implements IHighscore_RewardableObj, IFruit.DEFAULT_FRUIT_PROPERTIES {
+public abstract class Fruit extends GameObject implements IHighscore_RewardableObj {
     private static final String TAG = "Fruit";
     private List<FruitPower> fruitPowers = new ArrayList<>();
-    @Enhance (message = "Needed or for what is this param?")
+    /**
+     * Needed to control in future the spawning of fruits (They should occur more randomly or even
+     * only a certain amount of times within one level as they are used as currency later.
+     */
     private int spawnTime = 0;
+
+    /**
+     * Default fruit constants +++++++++++++++++++++++++++++++++++++++
+     */
+    protected static final float SPEED_X = 10f;
+    protected static final float SPEED_Y = 10f;
 
 
     public Fruit(@NonNull Activity activity, @NonNull Level currLevel, double posX, double posY, double speedX, double speedY) {
@@ -29,19 +39,34 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
         determineFruitPowers(currLevel);
     }
 
-    /**Creates random fruit*/
+    /**
+     * Creates random fruit
+     */
     public Fruit(@NonNull Activity activity, @NonNull Level currLevel) {
         super(activity);
         determineFruitPowers(currLevel);
     }
 
-    public boolean hasLeftScreen(){
-        return this.getPosX() < 0;
+    /**
+     * Fruits need to differ in here
+     */
+    @Override
+    public void resetPos() {
+        this.setPosX(RandomMgr.getRandomFloat(DrawableSurfaces.getDrawWidth()+this.getWidthOfBitmap(), DrawableSurfaces.getDrawWidth()+this.getWidthOfBitmap()*2)); //+width of bitmap to spawn outside of screen
+        this.setPosY(RandomMgr.getRandomFloat(this.getHeightOfBitmap(), DrawableSurfaces.getDrawHeight() - this.getHeightOfBitmap()));
     }
 
-    /** Execute when fruit has been collected. */
+    @Override
+    public void resetSpeed() {
+        this.setSpeedX(SPEED_X);
+        this.setSpeedY(SPEED_Y);
+    }
+
+    /**
+     * Execute when fruit has been collected.
+     */
     public void fruitCollected() {
-        Log.d(TAG, "fruitCollected: Executing powers -> "+this.getFruitPowers().size());
+        Log.d(TAG, "fruitCollected: Executing powers -> " + this.getFruitPowers().size());
 
         //Execute all fruitPowers
         for (FruitPower fruitPower : this.getFruitPowers()) {
@@ -49,9 +74,14 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
         }
     }
 
-    /** Set fruit powers. */
+    /**
+     * Set fruit powers.
+     */
     public abstract void determineFruitPowers(@NonNull Level currLevel);
-    /** Remove fruit powers, for bonus levels!*/
+
+    /**
+     * Remove fruit powers, for bonus levels!
+     */
     public abstract void removeFruitPowers(@NonNull Level currLevel);
 
     //GETTER/SETTERS ---------------------------------------------

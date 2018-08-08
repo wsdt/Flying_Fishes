@@ -17,6 +17,8 @@ import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 public class GameOverDialog {
     private static final String TAG = "GameOverDialog";
 
+    private GameOverDialog() {} //prevent
+
     public static void show(@NonNull final GameView gameView) {
         final Activity activity = gameView.getDrawableSurfaceActivity();
 

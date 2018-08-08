@@ -5,17 +5,23 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.FruitPower_EnemySpeed;
-import yourowngame.com.yourowngame.classes.actors.fruits.interfaces.IFruit;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 
-public class Fruit_Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES {
+public class Fruit_Avoci extends Fruit {
     public static final String TAG = "Avoci";
     private static Bitmap[] images;
+
+    /**
+     * Avoci Constants +++++++++++++++++++++++
+     */
+    private static final int HIGHSCORE_REWARD = 50;
+    private static final int[] IMAGE_FRAMES = new int[]{R.drawable.avoci};
 
     public Fruit_Avoci(@NonNull Activity activity, @NonNull Level currLevel, double posX, double posY, double speedX, double speedY) {
         super(activity, currLevel, posX, posY, speedX, speedY);
@@ -27,18 +33,12 @@ public class Fruit_Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES 
      */
     public Fruit_Avoci(@NonNull Activity activity, @NonNull Level currLevel) {
         super(activity, currLevel);
-
-        this.setPosX(RandomMgr.getRandomInt(DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawWidth() + (int) OFF_TIME));
-        this.setPosY(RandomMgr.getRandomInt(0, DrawableSurfaces.getDrawHeight()));
-        this.setSpeedX(SPEED_X);
-        this.setSpeedY(SPEED_Y);
-
         //Fruit powers are determined in super constr.
     }
 
     @Override
     public void determineFruitPowers(@NonNull Level currLevel) {
-        this.getFruitPowers().add(new FruitPower_EnemySpeed(0.5,10000, currLevel.getAllEnemies()));
+        this.getFruitPowers().add(new FruitPower_EnemySpeed(0.5, 10000, currLevel.getAllEnemies()));
     }
 
     @Override
@@ -50,6 +50,7 @@ public class Fruit_Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES 
     /*************************************** UPDATE / DRAW *************************************************/
     @Override
     public void update() {
+        super.update();
         this.setPosX(this.getPosX() - this.getSpeedX()); //just move them from right to left
     }
 
@@ -68,7 +69,7 @@ public class Fruit_Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES 
                 setImages(new Bitmap[IMAGE_FRAMES.length]);
 
                 for (int imgFrame = 0; imgFrame < IMAGE_FRAMES.length; imgFrame++) {
-                    getImages()[imgFrame] = getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], DEFAULT_ROTATION, null, null);
+                    getImages()[imgFrame] = getCraftedDynamicBitmap(this.getActivity(), IMAGE_FRAMES[imgFrame], ROTATION_DEFAULT, null, null);
                 }
                 this.setCurrentBitmap(getImages()[0]);
 
@@ -81,24 +82,12 @@ public class Fruit_Avoci extends Fruit implements IFruit.AVOCI_FRUIT_PROPERTIES 
         }
     }
 
-    @Override
-    public boolean cleanup() {
-        resetPos();
-        return true;
-    }
-
-    @Override
-    public void resetPos() {
-        this.setPosX(RandomMgr.getRandomFloat(DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawWidth() + IFruit.AVOCI_FRUIT_PROPERTIES.OFF_TIME));
-        this.setPosY(RandomMgr.getRandomFloat(IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT, DrawableSurfaces.getDrawHeight() - IFruit.DEFAULT_FRUIT_PROPERTIES.Y_UPLIFT));
-    }
-
     /**
      * Get reward method for highscore
      */
     @Override
     public int getReward() {
-        return IFruit.AVOCI_FRUIT_PROPERTIES.HIGHSCORE_REWARD;
+        return HIGHSCORE_REWARD;
     }
 
     /******************Getter & Setter ******************/

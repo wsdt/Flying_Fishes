@@ -5,18 +5,26 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
-import yourowngame.com.yourowngame.classes.actors.enemy.interfaces.IEnemy;
-import yourowngame.com.yourowngame.classes.manager.RandomMgr;
-import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 /**
  * Created on 12.03.2018.
  */
 
-public class Enemy_Rocketfish extends Enemy implements IEnemy.PROPERTIES.ROCKETFISH {
+public class Enemy_Rocketfish extends Enemy {
     private static Bitmap[] images;
     private static final String TAG = "RocketFish";
+
+    /**
+     * Rocketfish Constants +++++++++++++++++++++++++++++
+     */
+    private static final int HIGHSCORE_REWARD = 50;
+    private static final float SPEED_X_MIN = 10f;
+    private static final float SPEED_X_MAX = 15f; //TODO: could be also level dependent :) this will surely be level dependent :)
+    private static final float SPEED_Y_MIN = 5f; //TODO: Just use these here and add a lvlConstant (e.g. a difficulty e.g. *1.1 etc.
+    private static final float SPEED_Y_MAX = 10f;
+    private static final int[] IMAGE_FRAMES = new int[]{R.drawable.enemy_rocketfish_1};
 
     /**
      * Used in highscore (only getter/setter, because HighScore is the one who should increment itself) [By default 0, so new enemies would not do anything]
@@ -36,27 +44,18 @@ public class Enemy_Rocketfish extends Enemy implements IEnemy.PROPERTIES.ROCKETF
      */
     public Enemy_Rocketfish(@NonNull Activity activity) {
         super(activity); //also call super constr! (initializing)
-
-        this.setPosX(RandomMgr.getRandomInt(DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawWidth() + ADDITIONAL_GAME_WIDTH));
-        this.setPosY(RandomMgr.getRandomInt(0, DrawableSurfaces.getDrawHeight()));
-        this.setSpeedX(RandomMgr.getRandomFloat(IEnemy.PROPERTIES.ROCKETFISH.SPEED_X_MIN, IEnemy.PROPERTIES.ROCKETFISH.SPEED_X_MAX));
-        this.setSpeedY(RandomMgr.getRandomFloat(IEnemy.PROPERTIES.ROCKETFISH.SPEED_Y_MIN, IEnemy.PROPERTIES.ROCKETFISH.SPEED_Y_MAX));
     }
 
     @Override
     public void update() {
-        if (getPosX() <= 0) {
-            // Reset if out of screen
-            this.resetPos();
-        } else {
-            this.setPosX(this.getPosX() - this.getSpeedX());
-        }
+        super.update();
+        this.setPosX(this.getPosX() - this.getSpeedX());
     }
 
 
     @Override
     public void draw() {
-        this.setCurrentBitmap(getImages()[((int) this.getLoopCount()/10 % IMAGE_FRAMES.length)]);
+        this.setCurrentBitmap(getImages()[((int) this.getLoopCount() / 10 % IMAGE_FRAMES.length)]);
         this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
 
@@ -68,7 +67,7 @@ public class Enemy_Rocketfish extends Enemy implements IEnemy.PROPERTIES.ROCKETF
                 setImages(new Bitmap[IMAGE_FRAMES.length]);
 
                 for (int imgFrame = 0; imgFrame < IMAGE_FRAMES.length; imgFrame++) {
-                    getImages()[imgFrame] = getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], DEFAULT_ROTATION, null, null);
+                    getImages()[imgFrame] = getCraftedDynamicBitmap(this.getActivity(), IMAGE_FRAMES[imgFrame], ROTATION_DEFAULT, null, null);
                 }
                 this.setCurrentBitmap(getImages()[0]);
 
@@ -87,7 +86,7 @@ public class Enemy_Rocketfish extends Enemy implements IEnemy.PROPERTIES.ROCKETF
      */
     @Override
     public int getReward() {
-        return IEnemy.PROPERTIES.ROCKETFISH.HIGHSCORE_REWARD;
+        return HIGHSCORE_REWARD;
     }
 
     //GETTER/SETTER ---------------------------

@@ -8,22 +8,32 @@ import android.util.Log;
 
 import java.util.HashMap;
 
+import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
-import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 
-public class Player_Hugo extends Player implements IPlayer.PROPERTIES.HUGO {
+public class Player_Hugo extends Player {
     private static final String TAG = "Hugo";
     private HashMap<String, Bitmap> images; //must not be static
 
-    public Player_Hugo(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
-        super(activity, posX, posY, speedX, speedY);
+    /** Hugo constants +++++++++++++++++++++++++++++++++*/
+    private static final int[] IMAGE_FRAMES = new int[] {R.drawable.player_hugo};
+
+    public Player_Hugo(@NonNull Activity activity) {
+        super(activity);
     }
 
+    @Override
+    protected void loadConfiguration() {
+        /* Currently just simulate loading params of user from Db by setting default params */
+        this.resetPos();
+        this.resetSpeed();
+    }
 
     @Override
     public void update() {
+        super.update();
         if (this.isGoUp()) {
-            this.setPosY(this.getPosY() - this.getSpeedY() * MOVE_UP_MULTIPLIER);
+            this.setPosY(this.getPosY() - this.getSpeedY());
             this.setRotationDegree(ROTATION_UP);
         } else {
             this.setPosY(this.getPosY() + this.getSpeedY());
@@ -40,7 +50,7 @@ public class Player_Hugo extends Player implements IPlayer.PROPERTIES.HUGO {
     }
 
     @Override
-    public void draw(){
+    public void draw() {
         this.setCurrentBitmap(getImages().get(this.getRotationDegree() + "_" + ((int) this.getLoopCount() / 5 % IMAGE_FRAMES.length))); //reference for collision detection etc.
         this.getCanvas().drawBitmap(this.getCurrentBitmap(), (int) this.getPosX(), (int) this.getPosY(), null);
     }
@@ -50,20 +60,20 @@ public class Player_Hugo extends Player implements IPlayer.PROPERTIES.HUGO {
     public void initialize() {
         try {
             if (!this.isInitialized()) {
-                this.setIntrinsicHeightOfPlayer(this.getActivity().getResources().getDrawable(IMAGE_FRAMES[0]).getIntrinsicHeight());
+                this.setHeightOfBitmap(this.getActivity().getResources().getDrawable(IMAGE_FRAMES[0]).getIntrinsicHeight());
 
                 /*Load all bitmaps [load all rotations and all images from array] -------------------
                  * String of hashmap has following pattern: */
                 HashMap<String, Bitmap> loadedBitmaps = new HashMap<>();
                 Log.d(TAG, "initialize: Player img length: " + IMAGE_FRAMES.length);
                 for (int imgFrame = 0; imgFrame < this.IMAGE_FRAMES.length; imgFrame++) {
-                    loadedBitmaps.put(ROTATION_UP + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], ROTATION_UP, null,null));
-                    loadedBitmaps.put(ROTATION_DOWN + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], ROTATION_DOWN, null,null));
-                    loadedBitmaps.put(DEFAULT_ROTATION + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], DEFAULT_ROTATION,null,null));
+                    loadedBitmaps.put(ROTATION_UP + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(), IMAGE_FRAMES[imgFrame], ROTATION_UP, null, null));
+                    loadedBitmaps.put(ROTATION_DOWN + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(), IMAGE_FRAMES[imgFrame], ROTATION_DOWN, null, null));
+                    loadedBitmaps.put(ROTATION_DEFAULT + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(), IMAGE_FRAMES[imgFrame], ROTATION_DEFAULT, null, null));
                     Log.d(TAG, "initialize: Loaded following bitmaps->" +
                             ROTATION_UP + "_" + imgFrame + "//" +
                             ROTATION_DOWN + "_" + imgFrame + "//" +
-                            DEFAULT_ROTATION + "_" + imgFrame
+                            ROTATION_DEFAULT + "_" + imgFrame
                     );
                 }
                 this.setImages(loadedBitmaps);

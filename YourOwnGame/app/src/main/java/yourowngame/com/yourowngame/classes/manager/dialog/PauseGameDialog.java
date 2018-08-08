@@ -12,11 +12,12 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.WorldActivity;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
-import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
 
 /** Shown when user presses pause btn during game. */
 public class PauseGameDialog {
     private static final String TAG = "PauseGameDialog";
+
+    private PauseGameDialog() {}
 
     public static void show(@NonNull final GameView gameView) {
         final Activity activity = gameView.getDrawableSurfaceActivity();

@@ -5,12 +5,18 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
-import yourowngame.com.yourowngame.classes.actors.projectiles.interfaces.IProjectile;
 
-public class Projectile_Iron extends Projectile implements IProjectile.PROPERTIES.IRON {
+public class Projectile_Iron extends Projectile {
     private static final String TAG = "IronProjectile";
     private static Bitmap[] images;
+
+    /**
+     * Iron projectile constants ++++++++++++++++++++++++++
+     */
+    private static final int[] IMAGE_FRAMES = new int[]{R.drawable.color_player_bullet};
+    private static final short SHOOT_FREQUENCY = 5;
 
     public Projectile_Iron(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
@@ -29,6 +35,7 @@ public class Projectile_Iron extends Projectile implements IProjectile.PROPERTIE
 
     @Override
     public void update() {
+        super.update();
         this.setPosX(getPosX() + getSpeedX());
     }
 
@@ -39,7 +46,7 @@ public class Projectile_Iron extends Projectile implements IProjectile.PROPERTIE
                 setImages(new Bitmap[IMAGE_FRAMES.length]);
 
                 for (int imgFrame = 0; imgFrame < IMAGE_FRAMES.length; imgFrame++) {
-                    getImages()[imgFrame] = getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], DEFAULT_ROTATION, null, null);
+                    getImages()[imgFrame] = getCraftedDynamicBitmap(this.getActivity(), IMAGE_FRAMES[imgFrame], ROTATION_DEFAULT, null, null);
                 }
                 this.setCurrentBitmap(getImages()[0]);
 
@@ -54,7 +61,7 @@ public class Projectile_Iron extends Projectile implements IProjectile.PROPERTIE
 
     @Override
     public short getShootFrequency() {
-        return IProjectile.PROPERTIES.IRON.SHOOT_FREQUENCY;
+        return SHOOT_FREQUENCY;
     }
 
     //GETTER/SETTER ----------------------------------------

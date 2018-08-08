@@ -27,16 +27,4 @@ public interface Constants {
         String WSDT = "Kevin Riedl (WSDT)";
         String SOLUTION = "Christof Jori (SOLUTION)";
     }
-
-    @Delete (
-            createdBy = Developers.WSDT,
-            description = "Please verify and delete.",
-            lastModified = "27.03.2018 21:50"
-    )
-    interface GameLogic {
-        interface GameView {
-            float widthInPercentage = 0.35f; //this values is used in player.class (todo: we are sure this values is used correctly?)
-            float heightInPercentage = 0.35f;
-        }
-    }
 }

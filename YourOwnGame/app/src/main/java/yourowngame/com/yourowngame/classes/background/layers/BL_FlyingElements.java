@@ -2,37 +2,41 @@ package yourowngame.com.yourowngame.classes.background.layers;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.support.annotation.IntRange;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
 
-import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.background.Background;
-import yourowngame.com.yourowngame.classes.background.layers.interfaces.IBL_FlyingElements;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
-/** BL_FlyingElements is used for showing drawables, which are spawning at a specific height randomly.
+/**
+ * BL_FlyingElements is used for showing drawables, which are spawning at a specific height randomly.
  * This can be used e.g for clouds. But we could be creative here (showing different clouds, etc.)
  **/
-public class BL_FlyingElements extends Background implements IBL_FlyingElements {
+public class BL_FlyingElements extends Background {
     private static final String TAG = "BL_FlyingElements";
     private int[] resDrawables;
     private int amountOfFlyingElements;
     private ArrayList<FlyingElement> craftedFlyingELements = new ArrayList<>();
 
-    /** @param resDrawables: Provide int-array with all possible drawable resource ints.
-     * @param amountOfFlyingElements: How many of those drawables should be drawn on display?*/
-    public BL_FlyingElements(@NonNull Activity activity, @IntegerRes int[] resDrawables, @IntRange(from = 1,to = 250) int amountOfFlyingElements) {
+    /**
+     * Flying Elements constants +++++++++++++++++++++++++++
+     */
+    private static final float FLYINGELEMENT_RANDOM_Y_PLACEMENT_IN_PERCENTAGE = 0.50f; //top 40% where e.g. clouds can appear
+    private static final float FLYINGELEMENT_RANDOM_SPEED_MAX = 5f;
+    private static final float FLYINGELEMENT_RANDOM_SPEED_MIN = 1f; //do not place 0!
+
+    /**
+     * @param resDrawables:           Provide int-array with all possible drawable resource ints.
+     * @param amountOfFlyingElements: How many of those drawables should be drawn on display?
+     */
+    public BL_FlyingElements(@NonNull Activity activity, @IntegerRes int[] resDrawables, @IntRange(from = 1, to = 250) int amountOfFlyingElements) {
         super(activity);
         this.setResDrawables(resDrawables);
         this.setAmountOfFlyingElements(amountOfFlyingElements);
@@ -51,7 +55,7 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
         private FlyingElement(Bitmap flyingElementBitmap) {
             this.posX = getRandomPosX();
             this.posY = getRandomPosY();
-            Log.d(TAG, "Width and Height of GVA " +DrawableSurfaces.getDrawHeight() + " " + DrawableSurfaces.getDrawWidth());
+            Log.d(TAG, "Width and Height of GVA " + DrawableSurfaces.getDrawHeight() + " " + DrawableSurfaces.getDrawWidth());
 
             this.flyingElementBitmap = flyingElementBitmap;
             this.randomSpeed = RandomMgr.getRandomFloat(FLYINGELEMENT_RANDOM_SPEED_MIN, FLYINGELEMENT_RANDOM_SPEED_MAX);
@@ -70,6 +74,7 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
         private float getRandomPosX() {
             return RandomMgr.getRandomFloat(DrawableSurfaces.getDrawWidth(), DrawableSurfaces.getDrawWidth() + 1500);
         }
+
         private float getRandomPosY() {
             return RandomMgr.getRandomFloat(0, (int) (DrawableSurfaces.getDrawHeight() * FLYINGELEMENT_RANDOM_Y_PLACEMENT_IN_PERCENTAGE));
         }
@@ -108,11 +113,13 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
 
             this.getCraftedFlyingElements().add(new FlyingElement(BitmapFactory.decodeResource(this.getActivity().getResources(), getResDrawables()[RandomMgr.getRandomInt(0, getResDrawables().length - 1)])));
             Log.d(TAG, "GameView Height = ");
-            Log.d(TAG, "craftClouds: Added cloud no. "+i);
+            Log.d(TAG, "craftClouds: Added cloud no. " + i);
         }
     }
 
-    /** allObjs == NULL/no param to provide */
+    /**
+     * allObjs == NULL/no param to provide
+     */
     @Override
     public void initialize() {
         if (!isInitialized()) {
@@ -142,7 +149,7 @@ public class BL_FlyingElements extends Background implements IBL_FlyingElements 
         return amountOfFlyingElements;
     }
 
-    public void setAmountOfFlyingElements(@IntRange(from = 1,to = 250) int amountOfFlyingElements) {
+    public void setAmountOfFlyingElements(@IntRange(from = 1, to = 250) int amountOfFlyingElements) {
         this.amountOfFlyingElements = amountOfFlyingElements;
     }
 

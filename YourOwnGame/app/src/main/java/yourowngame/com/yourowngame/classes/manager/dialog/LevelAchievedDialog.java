@@ -19,6 +19,8 @@ import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 public class LevelAchievedDialog {
     private static final String TAG = "LevelAchievedDialog";
 
+    private LevelAchievedDialog() {}
+
     @Enhance(byDeveloper = "Solution49", message = "Guess we should make a short summary after every level & what he has achieved!")
     public static void show(@NonNull final GameView gameView) {
         final Activity activity = gameView.getDrawableSurfaceActivity();

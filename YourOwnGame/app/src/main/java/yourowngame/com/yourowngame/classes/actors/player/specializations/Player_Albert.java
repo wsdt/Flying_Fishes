@@ -8,21 +8,35 @@ import android.util.Log;
 
 import java.util.HashMap;
 
+import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
-import yourowngame.com.yourowngame.classes.actors.player.interfaces.IPlayer;
 
-public class Player_Albert extends Player implements IPlayer.PROPERTIES.ALBERT {
+public class Player_Albert extends Player {
     private static final String TAG = "Albert";
     private HashMap<String, Bitmap> images; //must not be static
 
-    public Player_Albert(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
-        super(activity, posX, posY, speedX, speedY);
+    /**
+     * Albert constants ++++++++++++++++++++++++++++++++++
+     */
+    private static final int[] IMAGE_FRAMES = new int[]{R.drawable.player_albert};
+
+    public Player_Albert(@NonNull Activity activity) {
+        super(activity);
     }
 
     @Override
+    protected void loadConfiguration() {
+        /* Currently just simulate loading params of user from Db by setting default params */
+        this.resetPos();
+        this.resetSpeed();
+    }
+
+
+    @Override
     public void update() {
+        super.update();
         if (this.isGoUp()) {
-            this.setPosY(this.getPosY() - this.getSpeedY() * MOVE_UP_MULTIPLIER);
+            this.setPosY(this.getPosY() - this.getSpeedY());
             this.setRotationDegree(ROTATION_UP);
         } else {
             this.setPosY(this.getPosY() + this.getSpeedY());
@@ -52,20 +66,20 @@ public class Player_Albert extends Player implements IPlayer.PROPERTIES.ALBERT {
     public void initialize() {
         try {
             if (!this.isInitialized()) {
-                this.setIntrinsicHeightOfPlayer(this.getActivity().getResources().getDrawable(IMAGE_FRAMES[0]).getIntrinsicHeight());
+                this.setHeightOfBitmap(this.getActivity().getResources().getDrawable(IMAGE_FRAMES[0]).getIntrinsicHeight());
 
                 /*Load all bitmaps [load all rotations and all images from array] -------------------
                  * String of hashmap has following pattern: */
                 HashMap<String, Bitmap> loadedBitmaps = new HashMap<>();
                 Log.d(TAG, "initialize: Player img length: " + IMAGE_FRAMES.length);
                 for (int imgFrame = 0; imgFrame < IMAGE_FRAMES.length; imgFrame++) {
-                    loadedBitmaps.put(ROTATION_UP + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], ROTATION_UP, null,null));
-                    loadedBitmaps.put(ROTATION_DOWN + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], ROTATION_DOWN, null,null));
-                    loadedBitmaps.put(DEFAULT_ROTATION + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(),IMAGE_FRAMES[imgFrame], DEFAULT_ROTATION, null, null));
+                    loadedBitmaps.put(ROTATION_UP + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(), IMAGE_FRAMES[imgFrame], ROTATION_UP, null, null));
+                    loadedBitmaps.put(ROTATION_DOWN + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(), IMAGE_FRAMES[imgFrame], ROTATION_DOWN, null, null));
+                    loadedBitmaps.put(ROTATION_DEFAULT + "_" + imgFrame, getCraftedDynamicBitmap(this.getActivity(), IMAGE_FRAMES[imgFrame], ROTATION_DEFAULT, null, null));
                     Log.d(TAG, "initialize: Loaded following bitmaps->" +
                             ROTATION_UP + "_" + imgFrame + "//" +
                             ROTATION_DOWN + "_" + imgFrame + "//" +
-                            DEFAULT_ROTATION + "_" + imgFrame
+                            ROTATION_DEFAULT + "_" + imgFrame
                     );
                 }
                 this.setImages(loadedBitmaps);

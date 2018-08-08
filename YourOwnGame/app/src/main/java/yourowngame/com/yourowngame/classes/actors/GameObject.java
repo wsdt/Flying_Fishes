@@ -2,22 +2,37 @@ package yourowngame.com.yourowngame.classes.actors;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
 import yourowngame.com.yourowngame.classes.DrawableObj;
-import yourowngame.com.yourowngame.classes.actors.interfaces.IGameObject;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 
-public abstract class GameObject extends DrawableObj implements IGameObject.PROPERTIES.DEFAULT {
+public abstract class GameObject extends DrawableObj {
     private static final String TAG = "GameObject";
     /**
      * All gameObjects (also Player with default X) have these params (but not Backgrounds e.g. so
      * it wouldn't be suitable for the DrawableObj.
      */
     private double posX, posY, speedX, speedY;
-    private int rotationDegree = DEFAULT_ROTATION; //rotation for simulating flying down/up [can be changed at runtime]
+    private int rotationDegree = ROTATION_DEFAULT; //rotation for simulating flying down/up [can be changed at runtime] --> 0 as default
     private Bitmap currentBitmap; //must not be static, is the current index for img-array
     private int heightOfBitmap, widthOfBitmap;
+
+    /* GameObj constants ++++++++++++++++++++++++++++++++++++++++++++*/
+    /**
+     * Rotation of player flying up (simulating by tilting image)
+     */
+    protected static final int ROTATION_UP = 5;
+    /**
+     * Rotation of player flying down (simulating by tilting img)
+     */
+    protected static final int ROTATION_DOWN = -5;
+    /**
+     * Default rotation
+     */
+    protected static final int ROTATION_DEFAULT = 0;
 
     public GameObject(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity);
@@ -26,6 +41,8 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
         this.setPosY(posY);
         this.setSpeedX(speedX);
         this.setSpeedY(speedY);
+
+        //No need to reset pos or speed etc. as we are setting it here.
     }
 
     /**
@@ -33,6 +50,27 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
      */
     public GameObject(@NonNull Activity activity) {
         super(activity);
+        //Set/Reset default speed and position
+        this.resetPos();
+        this.resetSpeed();
+    }
+
+    @Override @CallSuper
+    public void update() {
+        // Reset pos/speed etc. when not visible anymore
+        if (this.isNotVisible()) {
+            this.cleanup();
+        }
+    }
+
+    /**
+     * Is GameObj. visible or has it left the screen via Y or X?
+     */
+    public boolean isNotVisible() {
+        return ((this.getPosX() <= (0-this.getWidthOfBitmap())) || /* has left on left side */
+                (this.getPosX() >= (DrawableSurfaces.getDrawWidth()+this.getWidthOfBitmap())) || /* has left on right side */
+                (this.getPosY() <= (0-this.getHeightOfBitmap())) || /* has left on bottom side */
+                (this.getPosY() >= (DrawableSurfaces.getDrawHeight()+this.getHeightOfBitmap()))) /* has left on top side*/;
     }
 
     /**
@@ -41,6 +79,18 @@ public abstract class GameObject extends DrawableObj implements IGameObject.PROP
      */
     public abstract void resetPos();
 
+    /**
+     * Resets speed of gameObj
+     */
+    public abstract void resetSpeed();
+
+    @Override
+    @CallSuper //Call super to always do resetPos();
+    public boolean cleanup() {
+        this.resetPos();
+        this.resetSpeed();
+        return true;
+    }
 
     /**
      * GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  *

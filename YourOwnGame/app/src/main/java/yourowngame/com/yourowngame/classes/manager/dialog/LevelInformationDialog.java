@@ -23,7 +23,6 @@ import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
-import yourowngame.com.yourowngame.gameEngine.CanvasDrawThread;
 import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
 
 /**
@@ -35,6 +34,8 @@ import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
 public class LevelInformationDialog {
     private static final String TAG = "LevelInformationDialog";
     private static int levelIndex;
+
+    private LevelInformationDialog() {}
 
     public static void show(@NonNull final WorldView worldView, int lvlindex){
         final Activity activity = worldView.getDrawableSurfaceActivity();

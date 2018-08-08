@@ -3,34 +3,28 @@ package yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import yourowngame.com.yourowngame.R;
-import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitPower;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
-import yourowngame.com.yourowngame.classes.actors.projectiles.interfaces.IProjectile;
-import yourowngame.com.yourowngame.classes.annotations.Bug;
-import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
-/** Adds additional projectiles (= amount) and sets for all an arbitrary PosY to simulate
- * an amazing shoot. */
+/**
+ * Adds additional projectiles (= amount) and sets for all an arbitrary PosY to simulate
+ * an amazing shoot.
+ */
 public class FruitPower_ShootRage extends FruitPower {
     private static final String TAG = "RemoveEnemies";
     private Player currPlayer;
 
-    /** @param amount: How many enemies to remove. Here exceptionally a int instead of double so
-     * we can cast it without any problems later.
-     *
-     * Duration not needed for this fruitpower bc. projectiles get rvm automatically.*/
+    /**
+     * @param amount: How many projectiles to shoot (if enough ammo).
+     *                Duration not needed for this fruitpower bc. projectiles get rvm automatically.
+     */
     public FruitPower_ShootRage(int amount, @NonNull Player currPlayer) {
-        super(amount, 0);
+        super(amount, 20); //dummy value bc. startStop never called.
         this.setCurrPlayer(currPlayer);
         this.setResString(R.string.fruitPower_shootRage_effect);
     }
@@ -41,8 +35,8 @@ public class FruitPower_ShootRage extends FruitPower {
         Log.d(TAG, "execute: Started method.");
 
         /* Shoot desired amount of projectiles (projectiles only shot if munition not exhausted). */
-        for (int i = 0;i < this.getAmount();i++) {
-            Projectile p = ProjectileMgr.shoot(this.getCurrPlayer(),true);
+        for (int i = 0; i < this.getAmount(); i++) {
+            Projectile p = ProjectileMgr.shoot(this.getCurrPlayer(), true);
             if (p != null) {
                 //also set random Y
                 p.setPosY(RandomMgr.getRandomFloat(0, DrawableSurfaces.getDrawHeight())); //try to shoot regardless whether we have munition at that time

@@ -47,7 +47,7 @@ public class Level_NightRider extends Level {
 
     @Override
     protected void determinePlayer() {
-        this.setPlayer(new Player_Hugo(this.getActivity(), 100, Resources.getSystem().getDisplayMetrics().heightPixels / 4, 5, 2));
+        this.setPlayer(new Player_Hugo(this.getActivity()));
     }
 
     @Override

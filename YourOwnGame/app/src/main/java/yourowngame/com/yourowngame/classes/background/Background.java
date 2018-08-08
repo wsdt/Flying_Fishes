@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.classes.DrawableObj;
-import yourowngame.com.yourowngame.classes.background.interfaces.IBackground;
 
 /**
  * Created on 18.02.2018.
@@ -13,7 +12,7 @@ import yourowngame.com.yourowngame.classes.background.interfaces.IBackground;
  * Class for creating Backgrounds, only data!
  */
 
-public abstract class Background extends DrawableObj implements IBackground {
+public abstract class Background extends DrawableObj {
     private static final String TAG = "Background";
 
     public Background(@NonNull Activity activity) {

@@ -12,6 +12,7 @@ import java.util.Iterator;
 
 import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
@@ -83,8 +84,8 @@ public class CollisionMgr {
                 Log.e(TAG, "Player collected a fruit.");
             }
             //fruits has left the screen, will rejoin
-            if(fruit.hasLeftScreen()){
-                fruit.resetPos();
+            if(fruit.isNotVisible()){
+                fruit.cleanup();
             }
 
             Log.d(TAG, "Fruit " + fruit + " = " + fruit.getPosX());
@@ -104,7 +105,7 @@ public class CollisionMgr {
 
     /** check Player to Border Collision*/
     public boolean playerToBorderCollision() {                                          //we need the height of the bitmap here, didn't had any time left sorry
-        if (currLevel.getPlayer().getWidthOfPlayer() > DrawableSurfaces.getDrawHeight() || currLevel.getPlayer().getPosY() < 0) {
+        if (currLevel.getPlayer().getWidthOfBitmap() > DrawableSurfaces.getDrawHeight() || currLevel.getPlayer().getPosY() < 0) {
             return true;
         }
             return false;
@@ -121,18 +122,18 @@ public class CollisionMgr {
         /** private Access, no instantiation!*/
         private CollisionDetection(){}
 
-        /** Check Collision: Player to Enemy*/
-        public static boolean checkCollision(@NonNull Player player, @NonNull Enemy enemy) {
-            Bitmap playerBitmap = player.getCurrentBitmap();
-            Bitmap enemyBitmap = enemy.getCurrentBitmap();
+        /** Check Collision of two gameObjs. */
+        public static boolean checkCollision(@NonNull GameObject obj1, @NonNull GameObject obj2) {
+            Bitmap playerBitmap = obj1.getCurrentBitmap();
+            Bitmap enemyBitmap = obj2.getCurrentBitmap();
 
             //Only check for collision if bitmaps are not null (if null, then just return that no collision happened)
             if (playerBitmap != null && enemyBitmap != null) {
                 //when constraint above ok, then assign rest
-                int playerPosX = (int) player.getPosX();
-                int playerPosY = (int) player.getPosY();
-                int enemyPosX = (int) enemy.getPosX();
-                int enemyPosY = (int) enemy.getPosY();
+                int playerPosX = (int) obj1.getPosX();
+                int playerPosY = (int) obj1.getPosY();
+                int enemyPosX = (int) obj2.getPosX();
+                int enemyPosY = (int) obj2.getPosY();
 
                 Rect bounds1 = new Rect(playerPosX, playerPosY, playerPosX + playerBitmap.getWidth(), playerPosY + playerBitmap.getHeight());
                 Rect bounds2 = new Rect(enemyPosX, enemyPosY, enemyPosX + enemyBitmap.getWidth(), enemyPosY + enemyBitmap.getHeight());
@@ -145,79 +146,6 @@ public class CollisionMgr {
                             for (int j = collisionArea.top; j < collisionArea.bottom; j++) {
                                 int bitmap1Pixel = playerBitmap.getPixel(i - playerPosX, j - playerPosY);
                                 int bitmap2Pixel = enemyBitmap.getPixel(i - enemyPosX, j - enemyPosY);
-                                if (hasNoTransparentBackground(bitmap1Pixel) && hasNoTransparentBackground(bitmap2Pixel))
-                                    return true;
-                            }
-                        }
-                    } catch (IllegalArgumentException e) {
-                        //TODO: Only temporary (we should solve this problem!)
-                        e.printStackTrace();
-                    }
-                }
-            }
-            return false;
-        }
-
-        /** Check Collision: Projectile to Enemy*/
-        public static boolean checkCollision(@NonNull Enemy enemy, @NonNull Projectile projectile) {
-            Bitmap enemyBitmap = enemy.getCurrentBitmap();
-            Bitmap projectileBitmap = projectile.getCurrentBitmap();
-
-            if (enemyBitmap != null && projectileBitmap != null) {
-
-                int enemyPosX = (int) enemy.getPosX();
-                int enemyPosY = (int) enemy.getPosY();
-                int projectilePosX = (int) projectile.getPosX();
-                int projectilePosY = (int) projectile.getPosY();
-
-                Rect bounds1 = new Rect(enemyPosX, enemyPosY, enemyPosX + enemyBitmap.getWidth(), enemyPosY + enemyBitmap.getHeight());
-                Rect bounds2 = new Rect(projectilePosX, projectilePosY, projectilePosX + projectileBitmap.getWidth(), projectilePosY + projectileBitmap.getHeight());
-
-                if (Rect.intersects(bounds1, bounds2)) {
-                    Rect collisionArea = getCollisionArea(bounds1, bounds2);
-
-                    try {
-                        for (int i = collisionArea.left; i < collisionArea.right; i++) {
-                            for (int j = collisionArea.top; j < collisionArea.bottom; j++) {
-                                int bitmap1Pixel = enemyBitmap.getPixel(i - enemyPosX, j - enemyPosY);
-                                int bitmap2Pixel = projectileBitmap.getPixel(i - projectilePosX, j - projectilePosY);
-                                if (hasNoTransparentBackground(bitmap1Pixel) && hasNoTransparentBackground(bitmap2Pixel))
-                                    return true;
-                            }
-                        }
-                    } catch (IllegalArgumentException e) {
-                        //TODO: Only temporary (we should solve this problem!)
-                        e.printStackTrace();
-                    }
-                }
-            }
-            return false;
-        }
-
-        /** Check Collision: Player to Fruit*/
-        public static boolean checkCollision(@NonNull Player player, @NonNull Fruit fruit) {
-            Bitmap playerBitmap = player.getCurrentBitmap();
-            Bitmap fruitBitmap = fruit.getCurrentBitmap();
-
-            //Only check for collision if bitmaps are not null (if null, then just return that no collision happened)
-            if (playerBitmap != null && fruitBitmap != null) {
-                //when constraint above ok, then assign rest
-                int playerPosX = (int) player.getPosX();
-                int playerPosY = (int) player.getPosY();
-                int fruitPosX = (int) fruit.getPosX();
-                int fruitPosY = (int) fruit.getPosY();
-
-                Rect bounds1 = new Rect(playerPosX, playerPosY, playerPosX + playerBitmap.getWidth(), playerPosY + playerBitmap.getHeight());
-                Rect bounds2 = new Rect(fruitPosX, fruitPosY, fruitPosX + fruitBitmap.getWidth(), fruitPosY + fruitBitmap.getHeight());
-
-                if (Rect.intersects(bounds1, bounds2)) {
-                    Rect collisionArea = getCollisionArea(bounds1, bounds2);
-
-                    try {
-                        for (int i = collisionArea.left; i < collisionArea.right; i++) {
-                            for (int j = collisionArea.top; j < collisionArea.bottom; j++) {
-                                int bitmap1Pixel = playerBitmap.getPixel(i - playerPosX, j - playerPosY);
-                                int bitmap2Pixel = fruitBitmap.getPixel(i - fruitPosX, j - fruitPosY);
                                 if (hasNoTransparentBackground(bitmap1Pixel) && hasNoTransparentBackground(bitmap2Pixel))
                                     return true;
                             }
