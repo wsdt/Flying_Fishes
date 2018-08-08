@@ -59,7 +59,7 @@ public abstract class GameObject extends DrawableObj {
     public void update() {
         // Reset pos/speed etc. when not visible anymore
         if (this.isNotVisible()) {
-            this.cleanup();
+            this.resetPos(); //only resetPos as enemies etc. would get exponentionally fast
         }
     }
 

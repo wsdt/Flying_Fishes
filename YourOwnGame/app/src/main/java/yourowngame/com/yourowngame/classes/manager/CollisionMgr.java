@@ -26,6 +26,8 @@ import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 /**
  * Collision Manager will check all forms of Collisions and react to it.
+ *
+ * Only resetPos() ! Do not resetSpeed or similar as they would get modified by fruit powers etc.
  */
 
 public class CollisionMgr {

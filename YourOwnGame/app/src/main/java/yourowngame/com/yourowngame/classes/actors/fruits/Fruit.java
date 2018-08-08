@@ -52,7 +52,7 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
      */
     @Override
     public void resetPos() {
-        this.setPosX(RandomMgr.getRandomFloat(DrawableSurfaces.getDrawWidth()+this.getWidthOfBitmap(), DrawableSurfaces.getDrawWidth()+this.getWidthOfBitmap()*2)); //+width of bitmap to spawn outside of screen
+        this.setPosX(RandomMgr.getRandomFloat(DrawableSurfaces.getDrawWidth()+this.getWidthOfBitmap(), (DrawableSurfaces.getDrawWidth()+this.getWidthOfBitmap())*2)); //+width of bitmap to spawn outside of screen and not simultaneously (*2)
         this.setPosY(RandomMgr.getRandomFloat(this.getHeightOfBitmap(), DrawableSurfaces.getDrawHeight() - this.getHeightOfBitmap()));
     }
 
