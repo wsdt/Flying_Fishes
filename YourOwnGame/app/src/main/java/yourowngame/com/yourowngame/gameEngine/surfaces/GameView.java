@@ -35,7 +35,6 @@ public class GameView extends DrawableSurfaces {
     private Level currLevelObj;
     private CollisionMgr collisionMgr;
     private MultiTouchMgr multiTouchHandler = new MultiTouchMgr();
-    private boolean allowShooting = true;
 
     /**
      * Without this method our app will crash, keep it XML needs this constructor
@@ -228,7 +227,7 @@ public class GameView extends DrawableSurfaces {
                 this.getDrawableSurfaceActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        GameOverDialog.show(GameView.this);
+                        GameOverDialog.show(GameView.this, currLevelObj);
                     }
                 });
                 retry = false;

@@ -8,6 +8,8 @@ import android.view.View;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.gamedesign.Level;
 import yourowngame.com.yourowngame.classes.manager.AdManager;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
@@ -19,7 +21,7 @@ public class GameOverDialog {
 
     private GameOverDialog() {} //prevent
 
-    public static void show(@NonNull final GameView gameView) {
+    public static void show(@NonNull final GameView gameView, @NonNull final Level currLvl) {
         final Activity activity = gameView.getDrawableSurfaceActivity();
 
         //To prevent badTokenExceptions
@@ -37,7 +39,10 @@ public class GameOverDialog {
                                     gameView.getDrawableSurfaceActivity(), new ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation() {
                                         @Override
                                         public void success_is_true() {
-                                            //TODO: put here revive method/procedure (e.g. put all positions a few seconds back!)
+                                            //revive method/procedure (e.g. put all positions a few seconds back!)
+                                            for (Enemy e : currLvl.getAllEnemies()) {
+                                                e.cleanup();
+                                            }
                                         }
 
                                         @Override
