@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.gamedesign.levels;
+package yourowngame.com.yourowngame.classes.mode_adventure.levels;
 
 import android.app.Activity;
 import android.graphics.Point;
@@ -15,30 +15,33 @@ import yourowngame.com.yourowngame.classes.actors.enemy.specializations.Enemy_Ha
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.Enemy_Rocketfish;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Avoci;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Meloon;
 import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Pinapo;
 import yourowngame.com.yourowngame.classes.actors.player.specializations.Player_Hugo;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
-import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
-import yourowngame.com.yourowngame.classes.gamedesign.Level;
-import yourowngame.com.yourowngame.classes.gamedesign.LevelAssignment;
-import yourowngame.com.yourowngame.classes.gamedesign.levelassignments.LA_AchievePoints;
+import yourowngame.com.yourowngame.classes.background.layers.BL_FullscreenImage;
+import yourowngame.com.yourowngame.classes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.mode_adventure.LevelAssignment;
+import yourowngame.com.yourowngame.classes.mode_adventure.levelassignments.LA_AchievePoints;
 
 
 /**
- * LEVEL ONE
+ * LEVEL TWO
  */
 
-public class Level_LucifersGameRoom extends Level {
-    private static final String TAG = "Lvl_LucifersGameRoom";
 
-    public Level_LucifersGameRoom(@NonNull Activity activity, @NonNull Point worldMapPosition) {
+public class Level_NightRider extends Level {
+    private static final String TAG = "Lvl_Nightrider";
+
+    public Level_NightRider(@NonNull Activity activity, @NonNull Point worldMapPosition) {
         super(activity, worldMapPosition);
     }
 
     @Override
     protected void determineMetaData() {
-        this.setLevelNameResId(R.string.level_levelName_lucifersGameRoom);
+        this.setLevelNameResId(R.string.level_levelName_nightRider);
     }
 
     @Override
@@ -51,8 +54,8 @@ public class Level_LucifersGameRoom extends Level {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
          * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
         ArrayList<Background> allBgs = new ArrayList<>();
-        allBgs.add(new BL_SingleColor(this.getActivity(),R.color.colorDarkRed));
-        allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_1, R.drawable.bg_layer_flying_elements_clouds_2, R.drawable.bg_layer_flying_elements_clouds_3}, 20));
+        allBgs.add(new BL_FullscreenImage(this.getActivity(), R.drawable.bg_layer_fullscreenimage_mountains_1));
+        allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_2}, 7));
         this.setAllBackgroundLayers(allBgs);
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
@@ -65,13 +68,13 @@ public class Level_LucifersGameRoom extends Level {
         ArrayList<Enemy> allEnemies = new ArrayList<>();
 
         /* Initializing Bomber-Enemy */
-        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getActivity(), Enemy_Happen.class, 20));
+        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getActivity(), Enemy_Happen.class, 1));
 
-        /*Initializing Rocket-Enemy */
-        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getActivity(), Enemy_Rocketfish.class, 1));
+        /* Initializing Rocket-Enemy */
+        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getActivity(), Enemy_Rocketfish.class, 12)); //damit die Leute derweil wirklich was zum Spielen haben haha, haha so geil
 
         /* Initializing Spawn-Enemies */
-        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getActivity(), Enemy_Boba.class, 5));
+        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getActivity(), Enemy_Boba.class, 1));
 
         this.setAllEnemies(allEnemies);
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
@@ -79,8 +82,13 @@ public class Level_LucifersGameRoom extends Level {
 
     @Override
     protected void determineAllFruits() {
+        /* ***************************
+         *  FRUIT INITIALIZING AREA *
+         ****************************/
         ArrayList<Fruit> allFruits = new ArrayList<>();
-        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Fruit_Pinapo.class, 5));
+        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Fruit_Meloon.class, 1));
+        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Fruit_Avoci.class, 1));
+        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Fruit_Pinapo.class, 1));
         this.setAllFruits(allFruits);
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
@@ -89,10 +97,9 @@ public class Level_LucifersGameRoom extends Level {
     @Override
     protected void determineLevelAssigments() {
         ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
-        allLevelAssignments.add(new LA_AchievePoints(200000, this.getLevelHighscore()));
+        allLevelAssignments.add(new LA_AchievePoints(3000, this.getLevelHighscore()));
         this.setAllLevelAssignments(allLevelAssignments);
     }
-
 
     @Override
     protected void playBackgroundMusic() {

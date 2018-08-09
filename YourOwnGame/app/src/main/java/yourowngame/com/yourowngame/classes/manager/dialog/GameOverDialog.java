@@ -10,7 +10,7 @@ import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.annotations.Testing;
-import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.manager.AdManager;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;

@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.gamedesign.levels;
+package yourowngame.com.yourowngame.classes.mode_adventure.levels;
 
 import android.app.Activity;
 import android.graphics.Point;
@@ -22,9 +22,9 @@ import yourowngame.com.yourowngame.classes.actors.player.specializations.Player_
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FullscreenImage;
-import yourowngame.com.yourowngame.classes.gamedesign.Level;
-import yourowngame.com.yourowngame.classes.gamedesign.LevelAssignment;
-import yourowngame.com.yourowngame.classes.gamedesign.levelassignments.LA_AchievePoints;
+import yourowngame.com.yourowngame.classes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.mode_adventure.LevelAssignment;
+import yourowngame.com.yourowngame.classes.mode_adventure.levelassignments.LA_AchievePoints;
 
 
 /**

@@ -8,7 +8,7 @@ import android.util.Log;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.mode_adventure.Level;
 
 /**
  * Used for generating or/and managing fruits.
@@ -30,7 +30,7 @@ public class FruitMgr {
     public static <F extends Fruit> ArrayList<F> createRandomFruits(@NonNull Activity activity, @NonNull Level currLevel, @NonNull Class<F> fruitClass, @IntRange(from = 1) int numberOfFruits) {
         ArrayList<F> craftedFruits = new ArrayList<>();
         for (int i = 0; i < numberOfFruits; i++) {
-            F f = createRandomFruit(activity,currLevel,fruitClass);
+            F f = createRandomFruit(activity, currLevel, fruitClass);
             if (f == null) {
                 Log.e(TAG, "createRandomFruits: Could not create fruits! Returned null.");
                 return null; //abort when null for performance
@@ -40,7 +40,9 @@ public class FruitMgr {
         return craftedFruits;
     }
 
-    /** Convenience method so we don't get a list for one fruit */
+    /**
+     * Convenience method so we don't get a list for one fruit
+     */
     public static <F extends Fruit> F createRandomFruit(@NonNull Activity activity, @NonNull Level currLevel, @NonNull Class<F> fruitClass) {
         try {
             return fruitClass.getConstructor(Activity.class, Level.class).newInstance(activity, currLevel); //use default constructor

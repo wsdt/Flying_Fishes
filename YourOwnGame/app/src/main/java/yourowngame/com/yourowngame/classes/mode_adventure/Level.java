@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.gamedesign;
+package yourowngame.com.yourowngame.classes.mode_adventure;
 
 
 import android.app.Activity;

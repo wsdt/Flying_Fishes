@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import yourowngame.com.yourowngame.R;
@@ -27,8 +26,8 @@ import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.gamedesign.Level;
-import yourowngame.com.yourowngame.classes.gamedesign.LevelAssignment;
+import yourowngame.com.yourowngame.classes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.mode_adventure.LevelAssignment;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;

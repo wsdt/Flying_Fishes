@@ -5,9 +5,9 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
-import yourowngame.com.yourowngame.classes.gamedesign.Level;
-import yourowngame.com.yourowngame.classes.gamedesign.World;
-import yourowngame.com.yourowngame.classes.gamedesign.worlds.World_Earth;
+import yourowngame.com.yourowngame.classes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.mode_adventure.World;
+import yourowngame.com.yourowngame.classes.mode_adventure.worlds.World_Earth;
 
 /**
  * SINGLETON PATTERN

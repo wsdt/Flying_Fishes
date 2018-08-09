@@ -16,7 +16,7 @@ import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
 import yourowngame.com.yourowngame.classes.observer.Observer_HighScore;
-import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.mode_adventure.Level;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 

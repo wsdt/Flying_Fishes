@@ -7,11 +7,10 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 

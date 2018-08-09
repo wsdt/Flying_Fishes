@@ -14,7 +14,7 @@ import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.observer.Observer_HighScore;
-import yourowngame.com.yourowngame.classes.gamedesign.Level;
+import yourowngame.com.yourowngame.classes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.classes.manager.CollisionMgr;
 import yourowngame.com.yourowngame.classes.manager.dialog.GameOverDialog;
