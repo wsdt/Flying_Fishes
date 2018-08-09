@@ -39,13 +39,6 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/SplashTheme" />
-        <activity android:name=".activities.SwipeFruitsActivity" />
-        <activity
-            android:name=".activities.GameLevelHorizontalActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:noHistory="true"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/SplashTheme" />
         <activity android:name=".activities.WorldActivity"
             android:configChanges="keyboardHidden|orientation"
             android:noHistory="true"

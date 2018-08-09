@@ -1,6 +1,5 @@
 package yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levels;
 
-import android.app.Activity;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -8,6 +7,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.EnemyMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.Enemy_Happen;
@@ -32,7 +32,7 @@ import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levelassign
 public class Level_EndlessDawn extends Level {
     private static final String TAG = "Lvl_EndlessDawn";
 
-    public Level_EndlessDawn(@NonNull Activity activity, @NonNull Point worldMapPosition) {
+    public Level_EndlessDawn(@NonNull DrawableSurfaceActivity activity, @NonNull Point worldMapPosition) {
         super(activity, worldMapPosition);
     }
 
@@ -43,7 +43,7 @@ public class Level_EndlessDawn extends Level {
 
     @Override
     protected void determinePlayer() {
-        this.setPlayer(new Player_Hugo(this.getActivity()));
+        this.setPlayer(new Player_Hugo(this.getDrawableSurfaceActivity()));
     }
 
     @Override
@@ -52,8 +52,8 @@ public class Level_EndlessDawn extends Level {
          * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
 
         ArrayList<Background> allBgs = new ArrayList<>();
-        allBgs.add(new BL_FullscreenImage(this.getActivity(), R.drawable.bg_layer_fullscreenimage_mountains_1));
-        allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_2}, 9));
+        allBgs.add(new BL_FullscreenImage(this.getDrawableSurfaceActivity(), R.drawable.bg_layer_fullscreenimage_mountains_1));
+        allBgs.add(new BL_FlyingElements(this.getDrawableSurfaceActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_2}, 9));
         this.setBgLayers(allBgs);
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
@@ -66,10 +66,10 @@ public class Level_EndlessDawn extends Level {
         ArrayList<Enemy> allEnemies = new ArrayList<>();
 
         /* Initializing Bomber-Enemy */
-        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getActivity(), Enemy_Happen.class, 6));
+        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getDrawableSurfaceActivity(), Enemy_Happen.class, 6));
 
         /*Initializing Rocket-Enemy */
-        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getActivity(), Enemy_Rocketfish.class, 3)); //damit die Leute derweil wirklich was zum Spielen haben haha, haha so geil
+        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getDrawableSurfaceActivity(), Enemy_Rocketfish.class, 3)); //damit die Leute derweil wirklich was zum Spielen haben haha, haha so geil
 
         this.setEnemies(allEnemies);
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
@@ -82,7 +82,7 @@ public class Level_EndlessDawn extends Level {
          ****************************/
 
         ArrayList<Fruit> allFruits = new ArrayList<>();
-        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Fruit_Meloon.class, 1));
+        allFruits.addAll(FruitMgr.createRandomFruits(this.getDrawableSurfaceActivity(),this, Fruit_Meloon.class, 1));
         this.setFruits(allFruits);
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");

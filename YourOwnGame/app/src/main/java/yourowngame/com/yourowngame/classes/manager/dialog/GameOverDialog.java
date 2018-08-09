@@ -10,6 +10,7 @@ import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.annotations.Testing;
+import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.manager.AdManager;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
@@ -22,7 +23,7 @@ public class GameOverDialog {
 
     private GameOverDialog() {} //prevent
 
-    public static void show(@NonNull final GameView gameView, @NonNull final Level currLvl) {
+    public static void show(@NonNull final GameView gameView, @NonNull final DrawableLevel currLvl) {
         final Activity activity = gameView.getDrawableSurfaceActivity();
 
         //To prevent badTokenExceptions

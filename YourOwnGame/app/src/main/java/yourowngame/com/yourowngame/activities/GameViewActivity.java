@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
-import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
 /**
@@ -51,7 +50,6 @@ public class GameViewActivity extends DrawableSurfaceActivity {
             @Override
             public void run() {
                 getHighscoreVal_textView().setText(String.valueOf(getGameView().getHighscore().getValue())); //pure integers are not allowed by setText() so we transform it to a string
-
             }
         });
     }

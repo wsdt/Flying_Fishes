@@ -20,6 +20,7 @@ import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 import java.util.HashSet;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.activities.WorldActivity;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
@@ -45,7 +46,7 @@ public class LevelInformationDialog {
     }
 
     public static void show(@NonNull final WorldView worldView, final int lvlIndex) {
-        final Activity activity = worldView.getDrawableSurfaceActivity();
+        final DrawableSurfaceActivity activity = worldView.getDrawableSurfaceActivity();
 
         if (!activity.isFinishing()) {
             //Pause/Stop thread
@@ -108,7 +109,7 @@ public class LevelInformationDialog {
      */
     @Enhance(message = "Improve performance and legibility", byDeveloper = Constants.Developers.WSDT,
             priority = Enhance.Priority.MEDIUM)
-    private static void loadDataToDialog(@NonNull Activity activity, @NonNull RelativeLayout dialogParent, int lvlIndex) {
+    private static void loadDataToDialog(@NonNull DrawableSurfaceActivity activity, @NonNull RelativeLayout dialogParent, int lvlIndex) {
         Resources r = dialogParent.getResources();
         Level currLvl = WorldMgr.getCurrLvlObj(activity);
 

@@ -1,7 +1,6 @@
 package yourowngame.com.yourowngame.classes.game_modes.mode_adventure;
 
 
-import android.app.Activity;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -9,12 +8,15 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
+import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
-import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
+import yourowngame.com.yourowngame.classes.manager.dialog.LevelAchievedDialog;
+import yourowngame.com.yourowngame.classes.observer.interfaces.IHighscore_Observer;
 
 public abstract class Level extends DrawableLevel {
     private static final String TAG = "Level";
@@ -24,11 +26,11 @@ public abstract class Level extends DrawableLevel {
     private ArrayList<LevelAssignment> allLevelAssignments;
 
     //Do not make more constructors
-    public Level(@NonNull Activity activity, @NonNull Point worldMapPosition) {
+    public Level(@NonNull DrawableSurfaceActivity activity, @NonNull Point worldMapPosition) {
         super(activity);
 
         Log.d(TAG, "Level: ###################### STARTING LOADING LEVEL ###############################");
-        this.setActivity(activity);
+        this.setDrawableSurfaceActivity(activity);
         this.setWorldMapPosition(worldMapPosition);
 
         //TODO: Maybe get rid of this method, but surely make lvlInformation statically accessible.
@@ -42,8 +44,28 @@ public abstract class Level extends DrawableLevel {
         Log.d(TAG, "Level: ###################### ENDED LOADING LEVEL ##################################");
     }
 
-    @Enhance (message = "If we want to change player in future (shop etc.) we SHOULD NOT make the player " +
-            "level-dependent! So this method will be obsolete in future!")
+    @Override
+    public void initiate() {
+        super.initiate();
+        getLevelHighscore().addListener(new IHighscore_Observer() {
+            @Override
+            public void onHighscoreChanged() {
+                /*Evaluate whether user achieved level or not. */
+                if (Level.this.areLevelAssignmentsAchieved()) {
+                    ((GameViewActivity) Level.this.getDrawableSurfaceActivity()).getGameView().getThread().setRunning(false);
+                    Level.this.getDrawableSurfaceActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            LevelAchievedDialog.show(((GameViewActivity) Level.this.getDrawableSurfaceActivity()).getGameView());
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    /** Regardless of shop system keep this level dependent, so user can decide on lvl start which
+     * player to use. */
     protected abstract void determinePlayer();
     protected abstract void determineBackgroundLayers();
     protected abstract void determineAllEnemies();
@@ -72,7 +94,7 @@ public abstract class Level extends DrawableLevel {
     //GETTER/SETTER +++++++++++++++++++++++++++++++++++++++++++++++++
 
     public String getLevelName(){
-        return getActivity().getResources().getString(getLevelNameResId());
+        return getDrawableSurfaceActivity().getResources().getString(getLevelNameResId());
     }
 
     @Override

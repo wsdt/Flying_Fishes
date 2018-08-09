@@ -15,11 +15,11 @@ public class LH_AddEnemy implements ISurvival_Hardener_Base {
     @Override
     public void execute(@NonNull Level_Survival levelSurvival) {
         if (Level_Survival.SUPPORTED_ENEMIES != null && Level_Survival.SUPPORTED_ENEMIES.length > 0) {
-            Enemy e = EnemyMgr.createRandomEnemy(levelSurvival.getActivity(),
+            Enemy e = EnemyMgr.createRandomEnemy(levelSurvival.getDrawableSurfaceActivity(),
                     Level_Survival.SUPPORTED_ENEMIES[RandomMgr.getRandomInt(0, Level_Survival.SUPPORTED_ENEMIES.length - 1)]);
             if (e != null) {
                 e.initialize();
-                levelSurvival.getCurrentEnemies().add(e);
+                levelSurvival.getEnemies().add(e);
             }
         } else {
             Log.e(TAG, "execute: Could not add enemy.");

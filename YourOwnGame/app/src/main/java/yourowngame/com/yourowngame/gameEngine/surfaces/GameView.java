@@ -13,6 +13,7 @@ import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
+import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 import yourowngame.com.yourowngame.classes.observer.Observer_HighScore;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
@@ -30,9 +31,8 @@ import yourowngame.com.yourowngame.classes.observer.interfaces.IHighscore_Observ
 
 public class GameView extends DrawableSurfaces {
     private static final String TAG = "GameView";
-    private Level currLevelObj;
-    private CollisionMgr collisionMgr;
-    private MultiTouchMgr multiTouchHandler = new MultiTouchMgr();
+    private DrawableLevel currLevelObj;
+    private static MultiTouchMgr multiTouchHandler = new MultiTouchMgr();
 
     /**
      * Without this method our app will crash, keep it XML needs this constructor
@@ -57,7 +57,7 @@ public class GameView extends DrawableSurfaces {
      *
      * @param context: IMPORTANT ONLY ALLOW GameViewActivity here and not the DrawableSurface!
      */
-    public void startGame(@NonNull GameViewActivity context, @NonNull Level currLevelObj) {
+    public void startGame(@NonNull GameViewActivity context, @NonNull DrawableLevel currLevelObj) {
         this.setDrawableSurfaceActivity(context);
 
 
@@ -70,50 +70,14 @@ public class GameView extends DrawableSurfaces {
         /* At every Gamestart, get the metrics from screen, otherwise hole Game will crash in future!,
          *  because we used the metric nearly everywhere!! */
 
-        /* Initialize GameObjects & eq here! After initializing, the GameLoop will start!*/
-        initGameObjects();
+        /* Initialize GameObjects & eq here! After initializing, the GameLoop will start! also cleanup */
+        this.getCurrLevelObj().initiate();
 
         /* React to user input */
         getRootView().setOnTouchListener(getMultiTouchHandler());
 
         //Draw everything etc.
         this.initializeDrawing();
-    }
-
-
-    private void initGameObjects() {
-        /* Cleanup Level Properties */
-        this.getCurrLevelObj().cleanUp();
-        /* Clean the fruitCounter*/
-        Level.getLevelFruitCounter().resetCounter();
-        /* Clean Up Projectiles*/
-        ProjectileMgr.cleanUp();
-        /* Create CollisionManager*/
-        collisionMgr = new CollisionMgr(this.getCurrLevelObj(), getDrawableSurfaceActivity(), getHighscore());
-
-
-
-        this.getHighscore().addListener(new IHighscore_Observer() {
-            @Override
-            public void onHighscoreChanged() {
-                Log.d(TAG, "initGameObjects:onHighscoreChanged: HighScore has changed!");
-
-                /*Refresh HighScore lbl
-                 * IMPORTANT to be sure that only GameViewActivity is assigned to GameView. */
-                ((GameViewActivity) GameView.this.getDrawableSurfaceActivity()).setNewHighscoreOnUI();
-
-                /*Evaluate whether user achieved level or not. */
-                if (GameView.this.getCurrLevelObj().areLevelAssignmentsAchieved()) {
-                    getThread().setRunning(false);
-                    GameView.this.getDrawableSurfaceActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            LevelAchievedDialog.show(GameView.this);
-                        }
-                    });
-                }
-            }
-        });
     }
 
     /********************************
@@ -175,7 +139,7 @@ public class GameView extends DrawableSurfaces {
     @Override
     public void updateAll() {
         /* Uppdate player */
-        this.getCurrLevelObj().getPlayer().setGoUp(GameView.this.getMultiTouchHandler().isMoving());
+        this.getCurrLevelObj().getPlayer().setGoUp(getMultiTouchHandler().isMoving());
         this.getCurrLevelObj().getPlayer().update();
 
         /* Update all enemies */
@@ -198,7 +162,7 @@ public class GameView extends DrawableSurfaces {
         ProjectileMgr.updateProjectiles();
 
         /* Check for Collisions - if player hits the ground or gets hit by an enemy, game stops!*/
-        if (collisionMgr.checkForCollisions()) {
+        if (this.getCurrLevelObj().getCollisionMgr().checkForCollisions()) {
             startExitProcedure();
         }
 
@@ -260,8 +224,8 @@ public class GameView extends DrawableSurfaces {
         getDrawableSurfaceActivity().finish(); //todo: does not work (also do it in runOnUI but in success_true() of dialog
     }
 
-    /*********************************************************
-     * 4. Getters & Setters and all of that annoying methods *
+    /* ********************************************************
+     * 4. Getters & Setters
      *********************************************************/
 
     /**
@@ -272,22 +236,22 @@ public class GameView extends DrawableSurfaces {
     }
 
 
-    public MultiTouchMgr getMultiTouchHandler() {
+    public static MultiTouchMgr getMultiTouchHandler() {
         return multiTouchHandler;
     }
 
-    public void setMultiTouchHandler(MultiTouchMgr multiTouchHandler) {
-        this.multiTouchHandler = multiTouchHandler;
+    public static void setMultiTouchHandler(MultiTouchMgr multiTouchHandler) {
+        GameView.multiTouchHandler = multiTouchHandler;
     }
 
     /**
      * Current levelObj which player can play now.
      */
-    public Level getCurrLevelObj() {
+    public DrawableLevel getCurrLevelObj() {
         return currLevelObj;
     }
 
-    public void setCurrLevelObj(Level currLevelObj) {
+    public void setCurrLevelObj(DrawableLevel currLevelObj) {
         this.currLevelObj = currLevelObj;
     }
 }

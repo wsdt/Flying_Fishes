@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
+import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.activities.WorldActivity;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;

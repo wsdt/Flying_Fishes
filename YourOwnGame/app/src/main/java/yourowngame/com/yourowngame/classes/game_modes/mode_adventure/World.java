@@ -1,6 +1,5 @@
 package yourowngame.com.yourowngame.classes.game_modes.mode_adventure;
 
-import android.app.Activity;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Size;
@@ -10,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.exceptions.WrongConfigured_Exception;
@@ -22,7 +22,7 @@ import yourowngame.com.yourowngame.classes.exceptions.WrongConfigured_Exception;
 public abstract class World {
     private static final String TAG = "World";
 
-    private Activity activity;
+    private DrawableSurfaceActivity activity;
     /**
      * World name (maybe to show to user [e.g. Die dunkle Gruft, usw.] als Strings.xml res id for multilinguality!
      */
@@ -47,7 +47,7 @@ public abstract class World {
     /**
      * Initializing constructor.
      */
-    public World(@NonNull Activity activity) {
+    public World(@NonNull DrawableSurfaceActivity activity) {
         // Must be the first assignment
         this.setActivity(activity);
         this.determineMetaData();
@@ -91,11 +91,11 @@ public abstract class World {
     protected abstract void determineMetaData();
 
     // GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public Activity getActivity() {
+    public DrawableSurfaceActivity getActivity() {
         return activity;
     }
 
-    public void setActivity(@NonNull Activity activity) {
+    public void setActivity(@NonNull DrawableSurfaceActivity activity) {
         this.activity = activity;
     }
 

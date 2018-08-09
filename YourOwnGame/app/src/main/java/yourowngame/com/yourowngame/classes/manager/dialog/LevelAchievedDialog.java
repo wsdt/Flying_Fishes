@@ -1,6 +1,5 @@
 package yourowngame.com.yourowngame.classes.manager.dialog;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -9,6 +8,7 @@ import android.view.View;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.activities.WorldActivity;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 
@@ -23,7 +23,7 @@ public class LevelAchievedDialog {
 
     @Enhance(byDeveloper = "Solution49", message = "Guess we should make a short summary after every level & what he has achieved!")
     public static void show(@NonNull final GameView gameView) {
-        final Activity activity = gameView.getDrawableSurfaceActivity();
+        final GameViewActivity activity = (GameViewActivity) gameView.getDrawableSurfaceActivity();
 
         //To prevent badTokenExceptions
         if (!activity.isFinishing()) {

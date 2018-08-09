@@ -1,12 +1,12 @@
 package yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levels;
 
-import android.app.Activity;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.EnemyMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.Enemy_Boba;
@@ -26,37 +26,37 @@ import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levelassign
 
 public class Level_FruityIsland extends Level {
 
-    public Level_FruityIsland(@NonNull Activity activity, @NonNull Point worldMapPosition) {
+    public Level_FruityIsland(@NonNull DrawableSurfaceActivity activity, @NonNull Point worldMapPosition) {
         super(activity, worldMapPosition);
     }
 
     @Override
     protected void determinePlayer() {
-        this.setPlayer(new Player_Hugo(this.getActivity()));
+        this.setPlayer(new Player_Hugo(this.getDrawableSurfaceActivity()));
     }
 
     @Override
     protected void determineBackgroundLayers() {
         ArrayList<Background> allBgs = new ArrayList<>();
-        allBgs.add(new BL_FullscreenImage(this.getActivity(), R.drawable.bg_layer_fullscreenimage_mountains_2));
-        allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_3}, 2));
+        allBgs.add(new BL_FullscreenImage(this.getDrawableSurfaceActivity(), R.drawable.bg_layer_fullscreenimage_mountains_2));
+        allBgs.add(new BL_FlyingElements(this.getDrawableSurfaceActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_3}, 2));
         this.setBgLayers(allBgs);
     }
 
     @Override
     protected void determineAllEnemies() {
         ArrayList<Enemy> allEnemies = new ArrayList<>();
-        allEnemies.addAll(EnemyMgr.createRandomEnemies(getActivity(), Enemy_Rocketfish.class, 5));
-        allEnemies.addAll(EnemyMgr.createRandomEnemies(getActivity(), Enemy_Boba.class, 5));
+        allEnemies.addAll(EnemyMgr.createRandomEnemies(getDrawableSurfaceActivity(), Enemy_Rocketfish.class, 5));
+        allEnemies.addAll(EnemyMgr.createRandomEnemies(getDrawableSurfaceActivity(), Enemy_Boba.class, 5));
         this.setEnemies(allEnemies);
     }
 
     @Override
     protected void determineAllFruits() {
         ArrayList<Fruit> allFruits = new ArrayList<>();
-        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Fruit_Meloon.class, 2));
-        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Fruit_Avoci.class, 2));
-        allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(), this, Fruit_Pinapo.class, 2));
+        allFruits.addAll(FruitMgr.createRandomFruits(this.getDrawableSurfaceActivity(), this, Fruit_Meloon.class, 2));
+        allFruits.addAll(FruitMgr.createRandomFruits(this.getDrawableSurfaceActivity(), this, Fruit_Avoci.class, 2));
+        allFruits.addAll(FruitMgr.createRandomFruits(this.getDrawableSurfaceActivity(), this, Fruit_Pinapo.class, 2));
         this.setFruits(allFruits);
     }
 

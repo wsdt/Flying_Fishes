@@ -1,12 +1,12 @@
 package yourowngame.com.yourowngame.classes.game_modes.mode_adventure.worlds;
 
-import android.app.Activity;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
@@ -24,7 +24,7 @@ public class World_Earth extends World {
 
 
     /** Initializing constructor. */
-    public World_Earth(@NonNull Activity activity) {
+    public World_Earth(@NonNull DrawableSurfaceActivity activity) {
         super(activity);
 
     }

@@ -1,10 +1,12 @@
 package yourowngame.com.yourowngame.classes.manager;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
+import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
+import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.World;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.worlds.World_Earth;
@@ -36,7 +38,7 @@ public class WorldMgr {
     /**
      * Only worldActivity should have access.
      */
-    private static void createDefaultWorldOrder(@NonNull Activity activity) {
+    private static void createDefaultWorldOrder(@NonNull DrawableSurfaceActivity activity) {
         ArrayList<World> allWorlds = new ArrayList<>();
         allWorlds.add(new World_Earth(activity));
         setWorlds(allWorlds);
@@ -45,7 +47,7 @@ public class WorldMgr {
     /**
      * Dummy/Redundant method for resetting game.
      */
-    public static void resetGame(@NonNull Level level) {
+    public static void resetGame(@NonNull DrawableLevel level) {
         level.cleanUp();
     }
 
@@ -58,7 +60,7 @@ public class WorldMgr {
      * World.class has a constraint, that each specialization needs at least one LvlObj otherwise
      * we get a WrongConfigured-Exception. So, we don't evaluate of the levelList.size().
      */
-    public static boolean setNextLvl(@NonNull Activity activity) {
+    public static boolean setNextLvl(@NonNull GameViewActivity activity) {
         if (getCurrWorldObj(activity).getAllLevels().size() <= (getCurr_lvl_index() + 1)) {
             // last lvl in world achieved
             if (getWorlds(activity).size() <= (getCurr_world_index() + 1)) {
@@ -76,17 +78,17 @@ public class WorldMgr {
         return true; //next lvl available
     }
 
-    public static Level getCurrLvlObj(@NonNull Activity activity) {
+    public static Level getCurrLvlObj(@NonNull DrawableSurfaceActivity activity) {
         return getCurrWorldObj(activity).getAllLevels().get(WorldMgr.getCurr_lvl_index());
     }
 
-    public static World getCurrWorldObj(@NonNull Activity activity) {
+    public static World getCurrWorldObj(@NonNull DrawableSurfaceActivity activity) {
         return WorldMgr.getWorlds(activity).get(WorldMgr.getCurr_world_index());
     }
 
 
     // SETTER / GETTER +++++++++++++++++++++++++++++++++++++++++
-    public static ArrayList<World> getWorlds(@NonNull Activity worldActivity) {
+    public static ArrayList<World> getWorlds(@NonNull DrawableSurfaceActivity worldActivity) {
         if (worlds == null || worlds.size() <= 0) {
             createDefaultWorldOrder(worldActivity);
         }

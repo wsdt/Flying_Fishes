@@ -33,7 +33,7 @@ public class FruitMgr {
             F f = createRandomFruit(activity, currLevel, fruitClass);
             if (f == null) {
                 Log.e(TAG, "createRandomFruits: Could not create fruits! Returned null.");
-                return null; //abort when null for performance
+                continue; //abort when null
             }
             craftedFruits.add(f);
         }

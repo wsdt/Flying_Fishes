@@ -29,7 +29,7 @@ public class EnemyMgr {
             E e = createRandomEnemy(activity,enemyClass);
             if (e == null) {
                 Log.e(TAG, "createRandomFruits: Could not create fruits! Returned null.");
-                return null; //abort when null for performance
+                continue; //abort when null
             }
             craftedEnemies.add(e);
         }
