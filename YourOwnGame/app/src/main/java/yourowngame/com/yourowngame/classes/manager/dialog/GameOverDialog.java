@@ -10,7 +10,7 @@ import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.annotations.Testing;
-import yourowngame.com.yourowngame.classes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.manager.AdManager;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.interfaces.ExecuteIfTrueSuccess_or_ifFalseFailure_afterCompletation;
@@ -42,7 +42,7 @@ public class GameOverDialog {
                                                 byDeveloper = Constants.Developers.WSDT, priority = Testing.Priority.HIGH)
                                         public void success_is_true() {
                                             //revive method/procedure (e.g. put all positions a few seconds back!)
-                                            for (Enemy e : currLvl.getAllEnemies()) {
+                                            for (Enemy e : currLvl.getEnemies()) {
                                                 e.cleanup();
                                             }
                                         }

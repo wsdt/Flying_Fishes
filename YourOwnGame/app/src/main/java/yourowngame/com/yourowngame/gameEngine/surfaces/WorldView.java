@@ -15,7 +15,7 @@ import android.view.MotionEvent;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.WorldActivity;
 import yourowngame.com.yourowngame.classes.background.Background;
-import yourowngame.com.yourowngame.classes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.classes.manager.dialog.LevelInformationDialog;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;

@@ -8,7 +8,7 @@ import android.util.Log;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.FruitPower_PlayerSpeed;
-import yourowngame.com.yourowngame.classes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 
 public class Fruit_Meloon extends Fruit {
     private static final String TAG = "Meloon";

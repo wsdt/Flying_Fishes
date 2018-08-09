@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.mode_adventure.levels;
+package yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levels;
 
 import android.app.Activity;
 import android.graphics.Point;
@@ -20,9 +20,9 @@ import yourowngame.com.yourowngame.classes.actors.player.specializations.Player_
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
-import yourowngame.com.yourowngame.classes.mode_adventure.Level;
-import yourowngame.com.yourowngame.classes.mode_adventure.LevelAssignment;
-import yourowngame.com.yourowngame.classes.mode_adventure.levelassignments.LA_AchievePoints;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.LevelAssignment;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levelassignments.LA_AchievePoints;
 
 
 /**
@@ -53,7 +53,7 @@ public class Level_LucifersGameRoom extends Level {
         ArrayList<Background> allBgs = new ArrayList<>();
         allBgs.add(new BL_SingleColor(this.getActivity(),R.color.colorDarkRed));
         allBgs.add(new BL_FlyingElements(this.getActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_1, R.drawable.bg_layer_flying_elements_clouds_2, R.drawable.bg_layer_flying_elements_clouds_3}, 20));
-        this.setAllBackgroundLayers(allBgs);
+        this.setBgLayers(allBgs);
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
         //no setAllBackgroundLayers necessary (reference)
@@ -73,7 +73,7 @@ public class Level_LucifersGameRoom extends Level {
         /* Initializing Spawn-Enemies */
         allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getActivity(), Enemy_Boba.class, 5));
 
-        this.setAllEnemies(allEnemies);
+        this.setEnemies(allEnemies);
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
 
@@ -81,7 +81,7 @@ public class Level_LucifersGameRoom extends Level {
     protected void determineAllFruits() {
         ArrayList<Fruit> allFruits = new ArrayList<>();
         allFruits.addAll(FruitMgr.createRandomFruits(this.getActivity(),this, Fruit_Pinapo.class, 5));
-        this.setAllFruits(allFruits);
+        this.setFruits(allFruits);
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");
     }
@@ -89,7 +89,7 @@ public class Level_LucifersGameRoom extends Level {
     @Override
     protected void determineLevelAssigments() {
         ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
-        allLevelAssignments.add(new LA_AchievePoints(200000, this.getLevelHighscore()));
+        allLevelAssignments.add(new LA_AchievePoints(200000, getLevelHighscore()));
         this.setAllLevelAssignments(allLevelAssignments);
     }
 

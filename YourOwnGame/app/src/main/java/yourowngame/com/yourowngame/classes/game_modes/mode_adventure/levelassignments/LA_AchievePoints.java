@@ -1,10 +1,10 @@
-package yourowngame.com.yourowngame.classes.mode_adventure.levelassignments;
+package yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levelassignments;
 
 import android.support.annotation.NonNull;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.observer.Observer_HighScore;
-import yourowngame.com.yourowngame.classes.mode_adventure.LevelAssignment;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.LevelAssignment;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 
 /** To achieve this levelAssignment the user has to reach a specific

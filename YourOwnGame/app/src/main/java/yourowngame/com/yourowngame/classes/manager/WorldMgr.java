@@ -5,9 +5,9 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
-import yourowngame.com.yourowngame.classes.mode_adventure.Level;
-import yourowngame.com.yourowngame.classes.mode_adventure.World;
-import yourowngame.com.yourowngame.classes.mode_adventure.worlds.World_Earth;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.World;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.worlds.World_Earth;
 
 /**
  * SINGLETON PATTERN
@@ -46,7 +46,7 @@ public class WorldMgr {
      * Dummy/Redundant method for resetting game.
      */
     public static void resetGame(@NonNull Level level) {
-        level.cleanUpLevelProperties();
+        level.cleanUp();
     }
 
     /**

@@ -14,7 +14,7 @@ import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.observer.Observer_HighScore;
-import yourowngame.com.yourowngame.classes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.classes.manager.CollisionMgr;
 import yourowngame.com.yourowngame.classes.manager.dialog.GameOverDialog;
@@ -83,7 +83,7 @@ public class GameView extends DrawableSurfaces {
 
     private void initGameObjects() {
         /* Cleanup Level Properties */
-        this.getCurrLevelObj().cleanUpLevelProperties();
+        this.getCurrLevelObj().cleanUp();
         /* Clean the fruitCounter*/
         Level.getLevelFruitCounter().resetCounter();
         /* Clean Up Projectiles*/
@@ -131,7 +131,7 @@ public class GameView extends DrawableSurfaces {
 
             try {
                 // (1.) draw background
-                for (Background background : this.getCurrLevelObj().getAllBackgroundLayers()) {
+                for (Background background : this.getCurrLevelObj().getBgLayers()) {
                     background.setCanvas(canvas);
                     background.draw();
                 }
@@ -145,14 +145,14 @@ public class GameView extends DrawableSurfaces {
                 ProjectileMgr.drawProjectiles(canvas, loopCount);
 
                 // (4.) draw enemies
-                for (Enemy enemy : this.getCurrLevelObj().getAllEnemies()) {
+                for (Enemy enemy : this.getCurrLevelObj().getEnemies()) {
                     enemy.setCanvas(canvas);
                     enemy.setLoopCount(loopCount);
                     enemy.draw();
                 }
 
                 // (5.) draw fruits
-                for (Fruit fruit : this.getCurrLevelObj().getAllFruits()) {
+                for (Fruit fruit : this.getCurrLevelObj().getFruits()) {
                     fruit.setCanvas(canvas);
                     fruit.setLoopCount(loopCount);
                     fruit.draw();
@@ -179,18 +179,18 @@ public class GameView extends DrawableSurfaces {
         this.getCurrLevelObj().getPlayer().update();
 
         /* Update all enemies */
-        for (Enemy enemy : this.getCurrLevelObj().getAllEnemies()) {
+        for (Enemy enemy : this.getCurrLevelObj().getEnemies()) {
             enemy.setTargetGameObj(this.getCurrLevelObj().getPlayer()); //also not all enemies need this
             enemy.update();
         }
 
         /* Update all fruits */
-        for (Fruit fruit : this.getCurrLevelObj().getAllFruits()) {
+        for (Fruit fruit : this.getCurrLevelObj().getFruits()) {
             fruit.update();
         }
 
         /* Update bglayers */
-        for (Background background : this.getCurrLevelObj().getAllBackgroundLayers()) {
+        for (Background background : this.getCurrLevelObj().getBgLayers()) {
             background.update();
         }
 

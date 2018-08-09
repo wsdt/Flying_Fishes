@@ -1,0 +1,163 @@
+package yourowngame.com.yourowngame.classes.game_modes;
+
+import android.app.Activity;
+import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import java.util.ArrayList;
+
+import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
+import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
+import yourowngame.com.yourowngame.classes.actors.player.Player;
+import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
+import yourowngame.com.yourowngame.classes.background.Background;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.manager.CollisionMgr;
+import yourowngame.com.yourowngame.classes.manager.SoundMgr;
+import yourowngame.com.yourowngame.classes.manager.dialog.LevelAchievedDialog;
+import yourowngame.com.yourowngame.classes.observer.Observer_FruitCounter;
+import yourowngame.com.yourowngame.classes.observer.Observer_HighScore;
+import yourowngame.com.yourowngame.classes.observer.interfaces.IHighscore_Observer;
+import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
+
+/** All levels (regardless of mode) must extends from this base class to be drawn on GameView. */
+public abstract class DrawableLevel {
+    private Activity activity;
+    protected static SoundMgr soundMgr; //static because always only one soundMgr instance
+    private Player player;
+    private ArrayList<Background> bgLayers; //Background layers for each level (as Arraylist to avoid NullpointerExceptions, so we just do not allow gaps)
+    private ArrayList<Enemy> enemies; //MUST NOT BE STATIC (different levels, different enemies), All enemies on screen (will be spawned again if isGone) for specific level
+    private ArrayList<Fruit> fruits;
+    private CollisionMgr collisionMgr;
+
+    /** Static to save memory, but this means we have to care about resetting highscore when new lvl starts */
+    private static Observer_HighScore levelHighScore = new Observer_HighScore(); //add Level-dependent HighScore
+    /** Also static, don't forget to reset. */
+    private static Observer_FruitCounter levelFruitCounter = new Observer_FruitCounter();
+
+    public DrawableLevel(@NonNull Activity activity) {
+        this.setActivity(activity);
+    }
+
+    @CallSuper
+    public void initiate() {
+        /* Cleanup Level Properties */
+        this.cleanUp();
+        /* Clean the fruitCounter*/
+        Level.getLevelFruitCounter().resetCounter();
+        /* Clean Up Projectiles*/
+        ProjectileMgr.cleanUp();
+        /* Create CollisionManager*/
+        setCollisionMgr(new CollisionMgr(this, this.getActivity(), getLevelHighscore()));
+
+
+
+        this.getHighscore().addListener(new IHighscore_Observer() {
+            @Override
+            public void onHighscoreChanged() {
+                Log.d(TAG, "initGameObjects:onHighscoreChanged: HighScore has changed!");
+
+                /*Refresh HighScore lbl
+                 * IMPORTANT to be sure that only GameViewActivity is assigned to GameView. */
+                ((GameViewActivity) GameView.this.getDrawableSurfaceActivity()).setNewHighscoreOnUI();
+
+                /*Evaluate whether user achieved level or not. */
+                if (GameView.this.getCurrLevelObj().areLevelAssignmentsAchieved()) {
+                    getThread().setRunning(false);
+                    GameView.this.getDrawableSurfaceActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            LevelAchievedDialog.show(GameView.this);
+                        }
+                    });
+                }
+            }
+        });
+    }
+    @CallSuper
+    public void cleanUp() {
+        //CleanUp Player
+        this.getPlayer().cleanup();
+        //CleanUp Enemies
+        for (Enemy enemy : this.getEnemies()) {enemy.cleanup();}
+        //CleanUp Bglayers
+        for (Background background : this.getBgLayers()) {background.cleanup();}
+        //CleanUp all fruits
+        for (Fruit fruit : this.getFruits()) {fruit.cleanup();}
+
+        getLevelHighscore().resetCounter();
+        getLevelFruitCounter().resetCounter();
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        cleanUp();
+    }
+
+    //GETTER/SETTER ++++++++++++++++++++++++++++++++++++++++++++++
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public ArrayList<Background> getBgLayers() {
+        return bgLayers;
+    }
+
+    public void setBgLayers(ArrayList<Background> bgLayers) {
+        this.bgLayers = bgLayers;
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void setEnemies(ArrayList<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    public ArrayList<Fruit> getFruits() {
+        return fruits;
+    }
+
+    public void setFruits(ArrayList<Fruit> fruits) {
+        this.fruits = fruits;
+    }
+
+    public static Observer_HighScore getLevelHighscore() {
+        return levelHighScore;
+    }
+    public static void setLevelHighScore(Observer_HighScore levelHighScore) {
+        DrawableLevel.levelHighScore = levelHighScore;
+    }
+
+    public static Observer_FruitCounter getLevelFruitCounter() {
+        return levelFruitCounter;
+    }
+
+    public static void setLevelFruitCounter(Observer_FruitCounter levelFruitCounter) {
+        DrawableLevel.levelFruitCounter = levelFruitCounter;
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public CollisionMgr getCollisionMgr() {
+        return collisionMgr;
+    }
+
+    public void setCollisionMgr(CollisionMgr collisionMgr) {
+        this.collisionMgr = collisionMgr;
+    }
+}

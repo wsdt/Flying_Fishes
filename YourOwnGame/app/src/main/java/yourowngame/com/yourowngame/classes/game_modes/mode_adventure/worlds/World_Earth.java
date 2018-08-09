@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.mode_adventure.worlds;
+package yourowngame.com.yourowngame.classes.game_modes.mode_adventure.worlds;
 
 import android.app.Activity;
 import android.graphics.Point;
@@ -10,14 +10,14 @@ import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FlyingElements;
 import yourowngame.com.yourowngame.classes.background.layers.BL_SingleColor;
-import yourowngame.com.yourowngame.classes.mode_adventure.Level;
-import yourowngame.com.yourowngame.classes.mode_adventure.World;
-import yourowngame.com.yourowngame.classes.mode_adventure.levels.Level_DarkDescent;
-import yourowngame.com.yourowngame.classes.mode_adventure.levels.Level_EndlessDawn;
-import yourowngame.com.yourowngame.classes.mode_adventure.levels.Level_FruityIsland;
-import yourowngame.com.yourowngame.classes.mode_adventure.levels.Level_LucifersGameRoom;
-import yourowngame.com.yourowngame.classes.mode_adventure.levels.Level_NightRider;
-import yourowngame.com.yourowngame.classes.mode_adventure.levels.Level_SummerSky;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.World;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levels.Level_DarkDescent;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levels.Level_EndlessDawn;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levels.Level_FruityIsland;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levels.Level_LucifersGameRoom;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levels.Level_NightRider;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levels.Level_SummerSky;
 
 public class World_Earth extends World {
     private static final String TAG = "World_Earth";

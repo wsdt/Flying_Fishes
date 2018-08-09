@@ -8,7 +8,7 @@ import android.util.Log;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.FruitPower_ShootRage;
-import yourowngame.com.yourowngame.classes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 
 
 public class Fruit_Pinapo extends Fruit {

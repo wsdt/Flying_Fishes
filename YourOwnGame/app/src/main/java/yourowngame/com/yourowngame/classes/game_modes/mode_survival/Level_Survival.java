@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.mode_survival;
+package yourowngame.com.yourowngame.classes.game_modes.mode_survival;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -20,8 +20,8 @@ import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.background.layers.BL_FullscreenImage;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
-import yourowngame.com.yourowngame.classes.mode_survival.level_hardener.LH_AddEnemy;
-import yourowngame.com.yourowngame.classes.mode_survival.level_hardener.interfaces.ISurvival_Hardener_Base;
+import yourowngame.com.yourowngame.classes.game_modes.mode_survival.level_hardener.LH_AddEnemy;
+import yourowngame.com.yourowngame.classes.game_modes.mode_survival.level_hardener.interfaces.ISurvival_Hardener_Base;
 
 /**
  * Kind of dynamic lvl (adapts it's difficulty dynamically with time).

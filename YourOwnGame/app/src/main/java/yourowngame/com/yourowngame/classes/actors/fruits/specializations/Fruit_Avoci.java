@@ -8,7 +8,7 @@ import android.util.Log;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.FruitPower_EnemySpeed;
-import yourowngame.com.yourowngame.classes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 
 
 public class Fruit_Avoci extends Fruit {
@@ -36,7 +36,7 @@ public class Fruit_Avoci extends Fruit {
 
     @Override
     public void determineFruitPowers(@NonNull Level currLevel) {
-        this.getFruitPowers().add(new FruitPower_EnemySpeed(0.5, 10000, currLevel.getAllEnemies()));
+        this.getFruitPowers().add(new FruitPower_EnemySpeed(0.5, 10000, currLevel.getEnemies()));
     }
 
     @Override

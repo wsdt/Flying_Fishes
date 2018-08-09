@@ -1,4 +1,4 @@
-package yourowngame.com.yourowngame.classes.mode_adventure;
+package yourowngame.com.yourowngame.classes.game_modes.mode_adventure;
 
 import android.app.Activity;
 import android.support.annotation.DrawableRes;

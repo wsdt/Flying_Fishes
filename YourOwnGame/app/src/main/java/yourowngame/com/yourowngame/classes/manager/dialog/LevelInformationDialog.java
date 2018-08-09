@@ -26,8 +26,8 @@ import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.mode_adventure.Level;
-import yourowngame.com.yourowngame.classes.mode_adventure.LevelAssignment;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.LevelAssignment;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
@@ -117,7 +117,7 @@ public class LevelInformationDialog {
 
         //Set fruits
         HashSet<Class> differentFruits = new HashSet<>();
-        for (Fruit f : currLvl.getAllFruits()) {
+        for (Fruit f : currLvl.getFruits()) {
             differentFruits.add(f.getClass()); //simply add (hashset only accepts distinct values)
         }
 

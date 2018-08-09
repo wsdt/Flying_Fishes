@@ -15,8 +15,9 @@ import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
 import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
+import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 import yourowngame.com.yourowngame.classes.observer.Observer_HighScore;
-import yourowngame.com.yourowngame.classes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 
@@ -28,11 +29,11 @@ import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 public class CollisionMgr {
     private final String TAG = "CollisionMgr";
-    private Level currLevel;
+    private DrawableLevel currLevel;
     private Context context;
     private Observer_HighScore highScore;
 
-    public CollisionMgr(Level level, Context context, Observer_HighScore highScore){
+    public CollisionMgr(DrawableLevel level, Context context, Observer_HighScore highScore){
         this.currLevel = level;
         this.context = context;
         this.highScore = highScore;
@@ -48,7 +49,7 @@ public class CollisionMgr {
 
     /** check Projectile-to-Enemy collision */
     private void projectileToEnemyCollision(){
-        for (Enemy e : currLevel.getAllEnemies()){
+        for (Enemy e : currLevel.getEnemies()){
             for (Iterator<Projectile> it = ProjectileMgr.getShotProjectiles().iterator(); it.hasNext();){
                 Projectile p = it.next();
 
@@ -71,7 +72,7 @@ public class CollisionMgr {
 
     /** Check player to Fruit Collision*/
     private void playerToFruitCollision(){
-        for (Fruit fruit : currLevel.getAllFruits()) {
+        for (Fruit fruit : currLevel.getFruits()) {
             if (CollisionDetection.checkCollision(currLevel.getPlayer(), fruit)) {
                 //increment highScore
                 highScore.increment(fruit);
@@ -92,7 +93,7 @@ public class CollisionMgr {
 
     /** check Player-to-Enemy Collision */
     private boolean playerToEnemyCollision() {
-        for (Enemy e : currLevel.getAllEnemies()) {
+        for (Enemy e : currLevel.getEnemies()) {
             if (CollisionDetection.checkCollision(currLevel.getPlayer(), e)) {
                 CollisionDetection.playPlayerEnemyCollisionSound(context);
                 return true;

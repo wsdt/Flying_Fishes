@@ -10,7 +10,7 @@ import java.util.List;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
-import yourowngame.com.yourowngame.classes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
