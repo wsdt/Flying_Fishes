@@ -3,6 +3,7 @@ package yourowngame.com.yourowngame.classes.game_modes.mode_survival.level_harde
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.EnemyMgr;
 import yourowngame.com.yourowngame.classes.game_modes.mode_survival.Level_Survival;
@@ -13,9 +14,9 @@ public class LH_AddEnemy implements ISurvival_Hardener_Base {
     private static final String TAG = "LH_AddEnemy";
 
     @Override
-    public void execute(@NonNull Level_Survival levelSurvival) {
+    public void execute(@NonNull DrawableSurfaceActivity drawableSurfaceActivity, @NonNull Level_Survival levelSurvival) {
         if (Level_Survival.SUPPORTED_ENEMIES != null && Level_Survival.SUPPORTED_ENEMIES.length > 0) {
-            Enemy e = EnemyMgr.createRandomEnemy(levelSurvival.getDrawableSurfaceActivity(),
+            Enemy e = EnemyMgr.createRandomEnemy(drawableSurfaceActivity,
                     Level_Survival.SUPPORTED_ENEMIES[RandomMgr.getRandomInt(0, Level_Survival.SUPPORTED_ENEMIES.length - 1)]);
             if (e != null) {
                 e.initialize();

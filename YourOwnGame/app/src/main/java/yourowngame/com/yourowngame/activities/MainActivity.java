@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, WorldActivity.class));
     }
 
+    public void startSurvivalMode(View view) {
+        startActivity(new Intent(this, GameViewActivity.class));
+    }
 
     public void showHighscore(View view) {
         startActivity(new Intent(this, HighscoreActivity.class));

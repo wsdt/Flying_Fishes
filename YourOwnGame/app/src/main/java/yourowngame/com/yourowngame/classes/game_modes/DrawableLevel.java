@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.DrawableObj;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
@@ -23,6 +24,7 @@ import yourowngame.com.yourowngame.classes.observer.interfaces.IHighscore_Observ
 public abstract class DrawableLevel {
     private static final String TAG = "DrawableLevel";
 
+    // IMPORTANT: DO NOT PUT CONTEXT AS CLASS MEMBER //TODO to avoid memory leaks
     private DrawableSurfaceActivity drawableSurfaceActivity;
     protected static SoundMgr soundMgr; //static because always only one soundMgr instance
     private Player player;
@@ -40,8 +42,9 @@ public abstract class DrawableLevel {
         this.setDrawableSurfaceActivity(drawableSurfaceActivity);
     }
 
+    /** @param gameViewActivity: Only call this method with GameViewActivity!*/
     @CallSuper
-    public void initiate() {
+    public void initiate(@NonNull final GameViewActivity gameViewActivity) {
         /* Cleanup Level Properties */
         this.cleanUp();
 
@@ -55,9 +58,29 @@ public abstract class DrawableLevel {
 
                 /*Refresh HighScore lbl
                  * IMPORTANT to be sure that only GameViewActivity is assigned to GameView. */
+                if (!(DrawableLevel.this.getDrawableSurfaceActivity() instanceof GameViewActivity)) {
+                    DrawableLevel.this.setDrawableSurfaceActivity(gameViewActivity);
+                    Log.e(TAG, "initiate:onHighscoreChanged: Memory leak -> Level has WorldViewActivity and not GameViewActivity.");
+                }
                 ((GameViewActivity) DrawableLevel.this.getDrawableSurfaceActivity()).setNewHighscoreOnUI();
             }
         });
+
+
+        // DIRTY HACK :(
+        /* To prevent memory leaks change all contexts/drawablesurfaceactivities of current level
+        * from WorldViewActivity to GameViewActivity. TODO: Remove this in future and find a smoother
+        * solution (no context class-members would be perfect) */
+        ArrayList<DrawableObj> doList = new ArrayList<>();
+        doList.addAll(getBgLayers());
+        doList.addAll(getEnemies());
+        doList.addAll(getFruits());
+        doList.add(getPlayer());
+
+        //set gameViewactivity instead
+        for (DrawableObj d : doList) {
+            d.setActivity(gameViewActivity);
+        }
     }
 
     @CallSuper
@@ -133,19 +156,19 @@ public abstract class DrawableLevel {
         DrawableLevel.levelFruitCounter = levelFruitCounter;
     }
 
-    public DrawableSurfaceActivity getDrawableSurfaceActivity() {
-        return drawableSurfaceActivity;
-    }
-
-    public void setDrawableSurfaceActivity(DrawableSurfaceActivity drawableSurfaceActivity) {
-        this.drawableSurfaceActivity = drawableSurfaceActivity;
-    }
-
     public CollisionMgr getCollisionMgr() {
         return collisionMgr;
     }
 
     public void setCollisionMgr(CollisionMgr collisionMgr) {
         this.collisionMgr = collisionMgr;
+    }
+
+    public DrawableSurfaceActivity getDrawableSurfaceActivity() {
+        return drawableSurfaceActivity;
+    }
+
+    public void setDrawableSurfaceActivity(DrawableSurfaceActivity drawableSurfaceActivity) {
+        this.drawableSurfaceActivity = drawableSurfaceActivity;
     }
 }

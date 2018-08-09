@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.game_modes.mode_survival.Level_Survival;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
@@ -20,6 +22,12 @@ import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
 public class GameViewActivity extends DrawableSurfaceActivity {
     private static final String TAG = "GameViewActivity";
+
+    /** GameViewActivity Constants +++++++++++++++++++++++++++++++*/
+    public static final String INTENT_GAME_MODE = "GAME_MODE";
+    public static final int GAMEMODE_ADVENTURE = 0;
+    public static final int GAMEMODE_SURVIVAL = 1;
+
     private GameView gameView;
     private TextView highscoreVal; //for the points
 
@@ -36,8 +44,18 @@ public class GameViewActivity extends DrawableSurfaceActivity {
         setGameView(((GameView) findViewById(R.id.gameViewActivity_gameView)));
 
         //Start game
-        getGameView().startGame(this, WorldMgr.getWorlds(this).get(
-                WorldMgr.getCurr_world_index()).getAllLevels().get(WorldMgr.getCurr_lvl_index()));
+        Intent intent = getIntent();
+        switch (intent.getIntExtra(INTENT_GAME_MODE,GAMEMODE_ADVENTURE)) { //by default adventure mode
+            case GAMEMODE_ADVENTURE:
+                getGameView().startGame(this, WorldMgr.getWorlds(this).get(
+                        WorldMgr.getCurr_world_index()).getAllLevels().get(WorldMgr.getCurr_lvl_index()));
+                break;
+            case GAMEMODE_SURVIVAL:
+                //TODO: make difficulty selectable
+                getGameView().startGame(this, new Level_Survival(this, Level_Survival.DIFFICULTY.MEDIUM));
+                break;
+            default: Log.e(TAG, "onCreate: Gamemode not found.");
+        }
 
         Log.d(TAG, "onCreate: Tried to load game.");
     }

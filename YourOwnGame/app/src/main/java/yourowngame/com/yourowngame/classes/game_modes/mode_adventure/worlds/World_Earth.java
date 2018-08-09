@@ -33,7 +33,7 @@ public class World_Earth extends World {
     protected void determineAllLevels() {
         ArrayList<Level> levelList = new ArrayList<>();
 
-        levelList.add(new Level_SummerSky(this.getActivity(),new Point(50,50)));
+        levelList.add(new Level_SummerSky(this.getActivity(), new Point(50,50)));
         levelList.add(new Level_NightRider(this.getActivity(), new Point(400,50)));
         levelList.add(new Level_EndlessDawn(this.getActivity(), new Point(1200,300)));
         levelList.add(new Level_DarkDescent(this.getActivity(), new Point(1200,500)));

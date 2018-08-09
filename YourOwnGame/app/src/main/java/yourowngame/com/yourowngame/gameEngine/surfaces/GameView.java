@@ -71,7 +71,7 @@ public class GameView extends DrawableSurfaces {
          *  because we used the metric nearly everywhere!! */
 
         /* Initialize GameObjects & eq here! After initializing, the GameLoop will start! also cleanup */
-        this.getCurrLevelObj().initiate();
+        this.getCurrLevelObj().initiate((GameViewActivity) this.getDrawableSurfaceActivity());
 
         /* React to user input */
         getRootView().setOnTouchListener(getMultiTouchHandler());

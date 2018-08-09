@@ -28,7 +28,6 @@ public abstract class Level extends DrawableLevel {
     //Do not make more constructors
     public Level(@NonNull DrawableSurfaceActivity activity, @NonNull Point worldMapPosition) {
         super(activity);
-
         Log.d(TAG, "Level: ###################### STARTING LOADING LEVEL ###############################");
         this.setDrawableSurfaceActivity(activity);
         this.setWorldMapPosition(worldMapPosition);
@@ -45,8 +44,8 @@ public abstract class Level extends DrawableLevel {
     }
 
     @Override
-    public void initiate() {
-        super.initiate();
+    public void initiate(@NonNull GameViewActivity gameViewActivity) {
+        super.initiate(gameViewActivity);
         getLevelHighscore().addListener(new IHighscore_Observer() {
             @Override
             public void onHighscoreChanged() {
@@ -66,10 +65,10 @@ public abstract class Level extends DrawableLevel {
 
     /** Regardless of shop system keep this level dependent, so user can decide on lvl start which
      * player to use. */
-    protected abstract void determinePlayer();
-    protected abstract void determineBackgroundLayers();
-    protected abstract void determineAllEnemies();
-    protected abstract void determineAllFruits();
+    protected abstract void determinePlayer(@NonNull DrawableSurfaceActivity drawableSurfaceActivity);
+    protected abstract void determineBackgroundLayers(@NonNull DrawableSurfaceActivity drawableSurfaceActivity);
+    protected abstract void determineAllEnemies(@NonNull DrawableSurfaceActivity drawableSurfaceActivity);
+    protected abstract void determineAllFruits(@NonNull DrawableSurfaceActivity drawableSurfaceActivity);
     protected abstract void playBackgroundMusic();
     /** Put all wanted LevelAssigment Objs in there. These will be accessed and evaluated in areLevelAssigmentsAchieved().*/
     protected abstract void determineLevelAssigments();
@@ -100,7 +99,7 @@ public abstract class Level extends DrawableLevel {
     @Override
     public ArrayList<Background> getBgLayers() {
         if (super.getBgLayers() == null || super.getBgLayers().size() <= 0) {
-            this.determineBackgroundLayers();
+            this.determineBackgroundLayers(this.getDrawableSurfaceActivity());
             for (Background background : super.getBgLayers()) {background.initialize();}
         }
         return super.getBgLayers();
@@ -115,7 +114,7 @@ public abstract class Level extends DrawableLevel {
     @Override
     public ArrayList<Enemy> getEnemies() {
         if (super.getEnemies() == null || super.getEnemies().size() <= 0) {
-            this.determineAllEnemies();
+            this.determineAllEnemies(this.getDrawableSurfaceActivity());
             for (Enemy enemy : super.getEnemies()) {enemy.initialize();}
         }
         return super.getEnemies();
@@ -123,7 +122,7 @@ public abstract class Level extends DrawableLevel {
     @Override
     public Player getPlayer() {
         if (super.getPlayer() == null) {
-            this.determinePlayer();
+            this.determinePlayer(this.getDrawableSurfaceActivity());
             this.getPlayer().initialize();
         }
         return super.getPlayer();
@@ -132,7 +131,7 @@ public abstract class Level extends DrawableLevel {
     @Override
     public ArrayList<Fruit> getFruits() {
         if (super.getFruits() == null || super.getFruits().size() <= 0) {
-            this.determineAllFruits();
+            this.determineAllFruits(this.getDrawableSurfaceActivity());
             for (Fruit fruit : super.getFruits()) {fruit.initialize();}
         }
         return super.getFruits();
@@ -156,6 +155,4 @@ public abstract class Level extends DrawableLevel {
     public void setWorldMapPosition(Point worldMapPosition) {
         this.worldMapPosition = worldMapPosition;
     }
-
-
 }

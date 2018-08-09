@@ -14,6 +14,7 @@
 
     <!-- MainActivity -->
     <string name="mainActivity_button_mode_adventure">Adventure - Mode</string>
+    <string name="mainActivity_button_mode_survival">Survival - Mode</string>
     <string name="mainActivity_button_highscores">Highscores</string>
     <string name="mainActivity_button_settings">Settings</string>
 
@@ -36,7 +37,7 @@
     <string name="section_format">Hello World from section: %1$d</string>
 
     <!-- Worlds -->
-    <string name="world_worldName_earth">Die Erde</string>
+    <string name="world_worldName_earth">The Earth</string>
 
     <!-- LEVELs -->
     <string name="level_levelName_harmlessSky">Harmless Sky</string>

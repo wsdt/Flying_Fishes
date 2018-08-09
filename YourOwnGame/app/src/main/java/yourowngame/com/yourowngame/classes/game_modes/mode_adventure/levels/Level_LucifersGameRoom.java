@@ -32,8 +32,8 @@ import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levelassign
 public class Level_LucifersGameRoom extends Level {
     private static final String TAG = "Lvl_LucifersGameRoom";
 
-    public Level_LucifersGameRoom(@NonNull DrawableSurfaceActivity activity, @NonNull Point worldMapPosition) {
-        super(activity, worldMapPosition);
+    public Level_LucifersGameRoom(@NonNull DrawableSurfaceActivity drawableSurfaceActivity, @NonNull Point worldMapPosition) {
+        super(drawableSurfaceActivity, worldMapPosition);
     }
 
     @Override
@@ -42,17 +42,17 @@ public class Level_LucifersGameRoom extends Level {
     }
 
     @Override
-    protected void determinePlayer() {
-        this.setPlayer(new Player_Hugo(this.getDrawableSurfaceActivity()));
+    protected void determinePlayer(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) {
+        this.setPlayer(new Player_Hugo(drawableSurfaceActivity));
     }
 
     @Override
-    protected void determineBackgroundLayers() {
+    protected void determineBackgroundLayers(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) {
         /*This.getAllBackgroundLayers can be directly used with add without additional declaration, because object is initialized implicitly
          * - Add layers acc. to the desired order (first add() is the lowest layer etc.)*/
         ArrayList<Background> allBgs = new ArrayList<>();
-        allBgs.add(new BL_SingleColor(this.getDrawableSurfaceActivity(),R.color.colorDarkRed));
-        allBgs.add(new BL_FlyingElements(this.getDrawableSurfaceActivity(), new int[]{R.drawable.bg_layer_flying_elements_clouds_1, R.drawable.bg_layer_flying_elements_clouds_2, R.drawable.bg_layer_flying_elements_clouds_3}, 20));
+        allBgs.add(new BL_SingleColor(drawableSurfaceActivity,R.color.colorDarkRed));
+        allBgs.add(new BL_FlyingElements(drawableSurfaceActivity, new int[]{R.drawable.bg_layer_flying_elements_clouds_1, R.drawable.bg_layer_flying_elements_clouds_2, R.drawable.bg_layer_flying_elements_clouds_3}, 20));
         this.setBgLayers(allBgs);
 
         Log.d(TAG, "determineBackgroundLayers: Have set layers.");
@@ -60,27 +60,27 @@ public class Level_LucifersGameRoom extends Level {
     }
 
     @Override
-    protected void determineAllEnemies() { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
+    protected void determineAllEnemies(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) { //Only exception (initialize() here instead of in obj constr, because of createRandomEnemies())
         //Set allEnemies Arraylist
         ArrayList<Enemy> allEnemies = new ArrayList<>();
 
         /* Initializing Bomber-Enemy */
-        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getDrawableSurfaceActivity(), Enemy_Happen.class, 20));
+        allEnemies.addAll(EnemyMgr.createRandomEnemies(drawableSurfaceActivity, Enemy_Happen.class, 20));
 
         /*Initializing Rocket-Enemy */
-        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getDrawableSurfaceActivity(), Enemy_Rocketfish.class, 1));
+        allEnemies.addAll(EnemyMgr.createRandomEnemies(drawableSurfaceActivity, Enemy_Rocketfish.class, 1));
 
         /* Initializing Spawn-Enemies */
-        allEnemies.addAll(EnemyMgr.createRandomEnemies(this.getDrawableSurfaceActivity(), Enemy_Boba.class, 5));
+        allEnemies.addAll(EnemyMgr.createRandomEnemies(drawableSurfaceActivity, Enemy_Boba.class, 5));
 
         this.setEnemies(allEnemies);
         Log.d(TAG, "determineAllEnemies: Have set global level-dependent enemylist.");
     }
 
     @Override
-    protected void determineAllFruits() {
+    protected void determineAllFruits(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) {
         ArrayList<Fruit> allFruits = new ArrayList<>();
-        allFruits.addAll(FruitMgr.createRandomFruits(this.getDrawableSurfaceActivity(),this, Fruit_Pinapo.class, 5));
+        allFruits.addAll(FruitMgr.createRandomFruits(drawableSurfaceActivity,this, Fruit_Pinapo.class, 5));
         this.setFruits(allFruits);
 
         Log.d(TAG, "determineAllFruits: Have set global level-dependent fruits.");

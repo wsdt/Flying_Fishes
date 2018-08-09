@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.EnemyMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.Enemy_Boba;
@@ -17,6 +18,7 @@ import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 import yourowngame.com.yourowngame.classes.game_modes.mode_survival.level_hardener.LH_AddEnemy;
 import yourowngame.com.yourowngame.classes.game_modes.mode_survival.level_hardener.interfaces.ISurvival_Hardener_Base;
+import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 
 /**
  * Kind of dynamic lvl (adapts it's difficulty dynamically with time).
@@ -55,17 +57,17 @@ public class Level_Survival extends DrawableLevel {
 
     public Level_Survival(@NonNull GameViewActivity gameViewActivity, DIFFICULTY difficulty) {
         super(gameViewActivity);
-        this.runStartConfiguration(difficulty);
+        this.runStartConfiguration(gameViewActivity, difficulty);
     }
 
-    private void runStartConfiguration(DIFFICULTY difficulty) {
-        this.getBgLayers().add(new BL_FullscreenImage(this.getDrawableSurfaceActivity(), R.drawable.bg_layer_fullscreenimage_mountains_1));
-        this.getEnemies().addAll(EnemyMgr.createRandomEnemies(this.getDrawableSurfaceActivity(), Enemy_Rocketfish.class, 1));
+    private void runStartConfiguration(@NonNull GameViewActivity gameViewActivity, DIFFICULTY difficulty) {
+        this.getBgLayers().add(new BL_FullscreenImage(gameViewActivity, R.drawable.bg_layer_fullscreenimage_mountains_1));
+        this.getEnemies().addAll(EnemyMgr.createRandomEnemies(gameViewActivity, Enemy_Rocketfish.class, 1));
 
-        adaptDifficultyDynamically(difficulty);
+        adaptDifficultyDynamically(gameViewActivity, difficulty);
     }
 
-    private void adaptDifficultyDynamically(final DIFFICULTY difficulty) {
+    private void adaptDifficultyDynamically(@NonNull final GameViewActivity gameViewActivity, final DIFFICULTY difficulty) {
         Level_Survival.setDifficultyThread(new Thread(new Runnable() {
             @Override
             public void run() {
@@ -73,7 +75,7 @@ public class Level_Survival extends DrawableLevel {
                 while (true) {
                     try {
                         this.wait(difficulty.getMilliseconds());
-                        Level_Survival.this.addDifficulty();
+                        Level_Survival.this.addDifficulty(gameViewActivity);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                         break; //also exit loop
@@ -83,11 +85,11 @@ public class Level_Survival extends DrawableLevel {
         }));
     }
 
-    private void addDifficulty() {
+    private void addDifficulty(@NonNull GameViewActivity gameViewActivity) {
         if (ACTIVATED_HARDENERS != null && ACTIVATED_HARDENERS.length > 0) {
             try {
                 ((ISurvival_Hardener_Base) ACTIVATED_HARDENERS[RandomMgr.getRandomInt(0, ACTIVATED_HARDENERS.length - 1)]
-                        .newInstance()).execute(this);
+                        .newInstance()).execute(gameViewActivity,this);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
