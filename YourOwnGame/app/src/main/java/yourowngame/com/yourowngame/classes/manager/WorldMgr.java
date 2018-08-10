@@ -22,6 +22,8 @@ public class WorldMgr {
      */
     private static int curr_lvl_index = 0;
 
+    //TODO: Maybe replace arraylists of world/levels with Lvl1.class lists and initialize them on start! (but need to keep one as a member)
+
     /**
      * Which worlds are in which order.
      */
@@ -31,8 +33,8 @@ public class WorldMgr {
      * IMPORTANT: Do not give activity by constructor (to avoid saving old activities etc.),
      * bc. we use a Singleton (to avoid memory leaks)
      */
-    private WorldMgr() {} //no instance allowed
-
+    private WorldMgr() {
+    } //no instance allowed
 
 
     /**
@@ -56,7 +58,7 @@ public class WorldMgr {
      * next world the first index. If last lvl this method returns the first level! (good?)
      * <p>
      * Method might return null in error case!
-     *
+     * <p>
      * World.class has a constraint, that each specialization needs at least one LvlObj otherwise
      * we get a WrongConfigured-Exception. So, we don't evaluate of the levelList.size().
      */

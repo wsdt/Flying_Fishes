@@ -1,5 +1,6 @@
 package yourowngame.com.yourowngame.classes.game_modes.mode_adventure;
 
+import android.graphics.Point;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Size;
@@ -7,6 +8,9 @@ import android.support.annotation.StringRes;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
