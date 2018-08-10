@@ -71,7 +71,7 @@ public abstract class DrawableLevel {
         /* To prevent memory leaks change all contexts/drawablesurfaceactivities of current level
         * from WorldViewActivity to GameViewActivity. TODO: Remove this in future and find a smoother
         * solution (no context class-members would be perfect) */
-        ArrayList<DrawableObj> doList = new ArrayList<>();
+        /*ArrayList<DrawableObj> doList = new ArrayList<>();
         doList.addAll(getBgLayers());
         doList.addAll(getEnemies());
         doList.addAll(getFruits());
@@ -80,7 +80,7 @@ public abstract class DrawableLevel {
         //set gameViewactivity instead
         for (DrawableObj d : doList) {
             d.setActivity(gameViewActivity);
-        }
+        }*/
     }
 
     @CallSuper
