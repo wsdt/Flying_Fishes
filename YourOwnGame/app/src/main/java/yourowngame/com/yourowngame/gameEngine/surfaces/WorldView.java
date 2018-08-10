@@ -136,7 +136,6 @@ public class WorldView extends DrawableSurfaces {
                     if (r.contains((int) event.getX(), (int) event.getY())) {
                         Log.d(TAG, "onTouchEvent: Lvl clicked.");
                         // Pause/Stop thread before opening new activity --> is done in LevelInformationDialog
-                        WorldMgr.setCurr_lvl_index(lvlIndex);
                         LevelInformationDialog.show(this, lvlIndex);
 
                         return true;

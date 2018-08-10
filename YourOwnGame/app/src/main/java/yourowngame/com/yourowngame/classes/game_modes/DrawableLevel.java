@@ -24,7 +24,6 @@ import yourowngame.com.yourowngame.classes.observer.interfaces.IHighscore_Observ
 public abstract class DrawableLevel {
     private static final String TAG = "DrawableLevel";
 
-    // IMPORTANT: DO NOT PUT CONTEXT AS CLASS MEMBER //TODO to avoid memory leaks
     private DrawableSurfaceActivity drawableSurfaceActivity;
     protected static SoundMgr soundMgr; //static because always only one soundMgr instance
     private Player player;
@@ -65,22 +64,6 @@ public abstract class DrawableLevel {
                 ((GameViewActivity) DrawableLevel.this.getDrawableSurfaceActivity()).setNewHighscoreOnUI();
             }
         });
-
-
-        // DIRTY HACK :(
-        /* To prevent memory leaks change all contexts/drawablesurfaceactivities of current level
-        * from WorldViewActivity to GameViewActivity. TODO: Remove this in future and find a smoother
-        * solution (no context class-members would be perfect) */
-        /*ArrayList<DrawableObj> doList = new ArrayList<>();
-        doList.addAll(getBgLayers());
-        doList.addAll(getEnemies());
-        doList.addAll(getFruits());
-        doList.add(getPlayer());
-
-        //set gameViewactivity instead
-        for (DrawableObj d : doList) {
-            d.setActivity(gameViewActivity);
-        }*/
     }
 
     @CallSuper

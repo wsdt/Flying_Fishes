@@ -26,11 +26,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Load Banner Ad (declared as a member of class, so we could easily display more)
-        AdManager.loadBannerAd(this,(RelativeLayout) findViewById(R.id.mainActivity_RL));
+        AdManager.loadBannerAd(getApplicationContext(),(RelativeLayout) findViewById(R.id.mainActivity_RL));
 
 
         //Show current app version to user
-        ((TextView) findViewById(R.id.mainActivity_appVersion)).setText(MetaDataMgr.getAppVersion(this,true));
+        ((TextView) findViewById(R.id.mainActivity_appVersion)).setText(MetaDataMgr.getAppVersion(getApplicationContext(),true));
     }
 
     //GAME BUTTONS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -35,7 +35,6 @@ public class FruitPower_EnemySpeed extends FruitPower {
     }
 
     @Override
-    @Bug(problem = "Seems that this method makes Enemies extremely fast altough it should be normal speed. I don't know why.")
     public void stop() {
         //back to normal speed
         for(Enemy enemy : getLevelEnemies()) {

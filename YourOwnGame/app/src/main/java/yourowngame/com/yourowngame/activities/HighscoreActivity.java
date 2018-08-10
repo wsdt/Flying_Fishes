@@ -25,13 +25,13 @@ public class HighscoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_highscore);
 
-        setSharedPreferencesStorageMgr(new SharedPrefStorageMgr(this));
+        setSharedPreferencesStorageMgr(new SharedPrefStorageMgr(getApplicationContext()));
         setHighscoreList((LinearLayout) findViewById(R.id.highscoreActivity_highscoreList));
 
         printAllHighscoreEntries();
 
         // Load ads
-        AdManager.loadBannerAd(this,(RelativeLayout) findViewById(R.id.highscoreActivity_RL));
+        AdManager.loadBannerAd(getApplicationContext(),(RelativeLayout) findViewById(R.id.highscoreActivity_RL));
     }
 
     private void printHighscoreEntry(int points) {

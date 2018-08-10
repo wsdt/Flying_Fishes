@@ -39,11 +39,10 @@ public class FruitPower_ShootRage extends FruitPower {
             Projectile p = ProjectileMgr.shoot(this.getCurrPlayer(), true);
             if (p != null) {
                 //also set random Y
-                p.setPosY(RandomMgr.getRandomFloat(0, DrawableSurfaces.getDrawHeight())); //try to shoot regardless whether we have munition at that time
+                p.setPosY(RandomMgr.getRandomFloat(0, DrawableSurfaces.getDrawHeight())); //set random posY
             }
         }
 
-        //Show removed enemies after duration
         //startStopTimer(); --> NOT REQUIRED, bc. projectiles go away.
     }
 
