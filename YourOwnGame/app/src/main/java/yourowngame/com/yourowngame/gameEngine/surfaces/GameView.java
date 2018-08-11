@@ -7,9 +7,13 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
+import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
 import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.background.Background;
@@ -68,8 +72,16 @@ public class GameView extends DrawableSurfaces {
         Log.d(TAG, "startGame: Lvl-obj -> "+currLevelObj);
         this.setCurrLevelObj(currLevelObj);
 
-        /* At every Gamestart, get the metrics from screen, otherwise hole Game will crash in future!,
-         *  because we used the metric nearly everywhere!! */
+        //TODO: remove (workaround for currently bad game design) ---------------
+        /* Also workaround doesn't seem to work..
+
+        ArrayList<Fruit> fruits = new ArrayList<>();
+        for (Fruit f : this.getCurrLevelObj().getFruits()) {
+            fruits.add(FruitMgr.createRandomFruit(context,this.getCurrLevelObj(),f.getClass()));
+        } //reinitialize fruits
+        this.getCurrLevelObj().setFruits(fruits);*/
+
+        //TODO: remove end -------------------------
 
         /* Initialize GameObjects & eq here! After initializing, the GameLoop will start! also cleanup */
         this.getCurrLevelObj().initiate((GameViewActivity) this.getDrawableSurfaceActivity());
