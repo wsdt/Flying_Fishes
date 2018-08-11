@@ -8,6 +8,7 @@ import android.util.Log;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.FruitPower_ShootRage;
+import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 
 
@@ -21,24 +22,24 @@ public class Fruit_Pinapo extends Fruit {
     private static final int HIGHSCORE_REWARD = 200;
     private static final int[] IMAGE_FRAMES = new int[]{R.drawable.pinapos};
 
-    public Fruit_Pinapo(@NonNull Activity activity, @NonNull Level currLevel, double posX, double posY, double speedX, double speedY) {
+    public Fruit_Pinapo(@NonNull Activity activity, @NonNull DrawableLevel currLevel, double posX, double posY, double speedX, double speedY) {
         super(activity, currLevel, posX, posY, speedX, speedY);
     }
 
     /**
      * Creates random fruit
      */
-    public Fruit_Pinapo(@NonNull Activity activity, @NonNull Level currLevel) {
+    public Fruit_Pinapo(@NonNull Activity activity, @NonNull DrawableLevel currLevel) {
         super(activity, currLevel); //also call super constr! (initializing) and fruit powers
     }
 
     @Override
-    public void determineFruitPowers(@NonNull Level currLevel) {
+    public void determineFruitPowers(@NonNull DrawableLevel currLevel) {
         this.getFruitPowers().add(new FruitPower_ShootRage(15, currLevel.getPlayer()));
     }
 
     @Override
-    public void removeFruitPowers(@NonNull Level currLevel) {
+    public void removeFruitPowers(@NonNull DrawableLevel currLevel) {
         this.getFruitPowers().remove(0);
     }
 

@@ -43,14 +43,13 @@ public class GameViewActivity extends DrawableSurfaceActivity {
         this.setHighscoreVal_textView((TextView) findViewById(R.id.gameViewActivity_highscoreVal));
 
         /* Master-call, create GameView*/
-        setGameView(((GameView) findViewById(R.id.gameViewActivity_gameView)));
+        setGameView(((GameView) findViewById(DRAWABLE_SURFACE_ID)));
 
         //Start game
         Intent intent = getIntent();
         switch (intent.getIntExtra(INTENT_GAME_MODE, GAMEMODE_ADVENTURE)) { //by default adventure mode
             case GAMEMODE_ADVENTURE:
-                getGameView().startGame(this, WorldMgr.getWorlds(this).get(
-                        WorldMgr.getCurr_world_index()).getAllLevels().get(WorldMgr.getCurr_lvl_index()));
+                getGameView().startGame(this, WorldMgr.getCurrLvl(this,false));
                 break;
             case GAMEMODE_SURVIVAL:
                 //TODO: make difficulty selectable

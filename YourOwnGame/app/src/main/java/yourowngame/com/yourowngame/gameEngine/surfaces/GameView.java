@@ -65,6 +65,7 @@ public class GameView extends DrawableSurfaces {
         ProjectileMgr.runDefaultConfiguration(context);
 
         //Set LvlMgr
+        Log.d(TAG, "startGame: Lvl-obj -> "+currLevelObj);
         this.setCurrLevelObj(currLevelObj);
 
         /* At every Gamestart, get the metrics from screen, otherwise hole Game will crash in future!,

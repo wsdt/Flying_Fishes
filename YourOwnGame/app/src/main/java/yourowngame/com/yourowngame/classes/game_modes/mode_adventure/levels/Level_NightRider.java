@@ -35,8 +35,8 @@ import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levelassign
 public class Level_NightRider extends Level {
     private static final String TAG = "Lvl_Nightrider";
 
-    public Level_NightRider(@NonNull DrawableSurfaceActivity drawableSurfaceActivity, @NonNull Point worldMapPosition) {
-        super(drawableSurfaceActivity, worldMapPosition);
+    public Level_NightRider(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) {
+        super(drawableSurfaceActivity);
     }
 
     @Override

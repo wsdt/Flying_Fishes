@@ -13,7 +13,7 @@ public class WorldActivity extends DrawableSurfaceActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_world);
 
-        this.setWorldView((WorldView) findViewById(R.id.worldActivity_worldView));
+        this.setWorldView((WorldView) findViewById(DRAWABLE_SURFACE_ID));
         this.getWorldView().startWorldAnimations(this);
     }
 

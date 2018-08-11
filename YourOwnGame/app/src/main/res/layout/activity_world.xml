@@ -10,9 +10,9 @@
     android:layout_centerVertical="true"
     android:background="@color/colorShadow">
 
-
+    <!-- When changing belows Id you also have to change the id name of the worldview in activity_gameview -->
     <yourowngame.com.yourowngame.gameEngine.surfaces.WorldView
-        android:id="@+id/worldActivity_worldView"
+        android:id="@+id/drawableSurfaceActivity_surface"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

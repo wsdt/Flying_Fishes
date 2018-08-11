@@ -32,8 +32,8 @@ import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levelassign
 public class Level_LucifersGameRoom extends Level {
     private static final String TAG = "Lvl_LucifersGameRoom";
 
-    public Level_LucifersGameRoom(@NonNull DrawableSurfaceActivity drawableSurfaceActivity, @NonNull Point worldMapPosition) {
-        super(drawableSurfaceActivity, worldMapPosition);
+    public Level_LucifersGameRoom(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) {
+        super(drawableSurfaceActivity);
     }
 
     @Override

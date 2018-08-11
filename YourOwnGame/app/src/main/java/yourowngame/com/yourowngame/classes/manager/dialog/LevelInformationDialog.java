@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -18,6 +19,9 @@ import android.widget.TextView;
 import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
@@ -25,12 +29,16 @@ import yourowngame.com.yourowngame.activities.GameViewActivity;
 import yourowngame.com.yourowngame.activities.WorldActivity;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
+import yourowngame.com.yourowngame.classes.actors.fruits.specializations.Fruit_Pinapo;
 import yourowngame.com.yourowngame.classes.annotations.Bug;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
+import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.LevelAssignment;
 import yourowngame.com.yourowngame.classes.global_configuration.Constants;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
+import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
+import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
 import yourowngame.com.yourowngame.gameEngine.surfaces.WorldView;
 
 /**
@@ -45,6 +53,7 @@ public class LevelInformationDialog {
     private LevelInformationDialog() {
     }
 
+    //Only worldView!
     public static void show(@NonNull final WorldView worldView, final int lvlIndex) {
         final DrawableSurfaceActivity activity = worldView.getDrawableSurfaceActivity();
 
@@ -111,10 +120,14 @@ public class LevelInformationDialog {
             priority = Enhance.Priority.MEDIUM)
     private static void loadDataToDialog(@NonNull DrawableSurfaceActivity activity, @NonNull RelativeLayout dialogParent, int lvlIndex) {
         Resources r = dialogParent.getResources();
-        Level currLvl = WorldMgr.getCurrLvlObj(activity);
+        WorldMgr.setCurr_lvl_index(lvlIndex);
+        DrawableLevel currLvl = WorldMgr.getCurrLvl(activity,true); //force bc. we changed no.
+        Log.d(TAG, "loadDataToDialog: Loaded lvl -> "+currLvl);
 
         //Set title
-        ((TextView) dialogParent.findViewById(R.id.dialogLvlInformationTitle)).setText(r.getString(R.string.dialog_levelinformation_title, lvlIndex, currLvl.getLevelName()));
+        ((TextView) dialogParent.findViewById(R.id.dialogLvlInformationTitle)).setText(
+                r.getString(R.string.dialog_levelinformation_title, lvlIndex,
+                        (currLvl instanceof Level) ? ((Level) currLvl).getLevelName() : R.string.appName));
 
         //Set fruits
         HashSet<Class> differentFruits = new HashSet<>();
@@ -122,6 +135,7 @@ public class LevelInformationDialog {
             differentFruits.add(f.getClass()); //simply add (hashset only accepts distinct values)
         }
 
+        //TODO: Stop initializing fruits as this is the source of errors
         GridLayout gridLayout = dialogParent.findViewById(R.id.dialogLvlInformationFruits);
         for (Class f : differentFruits) {
             ImageView iv = new ImageView(activity);
@@ -141,9 +155,13 @@ public class LevelInformationDialog {
 
 
         //Set assigments
-        TextView laView = dialogParent.findViewById(R.id.dialogLvlInformationAssignments);
-        for (LevelAssignment la : currLvl.getAllLevelAssignments()) {
-            laView.append(la.getFormatted(activity) + "\n");
+        if (currLvl instanceof Level) {
+            TextView laView = dialogParent.findViewById(R.id.dialogLvlInformationAssignments);
+            for (LevelAssignment la : ((Level) currLvl).getAllLevelAssignments()) {
+                laView.append(la.getFormatted(activity) + "\n");
+            }
+        } else {
+            Log.w(TAG, "loadDataToDialog: Didn't list levelAssignments as we have no LevelObj here.");
         }
     }
 }

@@ -8,6 +8,7 @@ import android.util.Log;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 
 /**
@@ -43,9 +44,9 @@ public class FruitMgr {
     /**
      * Convenience method so we don't get a list for one fruit
      */
-    public static <F extends Fruit> F createRandomFruit(@NonNull Activity activity, @NonNull Level currLevel, @NonNull Class<F> fruitClass) {
+    public static <F extends Fruit> F createRandomFruit(@NonNull Activity activity, @NonNull DrawableLevel currLevel, @NonNull Class<F> fruitClass) {
         try {
-            return fruitClass.getConstructor(Activity.class, Level.class).newInstance(activity, currLevel); //use default constructor
+            return fruitClass.getConstructor(Activity.class, DrawableLevel.class).newInstance(activity, currLevel); //use default constructor
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

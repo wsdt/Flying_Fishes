@@ -12,6 +12,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import java.util.Map;
+import java.util.Set;
+
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
@@ -70,12 +73,12 @@ public class WorldView extends DrawableSurfaces {
      * Here we have to manually initialize DrawableObjs, bc. here we have no levelObj which does that.
      */
     private void initializeDrawableObjs() {
-            for (Background background : WorldMgr.getCurrWorldObj(this.getDrawableSurfaceActivity()).getAllBackgroundLayers()) {
+            for (Background background : WorldMgr.getCurrWorld(this.getDrawableSurfaceActivity(),false).getAllBackgroundLayers()) {
                 background.initialize();
 
                 //Initialize Level Representant
                 this.setInitializedLevelRepresentant(BitmapFactory.decodeResource(
-                        this.getResources(), WorldMgr.getCurrWorldObj(getDrawableSurfaceActivity()).getLevelRepresentativeResId()));
+                        this.getResources(), WorldMgr.getCurrWorld(this.getDrawableSurfaceActivity(),false).getLevelRepresentativeResId()));
                 Log.d(TAG, "initializeDrawableObjs: Have initialized worldView.");
             }
     }
@@ -84,7 +87,7 @@ public class WorldView extends DrawableSurfaces {
     public void drawAll(@NonNull Canvas canvas, long loopCount) {
         /* Update bglayers */
         try {
-            for (Background background : WorldMgr.getCurrWorldObj(this.getDrawableSurfaceActivity()).getAllBackgroundLayers()) {
+            for (Background background : WorldMgr.getCurrWorld(this.getDrawableSurfaceActivity(),false).getAllBackgroundLayers()) {
                 background.setCanvas(canvas);
                 background.draw();
             }
@@ -95,17 +98,17 @@ public class WorldView extends DrawableSurfaces {
             // Calculate how much we need to add so the lines are in the mid of the icons.
             float addToX = this.getInitializedLevelRepresentant().getWidth() / 2;
             float addToY = this.getInitializedLevelRepresentant().getHeight() / 2;
-            for (Level level : WorldMgr.getCurrWorldObj(getDrawableSurfaceActivity()).getAllLevels()) {
+            for (Point position : WorldMgr.getCurrWorld(this.getDrawableSurfaceActivity(),false).getAllLevels().values()) {
                 //Draw connection lines
                 if (positionOfLastLevel != null) {
                     canvas.drawLine(addToX + positionOfLastLevel.x,
                             addToY + positionOfLastLevel.y,
-                            addToX + level.getWorldMapPosition().x,
-                            addToY + level.getWorldMapPosition().y, new Paint(R.color.colorBlack));
+                            addToX + position.x,
+                            addToY + position.y, new Paint(R.color.colorBlack));
                 }
 
-                canvas.drawBitmap(this.getInitializedLevelRepresentant(), level.getWorldMapPosition().x, level.getWorldMapPosition().y, null);
-                positionOfLastLevel = level.getWorldMapPosition();
+                canvas.drawBitmap(this.getInitializedLevelRepresentant(), position.x, position.y, null);
+                positionOfLastLevel = position;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,11 +126,11 @@ public class WorldView extends DrawableSurfaces {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 int lvlIndex = 0;
-                for (Level level : WorldMgr.getCurrWorldObj(getDrawableSurfaceActivity()).getAllLevels()) {
+                for (Point position : WorldMgr.getCurrWorld(this.getDrawableSurfaceActivity(),false).getAllLevels().values()) {
                     int lvlReprX = this.getInitializedLevelRepresentant().getWidth();
                     int lvlReprY = this.getInitializedLevelRepresentant().getHeight();
-                    int lvlX = level.getWorldMapPosition().x;
-                    int lvlY = level.getWorldMapPosition().y;
+                    int lvlX = position.x;
+                    int lvlY = position.y;
 
                     //In which area a lvl gets opened/activated?
                     r.set(lvlX, lvlY, lvlX + lvlReprX, lvlY + lvlReprY);
@@ -150,7 +153,7 @@ public class WorldView extends DrawableSurfaces {
     @Override
     public void updateAll() {
         /* Update bglayers */
-        for (Background background : WorldMgr.getCurrWorldObj(this.getDrawableSurfaceActivity()).getAllBackgroundLayers()) {
+        for (Background background : WorldMgr.getCurrWorld(this.getDrawableSurfaceActivity(),false).getAllBackgroundLayers()) {
             background.update();
         }
     }

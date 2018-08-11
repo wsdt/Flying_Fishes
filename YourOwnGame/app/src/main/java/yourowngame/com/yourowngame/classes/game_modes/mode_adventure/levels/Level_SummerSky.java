@@ -34,8 +34,8 @@ import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levelassign
 public class Level_SummerSky extends Level {
     private static final String TAG = "Lvl_HarmlessSky";
 
-    public Level_SummerSky(@NonNull DrawableSurfaceActivity drawableSurfaceActivity, @NonNull Point worldMapPosition) {
-        super(drawableSurfaceActivity, worldMapPosition);
+    public Level_SummerSky(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) {
+        super(drawableSurfaceActivity);
     }
 
     @Override

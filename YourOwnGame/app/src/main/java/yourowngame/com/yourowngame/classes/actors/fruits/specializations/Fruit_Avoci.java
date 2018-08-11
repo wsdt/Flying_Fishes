@@ -8,6 +8,7 @@ import android.util.Log;
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.fruitpowers.FruitPower_EnemySpeed;
+import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 
 
@@ -21,7 +22,7 @@ public class Fruit_Avoci extends Fruit {
     private static final int HIGHSCORE_REWARD = 50;
     private static final int[] IMAGE_FRAMES = new int[]{R.drawable.avoci};
 
-    public Fruit_Avoci(@NonNull Activity activity, @NonNull Level currLevel, double posX, double posY, double speedX, double speedY) {
+    public Fruit_Avoci(@NonNull Activity activity, @NonNull DrawableLevel currLevel, double posX, double posY, double speedX, double speedY) {
         super(activity, currLevel, posX, posY, speedX, speedY);
         //fruit powers are determined in super constr
     }
@@ -29,18 +30,18 @@ public class Fruit_Avoci extends Fruit {
     /**
      * Create random fruit
      */
-    public Fruit_Avoci(@NonNull Activity activity, @NonNull Level currLevel) {
+    public Fruit_Avoci(@NonNull Activity activity, @NonNull DrawableLevel currLevel) {
         super(activity, currLevel);
         //Fruit powers are determined in super constr.
     }
 
     @Override
-    public void determineFruitPowers(@NonNull Level currLevel) {
+    public void determineFruitPowers(@NonNull DrawableLevel currLevel) {
         this.getFruitPowers().add(new FruitPower_EnemySpeed(0.5, 10000, currLevel.getEnemies()));
     }
 
     @Override
-    public void removeFruitPowers(@NonNull Level currLevel) {
+    public void removeFruitPowers(@NonNull DrawableLevel currLevel) {
         this.getFruitPowers().remove(0);
     }
 

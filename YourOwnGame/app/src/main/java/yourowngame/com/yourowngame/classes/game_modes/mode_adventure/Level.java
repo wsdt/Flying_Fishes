@@ -21,16 +21,12 @@ import yourowngame.com.yourowngame.classes.observer.interfaces.IHighscore_Observ
 public abstract class Level extends DrawableLevel {
     private static final String TAG = "Level";
     private int levelNameResId; //Level name (maybe to show to user [e.g. Die dunkle Gruft, usw.] als Strings.xml res id for multilinguality!
-    /** Where on the superior world map is the level located? (x,y) */
-    private Point worldMapPosition;
     private ArrayList<LevelAssignment> allLevelAssignments;
 
     //Do not make more constructors
-    public Level(@NonNull DrawableSurfaceActivity activity, @NonNull Point worldMapPosition) {
+    public Level(@NonNull DrawableSurfaceActivity activity) {
         super(activity);
-        Log.d(TAG, "Level: ###################### STARTING LOADING LEVEL ###############################");
         this.setDrawableSurfaceActivity(activity);
-        this.setWorldMapPosition(worldMapPosition);
 
         //TODO: Maybe get rid of this method, but surely make lvlInformation statically accessible.
         this.determineMetaData();
@@ -40,7 +36,6 @@ public abstract class Level extends DrawableLevel {
         * WHEN NEEDED AND NOT AT LVLOBJ_CREATION. THIS HAS THE ADVANTAGE THAT THE LVL_OBJ
         * AND SUPERIOR WORLD_OBJS REMAIN SMALL UNLESS WE NEED A SPECIFIC LVL OBJECT (WHEN
         * WE PLAY IT). */
-        Log.d(TAG, "Level: ###################### ENDED LOADING LEVEL ##################################");
     }
 
     @Override
@@ -146,13 +141,5 @@ public abstract class Level extends DrawableLevel {
 
     public void setAllLevelAssignments(ArrayList<LevelAssignment> allLevelAssignments) {
         this.allLevelAssignments = allLevelAssignments;
-    }
-
-    public Point getWorldMapPosition() {
-        return worldMapPosition;
-    }
-
-    public void setWorldMapPosition(Point worldMapPosition) {
-        this.worldMapPosition = worldMapPosition;
     }
 }

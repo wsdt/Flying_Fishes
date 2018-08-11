@@ -9,6 +9,7 @@ import android.view.SurfaceView;
 
 import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 
 /** Abstract class for GameView and WorldView etc. */
 public abstract class DrawableSurfaces extends SurfaceView {

@@ -41,7 +41,7 @@ public class LevelAchievedDialog {
                     .setCancelable(false);
 
             //Should we show positive btn (is this the last level?)
-            if (WorldMgr.getCurrWorldObj(activity).getAllLevels().size() > (WorldMgr.getCurr_lvl_index() + 1)) {
+            if (WorldMgr.getCurrWorld(activity,false).getAllLevels().size() > (WorldMgr.getCurr_lvl_index() + 1)) {
                 ld.setPositiveButton(R.string.dialog_levelachieved_btn_positive, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -10,6 +10,7 @@ import java.util.List;
 import yourowngame.com.yourowngame.classes.actors.GameObject;
 import yourowngame.com.yourowngame.classes.actors.interfaces.IHighscore_RewardableObj;
 import yourowngame.com.yourowngame.classes.annotations.Enhance;
+import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
@@ -33,7 +34,7 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
     protected static final float SPEED_X = 10f;
     protected static final float SPEED_Y = 10f;
 
-    public Fruit(@NonNull Activity activity, @NonNull Level currLevel, double posX, double posY, double speedX, double speedY) {
+    public Fruit(@NonNull Activity activity, @NonNull DrawableLevel currLevel, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
         determineFruitPowers(currLevel);
     }
@@ -41,7 +42,7 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
     /**
      * Creates random fruit
      */
-    public Fruit(@NonNull Activity activity, @NonNull Level currLevel) {
+    public Fruit(@NonNull Activity activity, @NonNull DrawableLevel currLevel) {
         super(activity);
         determineFruitPowers(currLevel);
     }
@@ -76,12 +77,12 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
     /**
      * Set fruit powers.
      */
-    public abstract void determineFruitPowers(@NonNull Level currLevel);
+    public abstract void determineFruitPowers(@NonNull DrawableLevel currLevel);
 
     /**
      * Remove fruit powers, for bonus levels!
      */
-    public abstract void removeFruitPowers(@NonNull Level currLevel);
+    public abstract void removeFruitPowers(@NonNull DrawableLevel currLevel);
 
     //GETTER/SETTERS ---------------------------------------------
     public List<FruitPower> getFruitPowers() {

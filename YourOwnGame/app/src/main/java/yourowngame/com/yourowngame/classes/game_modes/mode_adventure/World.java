@@ -5,11 +5,10 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Size;
 import android.support.annotation.StringRes;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import yourowngame.com.yourowngame.R;
@@ -44,8 +43,10 @@ public abstract class World {
     /**
      * All levels of this world, with a PointObj (not for identification, but for positioning on the
      * levelScreen). Levels are arranged according on which position they are in the map itself.
+     *
+     * LinkedhashMap to retain order and also be able to receive values by position and not only index.
      */
-    private ArrayList<Level> allLevels;
+    private LinkedHashMap<Class, Point> allLevels;
 
 
     /**
@@ -59,13 +60,8 @@ public abstract class World {
         this.determineBackgroundLayers();
 
         /* Evaluate constraints (e.g. at minimum one lvl defined.
-         * Check should be last method! */
-        try {
-            this.developerConfigurationCheck();
-        } catch (WrongConfigured_Exception e) {
-            Log.e(TAG, "World: World has been configured badly!");
-            e.printStackTrace();
-        }
+         * App will die if wrong configured. */
+        this.developerConfigurationCheck();
     }
 
     private void developerConfigurationCheck() throws WrongConfigured_Exception {
@@ -122,14 +118,14 @@ public abstract class World {
         this.allBackgroundLayers = allBackgroundLayers;
     }
 
-    public ArrayList<Level> getAllLevels() {
+    public LinkedHashMap<Class, Point> getAllLevels() {
         if (allLevels == null) {
-            allLevels = new ArrayList<>();
+            allLevels = new LinkedHashMap<>();
         }
         return allLevels;
     }
 
-    public void setAllLevels(@NonNull @Size(min = 1) ArrayList<Level> allLevels) {
+    public void setAllLevels(@NonNull @Size(min = 1) LinkedHashMap<Class, Point> allLevels) {
         this.allLevels = allLevels;
     }
 
