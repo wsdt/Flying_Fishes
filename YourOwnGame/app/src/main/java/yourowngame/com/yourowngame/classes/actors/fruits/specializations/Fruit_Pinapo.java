@@ -35,6 +35,7 @@ public class Fruit_Pinapo extends Fruit {
 
     @Override
     public void determineFruitPowers(@NonNull DrawableLevel currLevel) {
+        super.determineFruitPowers(currLevel);
         this.getFruitPowers().add(new FruitPower_ShootRage(15, currLevel.getPlayer()));
     }
 

@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.classes.actors.fruits;
 
 import android.app.Activity;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -13,6 +14,7 @@ import yourowngame.com.yourowngame.classes.annotations.Enhance;
 import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
 import yourowngame.com.yourowngame.classes.manager.RandomMgr;
+import yourowngame.com.yourowngame.classes.observer.interfaces.IFruitCounter_Observer;
 import yourowngame.com.yourowngame.gameEngine.DrawableSurfaces;
 
 @Enhance(message = {"Maybe replace isCollected/isOutOfBound etc. with Zustandsmuster",
@@ -77,7 +79,15 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
     /**
      * Set fruit powers.
      */
-    public abstract void determineFruitPowers(@NonNull DrawableLevel currLevel);
+    @CallSuper
+    public void determineFruitPowers(@NonNull DrawableLevel currLevel) {
+        DrawableLevel.getLevelFruitCounter().addListener(new IFruitCounter_Observer() {
+            @Override
+            public void onFruitCountChanged() {
+                Fruit.this.fruitCollected();
+            }
+        });
+    }
 
     /**
      * Remove fruit powers, for bonus levels!

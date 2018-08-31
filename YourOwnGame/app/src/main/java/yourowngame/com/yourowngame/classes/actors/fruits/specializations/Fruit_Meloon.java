@@ -35,6 +35,7 @@ public class Fruit_Meloon extends Fruit {
 
     @Override
     public void determineFruitPowers(@NonNull DrawableLevel currLevel) {
+        super.determineFruitPowers(currLevel);
         this.getFruitPowers().add(new FruitPower_PlayerSpeed(2, 10000, currLevel.getPlayer()));
     }
 
