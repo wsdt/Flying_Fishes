@@ -76,6 +76,8 @@ public class CollisionMgr {
             if (CollisionDetection.checkCollision(currLevel.getPlayer(), fruit)) {
                 //increment highScore
                 highScore.increment(fruit);
+                //activate the fruits power
+                fruit.getFruitPowers().get(0).execute();
                 //add collected Fruit
                 Level.getLevelFruitCounter().fruitCollected(fruit);
                 //reset fruit
