@@ -91,6 +91,8 @@ public abstract class Level extends DrawableLevel {
         return getDrawableSurfaceActivity().getResources().getString(getLevelNameResId());
     }
 
+
+
     @Override
     public ArrayList<Background> getBgLayers() {
         if (super.getBgLayers() == null || super.getBgLayers().size() <= 0) {
@@ -130,6 +132,10 @@ public abstract class Level extends DrawableLevel {
             for (Fruit fruit : super.getFruits()) {fruit.initialize();}
         }
         return super.getFruits();
+    }
+
+    public double getAmount(){
+        return allLevelAssignments.get(0).getAmount();
     }
 
     public ArrayList<LevelAssignment> getAllLevelAssignments() {

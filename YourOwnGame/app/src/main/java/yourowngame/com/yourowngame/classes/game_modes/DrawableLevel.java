@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
-import yourowngame.com.yourowngame.classes.DrawableObj;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.actors.projectiles.ProjectileMgr;
 import yourowngame.com.yourowngame.classes.background.Background;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.LevelAssignment;
 import yourowngame.com.yourowngame.classes.manager.CollisionMgr;
 import yourowngame.com.yourowngame.classes.manager.SoundMgr;
 import yourowngame.com.yourowngame.classes.observer.Observer_FruitCounter;
@@ -31,6 +31,7 @@ public abstract class DrawableLevel {
     private ArrayList<Enemy> enemies; //MUST NOT BE STATIC (different levels, different enemies), All enemies on screen (will be spawned again if isGone) for specific level
     private ArrayList<Fruit> fruits;
     private CollisionMgr collisionMgr;
+    private ArrayList<LevelAssignment> levelAssignment;
 
     /** Static to save memory, but this means we have to care about resetting highscore when new lvl starts */
     private static Observer_HighScore levelHighScore = new Observer_HighScore(); //add Level-dependent HighScore
@@ -154,4 +155,5 @@ public abstract class DrawableLevel {
     public void setDrawableSurfaceActivity(DrawableSurfaceActivity drawableSurfaceActivity) {
         this.drawableSurfaceActivity = drawableSurfaceActivity;
     }
+
 }

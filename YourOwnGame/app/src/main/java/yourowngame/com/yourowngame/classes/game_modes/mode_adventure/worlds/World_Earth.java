@@ -41,7 +41,7 @@ public class World_Earth extends World {
         levelList.put(Level_EndlessDawn.class, new Point(1200,300));
         levelList.put(Level_DarkDescent.class, new Point(1200,500));
         levelList.put(Level_FruityIsland.class, new Point(1500, 800));
-        levelList.put(Level_LucifersGameRoom.class, new Point(1000,850));
+        levelList.put(Level_LucifersGameRoom.class, new Point(1800,500));
         this.setAllLevels(levelList);
     }
 

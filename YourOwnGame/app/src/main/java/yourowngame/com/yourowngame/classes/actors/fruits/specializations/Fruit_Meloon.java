@@ -23,7 +23,6 @@ public class Fruit_Meloon extends Fruit {
 
     public Fruit_Meloon(@NonNull Activity activity, @NonNull DrawableLevel currLevel, double posX, double posY, double speedX, double speedY) {
         super(activity, currLevel, posX, posY, speedX, speedY);
-        //powers assigned in super constr
     }
 
     /**
@@ -36,7 +35,7 @@ public class Fruit_Meloon extends Fruit {
     @Override
     public void determineFruitPowers(@NonNull DrawableLevel currLevel) {
         super.determineFruitPowers(currLevel);
-        this.getFruitPowers().add(new FruitPower_PlayerSpeed(2, 10000, currLevel.getPlayer()));
+        this.getFruitPowers().add(new FruitPower_PlayerSpeed(1.2, 10000, currLevel.getPlayer()));
     }
 
     @Override
