@@ -67,6 +67,7 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
     /**
      * Execute when fruit has been collected.
      */
+    //TODO why executing ALL fruit powers?
     public void fruitCollected() {
         Log.d(TAG, "fruitCollected: Executing powers -> " + this.getFruitPowers().size());
 

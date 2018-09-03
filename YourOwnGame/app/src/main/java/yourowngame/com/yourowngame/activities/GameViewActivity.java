@@ -37,7 +37,7 @@ public class GameViewActivity extends DrawableSurfaceActivity {
 
     private GameView gameView;
     private TextView highscoreVal;  // points counter
-    private TextView targetPoints;  // points to achieve
+
 
     //(1.) Initialize objects
     @Override
@@ -112,9 +112,7 @@ public class GameViewActivity extends DrawableSurfaceActivity {
     }
 
     public void setTargetpoints(TextView targetPoints){
-        this.targetPoints = targetPoints;
         DrawableLevel currLvl = WorldMgr.getCurrLvl(this,true);
-
         for (LevelAssignment la : ((Level) currLvl).getAllLevelAssignments()) {
             targetPoints.setText(getResources().getString(R.string.targetPoints, ""+((Level) currLvl).getAllLevelAssignments().get(0).getAmount()));
         }

@@ -65,23 +65,13 @@ public class GameView extends DrawableSurfaces {
         this.setDrawableSurfaceActivity(context);
 
 
+
         /*Set Projectiles TODO later on, the level should decide by a simple method wethere u can shoot or not!*/
         ProjectileMgr.runDefaultConfiguration(context);
 
         //Set LvlMgr
         Log.d(TAG, "startGame: Lvl-obj -> "+currLevelObj);
         this.setCurrLevelObj(currLevelObj);
-
-        //TODO: remove (workaround for currently bad game design) ---------------
-        /* Also workaround doesn't seem to work..
-
-        ArrayList<Fruit> fruits = new ArrayList<>();
-        for (Fruit f : this.getCurrLevelObj().getFruits()) {
-            fruits.add(FruitMgr.createRandomFruit(context,this.getCurrLevelObj(),f.getClass()));
-        } //reinitialize fruits
-        this.getCurrLevelObj().setFruits(fruits);*/
-
-        //TODO: remove end -------------------------
 
         /* Initialize GameObjects & eq here! After initializing, the GameLoop will start! also cleanup */
         this.getCurrLevelObj().initiate((GameViewActivity) this.getDrawableSurfaceActivity());
