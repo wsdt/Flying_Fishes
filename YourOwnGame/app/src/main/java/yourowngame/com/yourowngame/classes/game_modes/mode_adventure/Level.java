@@ -16,6 +16,7 @@ import yourowngame.com.yourowngame.classes.actors.player.Player;
 import yourowngame.com.yourowngame.classes.background.Background;
 import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
 import yourowngame.com.yourowngame.classes.manager.dialog.LevelAchievedDialog;
+import yourowngame.com.yourowngame.classes.observer.interfaces.IFruitCounter_Observer;
 import yourowngame.com.yourowngame.classes.observer.interfaces.IHighscore_Observer;
 
 public abstract class Level extends DrawableLevel {

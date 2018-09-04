@@ -231,9 +231,7 @@ public class GameView extends DrawableSurfaces {
      * 4. Getters & Setters
      *********************************************************/
 
-    /**
-     * this returns the current HighScore
-     */
+    /*** this returns the current HighScore */
     public Observer_HighScore getHighscore() {
         return Level.getLevelHighscore();
     }
@@ -247,9 +245,7 @@ public class GameView extends DrawableSurfaces {
         GameView.multiTouchHandler = multiTouchHandler;
     }
 
-    /**
-     * Current levelObj which player can play now.
-     */
+    /** Current levelObj which player can play now.*/
     public DrawableLevel getCurrLevelObj() {
         return currLevelObj;
     }

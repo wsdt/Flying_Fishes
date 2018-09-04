@@ -64,6 +64,7 @@ public abstract class DrawableLevel {
                 }
                 ((GameViewActivity) DrawableLevel.this.getDrawableSurfaceActivity()).setNewHighscoreOnUI();
             }
+
         });
     }
 

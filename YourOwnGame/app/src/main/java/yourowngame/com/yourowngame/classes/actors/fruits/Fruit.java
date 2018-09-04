@@ -76,7 +76,7 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
         //for (FruitPower fruitPower : this.getFruitPowers()) {
          //   fruitPower.execute();
         //}
-        
+
         //remove end
     }
 

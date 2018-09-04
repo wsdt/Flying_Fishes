@@ -49,8 +49,6 @@ public class GameViewActivity extends DrawableSurfaceActivity {
         this.setHighscoreVal_textView((TextView) findViewById(R.id.gameViewActivity_highscoreVal));
         this.setTargetpoints((TextView) findViewById(R.id.targetPoints));
 
-
-
         /* Master-call, create GameView*/
         setGameView(((GameView) findViewById(DRAWABLE_SURFACE_ID)));
 
