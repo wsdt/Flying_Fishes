@@ -2,11 +2,13 @@ package yourowngame.com.yourowngame.classes.game_modes.mode_adventure.levels;
 
 import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.R;
 import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
+import yourowngame.com.yourowngame.classes.actors.barriers.BarrierMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.enemy.EnemyMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.specializations.Enemy_Rocketfish;
@@ -52,6 +54,11 @@ public class Level_DarkDescent extends Level {
         ArrayList<Fruit> allFruits = new ArrayList<>();
         allFruits.addAll(FruitMgr.createRandomFruits(drawableSurfaceActivity, this, Fruit_Meloon.class, 4));
         this.setFruits(allFruits);
+    }
+
+    @Override
+    protected void determineBarriers(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) {
+
     }
 
     @Override

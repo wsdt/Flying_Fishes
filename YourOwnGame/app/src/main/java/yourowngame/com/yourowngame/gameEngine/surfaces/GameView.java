@@ -11,6 +11,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.actors.barriers.Barrier;
+import yourowngame.com.yourowngame.classes.actors.barriers.BarrierMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
@@ -103,6 +105,12 @@ public class GameView extends DrawableSurfaces {
                     background.draw();
                 }
 
+                // (1.1) draw barriers
+                for (Barrier barrier : BarrierMgr.getBarrierList()){
+                    barrier.setCanvas(canvas);
+                    barrier.draw();
+                }
+
                 // (2.) draw player
                 this.getCurrLevelObj().getPlayer().setCanvas(canvas);
                 this.getCurrLevelObj().getPlayer().setLoopCount(loopCount);
@@ -124,7 +132,6 @@ public class GameView extends DrawableSurfaces {
                     fruit.setLoopCount(loopCount);
                     fruit.draw();
                 }
-
 
             } catch (Exception e) {
                 //Log.e(TAG, "redraw: Could not draw images.");
@@ -161,10 +168,20 @@ public class GameView extends DrawableSurfaces {
             background.update();
         }
 
+        /* Update & spawn Barriers */
+        BarrierMgr.spawnBarriers(this.getDrawableSurfaceActivity(), 0, 1);
+
+        for(Barrier barrier : BarrierMgr.getBarrierList()){
+            barrier.update();
+            if (barrier.checkIfOutOfBounds()){
+                BarrierMgr.removeBarrier();
+            }
+        }
+
         /* Update bullets */
         ProjectileMgr.updateProjectiles();
 
-        /* Check for Collisions - if player hits the ground or gets hit by an enemy, game stops!*/
+        /* Check for Collisions - if player hits the ground or gets hit by an enemy or hits barrier, game stops!*/
         if (this.getCurrLevelObj().getCollisionMgr().checkForCollisions()) {
             startExitProcedure();
         }

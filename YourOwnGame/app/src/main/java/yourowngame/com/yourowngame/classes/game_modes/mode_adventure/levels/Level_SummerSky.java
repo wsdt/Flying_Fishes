@@ -92,6 +92,11 @@ public class Level_SummerSky extends Level {
     }
 
     @Override
+    protected void determineBarriers(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) {
+
+    }
+
+    @Override
     protected void determineLevelAssigments() {
         ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
         allLevelAssignments.add(new LA_AchievePoints(1500, getLevelHighscore()));

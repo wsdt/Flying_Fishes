@@ -104,8 +104,6 @@ public class WorldView extends DrawableSurfaces {
             Paint paint = new Paint();
             paint.setStrokeWidth(5);
 
-
-
             // Calculate how much we need to add so the lines are in the mid of the icons.
             float addToX = this.getInitializedLevelRepresentant().getWidth() / 2;
             float addToY = this.getInitializedLevelRepresentant().getHeight() / 2;

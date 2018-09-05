@@ -40,13 +40,12 @@ public class Barrier extends GameObject {
 
     @Override
     public void resetPos() {
-        // this time, we shouldn't do that. the same barrier should never appear again, maybe after a specific time, but not after leaving the fielod!
+        // this time, we shouldn't do that. the same barrier should never appear again, maybe after a specific time, but not after leaving the field!
     }
 
     @Override
     public void resetSpeed() {
-        setSpeedX(RandomMgr.getRandomFloat(SPEED_X_MIN, SPEED_X_MAX));
-        setSpeedY(RandomMgr.getRandomFloat(SPEED_Y_MIN, SPEED_Y_MAX));
+
     }
 
     @Override
@@ -57,5 +56,9 @@ public class Barrier extends GameObject {
     @Override
     public void initialize() {
 
+    }
+
+    public boolean checkIfOutOfBounds(){
+        return this.getPosX() + this.getCurrentBitmap().getWidth() < 0;
     }
 }

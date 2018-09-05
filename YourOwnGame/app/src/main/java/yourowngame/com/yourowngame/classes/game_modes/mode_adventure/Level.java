@@ -32,6 +32,7 @@ public abstract class Level extends DrawableLevel {
         //TODO: Maybe get rid of this method, but surely make lvlInformation statically accessible.
         this.determineMetaData();
 
+        this.determineBarriers(getDrawableSurfaceActivity());
 
         /* IMPORTANT: DO NOT ADD HERE DETERMINE_OBJ METHODS, WE ONLY APPEND ENEMIES ETC.
         * WHEN NEEDED AND NOT AT LVLOBJ_CREATION. THIS HAS THE ADVANTAGE THAT THE LVL_OBJ
@@ -65,6 +66,7 @@ public abstract class Level extends DrawableLevel {
     protected abstract void determineBackgroundLayers(@NonNull DrawableSurfaceActivity drawableSurfaceActivity);
     protected abstract void determineAllEnemies(@NonNull DrawableSurfaceActivity drawableSurfaceActivity);
     protected abstract void determineAllFruits(@NonNull DrawableSurfaceActivity drawableSurfaceActivity);
+    protected abstract void determineBarriers(@NonNull DrawableSurfaceActivity drawableSurfaceActivity);
     protected abstract void playBackgroundMusic();
     /** Put all wanted LevelAssigment Objs in there. These will be accessed and evaluated in areLevelAssigmentsAchieved().*/
     protected abstract void determineLevelAssigments();

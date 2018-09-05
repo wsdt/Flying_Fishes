@@ -11,6 +11,8 @@ import android.util.Log;
 import java.util.Iterator;
 
 import yourowngame.com.yourowngame.classes.actors.GameObject;
+import yourowngame.com.yourowngame.classes.actors.barriers.Barrier;
+import yourowngame.com.yourowngame.classes.actors.barriers.BarrierMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.projectiles.Projectile;
@@ -43,8 +45,9 @@ public class CollisionMgr {
     public boolean checkForCollisions(){
         playerToFruitCollision();
         projectileToEnemyCollision();
+        playerToBarrierCollision();
 
-        return playerToEnemyCollision() || playerToBorderCollision();
+        return playerToEnemyCollision() || playerToBorderCollision() || playerToBarrierCollision();
     }
 
     /** check Projectile-to-Enemy collision */
@@ -104,6 +107,17 @@ public class CollisionMgr {
         return false;
     }
 
+    /** check Player to Barrier Collision */
+    private boolean playerToBarrierCollision() {
+        for (Barrier b : BarrierMgr.getBarrierList()){
+            if (CollisionDetection.checkCollision(currLevel.getPlayer(), b)){
+                //todo that sound needs to be hilarious!! haha
+                return true;
+            }
+        }
+        return false;
+    }
+
     /** check Player to Border Collision*/
     public boolean playerToBorderCollision() {                                          //we need the height of the bitmap here, didn't had any time left sorry
         if (currLevel.getPlayer().getWidthOfBitmap() > DrawableSurfaces.getDrawHeight() || currLevel.getPlayer().getPosY() < 0) {
@@ -111,6 +125,8 @@ public class CollisionMgr {
         }
             return false;
     }
+
+
 
     /**********************************************************************
      * NESTED CLASS - CollisionDetection                                  *

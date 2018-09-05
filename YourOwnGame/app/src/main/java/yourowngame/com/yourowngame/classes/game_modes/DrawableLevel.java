@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.actors.barriers.BarrierMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.player.Player;
@@ -129,8 +130,13 @@ public abstract class DrawableLevel {
     public static Observer_HighScore getLevelHighscore() {
         return levelHighScore;
     }
+
     public static void setLevelHighScore(Observer_HighScore levelHighScore) {
         DrawableLevel.levelHighScore = levelHighScore;
+    }
+
+    public ArrayList getBarrierList(){
+        return BarrierMgr.getBarrierList();
     }
 
     public static Observer_FruitCounter getLevelFruitCounter() {
