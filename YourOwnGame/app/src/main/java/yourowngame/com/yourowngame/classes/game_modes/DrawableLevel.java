@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.activities.DrawableSurfaceActivity;
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.actors.barriers.Barrier;
 import yourowngame.com.yourowngame.classes.actors.barriers.BarrierMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
@@ -32,7 +33,7 @@ public abstract class DrawableLevel {
     private ArrayList<Enemy> enemies; //MUST NOT BE STATIC (different levels, different enemies), All enemies on screen (will be spawned again if isGone) for specific level
     private ArrayList<Fruit> fruits;
     private CollisionMgr collisionMgr;
-    private ArrayList<LevelAssignment> levelAssignment;
+    private boolean hasBarriers = false; //true = Barriers, false no Barriers
 
     /** Static to save memory, but this means we have to care about resetting highscore when new lvl starts */
     private static Observer_HighScore levelHighScore = new Observer_HighScore(); //add Level-dependent HighScore
@@ -79,6 +80,8 @@ public abstract class DrawableLevel {
         for (Background background : this.getBgLayers()) {background.cleanup();}
         //CleanUp all fruits
         for (Fruit fruit : this.getFruits()) {fruit.cleanup();}
+        //Cleanup all Barriers
+        BarrierMgr.removeAllBarriers();
 
         getLevelHighscore().resetCounter();
         getLevelFruitCounter().resetCounter();
@@ -151,7 +154,7 @@ public abstract class DrawableLevel {
         return collisionMgr;
     }
 
-    public void setCollisionMgr(CollisionMgr collisionMgr) {
+    protected void setCollisionMgr(CollisionMgr collisionMgr) {
         this.collisionMgr = collisionMgr;
     }
 
@@ -161,6 +164,14 @@ public abstract class DrawableLevel {
 
     public void setDrawableSurfaceActivity(DrawableSurfaceActivity drawableSurfaceActivity) {
         this.drawableSurfaceActivity = drawableSurfaceActivity;
+    }
+
+    protected void allowBarriers(){
+        hasBarriers = true;
+    }
+
+    public boolean isBarrierLevel(){
+        return hasBarriers;
     }
 
 }

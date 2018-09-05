@@ -141,19 +141,19 @@ public class CollisionMgr {
 
         /** Check Collision of two gameObjs. */
         public static boolean checkCollision(@NonNull GameObject obj1, @NonNull GameObject obj2) {
-            Bitmap playerBitmap = obj1.getCurrentBitmap();
-            Bitmap enemyBitmap = obj2.getCurrentBitmap();
+            Bitmap object1Bitmap = obj1.getCurrentBitmap();
+            Bitmap object2Bitmap = obj2.getCurrentBitmap();
 
             //Only check for collision if bitmaps are not null (if null, then just return that no collision happened)
-            if (playerBitmap != null && enemyBitmap != null) {
+            if (object1Bitmap != null && object2Bitmap != null) {
                 //when constraint above ok, then assign rest
-                int playerPosX = (int) obj1.getPosX();
-                int playerPosY = (int) obj1.getPosY();
-                int enemyPosX = (int) obj2.getPosX();
-                int enemyPosY = (int) obj2.getPosY();
+                int object1PosX = (int) obj1.getPosX();
+                int object1PosY = (int) obj1.getPosY();
+                int object2PosX = (int) obj2.getPosX();
+                int object2PosY = (int) obj2.getPosY();
 
-                Rect bounds1 = new Rect(playerPosX, playerPosY, playerPosX + playerBitmap.getWidth(), playerPosY + playerBitmap.getHeight());
-                Rect bounds2 = new Rect(enemyPosX, enemyPosY, enemyPosX + enemyBitmap.getWidth(), enemyPosY + enemyBitmap.getHeight());
+                Rect bounds1 = new Rect(object1PosX, object1PosY, object1PosX + object2Bitmap.getWidth(), object1PosY + object2Bitmap.getHeight());
+                Rect bounds2 = new Rect(object2PosX, object2PosY, object2PosX + object2Bitmap.getWidth(), object2PosY + object2Bitmap.getHeight());
 
                 if (Rect.intersects(bounds1, bounds2)) {
                     Rect collisionArea = getCollisionArea(bounds1, bounds2);
@@ -161,8 +161,8 @@ public class CollisionMgr {
                     try {
                         for (int i = collisionArea.left; i < collisionArea.right; i++) {
                             for (int j = collisionArea.top; j < collisionArea.bottom; j++) {
-                                int bitmap1Pixel = playerBitmap.getPixel(i - playerPosX, j - playerPosY);
-                                int bitmap2Pixel = enemyBitmap.getPixel(i - enemyPosX, j - enemyPosY);
+                                int bitmap1Pixel = object2Bitmap.getPixel(i - object1PosX, j - object1PosY);
+                                int bitmap2Pixel = object2Bitmap.getPixel(i - object2PosX, j - object2PosY);
                                 if (hasNoTransparentBackground(bitmap1Pixel) && hasNoTransparentBackground(bitmap2Pixel))
                                     return true;
                             }

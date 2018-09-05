@@ -87,7 +87,7 @@ public class Level_LucifersGameRoom extends Level {
     }
 
     @Override
-    protected void determineBarriers(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) {
+    protected void determineBarriers() {
 
     }
 

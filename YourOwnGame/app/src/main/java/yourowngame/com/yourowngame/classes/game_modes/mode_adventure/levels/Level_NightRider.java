@@ -95,8 +95,8 @@ public class Level_NightRider extends Level {
     }
 
     @Override
-    protected void determineBarriers(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) {
-
+    protected void determineBarriers() {
+        allowBarriers();
     }
 
     @Override

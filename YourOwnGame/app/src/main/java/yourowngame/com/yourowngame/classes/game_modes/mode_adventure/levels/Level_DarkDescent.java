@@ -57,8 +57,8 @@ public class Level_DarkDescent extends Level {
     }
 
     @Override
-    protected void determineBarriers(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) {
-
+    protected void determineBarriers() {
+        allowBarriers();
     }
 
     @Override

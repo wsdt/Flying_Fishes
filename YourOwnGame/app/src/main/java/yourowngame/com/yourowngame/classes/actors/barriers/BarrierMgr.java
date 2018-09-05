@@ -41,8 +41,8 @@ public class BarrierMgr {
      */
     public static void spawnBarriers(Activity activity, int difficulty, int maxBarriersAtOnce){
         if (getBarrierList().size() != maxBarriersAtOnce){
-            //this could be done more OO, if we want to add another barrier, we can add it here.
-            switch(difficulty){                                                                                         //TODO here we need to get the height of the barrier
+            //this could be done more OO, BUT if we want to add another barrier, we can simply add it here.
+            switch(difficulty){
                 case 0: addBarrierToList(new Barrier_Easy(activity, GameView.getDrawWidth(),  RandomMgr.getRandomFloat(100, GameView.getDrawHeight()), 5, 0));
                     break;
                 case 1: addBarrierToList(new Barrier_Medium(activity, (double) GameView.getDrawWidth(), (double) RandomMgr.getRandomFloat(0, GameView.getDrawHeight()), 5, 5));
@@ -68,7 +68,7 @@ public class BarrierMgr {
         if(getBarrierList().size() > 0)
             getBarrierList().remove(getBarrierList().size()-1);
         else{
-            getBarrierList().remove(1);
+            getBarrierList().remove(0);
         }
     }
 

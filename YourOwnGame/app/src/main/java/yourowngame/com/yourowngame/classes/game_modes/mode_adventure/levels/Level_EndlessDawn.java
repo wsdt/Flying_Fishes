@@ -89,8 +89,8 @@ public class Level_EndlessDawn extends Level {
     }
 
     @Override
-    protected void determineBarriers(@NonNull DrawableSurfaceActivity drawableSurfaceActivity) {
-
+    protected void determineBarriers() {
+        allowBarriers();
     }
 
     @Override

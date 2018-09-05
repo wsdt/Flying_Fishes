@@ -36,6 +36,7 @@ public class Barrier extends GameObject {
 
     public Barrier(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
+
     }
 
     @Override
@@ -61,4 +62,5 @@ public class Barrier extends GameObject {
     public boolean checkIfOutOfBounds(){
         return this.getPosX() + this.getCurrentBitmap().getWidth() < 0;
     }
+
 }

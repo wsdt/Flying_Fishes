@@ -18,6 +18,7 @@ import yourowngame.com.yourowngame.classes.actors.barriers.Barrier;
 
 public class Barrier_Easy extends Barrier {
     public static String TAG = "Barrier_Easy";
+    public int[] possibleEasyBarriers = {R.drawable.barrier_easy}; //and so on, so we can create a randon number, depending on the size of this array.
 
     public Barrier_Easy(@NonNull Activity activity, double posX, double posY, double speedX, double speedY) {
         super(activity, posX, posY, speedX, speedY);
@@ -28,11 +29,10 @@ public class Barrier_Easy extends Barrier {
     @Override
     public void initialize() {
         super.initialize();
-
         try {
             if (!isInitialized()) {
-                //here we randomly need to return a single Barrier out of all EASY-Barriers
-                setCurrentBitmap(getCraftedDynamicBitmap(this.getActivity(), R.drawable.barrier_easy, 0, null, null));
+                //We randomly pick one barrier out of the barrier-pool and use it for a single run
+                setCurrentBitmap(getCraftedDynamicBitmap(this.getActivity(), possibleEasyBarriers[((int) (Math.random() * possibleEasyBarriers.length))], 0, null, null));
 
                 Log.d(TAG, "Successfully initialized an " + this.getClass() + "-Object");
             }
