@@ -41,7 +41,7 @@ public class Barrier extends GameObject {
 
     @Override
     public void resetPos() {
-        // this time, we shouldn't do that. the same barrier should never appear again, maybe after a specific time, but not after leaving the field!
+
     }
 
     @Override

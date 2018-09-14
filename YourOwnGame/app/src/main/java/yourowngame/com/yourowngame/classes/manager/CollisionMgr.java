@@ -45,9 +45,8 @@ public class CollisionMgr {
     public boolean checkForCollisions(){
         playerToFruitCollision();
         projectileToEnemyCollision();
-        playerToBarrierCollision();
 
-        return playerToEnemyCollision() || playerToBorderCollision() || playerToBarrierCollision();
+        return playerToEnemyCollision() || playerToBorderCollision();
     }
 
     /** check Projectile-to-Enemy collision */
@@ -108,15 +107,7 @@ public class CollisionMgr {
     }
 
     /** check Player to Barrier Collision */
-    private boolean playerToBarrierCollision() {
-        for (Barrier b : BarrierMgr.getBarrierList()){
-            if (CollisionDetection.checkCollision(currLevel.getPlayer(), b)){
-                //todo that sound needs to be hilarious!! haha
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     /** check Player to Border Collision*/
     public boolean playerToBorderCollision() {                                          //we need the height of the bitmap here, didn't had any time left sorry
@@ -152,7 +143,7 @@ public class CollisionMgr {
                 int object2PosX = (int) obj2.getPosX();
                 int object2PosY = (int) obj2.getPosY();
 
-                Rect bounds1 = new Rect(object1PosX, object1PosY, object1PosX + object2Bitmap.getWidth(), object1PosY + object2Bitmap.getHeight());
+                Rect bounds1 = new Rect(object1PosX, object1PosY, object1PosX + object1Bitmap.getWidth(), object1PosY + object1Bitmap.getHeight());
                 Rect bounds2 = new Rect(object2PosX, object2PosY, object2PosX + object2Bitmap.getWidth(), object2PosY + object2Bitmap.getHeight());
 
                 if (Rect.intersects(bounds1, bounds2)) {
@@ -161,7 +152,7 @@ public class CollisionMgr {
                     try {
                         for (int i = collisionArea.left; i < collisionArea.right; i++) {
                             for (int j = collisionArea.top; j < collisionArea.bottom; j++) {
-                                int bitmap1Pixel = object2Bitmap.getPixel(i - object1PosX, j - object1PosY);
+                                int bitmap1Pixel = object1Bitmap.getPixel(i - object1PosX, j - object1PosY);
                                 int bitmap2Pixel = object2Bitmap.getPixel(i - object2PosX, j - object2PosY);
                                 if (hasNoTransparentBackground(bitmap1Pixel) && hasNoTransparentBackground(bitmap2Pixel))
                                     return true;

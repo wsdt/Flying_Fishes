@@ -105,13 +105,6 @@ public class GameView extends DrawableSurfaces {
                     background.draw();
                 }
 
-                // (1.1) draw barriers
-                if(currLevelObj.isBarrierLevel()) {
-                    for (Barrier barrier : BarrierMgr.getBarrierList()) {
-                        barrier.setCanvas(canvas);
-                        barrier.draw();
-                    }
-                }
                 // (2.) draw player
                 this.getCurrLevelObj().getPlayer().setCanvas(canvas);
                 this.getCurrLevelObj().getPlayer().setLoopCount(loopCount);
@@ -169,17 +162,7 @@ public class GameView extends DrawableSurfaces {
             background.update();
         }
 
-        /* Update & spawn Barriers if level has barriers */
-        if(currLevelObj.isBarrierLevel()) {
-            BarrierMgr.spawnBarriers(this.getDrawableSurfaceActivity(), 0, 1);
 
-            for (Barrier barrier : BarrierMgr.getBarrierList()) {
-                barrier.update();
-                if (barrier.checkIfOutOfBounds()) {
-                    BarrierMgr.removeBarrier();
-                }
-            }
-        }
         /* Update bullets */
         ProjectileMgr.updateProjectiles();
 

@@ -80,8 +80,7 @@ public abstract class DrawableLevel {
         for (Background background : this.getBgLayers()) {background.cleanup();}
         //CleanUp all fruits
         for (Fruit fruit : this.getFruits()) {fruit.cleanup();}
-        //Cleanup all Barriers
-        BarrierMgr.removeAllBarriers();
+
 
         getLevelHighscore().resetCounter();
         getLevelFruitCounter().resetCounter();
@@ -138,9 +137,6 @@ public abstract class DrawableLevel {
         DrawableLevel.levelHighScore = levelHighScore;
     }
 
-    public ArrayList getBarrierList(){
-        return BarrierMgr.getBarrierList();
-    }
 
     public static Observer_FruitCounter getLevelFruitCounter() {
         return levelFruitCounter;
