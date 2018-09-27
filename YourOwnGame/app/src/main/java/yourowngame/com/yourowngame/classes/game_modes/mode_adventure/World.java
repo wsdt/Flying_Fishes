@@ -35,7 +35,7 @@ public abstract class World {
      * set pointObj in alllevels-Map. By default a default one is used, but you can change this Icon
      * in each World individually, by just using the Setter in the inheritated/default constructor.
      */
-    private int levelRepresentativeResId = R.drawable.world_1_lvl_representant;
+    private int levelRepresentativeResId = R.drawable.fruit_meloon;
     /**
      * Background layers for each world. These layers are determined by each subclass in the determineBgLayers().
      */

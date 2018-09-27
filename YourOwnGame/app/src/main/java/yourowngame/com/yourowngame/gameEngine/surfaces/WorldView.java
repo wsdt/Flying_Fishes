@@ -4,9 +4,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.PathEffect;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Shader;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -95,6 +99,11 @@ public class WorldView extends DrawableSurfaces {
             /* Draw levels */
             //Log.d(TAG, "drawAll: Trying to draw levelRepresentants. Count: "+this.getCurrWorld().getAllLevels().size());
             Point positionOfLastLevel = null; // to draw line
+
+            //Create a Paint-Object for further details
+            Paint paint = new Paint();
+            paint.setStrokeWidth(5);
+
             // Calculate how much we need to add so the lines are in the mid of the icons.
             float addToX = this.getInitializedLevelRepresentant().getWidth() / 2;
             float addToY = this.getInitializedLevelRepresentant().getHeight() / 2;
@@ -104,7 +113,7 @@ public class WorldView extends DrawableSurfaces {
                     canvas.drawLine(addToX + positionOfLastLevel.x,
                             addToY + positionOfLastLevel.y,
                             addToX + position.x,
-                            addToY + position.y, new Paint(R.color.colorBlack));
+                            addToY + position.y, paint);
                 }
 
                 canvas.drawBitmap(this.getInitializedLevelRepresentant(), position.x, position.y, null);

@@ -38,7 +38,7 @@ public class Fruit_Avoci extends Fruit {
     @Override
     public void determineFruitPowers(@NonNull DrawableLevel currLevel) {
         super.determineFruitPowers(currLevel);
-        this.getFruitPowers().add(new FruitPower_EnemySpeed(0.5, 10000, currLevel.getEnemies()));
+        this.getFruitPowers().add(new FruitPower_EnemySpeed(0.3, 2500, currLevel.getEnemies()));
     }
 
     @Override

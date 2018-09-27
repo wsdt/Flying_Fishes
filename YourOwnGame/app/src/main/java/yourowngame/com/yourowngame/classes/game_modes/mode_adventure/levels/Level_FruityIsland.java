@@ -61,6 +61,11 @@ public class Level_FruityIsland extends Level {
     }
 
     @Override
+    protected void determineBarriers() {
+
+    }
+
+    @Override
     protected void playBackgroundMusic() {
 
     }

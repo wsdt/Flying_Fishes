@@ -57,7 +57,7 @@
     <string name="fruitPower_shootRage_effect">Spawns %1$.0f projectiles at random positions.</string>
 
     <!-- LevelHierarchy View -->
-    <string name="targetPoints">Target: $1$d Points</string>
+    <string name="targetPoints">Gain: %1$s Points!</string>
 
 
     <!-- Swap-Fruit-Swipe-View -->

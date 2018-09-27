@@ -87,6 +87,11 @@ public class Level_LucifersGameRoom extends Level {
     }
 
     @Override
+    protected void determineBarriers() {
+
+    }
+
+    @Override
     protected void determineLevelAssigments() {
         ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
         allLevelAssignments.add(new LA_AchievePoints(200000, getLevelHighscore()));

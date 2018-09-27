@@ -22,40 +22,110 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:onClick="pauseGame"
-            android:src="@drawable/btn_pause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:onClick="pauseGame"
+            android:src="@drawable/btn_pause" />
 
-        <ImageView
-            android:id="@+id/gameViewActivity_pointsLbl"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="131dp"
-            android:layout_marginRight="131dp"
-            app:srcCompat="@drawable/points" />
 
-        <TextView
-            android:id="@+id/gameViewActivity_highscoreVal"
+        <android.support.v7.widget.GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="top|end"
-            android:layout_marginEnd="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="18dp"
-            android:text="@string/gameActivity_highscore_val"
-            android:textSize="20sp" />
+            android:layout_centerHorizontal="true"
+            >
+
+            <ImageView
+                android:id="@+id/meloonImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/fruit_meloon"
+                />
+
+            <ImageView
+                android:id="@+id/acovicImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_column="2"
+                app:layout_row="0"
+                app:srcCompat="@drawable/avoci" />
+
+            <ImageView
+                android:id="@+id/PinapoImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_column="1"
+                app:layout_row="0"
+                android:textSize="20sp"
+                app:srcCompat="@drawable/pinapos" />
+
+            <TextView
+                android:id="@+id/meloonCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/colorBlack"
+                android:text="0"
+                app:layout_column="0"
+                app:layout_row="1"
+                />
+
+            <TextView
+                android:id="@+id/pinapoCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/colorBlack"
+                android:text="0"
+                app:layout_column="1"
+                app:layout_row="1" />
+
+            <TextView
+                android:id="@+id/avociCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_gravity="center"
+
+                android:textSize="20sp"
+                android:textColor="@color/colorBlack"
+                android:text="0"
+                app:layout_column="2"
+                app:layout_row="1" />
+
+        </android.support.v7.widget.GridLayout>
+
+        <android.support.v7.widget.GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:id="@+id/targetPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/targetPoints"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
+                app:layout_column="3"
+                app:layout_row="0" />
+
+            <TextView
+                android:id="@+id/gameViewActivity_highscoreVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gameActivity_highscore_val"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
+                app:layout_column="3"
+                app:layout_gravity="center"
+                app:layout_row="1" />
+        </android.support.v7.widget.GridLayout>
 
     </RelativeLayout>
 

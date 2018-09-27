@@ -1,10 +1,8 @@
 package yourowngame.com.yourowngame.classes.game_modes.mode_adventure;
 
 
-import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -23,6 +21,7 @@ public abstract class Level extends DrawableLevel {
     private int levelNameResId; //Level name (maybe to show to user [e.g. Die dunkle Gruft, usw.] als Strings.xml res id for multilinguality!
     private ArrayList<LevelAssignment> allLevelAssignments;
 
+
     //Do not make more constructors
     public Level(@NonNull DrawableSurfaceActivity activity) {
         super(activity);
@@ -31,6 +30,7 @@ public abstract class Level extends DrawableLevel {
         //TODO: Maybe get rid of this method, but surely make lvlInformation statically accessible.
         this.determineMetaData();
 
+        this.determineBarriers();
 
         /* IMPORTANT: DO NOT ADD HERE DETERMINE_OBJ METHODS, WE ONLY APPEND ENEMIES ETC.
         * WHEN NEEDED AND NOT AT LVLOBJ_CREATION. THIS HAS THE ADVANTAGE THAT THE LVL_OBJ
@@ -58,17 +58,29 @@ public abstract class Level extends DrawableLevel {
         });
     }
 
-    /** Regardless of shop system keep this level dependent, so user can decide on lvl start which
-     * player to use. */
+    /** Regardless of shop system keep this level dependent, so user can decide on lvl start which player to use. */
     protected abstract void determinePlayer(@NonNull DrawableSurfaceActivity drawableSurfaceActivity);
+
+    /** Determine Background Layers*/
     protected abstract void determineBackgroundLayers(@NonNull DrawableSurfaceActivity drawableSurfaceActivity);
+
+    /** Determine Enemies*/
     protected abstract void determineAllEnemies(@NonNull DrawableSurfaceActivity drawableSurfaceActivity);
+
+    /** Determine Fruits*/
     protected abstract void determineAllFruits(@NonNull DrawableSurfaceActivity drawableSurfaceActivity);
-    protected abstract void playBackgroundMusic();
-    /** Put all wanted LevelAssigment Objs in there. These will be accessed and evaluated in areLevelAssigmentsAchieved().*/
+
+    /** Determine Barriers by calling @allowBorders*/
+    protected abstract void determineBarriers();
+
+    /** Put all wanted LevelAssignment Objects in there. These will be accessed and evaluated in areLevelAssignmentsAchieved().*/
     protected abstract void determineLevelAssigments();
+
     /** Defines default data (normally this method does not contain any logic* operations). E.g. setting the levelName by getting it from the strings.xml*/
     protected abstract void determineMetaData();
+
+    /** play a Background-Music*/
+    protected abstract void playBackgroundMusic();
 
     /** Check whether the assignments are achieved, or not. Every Level implements their assignments itself! */
     public boolean areLevelAssignmentsAchieved() {
@@ -90,6 +102,8 @@ public abstract class Level extends DrawableLevel {
     public String getLevelName(){
         return getDrawableSurfaceActivity().getResources().getString(getLevelNameResId());
     }
+
+
 
     @Override
     public ArrayList<Background> getBgLayers() {
@@ -132,6 +146,10 @@ public abstract class Level extends DrawableLevel {
         return super.getFruits();
     }
 
+    public double getAmount(){
+        return allLevelAssignments.get(0).getAmount();
+    }
+
     public ArrayList<LevelAssignment> getAllLevelAssignments() {
         if (allLevelAssignments == null || allLevelAssignments.size() <= 0) {
             this.determineLevelAssigments();
@@ -142,4 +160,8 @@ public abstract class Level extends DrawableLevel {
     public void setAllLevelAssignments(ArrayList<LevelAssignment> allLevelAssignments) {
         this.allLevelAssignments = allLevelAssignments;
     }
+
+
+
+
 }

@@ -89,6 +89,11 @@ public class Level_EndlessDawn extends Level {
     }
 
     @Override
+    protected void determineBarriers() {
+        allowBarriers();
+    }
+
+    @Override
     protected void determineLevelAssigments() {
         ArrayList<LevelAssignment> allLevelAssignments = new ArrayList<>();
         allLevelAssignments.add(new LA_AchievePoints(10_000, getLevelHighscore()));

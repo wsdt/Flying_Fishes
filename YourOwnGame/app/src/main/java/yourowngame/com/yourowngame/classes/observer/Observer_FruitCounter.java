@@ -17,7 +17,7 @@ import yourowngame.com.yourowngame.classes.observer.interfaces.IFruitCounter_Obs
 import yourowngame.com.yourowngame.classes.observer.interfaces.IHighscore_Observer;
 
 /**
- * HighScore.class that provides a simple counter, to count the highscore
+ * FruitCounter.class that provides a simple counter, to count the highscore
  *
  */
 

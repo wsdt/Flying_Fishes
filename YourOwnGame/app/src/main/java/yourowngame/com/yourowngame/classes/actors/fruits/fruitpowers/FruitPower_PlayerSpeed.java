@@ -27,6 +27,7 @@ public class FruitPower_PlayerSpeed extends FruitPower {
         startStopTimer();
     }
 
+
     @Override
     public void stop() {
         this.getCurrPlayer().setSpeedY(this.getCurrPlayer().getSpeedY()/this.getAmount());

@@ -67,13 +67,17 @@ public abstract class Fruit extends GameObject implements IHighscore_RewardableO
     /**
      * Execute when fruit has been collected.
      */
+
     public void fruitCollected() {
         Log.d(TAG, "fruitCollected: Executing powers -> " + this.getFruitPowers().size());
 
+        //TODO remove if read, this leads to the fruitpower-bug, something wrong with superclass!
         //Execute all fruitPowers
-        for (FruitPower fruitPower : this.getFruitPowers()) {
-            fruitPower.execute();
-        }
+        //for (FruitPower fruitPower : this.getFruitPowers()) {
+         //   fruitPower.execute();
+        //}
+
+        //remove end
     }
 
     /**

@@ -11,6 +11,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import yourowngame.com.yourowngame.activities.GameViewActivity;
+import yourowngame.com.yourowngame.classes.actors.barriers.Barrier;
+import yourowngame.com.yourowngame.classes.actors.barriers.BarrierMgr;
 import yourowngame.com.yourowngame.classes.actors.enemy.Enemy;
 import yourowngame.com.yourowngame.classes.actors.fruits.Fruit;
 import yourowngame.com.yourowngame.classes.actors.fruits.FruitMgr;
@@ -65,23 +67,13 @@ public class GameView extends DrawableSurfaces {
         this.setDrawableSurfaceActivity(context);
 
 
+
         /*Set Projectiles TODO later on, the level should decide by a simple method wethere u can shoot or not!*/
         ProjectileMgr.runDefaultConfiguration(context);
 
         //Set LvlMgr
         Log.d(TAG, "startGame: Lvl-obj -> "+currLevelObj);
         this.setCurrLevelObj(currLevelObj);
-
-        //TODO: remove (workaround for currently bad game design) ---------------
-        /* Also workaround doesn't seem to work..
-
-        ArrayList<Fruit> fruits = new ArrayList<>();
-        for (Fruit f : this.getCurrLevelObj().getFruits()) {
-            fruits.add(FruitMgr.createRandomFruit(context,this.getCurrLevelObj(),f.getClass()));
-        } //reinitialize fruits
-        this.getCurrLevelObj().setFruits(fruits);*/
-
-        //TODO: remove end -------------------------
 
         /* Initialize GameObjects & eq here! After initializing, the GameLoop will start! also cleanup */
         this.getCurrLevelObj().initiate((GameViewActivity) this.getDrawableSurfaceActivity());
@@ -135,7 +127,6 @@ public class GameView extends DrawableSurfaces {
                     fruit.draw();
                 }
 
-
             } catch (Exception e) {
                 //Log.e(TAG, "redraw: Could not draw images.");
                 e.printStackTrace();
@@ -171,10 +162,11 @@ public class GameView extends DrawableSurfaces {
             background.update();
         }
 
+
         /* Update bullets */
         ProjectileMgr.updateProjectiles();
 
-        /* Check for Collisions - if player hits the ground or gets hit by an enemy, game stops!*/
+        /* Check for Collisions - if player hits the ground or gets hit by an enemy or hits barrier, game stops!*/
         if (this.getCurrLevelObj().getCollisionMgr().checkForCollisions()) {
             startExitProcedure();
         }
@@ -241,9 +233,7 @@ public class GameView extends DrawableSurfaces {
      * 4. Getters & Setters
      *********************************************************/
 
-    /**
-     * this returns the current HighScore
-     */
+    /*** this returns the current HighScore */
     public Observer_HighScore getHighscore() {
         return Level.getLevelHighscore();
     }
@@ -257,9 +247,7 @@ public class GameView extends DrawableSurfaces {
         GameView.multiTouchHandler = multiTouchHandler;
     }
 
-    /**
-     * Current levelObj which player can play now.
-     */
+    /** Current levelObj which player can play now.*/
     public DrawableLevel getCurrLevelObj() {
         return currLevelObj;
     }

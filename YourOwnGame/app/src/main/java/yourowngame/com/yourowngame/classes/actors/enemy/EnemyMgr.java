@@ -36,7 +36,7 @@ public class EnemyMgr {
         return craftedEnemies;
     }
 
-    /** Convenience method so we don't get a list for one fruit */
+    /** Convenience method so we don't get a list for one enemy */
     public static <E extends Enemy> E createRandomEnemy(@NonNull Activity activity, @NonNull Class<E> enemyClass) {
         try {
             return enemyClass.getConstructor(Activity.class).newInstance(activity); //use default constructor

@@ -1,6 +1,7 @@
 package yourowngame.com.yourowngame.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -8,6 +9,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import yourowngame.com.yourowngame.R;
+import yourowngame.com.yourowngame.classes.game_modes.DrawableLevel;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.Level;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.LevelAssignment;
+import yourowngame.com.yourowngame.classes.game_modes.mode_adventure.worlds.World_Earth;
 import yourowngame.com.yourowngame.classes.game_modes.mode_survival.Level_Survival;
 import yourowngame.com.yourowngame.classes.manager.WorldMgr;
 import yourowngame.com.yourowngame.gameEngine.surfaces.GameView;
@@ -31,7 +36,8 @@ public class GameViewActivity extends DrawableSurfaceActivity {
     public static final int GAMEMODE_SURVIVAL = 1;
 
     private GameView gameView;
-    private TextView highscoreVal; //for the points
+    private TextView highscoreVal;  // points counter
+
 
     //(1.) Initialize objects
     @Override
@@ -41,6 +47,7 @@ public class GameViewActivity extends DrawableSurfaceActivity {
 
         /* Set highscore val textview */
         this.setHighscoreVal_textView((TextView) findViewById(R.id.gameViewActivity_highscoreVal));
+        this.setTargetpoints((TextView) findViewById(R.id.targetPoints));
 
         /* Master-call, create GameView*/
         setGameView(((GameView) findViewById(DRAWABLE_SURFACE_ID)));
@@ -100,6 +107,13 @@ public class GameViewActivity extends DrawableSurfaceActivity {
 
     public void setHighscoreVal_textView(TextView highscoreVal) {
         this.highscoreVal = highscoreVal;
+    }
+
+    public void setTargetpoints(TextView targetPoints){
+        DrawableLevel currLvl = WorldMgr.getCurrLvl(this,true);
+        for (LevelAssignment la : ((Level) currLvl).getAllLevelAssignments()) {
+            targetPoints.setText(getResources().getString(R.string.targetPoints, ""+((Level) currLvl).getAllLevelAssignments().get(0).getAmount()));
+        }
     }
 }
 
