@@ -8,6 +8,9 @@ This app is currently only available to Alpha (Closed-Alpha track) and Beta (Ope
 
 _All (senseful) contributions/pull-requests will be examined and added to the next release (if you want so / if you don't just fork this repository)._
 
+<img src="https://github.com/wsdt/Flying_Fishes/blob/master/UMLs/FlyingFishers_Screen_1.webp" title="Playstore Screen 1" />
+<img src="https://github.com/wsdt/Flying_Fishes/blob/master/UMLs/FlyingFishers_Screen_2.webp" title="Playstore Screen 2"/>
+
 ## Contribution [![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 This project is licensed under GNU V3, so contributions/pull-requests are welcome. All contributors get listed here. 
