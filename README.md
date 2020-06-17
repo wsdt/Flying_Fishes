@@ -1,4 +1,4 @@
-# Flying Fishes [![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)](https://GitHub.com/wsdt/Flying_Fishes/graphs/commit-activity) [![Generic badge](https://img.shields.io/badge/In-JAVA-RED.svg)](https://www.java.com/) [![GitHub license](https://img.shields.io/github/license/wsdt/Flying_Fishes.svg)](https://github.com/wsdt/Flying_Fishes/blob/master/LICENSE)
+# Flying Fishes [![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)](https://GitHub.com/wsdt/Flying_Fishes/graphs/commit-activity) [![Generic badge](https://img.shields.io/badge/In-JAVA-RED.svg)](https://www.java.com/) [![GitHub license](https://img.shields.io/github/license/wsdt/Flying_Fishes.svg)](https://github.com/wsdt/Flying_Fishes/blob/master/LICENSE) [![Donate](https://img.shields.io/badge/Donate-Pay%20me%20a%20coffee-3cf)](https://github.com/wsdt/Global/wiki/Donation) [![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://saythanks.io/to/kevin.riedl.privat%40gmail.com)
 
 Native Android game which has been written as modular as possible. Consequently, new levels, worlds, enemies, backgrounds can be integrated into the game within a few minutes. Here you can jump to the [class-section](https://github.com/wsdt/Flying_Fishes/tree/master/YourOwnGame/app/src/main/java/yourowngame/com/yourowngame).
 
@@ -14,7 +14,7 @@ _All (senseful) contributions/pull-requests will be examined and added to the ne
 
 This project is licensed under GNU V3, so contributions/pull-requests are welcome. All contributors get listed here. 
 
-**Contributors** [![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://saythanks.io/to/kennethreitz)
+**Contributors** 
 - Kevin Riedl ([WSDT](https://github.com/wsdt))
 - Christof Jori ([SOLUTION](https://github.com/solution49)) 
 
